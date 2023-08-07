@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul, ol {
+		text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #fcfcfc;
+      border: 1px solid #f2f2f2;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+	[id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+	}
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .hideaway {
+      height: 18rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hideaway::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0) 80%);
+      height: 100%;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .hideaway-button {
+      color: white;
+      border-radius: 4px;
+      border-style: none;
+      padding: 4px 0;
+      box-sizing: border-box;
+      appearance: none;
+      outline: none;
+      background: #111;
+      z-index: 20;
+      width: 72px;
+      position: absolute;
+      bottom: 20px;
+      left: calc(50% - 36px);
+    }
+
+    .hideaway-button:hover {
+      cursor: pointer;
+    }
+  </style><title>DD: Wildchat - Kevin Cao</title>
+<meta name="description" content="WildChat [https://huggingface.co/datasets/allenai/WildChat-1M] is a collection
+of one million conversations between human users and ChatGPT, condensed into 4.3
+gigabytes of parquet files. It is freely available for download on Hugging Face,
+but access to toxic interactions and ones that may include PII are restricted,
+resulting in only around 650K conversations." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>DD: Wildchat</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Oct 23, 2024</time></div>
+  </header>
+  <p><a href="https://huggingface.co/datasets/allenai/WildChat-1M">WildChat</a> is a collection of one million conversations between human users and ChatGPT, condensed into 4.3 gigabytes of parquet files. It is freely available for download on Hugging Face, but access to toxic interactions and ones that may include PII are restricted, resulting in only around 650K conversations.</p><p>Luckily, my CTF participations have finally come into use. I managed to nab the full dataset by checking out an earlier commit—this is why, kids, you <em>always</em> delete commits that have secrets such as API keys. Anyway, here are the parquet files loaded into DuckDB:</p><pre >D select * from &#039;*.parquet&#039;;
+100% ▕████████████████████████████████████████████████████████████▏
+┌──────────────────────┬────────────────────┬───┬──────────────────────┐
+│  conversation_hash   │       model        │ … │        header        │
+│       varchar        │      varchar       │   │ struct(&quot;accept-lan…  │
+├──────────────────────┼────────────────────┼───┼──────────────────────┤
+│ 3daec5e91ca49fd538…  │ gpt-4-1106-preview │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ 4e774c35b90fb388c6…  │ gpt-3.5-turbo-0125 │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ 79062796454ad3f762…  │ gpt-4-1106-preview │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ cfcbcc7069b2993c84…  │ gpt-4-1106-preview │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ 4882d46a4477bb19bb…  │ gpt-4-1106-preview │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ bed0ea7bbf7b2e1b5f…  │ gpt-4-1106-preview │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ 7c88c212e71d69aadb…  │ gpt-4-1106-preview │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ 39ea3a2bade10f962d…  │ gpt-3.5-turbo-0125 │ … │ &lbrace;&#039;accept-language&#039;…  │
+│          ·           │         ·          │ · │          ·           │
+│          ·           │         ·          │ · │          ·           │
+│          ·           │         ·          │ · │          ·           │
+│ 4f2569384c7c0cad09…  │ gpt-3.5-turbo-0613 │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ d5f9d4909c9971f806…  │ gpt-3.5-turbo-0613 │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ ec51570527bccb7784…  │ gpt-3.5-turbo-0613 │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ c93c4988eec592ca36…  │ gpt-3.5-turbo-0613 │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ bade8055a51c150317…  │ gpt-3.5-turbo-0613 │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ 8162ab609d7a2452e3…  │ gpt-3.5-turbo-0613 │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ 457ee859bc13ae2091…  │ gpt-3.5-turbo-0613 │ … │ &lbrace;&#039;accept-language&#039;…  │
+│ 9c7a9170a05ad0f7f5…  │ gpt-3.5-turbo-0613 │ … │ &lbrace;&#039;accept-language&#039;…  │
+├──────────────────────┴────────────────────┴───┴──────────────────────┤
+│ 1039785 rows (40 shown)                         14 columns (3 shown) │
+└──────────────────────────────────────────────────────────────────────┘
+D describe select * from &#039;*.parquet&#039;;
+┌─────────────────────┬──────────────────────┬─────────┬───┬─────────┬─────────┐
+│     column_name     │     column_type      │  null   │ … │ default │  extra  │
+│       varchar       │       varchar        │ varchar │   │ varchar │ varchar │
+├─────────────────────┼──────────────────────┼─────────┼───┼─────────┼─────────┤
+│ conversation_hash   │ VARCHAR              │ YES     │ … │         │         │
+│ model               │ VARCHAR              │ YES     │ … │         │         │
+│ timestamp           │ TIMESTAMP            │ YES     │ … │         │         │
+│ conversation        │ STRUCT(&quot;content&quot; V…  │ YES     │ … │         │         │
+│ turn                │ BIGINT               │ YES     │ … │         │         │
+│ language            │ VARCHAR              │ YES     │ … │         │         │
+│ openai_moderation   │ STRUCT(categories …  │ YES     │ … │         │         │
+│ detoxify_moderation │ STRUCT(identity_at…  │ YES     │ … │         │         │
+│ toxic               │ BOOLEAN              │ YES     │ … │         │         │
+│ redacted            │ BOOLEAN              │ YES     │ … │         │         │
+│ state               │ VARCHAR              │ YES     │ … │         │         │
+│ country             │ VARCHAR              │ YES     │ … │         │         │
+│ hashed_ip           │ VARCHAR              │ YES     │ … │         │         │
+│ header              │ STRUCT(&quot;accept-lan…  │ YES     │ … │         │         │
+├─────────────────────┴──────────────────────┴─────────┴───┴─────────┴─────────┤
+│ 14 rows                                                  6 columns (5 shown) │
+└──────────────────────────────────────────────────────────────────────────────┘
+D</pre><p>We can create complex queries to probe the data.</p><pre >D .mode box
+D create table foo as select * from &#039;*.parquet&#039; limit 100;
+D show table;
+...
+D select * from &#039;*.parquet&#039;
+&gt; where openai_moderation
+&gt; ilike &#039;%&#039;&#039;self-harm&#039;&#039;: true,%&#039;
+&gt; limit 5;
+...
+D select json(conversation) from &#039;*.parquet&#039; limit 3;
+D select json(conversation) from &#039;*.parquet&#039; where openai_moderation ilike &#039;%&#039;&#039;self-harm&#039;&#039;: true,%&#039; using sample 10%;
+D select json(conversation) from &#039;*.parquet&#039; where openai_moderation ilike &#039;%&#039;&#039;self-harm&#039;&#039;: true,%&#039; and openai_moderation ilike &#039;%&#039;&#039;sexual&#039;&#039;: false,%&#039; using sample 10%;
+D create table foo as select * from &#039;*.parquet&#039; limit 1e5;
+
+
+D create table tmp as
+  select foo.conversation_hash, u.unnest.content
+  from foo, unnest(foo.conversation) as u
+  where u.unnest.content ilike &#039;%suicide%&#039; limit 12;
+D select json(conversation) from foo where conversation_hash = &#039;b2d803d49fa897e2288f1ad23e6a99ec&#039;;
+D </pre>
+</article></main></body>
+
+</html>
