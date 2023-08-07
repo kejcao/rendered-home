@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul, ol {
+		text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #fcfcfc;
+      border: 1px solid #f2f2f2;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+	[id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+	}
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .hideaway {
+      height: 18rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hideaway::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0) 80%);
+      height: 100%;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .hideaway-button {
+      color: white;
+      border-radius: 4px;
+      border-style: none;
+      padding: 4px 0;
+      box-sizing: border-box;
+      appearance: none;
+      outline: none;
+      background: #111;
+      z-index: 20;
+      width: 72px;
+      position: absolute;
+      bottom: 20px;
+      left: calc(50% - 36px);
+    }
+
+    .hideaway-button:hover {
+      cursor: pointer;
+    }
+  </style><title>Nvidia Streaming ASR - Kevin Cao</title>
+<meta name="description" content="This is going to be a short one, but Nvidia" />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Nvidia Streaming ASR</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Apr 15, 2025</time></div>
+  </header>
+  <p>This is going to be a short one, but Nvidia</p><pre >Traceback (most recent call last):
+  File &quot;/home/kjc/streaming/main.py&quot;, line 186, in callback
+    text = transcribe_chunk(signal)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;/home/kjc/streaming/main.py&quot;, line 147, in transcribe_chunk
+    ) = asr_model.conformer_stream_step(
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;/home/kjc/streaming/.venv/lib/python3.12/site-packages/nemo/collections/asr/parts/mixins/mixins.py&quot;, line 705, in conformer_stream_step
+    best_hyp = self.decoding.rnnt_decoder_predictions_tensor(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;/home/kjc/streaming/.venv/lib/python3.12/site-packages/nemo/collections/asr/parts/submodules/rnnt_decoding.py&quot;, line 518, in rnnt_decoder_predictions_tensor
+    hypotheses_list = self.decoding(
+                      ^^^^^^^^^^^^^^
+  File &quot;/home/kjc/streaming/.venv/lib/python3.12/site-packages/nemo/collections/asr/parts/submodules/rnnt_greedy_decoding.py&quot;, line 197, in __call__
+    return self.forward(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;/home/kjc/streaming/.venv/lib/python3.12/site-packages/nemo/core/classes/common.py&quot;, line 1081, in wrapped_call
+    outputs = wrapped(*args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;/home/kjc/streaming/.venv/lib/python3.12/site-packages/nemo/collections/asr/parts/submodules/rnnt_greedy_decoding.py&quot;, line 404, in forward
+    hypothesis = self._greedy_decode(inseq, logitlen, partial_hypotheses=partial_hypothesis)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File &quot;/home/kjc/streaming/.venv/lib/python3.12/site-packages/torch/utils/_contextlib.py&quot;, line 116, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File &quot;/home/kjc/streaming/.venv/lib/python3.12/site-packages/nemo/collections/asr/parts/submodules/rnnt_greedy_decoding.py&quot;, line 447, in _greedy_decode
+    f = x.narrow(dim=0, start=time_idx, length=1)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: start (2) + length (1) exceeds dimension size (2).</pre><p>In <code>_greedy_decode()</code> the <code>time_idx</code> parameter is an index looping from 0 to <code>out_len</code>. <code>out_len</code> was set to 11, when the appropriate value is 2. By following <code>out_len</code> up the stack trace, we find that a return value <code>encoded_len</code> of <code>cache_aware_stream_step()</code> is responsible. Before returning, this function passes the values to <code>streaming_post_process</code> which importantly implements this logic:</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word"><span class="hljs-keyword">if</span> self.streaming_cfg.valid_out_len &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> (<span class="hljs-keyword">not</span> keep_all_outputs <span class="hljs-keyword">or</span> self.att_context_style == <span class="hljs-string">&quot;regular&quot;</span>):
+    encoded = encoded[:, :, : self.streaming_cfg.valid_out_len]
+    encoded_len = torch.clamp(encoded_len, <span class="hljs-built_in">max</span>=self.streaming_cfg.valid_out_len)</pre><p>For the working model, <code>self.streaming_cfg.valid_out_len</code> is set to 2, while the broken has it set to 14. A solution is to add this line of code somewhere:</p><pre >asr_model.encoder.streaming_cfg.valid_out_len = <span class="hljs-number">2</span></pre>
+</article></main></body>
+
+</html>
