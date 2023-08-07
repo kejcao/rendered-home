@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <script>MathJax={tex:{inlineMath:[["$","$"]],displayMath:[["$$","$$"]],processEscapes:!1}}</script>
+  <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+      pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}header div a::before{content:'';display:block;position:absolute;bottom:14%;left:0;width:100%;height:40%;transform:rotate(-1deg);background-color:orange;z-index:-1;opacity:.3;transition:opacity .2s ease-in-out}header div a:hover::before{opacity:.8}header div a{font-size:1.8rem;display:inline-block;position:relative;-webkit-text-decoration:none;text-decoration:none;color:inherit}header{margin-top:1rem}header>div{text-align:center}body{padding:0 1rem;margin:0 auto;color:#333333;max-width:36rem;line-height:1.55}main{text-align:justify;-webkit-hyphens:auto;hyphens:auto;word-break:auto-phrase}h1{font-size:2.25rem;line-height:2.5rem;text-align:center}hr{margin:32px 0}li{margin:4px 0}h1,h2,h3,h4,h5,h6{line-height:1.2}kbd>kbd{text-indent:0;background-color:#eee;border-radius:3px;border:1px solid #b4b4b4;box-shadow:0 1px 1px rgba(0,0,0,0.2),0 2px 0 0 rgba(255,255,255,0.7) inset;color:#333;display:inline-block;font-size:0.9em;font-weight:700;line-height:1;padding:2px 4px;white-space:nowrap}aside{border-left:2px solid gray;border-radius:2px;padding-left:16px;margin:0;margin-left:32px}code,pre{font-family:ui-monospace,'Cascadia Code','Source Code Pro',Menlo,Consolas,'DejaVu Sans Mono',monospace !important;overflow-y:hidden;-webkit-hyphens:auto;hyphens:auto}:not(pre)>code{font-size:90%}p+p{margin-top:1.3em}pre{border-radius:8px;background-color:#fcfcfc;border:1px solid #f2f2f2;padding:4px 7px;overflow-x:auto;font-size:.8rem}.img+pre{margin-top:1rem}pre:has(+.img){margin-bottom:1rem}img{max-width:85%;height:auto;display:block;margin:0 auto}.hljs-meta.prompt_{-webkit-user-select:none;-moz-user-select:none;user-select:none}summary{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;user-select:none;display:flex;align-items:center;justify-content:flex-end;margin-bottom:20px}details>summary::before{content:'>';font-weight:700;padding-right:10px}details[open]>summary::before{content:'^'}summary::after{content:"";flex-grow:1;height:1px;background-color:#333;margin-left:10px}.hideaway{height:18rem;position:relative;overflow:hidden}.hideaway::after{content:'';position:absolute;bottom:0;left:0;background:linear-gradient(to top,rgba(0,0,0,0.7),rgba(0,0,0,0) 80%);height:100%;width:100%;pointer-events:none}.hideaway-button{color:white;border-radius:4px;border-style:none;padding:4px 0;box-sizing:border-box;-webkit-appearance:none;-moz-appearance:none;appearance:none;outline:none;background:#111;z-index:20;width:72px;position:absolute;bottom:20px;left:calc(50% - 36px)}.hideaway-button:hover{cursor:pointer}
+  
+    </style>
+
+  
+  <title>Homepage</title>
+  <meta name="description" content="The website of a computer geek. I write about computers and math. I daily-drive a x86-64 Linux PC so some of the posts below are specific to that platform." />
+  <style>
+      nav a::before{content:'';display:block;position:absolute;bottom:14%;left:0;width:100%;height:40%;transform:rotate(1.5deg);background-color:magenta;z-index:-1;opacity:.3;transition:opacity .2s ease-in-out}nav a:hover::before{opacity:.8}nav a{font-size:1.8rem;display:inline-block;position:relative;-webkit-text-decoration:none;text-decoration:none;color:inherit}.green::before{content:'';display:block;position:absolute;bottom:20%;left:0;width:100%;height:30%;transform:rotate(1.5deg);background-color:lightgreen;z-index:-1;opacity:.3;transition:opacity .2s ease-in-out}.green:hover::before{opacity:.8}.green{font-size:1.2rem;display:inline-block;position:relative;-webkit-text-decoration:none;text-decoration:none;color:inherit}.something{font-size:1.2rem;display:inline-block;position:relative;-webkit-text-decoration:none;text-decoration:none;color:inherit}.green:nth-child(odd):before{transform:rotate(1.8deg)}.read-more::before{content:'';display:block;position:absolute;bottom:14%;left:0;width:100%;height:40%;transform:rotate(-1.8deg);background-color:orange;z-index:-1;opacity:.3;transition:opacity .2s ease-in-out}li:nth-child(odd) .read-more:before{transform:rotate(1.8deg)}.read-more:hover::before{opacity:.8}.read-more{font-size:1.2rem;display:inline-block;position:relative;-webkit-text-decoration:none;text-decoration:none;color:inherit;font-weight:bold}ul>li{border-radius:0.5rem;box-shadow:0 4px 6px rgba(0,0,0,0.1),0 2px 4px rgba(0,0,0,0.06);border-color:#4a5568;border-style:solid;border-width:2px;margin-top:2rem;margin-bottom:2rem;padding:1rem}nav{text-align:center;line-height:2.2rem}
+  
+    </style>
+
+</head>
+
+<body>
+  
+  <header>
+    
+  <nav>
+    <a href="/archive/">blog archive</a><br>
+    <a href="/about/">about</a>
+  </nav>
+
+  </header>
+
+  <main>
+    
+  <div>
+    <h1>Homepage</h1>
+      <p>I use this website primarily to write on computer-related topics, such as cybersecurity, programming, and mathematics. I participate in CTFs and competitive programming contests sometimes. I read, both fiction and non-fiction. I use the DWM window manager on Arch Linux, neovim as my editor, Chromium for web browsing, and Alacritty as my terminal emulator. I know a lot of programming languages, in order of skill, from most to least: Python, HTML, Bash, C/C++, JavaScript, Haskell, CSS, LaTeX, Lean, and x86-64 asm.</p>
+    <div style="text-align:center; margin-top: 1rem; margin-bottom: 2rem">
+      <a class="green" href="https://github.com/kejcao">github.com</a>&nbsp;&nbsp;&nbsp;
+      <a class="green" href="https://gitlab.com/kejcao">gitlab.com</a><br>
+      <a class="green" href="https://crackmes.one/user/kejcao">crackmes.one</a><br>
+      <a class="green" href="https://cryptohack.org/user/kjcao/">cryptohack.org</a><br>
+      <span class="something">&#x6b;&#x6a;&#x63;&#x61;&#x6f;&#x40;&#x70;&#x72;&#x6f;&#x74;&#x6f;&#x6e;&#x2e;&#x6d;&#x65;</span><br>
+    </div>
+  </div>
+
+  <ul style="margin:0; padding:0; list-style:none">
+    
+      
+    <li style="margin-top:8; ">
+      <h1 style="margin-top:0"><a style="text-decoration:none; color:inherit" href="/posts/algo-order-preserving-mphf">Generating Order-Preserving Minimal Perfect Hash Functions</a></h1>
+      <div style="columns:2">
+        <div style="text-align:center">Aug 7, 2024</div>
+      <div style="text-align:center">algo</div>
+      </div>
+      <p><p>A hash function is a function that maps a set of strings to integers between an interval. If this function is injective, in other words the function produces no hash collisions, then we call the hash function perfect. If furthermore the function is bijective, then we call it a minimal perfect hash function, sometimes abbreviated as MPHF. In computer science we sometimes refer to strings as words.</p></p>
+      <p style="text-align:center; margin:0"><a class="read-more" href="/posts/algo-order-preserving-mphf">...read more</a></p>
+    </li>
+      
+    
+      
+    <li style="">
+      <h1 style="margin-top:0"><a style="text-decoration:none; color:inherit" href="/posts/eliminating-terminal-startup-latency">Eliminating Terminal Startup Latency</a></h1>
+      <div style="columns:2">
+        <div style="text-align:center">Aug 4, 2024</div>
+      <div style="text-align:center">dwm, workflow</div>
+      </div>
+      <p><p>My workflow revolves around the terminal. For example, to launch an application such as Chromium or Krita, I press the keybind <kbd><kbd>Win</kbd>+<kbd>space</kbd></kbd> to open a new floating Alacritty terminal in the center of my screen. Then, I type <code>krita</code> or the name of whatever application to launch it. I have tons of aliases in my <code>.bashrc</code> that look like this to close the terminal when I open an application:</p></p>
+      <p style="text-align:center; margin:0"><a class="read-more" href="/posts/eliminating-terminal-startup-latency">...read more</a></p>
+    </li>
+      
+    
+      
+    <li style="">
+      <h1 style="margin-top:0"><a style="text-decoration:none; color:inherit" href="/posts/python-tempfile">The <code>tempfile</code> Module in Python</a></h1>
+      <div style="columns:2">
+        <div style="text-align:center">Jul 26, 2024</div>
+      <div style="text-align:center">python</div>
+      </div>
+      <p><p>The Python programming language boasts an expansive standard library, providing developers modules for the most specific and esoteric of needs. In fact, there exists a famous XKCD comic where an individual imports &quot;antigravity&quot; and gains the ability to fly.</p></p>
+      <p style="text-align:center; margin:0"><a class="read-more" href="/posts/python-tempfile">...read more</a></p>
+    </li>
+      
+    
+      
+    <li style="">
+      <h1 style="margin-top:0"><a style="text-decoration:none; color:inherit" href="/posts/ukulele-tuner">A Ukulele Tuner in React</a></h1>
+      <div style="columns:2">
+        <div style="text-align:center">Jul 15, 2024</div>
+      <div style="text-align:center">react, web</div>
+      </div>
+      <p><p>I really like <a href="https://yousician.com/guitartuna">GuitarTuna</a>, an online tuner for musical instruments with a fun and intuitive user interface. For some reason they only allow you to tune a guitar and not a ukulele, perhaps to encourage you to install the mobile app?</p></p>
+      <p style="text-align:center; margin:0"><a class="read-more" href="/posts/ukulele-tuner">...read more</a></p>
+    </li>
+      
+    
+      
+    <li style="">
+      <h1 style="margin-top:0"><a style="text-decoration:none; color:inherit" href="/posts/delta-compressing-images">Losslessly Compressing 25000 Images</a></h1>
+      <div style="columns:2">
+        <div style="text-align:center">Jun 26, 2024</div>
+      <div style="text-align:center">compression, python</div>
+      </div>
+      <p><p>On May 20, Microsoft <a href="https://blogs.microsoft.com/blog/2024/05/20/introducing-copilot-pcs/">announced</a> their Copilot+ PCs. The main selling point of these devices are its AI features. These include near real-time local image generation, Live Captions with translation, and Recall. Recall periodically takes a screenshot of the PC and allows users to search through these to &quot;easily find and remember what you have seen in your PC.&quot; After harsh backlash and exposed security flaws targeting Recall, Microsoft vastly <a href="https://www.wired.com/story/microsoft-recall-off-default-security-concerns/">scaled back</a> its ambitions with this project.</p></p>
+      <p style="text-align:center; margin:0"><a class="read-more" href="/posts/delta-compressing-images">...read more</a></p>
+    </li>
+      
+    
+      
+    <li style="">
+      <h1 style="margin-top:0"><a style="text-decoration:none; color:inherit" href="/posts/fibonacci">Calculating the 1 Billionth Fibonacci Number in 8 Seconds</a></h1>
+      <div style="columns:2">
+        <div style="text-align:center">Jun 9, 2024</div>
+      <div style="text-align:center">algo, math, py</div>
+      </div>
+      <p><p>The Fibonacci sequence was popularized in Western Europe by Leonardo of Pisa, where he used it to model rabbit population growth in his 1202 book <em>Liber Abaci</em>. However, the sequence was already known by Indian mathematicians as early as 200 BC, when it was used to enumerate possible patterns of Sanskrit poetry.</p></p>
+      <p style="text-align:center; margin:0"><a class="read-more" href="/posts/fibonacci">...read more</a></p>
+    </li>
+      
+    
+      
+    <li style="">
+      <h1 style="margin-top:0"><a style="text-decoration:none; color:inherit" href="/posts/chatbot-python-playground">Playing Around With LLM Chatbots</a></h1>
+      <div style="columns:2">
+        <div style="text-align:center">May 18, 2024</div>
+      <div style="text-align:center">llm, python</div>
+      </div>
+      <p><p>I spent most of yesterday goofing around with chatbots. I wrote a blog post on Meta Llama-2 7b in what feels like a decade ago—gosh, my perception of time is all warped. Anyway, since then the local LLM space has greatly expanded and many new contenders are vying to train and fine-tune the best (supposedly) open source LLMs. The hotly anticipated Llama-3 line of LLMs were relatively recently announced and released. I&#039;m most excited about the 8b model which was trained on 15 trillion tokens!</p></p>
+      <p style="text-align:center; margin:0"><a class="read-more" href="/posts/chatbot-python-playground">...read more</a></p>
+    </li>
+      
+    
+      
+    <li style="">
+      <h1 style="margin-top:0"><a style="text-decoration:none; color:inherit" href="/posts/vim-config-1">Configuring Neovim</a></h1>
+      <div style="columns:2">
+        <div style="text-align:center">May 7, 2024</div>
+      <div style="text-align:center">neovim, workflow</div>
+      </div>
+      <p><p>I use Neovim and spend more time configuring it than actually coding—I&#039;m exaggerating, of course, but I do spend an inordinate amount of time with my nose in my Neovim config. There are constantly new additions I think to add or small adjustments to make to my <code>init.lua</code>. Here I present two neat ad-hoc code snippets in my config. In the wise words of Georgi Gerganov, &quot;I like big <code>.vimrc</code> and I cannot lie.&quot;</p></p>
+      <p style="text-align:center; margin:0"><a class="read-more" href="/posts/vim-config-1">...read more</a></p>
+    </li>
+      
+    
+      
+    <li style="">
+      <h1 style="margin-top:0"><a style="text-decoration:none; color:inherit" href="/posts/plaid-2024-ctf-icmp">Plaid CTF 2024: An Approach to ICMP</a></h1>
+      <div style="columns:2">
+        <div style="text-align:center">Apr 14, 2024</div>
+      <div style="text-align:center">ctf, cv, writeup</div>
+      </div>
+      <p><p>&quot;(Inter-Corporeality Messaging Protocol) We left an ouija board out as a joke, but then it started moving and it stopped being a joke.&quot; This was the description of a challenge in the 2024 Plaid CTF where we are given a 2 hour long <a href="https://www.youtube.com/watch?v=FGRs-6mMFTU">YouTube video</a> featuring a ghost telekinetically controlling a planchette over a Ouiji board, communicating certain symbols to us by pausing over them.</p></p>
+      <p style="text-align:center; margin:0"><a class="read-more" href="/posts/plaid-2024-ctf-icmp">...read more</a></p>
+    </li>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </ul>
+
+  </main>
+  
+</body>
+
+</html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <script>MathJax={tex:{inlineMath:[["$","$"]],displayMath:[["$$","$$"]],processEscapes:!1}}</script>
+  <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+      pre code.hljs{display:block;overflow-x:auto;padding:1em}code.hljs{padding:3px 5px}.hljs{background:#fefefe;color:#545454}.hljs-comment,.hljs-quote{color:#696969}.hljs-deletion,.hljs-name,.hljs-regexp,.hljs-selector-class,.hljs-selector-id,.hljs-tag,.hljs-template-variable,.hljs-variable{color:#d91e18}.hljs-attribute,.hljs-built_in,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-type{color:#aa5d00}.hljs-addition,.hljs-bullet,.hljs-string,.hljs-symbol{color:green}.hljs-section,.hljs-title{color:#007faa}.hljs-keyword,.hljs-selector-tag{color:#7928a1}.hljs-emphasis{font-style:italic}.hljs-strong{font-weight:700}@media screen and (-ms-high-contrast:active){.hljs-addition,.hljs-attribute,.hljs-built_in,.hljs-bullet,.hljs-comment,.hljs-link,.hljs-literal,.hljs-meta,.hljs-number,.hljs-params,.hljs-quote,.hljs-string,.hljs-symbol,.hljs-type{color:highlight}.hljs-keyword,.hljs-selector-tag{font-weight:700}}header div a::before{content:'';display:block;position:absolute;bottom:14%;left:0;width:100%;height:40%;transform:rotate(-1deg);background-color:orange;z-index:-1;opacity:.3;transition:opacity .2s ease-in-out}header div a:hover::before{opacity:.8}header div a{font-size:1.8rem;display:inline-block;position:relative;-webkit-text-decoration:none;text-decoration:none;color:inherit}header{margin-top:1rem}header>div{text-align:center}body{padding:0 1rem;margin:0 auto;color:#333333;max-width:36rem;line-height:1.55}main{text-align:justify;-webkit-hyphens:auto;hyphens:auto;word-break:auto-phrase}h1{font-size:2.25rem;line-height:2.5rem;text-align:center}hr{margin:32px 0}li{margin:4px 0}h1,h2,h3,h4,h5,h6{line-height:1.2}kbd>kbd{text-indent:0;background-color:#eee;border-radius:3px;border:1px solid #b4b4b4;box-shadow:0 1px 1px rgba(0,0,0,0.2),0 2px 0 0 rgba(255,255,255,0.7) inset;color:#333;display:inline-block;font-size:0.9em;font-weight:700;line-height:1;padding:2px 4px;white-space:nowrap}aside{border-left:2px solid gray;border-radius:2px;padding-left:16px;margin:0;margin-left:32px}code,pre{font-family:ui-monospace,'Cascadia Code','Source Code Pro',Menlo,Consolas,'DejaVu Sans Mono',monospace !important;overflow-y:hidden;-webkit-hyphens:auto;hyphens:auto}:not(pre)>code{font-size:90%}p+p{margin-top:1.3em}pre{border-radius:8px;background-color:#fcfcfc;border:1px solid #f2f2f2;padding:4px 7px;overflow-x:auto;font-size:.8rem}.img+pre{margin-top:1rem}pre:has(+.img){margin-bottom:1rem}img{max-width:85%;height:auto;display:block;margin:0 auto}.hljs-meta.prompt_{-webkit-user-select:none;-moz-user-select:none;user-select:none}summary{cursor:pointer;-webkit-user-select:none;-moz-user-select:none;user-select:none;display:flex;align-items:center;justify-content:flex-end;margin-bottom:20px}details>summary::before{content:'>';font-weight:700;padding-right:10px}details[open]>summary::before{content:'^'}summary::after{content:"";flex-grow:1;height:1px;background-color:#333;margin-left:10px}.hideaway{height:18rem;position:relative;overflow:hidden}.hideaway::after{content:'';position:absolute;bottom:0;left:0;background:linear-gradient(to top,rgba(0,0,0,0.7),rgba(0,0,0,0) 80%);height:100%;width:100%;pointer-events:none}.hideaway-button{color:white;border-radius:4px;border-style:none;padding:4px 0;box-sizing:border-box;-webkit-appearance:none;-moz-appearance:none;appearance:none;outline:none;background:#111;z-index:20;width:72px;position:absolute;bottom:20px;left:calc(50% - 36px)}.hideaway-button:hover{cursor:pointer}
+  
+    </style>
+
+  
+  <title>DD: Sequence Alignment Algorithms - Kevin Cao</title>
+  <meta name="description" content="In bioinformatics, sequence alignment refers to a way of arranging sequences of
+DNA or RNA to identify regions of similarity. These shared regions can reveal
+evolutionary and other useful relationships. But this idea of similarity
+matching is useful for many other purposes, for example," />
+  <style>
+      h2,h3,h4,h5,h6{margin-top:32px;margin-bottom:12px;margin-left:-28px;-webkit-text-decoration:underline;text-decoration:underline}@media (min-width:42rem){pre{margin-left:-2rem;width:calc(100% + 4rem)}}header>h1{color:#333;padding:0 1rem;text-align:center}
+  
+    </style>
+
+</head>
+
+<body>
+  
+  <header>
+    
+    <div>
+      <a href="/">back to homepage</a>
+    </div>
+    
+  </header>
+
+  <main>
+    
+  <article>
+    <header>
+      <h1>DD: Sequence Alignment Algorithms</h1>
+      <div style="padding-bottom:1rem; text-align:center"><time>Aug 5, 2024</time></div>
+    </header>
+    <p>In bioinformatics, sequence alignment refers to a way of arranging sequences of DNA or RNA to identify regions of similarity. These shared regions can reveal evolutionary and other useful relationships. But this idea of similarity matching is useful for many other purposes, for example,</p><ul><li> Fuzzy searching. FZF uses a local sequence alignment algorithm called Smith–Waterman.</li><li> Forced alignment, which is the problem of determining the time intervals text is spoken in given a raw transcription of the audio and the audio itself. One technique involves running an SST model on the audio and then matching the SST result with the transcript, using an sequence alignment algorithm like DTW.</li><li> Plagiarism detection.</li></ul><p>Most of these sequence alignment algorithms involve DP.</p><h3>DTW</h3><p>Given two sequences $x_1,\dotsc,x_n$ and $y_1,\dotsc,y_m$ with a distance function $d(x,y) \in \mathbb{R}^+$ that measures the similarity between two points, we want to somehow find a monotonic alignment that minimizes the distance between the points.</p><p>Intuitively, starting with two pointers on $x_1$ and $y_1$, we can choose either to advance the $x$ pointer or the $y$ pointer or both at the same time. We continue until both pointers reach $x_n$ and $y_m$. The movement or path of the pointers produces a monotonic alignment between the sequence points.</p><p>To find the optimal path the points can move in to reduce the distances between the points the resultant alignment gives, we can use a dynamic programming approach. The matrix stores the cost of the two pointers being in position $i$ or $j$.</p><pre class="hideaway" id="hideaway1"><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+
+<span class="hljs-comment"># returns (similarity, optimal path)</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">dtw</span>(<span class="hljs-params">x, y, d</span>):
+    n, m = <span class="hljs-built_in">len</span>(x), <span class="hljs-built_in">len</span>(y)
+
+    mat = np.zeros((n + <span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>))
+    mat[<span class="hljs-number">0</span>, <span class="hljs-number">1</span>:] = np.inf
+    mat[<span class="hljs-number">1</span>:, <span class="hljs-number">0</span>] = np.inf
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n + <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, m + <span class="hljs-number">1</span>):
+            cost = d(x[i-<span class="hljs-number">1</span>], y[j-<span class="hljs-number">1</span>])
+            mat[i, j] = cost + <span class="hljs-built_in">min</span>(
+                mat[i-<span class="hljs-number">1</span>, j  ],
+                mat[i  , j-<span class="hljs-number">1</span>],
+                mat[i-<span class="hljs-number">1</span>, j-<span class="hljs-number">1</span>],
+            )
+
+    path = [(n-<span class="hljs-number">1</span>, m-<span class="hljs-number">1</span>)]
+    i, j = n-<span class="hljs-number">1</span>, m-<span class="hljs-number">1</span>
+    <span class="hljs-keyword">while</span> i &gt; <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> j &gt; <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">if</span> i == <span class="hljs-number">0</span>: j -= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">if</span> j == <span class="hljs-number">0</span>: i -= <span class="hljs-number">1</span>
+        <span class="hljs-keyword">else</span>:
+            <span class="hljs-keyword">match</span> np.argmin([
+                mat[i-<span class="hljs-number">1</span>, j],
+                mat[i, j-<span class="hljs-number">1</span>],
+                mat[i-<span class="hljs-number">1</span>, j-<span class="hljs-number">1</span>],
+            ]):
+                <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>: i -= <span class="hljs-number">1</span>
+                <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>: j -= <span class="hljs-number">1</span>
+                <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>:
+                    i -= <span class="hljs-number">1</span>
+                    j -= <span class="hljs-number">1</span>
+            path.append((i, j))
+
+    <span class="hljs-keyword">return</span> mat[n, m], <span class="hljs-built_in">list</span>(<span class="hljs-built_in">reversed</span>(path))
+
+<span class="hljs-comment"># Example usage of DTW function</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">f1</span>(<span class="hljs-params">x</span>): <span class="hljs-keyword">return</span> <span class="hljs-number">0.01</span> * (x+<span class="hljs-number">10.0</span>) * (x+<span class="hljs-number">2.0</span>) * (x-<span class="hljs-number">4.0</span>) * (x-<span class="hljs-number">10.0</span>)
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">f2</span>(<span class="hljs-params">x</span>): <span class="hljs-keyword">return</span> <span class="hljs-number">0.01</span> * (x+<span class="hljs-number">10.0</span>) * (x+<span class="hljs-number">1.7</span>) * (x-<span class="hljs-number">5.9</span>) * (x-<span class="hljs-number">10.0</span>)
+
+x = np.linspace(-<span class="hljs-number">10</span>, <span class="hljs-number">10</span>, <span class="hljs-number">50</span>)
+y1, y2 = f1(x), f2(x)
+
+plt.plot(x, y1, <span class="hljs-string">&#x27;b-&#x27;</span>)
+plt.plot(x, y2, <span class="hljs-string">&#x27;r-&#x27;</span>)
+<span class="hljs-keyword">for</span> a, b <span class="hljs-keyword">in</span> dtw(y1, y2, <span class="hljs-keyword">lambda</span> x, y: <span class="hljs-built_in">abs</span>(x - y))[<span class="hljs-number">1</span>]:
+    plt.plot([x[a], x[b]], [y1[a], y2[b]], <span class="hljs-string">&#x27;g-&#x27;</span>, alpha=<span class="hljs-number">0.3</span>)
+    plt.plot(x[a], y1[a], <span class="hljs-string">&#x27;ko&#x27;</span>, markersize=<span class="hljs-number">3</span>)
+    plt.plot(x[b], y2[b], <span class="hljs-string">&#x27;ko&#x27;</span>, markersize=<span class="hljs-number">3</span>)
+
+plt.show()<button class="hideaway-button" onclick="const l=document.getElementById('hideaway1');l.className?(l.className=''):(l.className='hideaway')">Show All</button></pre><p>test</p>
+  </article>
+
+  </main>
+  
+</body>
+
+</html>
