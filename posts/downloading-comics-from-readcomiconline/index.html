@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/static/favicon.ico" type="image/x-icon" />
+
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [["$", "$"]],
+          displayMath: [["$$", "$$"]],
+          processEscapes: !1,
+        },
+      };
+    </script>
+    <script
+      type="text/javascript"
+      id="MathJax-script"
+      async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"
+    ></script>
+
+    <style>
+      pre code.hljs {
+        display: block;
+        overflow-x: auto;
+        padding: 1em;
+      }
+      code.hljs {
+        padding: 3px 5px;
+      }
+      .hljs {
+        background: #fefefe;
+        color: #545454;
+      }
+      .hljs-comment, .hljs-quote {
+        color: #696969;
+      }
+      .hljs-deletion,
+      .hljs-name,
+      .hljs-regexp,
+      .hljs-selector-class,
+      .hljs-selector-id,
+      .hljs-tag,
+      .hljs-template-variable,
+      .hljs-variable {
+        color: #d91e18;
+      }
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-type {
+        color: #aa5d00;
+      }
+      .hljs-addition, .hljs-bullet, .hljs-string, .hljs-symbol {
+        color: green;
+      }
+      .hljs-section, .hljs-title {
+        color: #007faa;
+      }
+      .hljs-keyword, .hljs-selector-tag {
+        color: #7928a1;
+      }
+      .hljs-emphasis {
+        font-style: italic;
+      }
+      .hljs-strong {
+        font-weight: 700;
+      }
+      @media screen and (-ms-high-contrast: active) {
+        .hljs-addition,
+        .hljs-attribute,
+        .hljs-built_in,
+        .hljs-bullet,
+        .hljs-comment,
+        .hljs-link,
+        .hljs-literal,
+        .hljs-meta,
+        .hljs-number,
+        .hljs-params,
+        .hljs-quote,
+        .hljs-string,
+        .hljs-symbol,
+        .hljs-type {
+          color: highlight;
+        }
+        .hljs-keyword, .hljs-selector-tag {
+          font-weight: 700;
+        }
+      }
+      header div a::before {
+        content: "";
+        display: block;
+        position: absolute;
+        bottom: 14%;
+        left: 0;
+        width: 100%;
+        height: 40%;
+        transform: rotate(-1deg);
+        background-color: orange;
+        z-index: -1;
+        opacity: 0.3;
+        transition: opacity 0.2s ease-in-out;
+      }
+      header div a:hover::before {
+        opacity: 0.8;
+      }
+      header div a {
+        font-size: 1.8rem;
+        display: inline-block;
+        position: relative;
+        -webkit-text-decoration: none;
+        text-decoration: none;
+        color: inherit;
+      }
+      header {
+        margin-top: 1rem;
+      }
+      header > div {
+        text-align: center;
+      }
+      body {
+        padding: 0 1rem;
+        margin: 0 auto;
+        color: #333333;
+        max-width: 36rem;
+        line-height: 1.55;
+      }
+      main {
+        text-align: justify;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+        word-break: auto-phrase;
+      }
+      h1 {
+        font-size: 2.25rem;
+        line-height: 2.5rem;
+        text-align: center;
+      }
+      hr {
+        margin: 32px 0;
+      }
+      li {
+        margin: 4px 0;
+      }
+      h1, h2, h3, h4, h5, h6 {
+        line-height: 1.2;
+      }
+      kbd > kbd {
+        text-indent: 0;
+        background-color: #eee;
+        border-radius: 3px;
+        border: 1px solid #b4b4b4;
+        box-shadow:
+          0 1px 1px rgba(0, 0, 0, 0.2),
+          0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+        color: #333;
+        display: inline-block;
+        font-size: 0.9em;
+        font-weight: 700;
+        line-height: 1;
+        padding: 2px 4px;
+        white-space: nowrap;
+      }
+      aside {
+        border-left: 2px solid gray;
+        border-radius: 2px;
+        padding-left: 16px;
+        margin: 0;
+        margin-left: 32px;
+      }
+      code, pre {
+        font-family:
+          ui-monospace,
+          "Cascadia Code",
+          "Source Code Pro",
+          Menlo,
+          Consolas,
+          "DejaVu Sans Mono",
+          monospace !important;
+        overflow-y: hidden;
+        -webkit-hyphens: auto;
+        hyphens: auto;
+      }
+      :not(pre) > code {
+        font-size: 90%;
+      }
+      p + p {
+        margin-top: 1.3em;
+      }
+      pre {
+        border-radius: 8px;
+        background-color: #fcfcfc;
+        border: 1px solid #f2f2f2;
+        padding: 4px 7px;
+        overflow-x: auto;
+        font-size: 0.8rem;
+      }
+      .img + pre {
+        margin-top: 1rem;
+      }
+      pre:has(+ .img) {
+        margin-bottom: 1rem;
+      }
+      img {
+        max-width: 85%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+      }
+      .hljs-meta.prompt_ {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+      }
+      summary {
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        user-select: none;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin-bottom: 20px;
+      }
+      details > summary::before {
+        content: ">";
+        font-weight: 700;
+        padding-right: 10px;
+      }
+      details[open] > summary::before {
+        content: "^";
+      }
+      summary::after {
+        content: "";
+        flex-grow: 1;
+        height: 1px;
+        background-color: #333;
+        margin-left: 10px;
+      }
+      .hideaway {
+        height: 18rem;
+        position: relative;
+        overflow: hidden;
+      }
+      .hideaway::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.7),
+          rgba(0, 0, 0, 0) 80%
+        );
+        height: 100%;
+        width: 100%;
+        pointer-events: none;
+      }
+      .hideaway-button {
+        color: white;
+        border-radius: 4px;
+        border-style: none;
+        padding: 4px 0;
+        box-sizing: border-box;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        outline: none;
+        background: #111;
+        z-index: 20;
+        width: 72px;
+        position: absolute;
+        bottom: 20px;
+        left: calc(50% - 36px);
+      }
+      .hideaway-button:hover {
+        cursor: pointer;
+      }
+    </style>
+
+    <title>DD: Untitled - Kevin Cao</title>
+    <meta
+      name="description"
+      content="It seems the site has some rudimentary anti-debugging methods but it is really
+inconsistent and simple to bypass. They sometimes clear the console every second
+or so, but this is trivial to bypass by just setting the console.clear function
+to do nothing. It seems they try to detect the presence of inspect element by
+having a statement after debugger;. The problem with this is two-fold: firstly,
+you can deactivat ebreakpoints. Secondly, you can just. These methods are all
+quite elementary, a more robust method that I remember seeing in the wild and
+that really threw me for a loop was source mapping."
+    />
+    <style>
+      h2, h3, h4, h5, h6 {
+        margin-top: 32px;
+        margin-bottom: 12px;
+        margin-left: -28px;
+        -webkit-text-decoration: underline;
+        text-decoration: underline;
+      }
+      @media (min-width: 42rem) {
+        pre {
+          margin-left: -2rem;
+          width: calc(100% + 4rem);
+        }
+      }
+      header > h1 {
+        color: #333;
+        padding: 0 1rem;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <div>
+        <a href="/">back to homepage</a>
+      </div>
+    </header>
+
+    <main>
+      <article>
+        <header>
+          <h1>DD: Untitled</h1>
+          <div style="padding-bottom: 1rem; text-align: center">
+            <time>Aug 23, 2024</time>
+          </div>
+        </header>
+        <p>
+          It seems the site has some rudimentary anti-debugging methods but it
+          is really inconsistent and simple to bypass. They sometimes clear the
+          console every second or so, but this is trivial to bypass by just
+          setting the <code>console.clear</code> function to do nothing. It
+          seems they try to detect the presence of inspect element by having a
+          statement after <code>debugger;</code>. The problem with this is
+          two-fold: firstly, you can deactivat ebreakpoints. Secondly, you can
+          just. These methods are all quite elementary, a more robust method
+          that I remember seeing in the wild and that really threw me for a loop
+          was source mapping.
+        </p>
+        <p>
+          I wrote this code that creates a list <code>l</code> with the image
+          URLs.
+        </p>
+        <pre
+          style="hyphens: none; text-align: start; white-space: pre-wrap; word-wrap: break-word"
+        ><span class="hljs-variable language_">console</span>.<span class="hljs-property">clear</span>=<span class="hljs-function">()=&gt;</span>&lbrace;&rbrace;;l=[];<span class="hljs-keyword">for</span>(i=<span class="hljs-number">0</span>;;i++)&lbrace;<span class="hljs-keyword">try</span>&lbrace;l.<span class="hljs-title function_">push</span>(<span class="hljs-built_in">eval</span>(<span class="hljs-title class_">LoadNextPages</span>.<span class="hljs-title function_">toString</span>().<span class="hljs-title function_">match</span>(<span class="hljs-regexp">/, (.*\))\);/</span>)[<span class="hljs-number">1</span>].<span class="hljs-title function_">replace</span>(<span class="hljs-string">&#x27;currImage&#x27;</span>,i)))&rbrace;<span class="hljs-keyword">catch</span>(_)&lbrace;<span class="hljs-keyword">break</span>&rbrace;&rbrace;l;</pre
+        >
+        <p>
+          One can then use a Python script or any other method to download those
+          image urls. As an exercise for the reader, parallelize the below code
+          with <code>grequests</code>.
+        </p>
+        <pre
+        >
+<span class="hljs-keyword">import</span> requests
+
+l = [
+  <span class="hljs-comment"># urls...</span>
+]
+
+<span class="hljs-keyword">for</span> i, u <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(l):
+    <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">f&#x27;out<span class="hljs-subst">&lbrace;i:05&rbrace;</span>.jpg&#x27;</span>, <span class="hljs-string">&#x27;wb&#x27;</span>) <span class="hljs-keyword">as</span> fp:
+        <span class="hljs-built_in">print</span>(i)
+        fp.write(requests.get(u).content)</pre
+        >
+        <p>Then I hacked together some PIL code</p>
+        <pre
+        >
+<span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image
+<span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path
+<span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter
+
+p = <span class="hljs-built_in">sorted</span>(Path(<span class="hljs-string">&#x27;.&#x27;</span>).glob(<span class="hljs-string">&#x27;*.jpg&#x27;</span>))[<span class="hljs-number">1</span>:]
+imgs = [Image.<span class="hljs-built_in">open</span>(x) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> p]
+dims = [(x.width, x.height) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> imgs] <span class="hljs-comment"># exclude first file, that might have special dimensions.</span>
+
+most_common_height = Counter(h <span class="hljs-keyword">for</span> (_, h) <span class="hljs-keyword">in</span> dims).most_common(<span class="hljs-number">1</span>)[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]
+<span class="hljs-keyword">for</span> path, i <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(p, imgs):
+    <span class="hljs-built_in">print</span>(path)
+    i = i.crop((<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, i.width, most_common_height))
+    i.save(path)</pre
+        >
+        <p>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tempus
+          pellentesque luctus. Donec at orci nibh. Aliquam erat volutpat. Donec
+          pharetra feugiat tincidunt. Maecenas ornare egestas orci a tincidunt.
+          Orci varius natoque penatibus et magnis dis parturient montes,
+          nascetur ridiculus mus. Ut dapibus placerat mollis. Quisque et leo et
+          erat sagittis pulvinar eu sit amet justo. Cras quis bibendum libero.
+          Etiam imperdiet egestas mi in venenatis. Duis fringilla cursus libero,
+          sed volutpat purus gravida a. Interdum et malesuada fames ac ante
+          ipsum primis in faucibus. Aenean mi risus, varius sed vehicula vitae,
+          efficitur gravida mauris. Donec id dolor sodales, convallis ipsum sed,
+          ultricies mauris. Mauris nec pretium lorem, ut laoreet sem. Donec eget
+          risus laoreet, pellentesque risus et, dictum purus.
+        </p>
+      </article>
+    </main>
+  </body>
+</html>
