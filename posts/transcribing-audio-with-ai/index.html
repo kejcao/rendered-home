@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kevin Cao</title>
+
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/static/stylesheet.css">
+  
+  <style>
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+
+  
+  <title>Transcribing Audio With AI - Kevin Cao</title>
+  <meta name="description" content="I sometimes encounter long form video or audio like a video by Horses on How to
+Perform an Exorcism [https://www.youtube.com/watch?v=WQLnIv3Y6Dc] that my
+attention-span rotted brain doesn&#39;t have the patience to sit through. In cases
+like these, I download the video using a tool like yt-dlp." />
+
+</head>
+
+<body class="font-serif px-4 mx-auto my-0 text-gray-800 max-w-xl">
+  
+
+  <header class="mt-4">
+    
+    <div class="text-center"><a href="/">back to homepage</a></div>
+    
+  </header>
+
+  <main class="text-justify text-balance hyphens-auto">
+    
+  <article>
+    <header>
+        <h1 class="text-5xl text-gray-700 py-4 text-center">Transcribing Audio With AI</h1>
+        <div class="pb-4 text-center"><time>Jan 12, 2024</time></div>
+    </header>
+    <p>I sometimes encounter long form video or audio like a video by Horses on <em><a href="https://www.youtube.com/watch?v=WQLnIv3Y6Dc">How to Perform an Exorcism</a></em> that my attention-span rotted brain doesn&#039;t have the patience to sit through. In cases like these, I download the video using a tool like <code>yt-dlp</code>.</p><pre><code><span class="hljs-keyword">import</span> argparse
+<span class="hljs-keyword">from</span> faster_whisper <span class="hljs-keyword">import</span> WhisperModel
+<span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime
+
+parser = argparse.ArgumentParser()
+parser.add_argument(<span class="hljs-string">&#x27;audio&#x27;</span>, <span class="hljs-built_in">type</span>=<span class="hljs-built_in">str</span>, <span class="hljs-built_in">help</span>=<span class="hljs-string">&#x27;path to audio file&#x27;</span>)
+parser.add_argument(<span class="hljs-string">&#x27;-q&#x27;</span>, <span class="hljs-string">&#x27;--quiet&#x27;</span>, action=<span class="hljs-string">&#x27;store_true&#x27;</span>, <span class="hljs-built_in">help</span>=<span class="hljs-string">&#x27;do not add timestamps&#x27;</span>)
+parser.add_argument(<span class="hljs-string">&#x27;-f&#x27;</span>, <span class="hljs-string">&#x27;--fast&#x27;</span>, action=<span class="hljs-string">&#x27;store_true&#x27;</span>, <span class="hljs-built_in">help</span>=<span class="hljs-string">&#x27;use tiny.en model instead of medium&#x27;</span>)
+args = parser.parse_args()
+
+segments, _ = WhisperModel(
+    <span class="hljs-string">&#x27;tiny.en&#x27;</span> <span class="hljs-keyword">if</span> args.fast <span class="hljs-keyword">else</span> <span class="hljs-string">&#x27;medium&#x27;</span>,
+    compute_type=<span class="hljs-string">&#x27;float32&#x27;</span>
+).transcribe(args.audio, language=<span class="hljs-string">&#x27;en&#x27;</span>)
+
+<span class="hljs-keyword">for</span> i, segment <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(segments):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fmt</span>(<span class="hljs-params">t: <span class="hljs-built_in">float</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        <span class="hljs-keyword">return</span> (datetime
+            .utcfromtimestamp(t)
+            .strftime(<span class="hljs-string">&#x27;%H:%M:%S,%f&#x27;</span>)[:-<span class="hljs-number">3</span>])
+
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> args.quiet:
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;&#x27;&#x27;\
+<span class="hljs-subst">&lbrace;i+<span class="hljs-number">1</span>&rbrace;</span>
+<span class="hljs-subst">&lbrace;fmt(segment.start)&rbrace;</span> --&gt; <span class="hljs-subst">&lbrace;fmt(segment.end)&rbrace;</span>\
+        &#x27;&#x27;&#x27;</span>)
+    <span class="hljs-built_in">print</span>(segment.text.strip())</code></pre><p>I then pump the transcribed text into <a href="https://labs.perplexity.ai/"></a></p><pre style="hyphens:none;text-align:start;white-space:pre-wrap"><code>The Catholic Church has officially published guidelines and procedures for diagnosing demonic possession and performing an exorcism. But this is just one piece of a much larger picture. For centuries, there has existed a mysterious esoteric side of the Christian faith. It does not prescribe to any denominations of Christianity. Instead, it demands that the individual surrender all ideas about what God is or what the universe could be. These preconceived notions are said to be just false idols. The truth is more profound and exponentially more intense. This is the practice of Christian mysticism. This approach to the religion has allegedly served as the gateway to phenomena both divine and satanic. The wounds of stigmata, divine visions, and prophecy, levitation, and divine ecstasy have all been reported by these followers. Later in this essay, I will discuss this practice and these phenomena in great detail. For now, I should start with what was promised. How to perform an exorcism. Before we get truly started, there is something I should say. I myself am not Christian, and this essay will not evangelize about the Christian faith. Whether my personal beliefs are not really relevant to the conversation at hand. So I will treat Christian mystical traditions and phenomena with a level of reverence. This is partially in an effort to be respectful. It is also to avoid fatiguing the viewer with the constant inclusion of personal, disclaiming language.
+
+Diabolical intervention can be described as any intrusion on human life by a demon or the devil. A demon being a fallen angel was been cast out of heaven for helping Satan rebel against God. But a mystical reading of the Bible does result in some qualifications for the diabolical. The first and most important principle is that demons do exist and can meaningfully interface with human beings in ways both physical and spiritual. The mystics accept this as fact. However, the mystics say that human will can only be moved in two ways by God or by man&#039;s free will. So the most that demons can do is persuade. They cannot entirely take over a person&#039;s free will, but they can influence very strongly. To aid in this, demons can perform seemingly miraculous feats. These feats will arouse a man&#039;s admiration and interest to the extent that the individual will feel compelled to follow the demon. However, it should be stated that these feats are not true miracles. Although seemingly miraculous, only God can perform a true miracle as defined by the mystics.
+
+There are a lot of other things demons simply cannot do. A demon cannot as stated produce any truly divine phenomena. A demon also cannot create any substance the power of creation belongs to God alone. A demon cannot raise the dead, though he may be able to produce the illusion of having done so. Only God can heal, so a demon can never truly cure wounds, fractures, or injuries. Demons cannot make true prophecies because the devil does not know what God may bring about. Nor does a demon have access to a human&#039;s intellect or will, so he can&#039;t truly know a person&#039;s secret. Demons are said to be remarkably intelligent, though, so they could predict people&#039;s behaviors quite astutely.
+
+So limitations aside, what can a demon do? A demon can produce visions both corporeal and imaginative. A demon could falsify the state of religious ecstasy in an individual or even produce the light and heat that many mystics have claimed to experience through God. A demon could cause an illness and then cure it, virtually mimicking the power of healing. This includes producing the stigmata, which is something we will talk about later in this video. However, even more dangerous than these tricks and more relevant to the subject of exorcism, the mystics believe in demonic obsession and possession.
+
+Most versions of Christianity believe in the temptation of the devil, that demons or Satan can tempt humans into sin. But the mystics specifically believe in two more severe alternatives, demonic obsession and demonic possession. Mystic texts do not reveal a hard line between temptation and obsession, but in general authentic obsession sees clear satanic activity on, but separate from the individual. The soul is aware of an external force trying to exert violence upon it, but the soul also maintains its own agency. Obsession can be internal or external. Internal obsession affects a person&#039;s interior faculties, most specifically the imagination. This can manifest as a fixed idea within the intellect or by vivid images and sounds within the mind. Internal obsession may impart on a person a set of duties or goals that they otherwise would find repugnant. The mystics say that the best antidote for interior obsession is prayer, self-destain, confidence in God, and the use of sacraments in the church.
+
+External obsession presents more spectacularly, but in reality is less dangerous. In cases of external obsession, an individual sees devilish apparitions in a very real physical sense. These visions can be pleasant, should the devil transform himself into an angel to deceive the individual&#039;s soul, but some visions may be more straightforward. Satan may appear in horrifying forms to terrify the servants of God away from their practice. A person may hear screams and shouts of blasphemy or songs designed to arouse sensuality. In external possession, a person may perceive either pleasant odors or an unbearable stench wherever they go. The sense of taste can also be affected. The devil often mixes objects or insects into a person&#039;s food or causes meals to taste spoiled and bitter. Lastly, there is the sense of touch. An individual can feel things caused by the devil. These may be bruises, cuts, or blows. They could also be pleasant, sensuous, caresses, or warm embraces.
+
+Both types of obsession are due to one of three causes. The first is God giving permission to the devil to affect a soul in order to test that individual&#039;s faith. The second is the pride of the devil. The mystics believe that sometimes the devil cannot bear the sight of a soul, trying to glorify God, and so he attacks. Thirdly, an obsession may be due to an individual themselves. Specifically, the natural predisposition of the weak. Someone who is inclined to melancholy, sadness, or anxiety is believed to be more susceptible to demonic obsession.
+
+More dangerous than mere obsession though is possession, where obsession is a series of external attacks on a person. Possession is the full taking over of a victim&#039;s body by satanic forces. Mistics recognize that so-called possessions may often be caused by mental health crises and that true possessions are extraordinarily rare. But within mystical practice, there is no debate about the existence of diabolical possession. Various cases are described in the Gospels and the Gospels are the ultimate truth. Furthermore, within the church itself, there have been numerous cases of this possession. Indeed, the church has instituted official exorcism rituals, which we will discuss momentarily.
+
+In a possession, the devil invades the body of a living person and moves his faculties and organs as if they were his own. The devil truly resides within the victim, physically, but not spiritually. Consider a man driving a car. Through physical means the man can steer break and accelerate, but the man is still, of course, a separate entity from the car itself. Such is demonic possession. Only God has the power to penetrate truly into a person&#039;s soul, so the soul of a possessed individual remains free. The primary purpose of a possession is to disturb the soul and draw it to sin in a rebellion against God.</code></pre>
+  </article>
+  <footer class="text-center pt-8">
+    <hr>
+    <div style="height: 30vh;background-color: #DFDBE5; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 28' width='56' height='28'%3E%3Cpath fill='%239C92AC' fill-opacity='0.4' d='M56 26v2h-7.75c2.3-1.27 4.94-2 7.75-2zm-26 2a2 2 0 1 0-4 0h-4.09A25.98 25.98 0 0 0 0 16v-2c.67 0 1.34.02 2 .07V14a2 2 0 0 0-2-2v-2a4 4 0 0 1 3.98 3.6 28.09 28.09 0 0 1 2.8-3.86A8 8 0 0 0 0 6V4a9.99 9.99 0 0 1 8.17 4.23c.94-.95 1.96-1.83 3.03-2.63A13.98 13.98 0 0 0 0 0h7.75c2 1.1 3.73 2.63 5.1 4.45 1.12-.72 2.3-1.37 3.53-1.93A20.1 20.1 0 0 0 14.28 0h2.7c.45.56.88 1.14 1.29 1.74 1.3-.48 2.63-.87 4-1.15-.11-.2-.23-.4-.36-.59H26v.07a28.4 28.4 0 0 1 4 0V0h4.09l-.37.59c1.38.28 2.72.67 4.01 1.15.4-.6.84-1.18 1.3-1.74h2.69a20.1 20.1 0 0 0-2.1 2.52c1.23.56 2.41 1.2 3.54 1.93A16.08 16.08 0 0 1 48.25 0H56c-4.58 0-8.65 2.2-11.2 5.6 1.07.8 2.09 1.68 3.03 2.63A9.99 9.99 0 0 1 56 4v2a8 8 0 0 0-6.77 3.74c1.03 1.2 1.97 2.5 2.79 3.86A4 4 0 0 1 56 10v2a2 2 0 0 0-2 2.07 28.4 28.4 0 0 1 2-.07v2c-9.2 0-17.3 4.78-21.91 12H30zM7.75 28H0v-2c2.81 0 5.46.73 7.75 2zM56 20v2c-5.6 0-10.65 2.3-14.28 6h-2.7c4.04-4.89 10.15-8 16.98-8zm-39.03 8h-2.69C10.65 24.3 5.6 22 0 22v-2c6.83 0 12.94 3.11 16.97 8zm15.01-.4a28.09 28.09 0 0 1 2.8-3.86 8 8 0 0 0-13.55 0c1.03 1.2 1.97 2.5 2.79 3.86a4 4 0 0 1 7.96 0zm14.29-11.86c1.3-.48 2.63-.87 4-1.15a25.99 25.99 0 0 0-44.55 0c1.38.28 2.72.67 4.01 1.15a21.98 21.98 0 0 1 36.54 0zm-5.43 2.71c1.13-.72 2.3-1.37 3.54-1.93a19.98 19.98 0 0 0-32.76 0c1.23.56 2.41 1.2 3.54 1.93a15.98 15.98 0 0 1 25.68 0zm-4.67 3.78c.94-.95 1.96-1.83 3.03-2.63a13.98 13.98 0 0 0-22.4 0c1.07.8 2.09 1.68 3.03 2.63a9.99 9.99 0 0 1 16.34 0z'%3E%3C/path%3E%3C/svg%3E&quot;);"></div>
+    <hr class="mb-10">
+    <span class="pb-16"><a href="/">return to homepage</a></span>
+  </footer>
+
+
+  </main>
+  
+</body>
+
+</html>

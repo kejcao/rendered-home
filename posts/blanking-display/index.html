@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kevin Cao</title>
+
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/stylesheet.css">
+  <script defer src="https://us.umami.is/script.js" data-website-id="4dfdaf2f-089e-440f-b4f3-0162d29805f2"></script>
+  
+  <style>
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+
+  
+  <title>Blanking Displays on Linux - Kevin Cao</title>
+  <meta name="description" content="I blank my displays when I go to sleep since I don&#39;t want sharp blue light cast
+on my bed as I try to doze. My Linux PC can be put to sleep with the command
+systemctl suspend which also blanks the display, but often I need my PC
+computing some time-consuming code overnight, rendering 3D models, or
+transferring files to my backup so I need it still run, just with the display
+off. I could just turn off my only monitor hooked to the PC with the power
+button, but the 2K monitor takes maybe 3-4 seconds to load back up and I&#39;m too
+impatient to wait that long each morning so instead I found that I can run xset
+dpms force off to turn off the screen." />
+
+</head>
+
+<body class="font-serif px-4 mx-auto my-0 text-gray-800 max-w-xl">
+  
+
+  <header class="mt-4">
+    
+    <div class="text-center"><a href="/">back to homepage</a></div>
+    
+  </header>
+
+  <main class="text-justify text-balance hyphens-auto">
+    
+  <article>
+    <header>
+        <h1 class="text-5xl text-gray-700 py-4 text-center">Blanking Displays on Linux</h1>
+        <div class="pb-4 text-center"><time>Apr 26, 2023</time></div>
+    </header>
+    <p>I blank my displays when I go to sleep since I don&#039;t want sharp blue light cast on my bed as I try to doze. My Linux PC can be put to sleep with the command <code>systemctl suspend</code> which also blanks the display, but often I need my PC computing some time-consuming code overnight, rendering 3D models, or transferring files to my backup so I need it still run, just with the display off. I could just turn off my only monitor hooked to the PC with the power button, but the 2K monitor takes maybe 3-4 seconds to load back up and I&#039;m too impatient to wait that long each morning so instead I found that I can run <code>xset dpms force off</code> to turn off the screen.</p><p>If that doesn&#039;t work for you try the command <code>sleep 1 &amp;&amp; xset dpms force off</code> which just waits a second but seems to fix things.</p><p>I also have a laptop which isn&#039;t running Xorg or any other graphical display so I can&#039;t use the <code>xset</code> command. I&#039;ve tried doing what some Stack Overflow Q&amp;As suggest, like using the command <code>setterm -powerdown 1</code> which doesn&#039;t work on my laptop or using <code>vbetool</code> which isn&#039;t in OpenSUSE&#039;s repos, so I can&#039;t install it on my laptop. Instead I followed an OpenSUSE <a href="https://forums.opensuse.org/t/how-to-turn-off-monitor-in-multi-user-mode/149732/4">forum</a> in which OP has the same problem I have. In the file <code>/etc/systemd/logind.conf</code> I set <code>HandleLidSwitch</code> to <code>ignore</code>, then the file looks like</p><pre><code>#  This file is part of systemd.
+#
+#  systemd is free software; you can redistribute it and/or modify it under the
+#  terms of the GNU Lesser General Public License as published by the Free
+#  Software Foundation; either version 2.1 of the License, or (at your option)
+#  any later version.
+#
+# Entries in this file show the compile time defaults. Local configuration
+# should be created by either modifying this file, or by creating &quot;drop-ins&quot; in
+# the logind.conf.d/ subdirectory. The latter is generally recommended.
+# Defaults can be restored by simply deleting this file and all drop-ins.
+#
+# Use &#039;systemd-analyze cat-config systemd/logind.conf&#039; to display the full config.
+#
+# See logind.conf(5) for details.
+
+[Login]
+...
+#HandleSuspendKey=suspend
+#HandleHibernateKey=hibernate
+#HandleLidSwitch=suspend
+HandleLidSwitch=ignore
+#HandleLidSwitchExternalPower=suspend
+#HandleLidSwitchDocked=ignore
+...</code></pre><p>Then I restarted the service this config file belongs to by running the command <code>sudo systemctl restart systemd-logind</code> for the changes to take effect.</p><p>Now, when I close my laptop lid instead of shutting off it blanks the display but runs in the background, so I can still SSH into it even if the lid is shut tight and transfer files with <code>rsync</code> and backup my files between them at midnight—while I&#039;m asleep.</p>
+  </article>
+  <footer class="text-center pt-8">
+    <hr>
+    <div style="height: 30vh;background-color: #DFDBE5; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 28' width='56' height='28'%3E%3Cpath fill='%239C92AC' fill-opacity='0.4' d='M56 26v2h-7.75c2.3-1.27 4.94-2 7.75-2zm-26 2a2 2 0 1 0-4 0h-4.09A25.98 25.98 0 0 0 0 16v-2c.67 0 1.34.02 2 .07V14a2 2 0 0 0-2-2v-2a4 4 0 0 1 3.98 3.6 28.09 28.09 0 0 1 2.8-3.86A8 8 0 0 0 0 6V4a9.99 9.99 0 0 1 8.17 4.23c.94-.95 1.96-1.83 3.03-2.63A13.98 13.98 0 0 0 0 0h7.75c2 1.1 3.73 2.63 5.1 4.45 1.12-.72 2.3-1.37 3.53-1.93A20.1 20.1 0 0 0 14.28 0h2.7c.45.56.88 1.14 1.29 1.74 1.3-.48 2.63-.87 4-1.15-.11-.2-.23-.4-.36-.59H26v.07a28.4 28.4 0 0 1 4 0V0h4.09l-.37.59c1.38.28 2.72.67 4.01 1.15.4-.6.84-1.18 1.3-1.74h2.69a20.1 20.1 0 0 0-2.1 2.52c1.23.56 2.41 1.2 3.54 1.93A16.08 16.08 0 0 1 48.25 0H56c-4.58 0-8.65 2.2-11.2 5.6 1.07.8 2.09 1.68 3.03 2.63A9.99 9.99 0 0 1 56 4v2a8 8 0 0 0-6.77 3.74c1.03 1.2 1.97 2.5 2.79 3.86A4 4 0 0 1 56 10v2a2 2 0 0 0-2 2.07 28.4 28.4 0 0 1 2-.07v2c-9.2 0-17.3 4.78-21.91 12H30zM7.75 28H0v-2c2.81 0 5.46.73 7.75 2zM56 20v2c-5.6 0-10.65 2.3-14.28 6h-2.7c4.04-4.89 10.15-8 16.98-8zm-39.03 8h-2.69C10.65 24.3 5.6 22 0 22v-2c6.83 0 12.94 3.11 16.97 8zm15.01-.4a28.09 28.09 0 0 1 2.8-3.86 8 8 0 0 0-13.55 0c1.03 1.2 1.97 2.5 2.79 3.86a4 4 0 0 1 7.96 0zm14.29-11.86c1.3-.48 2.63-.87 4-1.15a25.99 25.99 0 0 0-44.55 0c1.38.28 2.72.67 4.01 1.15a21.98 21.98 0 0 1 36.54 0zm-5.43 2.71c1.13-.72 2.3-1.37 3.54-1.93a19.98 19.98 0 0 0-32.76 0c1.23.56 2.41 1.2 3.54 1.93a15.98 15.98 0 0 1 25.68 0zm-4.67 3.78c.94-.95 1.96-1.83 3.03-2.63a13.98 13.98 0 0 0-22.4 0c1.07.8 2.09 1.68 3.03 2.63a9.99 9.99 0 0 1 16.34 0z'%3E%3C/path%3E%3C/svg%3E&quot;);"></div>
+    <hr class="mb-10">
+    <span class="pb-16"><a href="/">return to homepage</a></span>
+  </footer>
+
+
+  </main>
+  
+</body>
+
+</html>

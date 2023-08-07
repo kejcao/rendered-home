@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kevin Cao</title>
+
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/stylesheet.css">
+  <script defer src="https://us.umami.is/script.js" data-website-id="4dfdaf2f-089e-440f-b4f3-0162d29805f2"></script>
+  
+  <style>
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+
+  
+  <title>OpenAI Whisper: Speech To Text Using AI - Kevin Cao</title>
+  <meta name="description" content="I&#39;ve been messing around with Whisper [https://github.com/openai/whisper] these
+past few days. It&#39;s a machine learning model that OpenAI trained which
+automatically generates subtitles in multiple languages. In other words, it
+transcribes audio into text using some AI black magic. It&#39;s ironic that for an
+organization named &quot;OpenAI,&quot; this is one of the few models—to my knowledge—that
+they&#39;ve made open source." />
+
+</head>
+
+<body class="font-serif px-4 mx-auto my-0 text-gray-800 max-w-xl">
+  
+
+  <header class="mt-4">
+    
+    <div class="text-center"><a href="/">back to homepage</a></div>
+    
+  </header>
+
+  <main class="text-justify text-balance hyphens-auto">
+    
+  <article>
+    <header>
+        <h1 class="text-5xl text-gray-700 py-4 text-center">OpenAI Whisper: Speech To Text Using AI</h1>
+        <div class="pb-4 text-center"><time>Oct 22, 2023</time></div>
+    </header>
+    <p>I&#039;ve been messing around with <a href="https://github.com/openai/whisper">Whisper</a> these past few days. It&#039;s a machine learning model that OpenAI trained which automatically generates subtitles in multiple languages. In other words, it transcribes audio into text using some AI black magic. It&#039;s ironic that for an organization named &quot;OpenAI,&quot; this is one of the few models—to my knowledge—that they&#039;ve made open source.</p><p>In a Microsoft <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2017/06/paper-revised2.pdf">paper</a> I found online, they basically state that a human transcriber can achieve 4–5% WER (word error rate). OpenAI Whisper can achieve 4.4% WER with the medium model. This means Whisper can transcribe English as well if not better than a human being, which is amazing. We&#039;re going to use the medium model for the rest of this article since the large one requires 2x CPU and more RAM but is only very marginally better at transcribing English.</p><p>I made it 2–4x faster by installing and using <a href="https://github.com/guillaumekln/faster-whisper">Faster Whisper</a> instead of OpenAI&#039;s version. Although you can install both using PIP, my package manager prohibits me from doing that for some reason. So what I did was clone the repo, create a virtual environment, and install all the requirements.</p><pre><code><span class="hljs-meta prompt_">$ </span><span class="language-bash">git <span class="hljs-built_in">clone</span> https://github.com/guillaumekln/faster-whisper</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cd</span> faster-whisper/</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">python3 -m venv .</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">. bin/activate</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">python3 -m pip install -r requirements.txt</span></code></pre><p>I wrote a very simple command-line interface for it that takes a single argument referencing an audio or video file and outputs the SRT subtitles. Only notable thing about the script is that we are given a float as the timestamp, so we need a function that converts the float into the time format SRT uses.</p><pre><code><span class="hljs-keyword">import</span> sys
+
+<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.argv) != <span class="hljs-number">2</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;usage: <span class="hljs-subst">&lbrace;sys.argv[<span class="hljs-number">0</span>]&rbrace;</span> file&#x27;</span>)
+    sys.exit(<span class="hljs-number">1</span>)
+
+<span class="hljs-keyword">from</span> faster_whisper <span class="hljs-keyword">import</span> WhisperModel
+<span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime
+
+segments, _ = (
+    WhisperModel(<span class="hljs-string">&#x27;medium&#x27;</span>, compute_type=<span class="hljs-string">&#x27;float32&#x27;</span>)
+        .transcribe(sys.argv[<span class="hljs-number">1</span>]))
+
+<span class="hljs-keyword">for</span> i, segment <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(segments):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fmt</span>(<span class="hljs-params">t: <span class="hljs-built_in">float</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        <span class="hljs-keyword">return</span> (datetime
+            .utcfromtimestamp(t)
+            .strftime(<span class="hljs-string">&#x27;%H:%M:%S,%f&#x27;</span>)[:-<span class="hljs-number">3</span>])
+
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;&#x27;&#x27;
+<span class="hljs-subst">&lbrace;i+<span class="hljs-number">1</span>&rbrace;</span>
+<span class="hljs-subst">&lbrace;fmt(segment.start)&rbrace;</span> --&gt; <span class="hljs-subst">&lbrace;fmt(segment.end)&rbrace;</span>
+<span class="hljs-subst">&lbrace;segment.text.strip()&rbrace;</span>
+    &#x27;&#x27;&#x27;</span>.lstrip(), flush=<span class="hljs-literal">True</span>)</code></pre><p>It&#039;s around 2x faster than OpenAI&#039;s Whisper without any loss or difference in quality. 4–5x faster (depending on how much silence you have in the audio) if you enable <code>vad_filter</code> which works by only running Whisper on parts of the audio that have speech. Faster Whisper transcribes English faster than realtime on my AMD Ryzen 7 PRO 6850U (which almost reaches 1 TFLOP, for reference). For the 16-minute Oscar-Nominated short &quot;<a href="https://www.youtube.com/watch?v=bAX9_rDvO_c">Affairs of the Art</a>&quot; it took about 12 minutes. You can download the full <a href="/affairs-of-the-art.srt">subtitles</a> but the beginning looks like this (I erased the timestamps, they take up too much space):</p><pre style="hyphens:none;text-align:start;white-space:pre-wrap"><code>I&#039;m into art now. I&#039;m drinking from the cup of creativity again. I&#039;m back on track, hooked, besotted with drawing. It&#039;s all I want to do. I think I&#039;m quite good at it, you know, in a russuesque sort of way. Ivers, my model, I work him to the bone. He&#039;s very tolerant, though. Last week when I asked him to be a nude, descending a stack, as he said. Who we referencing, bear? Duchamp or Boccioni? Art. I&#039;m obsessed. I think I&#039;m turning into my sister Beverly. She never liked drawing or playing with dolls like me. She liked insects, woodlice and beetles. She kept them all in a big fishbowl. She&#039;d wait until they pegged out and she&#039;d put them in coffins she&#039;d made out of little...</code></pre><p>One problem that annoys me but not enough for me to fix it is that the first timestamp always starts at 0:00, so the first subtitle is displayed minutes before any characters even begin speaking. Also, I don&#039;t think the model incorporates context, so it gets some words wrong that I don&#039;t. For example, the model mistakes &quot;grand&quot; with &quot;grant&quot; but I understand that she says &quot;grand&quot; in reference to her grandmother. If I went purely off sound, I would&#039;ve been mistaken too.</p>
+  </article>
+  <footer class="text-center pt-8">
+    <hr>
+    <div style="height: 30vh;background-color: #DFDBE5; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 28' width='56' height='28'%3E%3Cpath fill='%239C92AC' fill-opacity='0.4' d='M56 26v2h-7.75c2.3-1.27 4.94-2 7.75-2zm-26 2a2 2 0 1 0-4 0h-4.09A25.98 25.98 0 0 0 0 16v-2c.67 0 1.34.02 2 .07V14a2 2 0 0 0-2-2v-2a4 4 0 0 1 3.98 3.6 28.09 28.09 0 0 1 2.8-3.86A8 8 0 0 0 0 6V4a9.99 9.99 0 0 1 8.17 4.23c.94-.95 1.96-1.83 3.03-2.63A13.98 13.98 0 0 0 0 0h7.75c2 1.1 3.73 2.63 5.1 4.45 1.12-.72 2.3-1.37 3.53-1.93A20.1 20.1 0 0 0 14.28 0h2.7c.45.56.88 1.14 1.29 1.74 1.3-.48 2.63-.87 4-1.15-.11-.2-.23-.4-.36-.59H26v.07a28.4 28.4 0 0 1 4 0V0h4.09l-.37.59c1.38.28 2.72.67 4.01 1.15.4-.6.84-1.18 1.3-1.74h2.69a20.1 20.1 0 0 0-2.1 2.52c1.23.56 2.41 1.2 3.54 1.93A16.08 16.08 0 0 1 48.25 0H56c-4.58 0-8.65 2.2-11.2 5.6 1.07.8 2.09 1.68 3.03 2.63A9.99 9.99 0 0 1 56 4v2a8 8 0 0 0-6.77 3.74c1.03 1.2 1.97 2.5 2.79 3.86A4 4 0 0 1 56 10v2a2 2 0 0 0-2 2.07 28.4 28.4 0 0 1 2-.07v2c-9.2 0-17.3 4.78-21.91 12H30zM7.75 28H0v-2c2.81 0 5.46.73 7.75 2zM56 20v2c-5.6 0-10.65 2.3-14.28 6h-2.7c4.04-4.89 10.15-8 16.98-8zm-39.03 8h-2.69C10.65 24.3 5.6 22 0 22v-2c6.83 0 12.94 3.11 16.97 8zm15.01-.4a28.09 28.09 0 0 1 2.8-3.86 8 8 0 0 0-13.55 0c1.03 1.2 1.97 2.5 2.79 3.86a4 4 0 0 1 7.96 0zm14.29-11.86c1.3-.48 2.63-.87 4-1.15a25.99 25.99 0 0 0-44.55 0c1.38.28 2.72.67 4.01 1.15a21.98 21.98 0 0 1 36.54 0zm-5.43 2.71c1.13-.72 2.3-1.37 3.54-1.93a19.98 19.98 0 0 0-32.76 0c1.23.56 2.41 1.2 3.54 1.93a15.98 15.98 0 0 1 25.68 0zm-4.67 3.78c.94-.95 1.96-1.83 3.03-2.63a13.98 13.98 0 0 0-22.4 0c1.07.8 2.09 1.68 3.03 2.63a9.99 9.99 0 0 1 16.34 0z'%3E%3C/path%3E%3C/svg%3E&quot;);"></div>
+    <hr class="mb-10">
+    <span class="pb-16"><a href="/">return to homepage</a></span>
+  </footer>
+
+
+  </main>
+  
+</body>
+
+</html>

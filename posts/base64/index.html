@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kevin Cao</title>
+
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/stylesheet.css">
+  <script defer src="https://us.umami.is/script.js" data-website-id="4dfdaf2f-089e-440f-b4f3-0162d29805f2"></script>
+  
+  <style>
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+
+  
+  <title>Base64: Encoding Binary Data - Kevin Cao</title>
+  <meta name="description" content="Base64 is a binary-to-text encoding scheme that transforms 8-bit binary data, in
+chunks of 3, into 6-bit ASCII characters. This is useful for the transfer of
+data in environments that are restricted to ASCII, or to avoid accidentally
+triggering control characters. It is used to create Data URLs, which allow the
+embedding of media—such as images—or other binary assets into textual HTML, XML,
+and CSS files; Earlier forms of SMTP only supported 7-bit ASCII, and Base64 was
+used to transfer attachments." />
+
+</head>
+
+<body class="font-serif px-4 mx-auto my-0 text-gray-800 max-w-xl">
+  
+
+  <header class="mt-4">
+    
+    <div class="text-center"><a href="/">back to homepage</a></div>
+    
+  </header>
+
+  <main class="text-justify text-balance hyphens-auto">
+    
+  <article>
+    <header>
+        <h1 class="text-5xl text-gray-700 py-4 text-center">Base64: Encoding Binary Data</h1>
+        <div class="pb-4 text-center"><time>Jun 9, 2022</time></div>
+    </header>
+    <p>Base64 is a binary-to-text encoding scheme that transforms 8-bit binary data, in chunks of 3, into 6-bit ASCII characters. This is useful for the transfer of data in environments that are restricted to ASCII, or to avoid accidentally triggering control characters. It is used to create Data URLs, which allow the embedding of media—such as images—or other binary assets into textual HTML, XML, and CSS files; Earlier forms of SMTP only supported 7-bit ASCII, and Base64 was used to transfer attachments.</p><p>Data encoded with Base64 experience around a 33 percent increase in size, about 2 percent more if line breaks occur every 76 characters, as enforced by MIME.</p><p>If the data being encoded does not fit neatly into chunks of 3, equal signs are commonly used to pad the output. The 64 characters used for Base64 are, in order from 0–63: A–Z, a–z, 0–9, then two symbols that vary. RFC 4648 specifies those two symbols as the plus sign, then the forward slash.</p><p>Here is my implementation of Base64 in C:</p><pre><code><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+
+<span class="hljs-type">const</span> <span class="hljs-type">int</span> WRAP_AT = <span class="hljs-number">76</span>;
+<span class="hljs-type">const</span> <span class="hljs-type">char</span> *B64_CHARS = <span class="hljs-string">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/&quot;</span>;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">encode_block</span><span class="hljs-params">(<span class="hljs-type">char</span> buf[<span class="hljs-number">3</span>], <span class="hljs-type">char</span> out[<span class="hljs-number">4</span>])</span> &lbrace;
+    out[<span class="hljs-number">0</span>] = B64_CHARS[buf[<span class="hljs-number">0</span>] &gt;&gt; <span class="hljs-number">2</span> &amp; <span class="hljs-number">0x3f</span>];
+    out[<span class="hljs-number">1</span>] = B64_CHARS[(buf[<span class="hljs-number">0</span>] &amp; <span class="hljs-number">0x03</span>) &lt;&lt; <span class="hljs-number">4</span> | buf[<span class="hljs-number">1</span>] &gt;&gt; <span class="hljs-number">4</span> &amp; <span class="hljs-number">0x0f</span>];
+    out[<span class="hljs-number">2</span>] = B64_CHARS[(buf[<span class="hljs-number">1</span>] &amp; <span class="hljs-number">0x0f</span>) &lt;&lt; <span class="hljs-number">2</span> | buf[<span class="hljs-number">2</span>] &gt;&gt; <span class="hljs-number">6</span> &amp; <span class="hljs-number">0x03</span>];
+    out[<span class="hljs-number">3</span>] = B64_CHARS[buf[<span class="hljs-number">2</span>] &amp; <span class="hljs-number">0x3f</span>];
+&rbrace;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">putchar_wrap</span><span class="hljs-params">(<span class="hljs-type">char</span> c, <span class="hljs-type">int</span> *read)</span> &lbrace;
+    <span class="hljs-keyword">if</span>(*read &gt;= WRAP_AT) &lbrace;
+        <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27;\n&#x27;</span>);
+        *read = <span class="hljs-number">0</span>;
+    &rbrace;
+    <span class="hljs-built_in">putchar</span>(c);
+    ++*read;
+&rbrace;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">encode_to_stdout</span><span class="hljs-params">(FILE *fp)</span> &lbrace;
+    <span class="hljs-type">int</span> read = <span class="hljs-number">0</span>;
+    <span class="hljs-type">char</span> buf[<span class="hljs-number">3</span>], out[<span class="hljs-number">4</span>];
+
+    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>) &lbrace;
+        <span class="hljs-comment">/* read */</span>
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">3</span>; ++i) &lbrace;
+            <span class="hljs-type">int</span> c;
+            <span class="hljs-keyword">if</span>((c=fgetc(fp)) == EOF) &lbrace;
+                <span class="hljs-keyword">if</span>(ferror(fp)) &lbrace;
+                    perror(<span class="hljs-string">&quot;fgetc&quot;</span>);
+                    <span class="hljs-built_in">exit</span>(EXIT_FAILURE);
+                &rbrace;
+
+                <span class="hljs-comment">/* last few bits: encode, pad, and finish. */</span>
+                <span class="hljs-keyword">if</span>(i != <span class="hljs-number">0</span>) &lbrace;
+                    <span class="hljs-built_in">memset</span>(buf+i, <span class="hljs-number">0</span>, <span class="hljs-number">3</span>-i);
+                    encode_block(buf, out);
+
+                    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>; j&lt;<span class="hljs-number">4</span>; ++j) &lbrace;
+                        putchar_wrap(j &lt; i+<span class="hljs-number">1</span> ? out[j] : <span class="hljs-string">&#x27;=&#x27;</span>, &amp;read);
+                    &rbrace;
+                &rbrace;
+                <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27;\n&#x27;</span>);
+                <span class="hljs-keyword">goto</span> finish;
+            &rbrace;
+            buf[i] = c;
+        &rbrace;
+
+        <span class="hljs-comment">/* encode */</span>
+        encode_block(buf, out);
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">4</span>; ++i) &lbrace;
+            putchar_wrap(out[i], &amp;read);
+        &rbrace;
+    &rbrace;
+finish:
+&rbrace;
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">char</span> **argv)</span> &lbrace;
+    <span class="hljs-keyword">if</span>(argc == <span class="hljs-number">1</span>) &lbrace;
+        <span class="hljs-keyword">if</span>(!freopen(<span class="hljs-literal">NULL</span>, <span class="hljs-string">&quot;rb&quot;</span>, <span class="hljs-built_in">stdin</span>)) &lbrace;
+            perror(<span class="hljs-string">&quot;freopen&quot;</span>);
+            <span class="hljs-built_in">exit</span>(EXIT_FAILURE);
+        &rbrace;
+        encode_to_stdout(<span class="hljs-built_in">stdin</span>);
+    &rbrace;
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;argc; ++i) &lbrace;
+        FILE *fp = fopen(argv[i], <span class="hljs-string">&quot;rb&quot;</span>);
+        <span class="hljs-keyword">if</span>(!fp) &lbrace;
+            perror(<span class="hljs-string">&quot;fopen&quot;</span>);
+            <span class="hljs-built_in">exit</span>(EXIT_FAILURE);
+        &rbrace;
+        encode_to_stdout(fp);
+        fclose(fp);
+    &rbrace;
+&rbrace;</code></pre><p>The script will encode any input fed to it from stdin. Any command line arguments will be read from and encoded. The script uses RFC 4648&#039;s Base64 alphabet, and produces line breaks every 76 characters.</p><p>For example, here&#039;s the output of my program&#039;s encoding of a compressed, 256x256 WebP logo of my website:</p><pre><code>$ ./a.out favicon.webp 
+UklGRpgKAABXRUJQVlA4WAoAAAASAAAA/wAA/wAAQU5JTQYAAAD/////AABBTk1GbAoAAAQAABYA
+AOwAAKIAAAAAAAJBTFBI1QkAAAGwh23bObnZM7O2N2w33SK2bRu1tXVj2zanKWJMUkZHGzv7pdqN
+WcRZWzPzfEh/7/M+7/v7zX/fERETAE84VU4AiQFONbeA7uujynVlBKOaJf+fRey4r06lKfHwxFfj
+YmT4jnAc/MvD7M5hx1DtPTKy4bOjHSeymWT97JyT1CoCWPondkpauv+GS1rxBeecpFbhYLbxrd+a
+vTOlkCz31+0zXm8eCwoG1uo30nHwbw/Fle/mvdO2HJh6B7KnQfGqmQQOsIC6ir6K4rt8vRa/gyh+
+JgS8ljUofjEavJbhKH4nAbyWbi6xnHqg1cjyiYmJ0VFR1qBGNgqXdAYd+jzR5cPFey6lF+A/e9Kv
+nNr9xYSXW1QwsdjrKOx5FZQP6Dj9QC7KzDq86LXavmYUeArFh4LiUW/uykeWRcmrkxoGmIttI4rP
+A6V9ev9QgqxLf/tiRJ+qfmYxAcW32lUKH3ML1Sy7tucZMxjgFjsUAOrGTslAhRubQIN8FE6NBGXL
+LcpHpavpr8ItFL5ZHlS1v5aOilfUXlAyCqdXBVUbnkXasutHtzlWrXY4tnx37MJ9SWG6s21D4cIW
+oGjIchcS5nz7YaNAMB5cu9/UH7Op3HbdzUJhVz9QtNp5FC/d2dcfiO3NZpwnyQHNPe8R8rwNir6Q
+h8L5Cx8DuY3Wlojd1lyLYhSeCGoGrEBh9xcVQX7CHqFLeqvyAIUdoGbYYRS+3AJY2k6KJGstLBWF
+d/mqEZ2MwquDgOlCkQM6s/+AwmdCQMnyqSha+BqwfUnkW50tQeGrcaBkwjUUzWoNfKuJrNfYWyh8
+...</code></pre><p>The ellipsis above isn&#039;t output from my program, but just to signify three more pages worth of gibberish. That gibberish can be appended to a Data URL. Data URL&#039;s begin with <code>data:</code>, then a MIME type indicating the type of data, then an optional <code>;base64</code> to hint that the data is in Base64, and is concluded by a comma and the data.</p><p>For example, this is the Data URL of my logo: <a href="data:image/webp;base64,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">data:image/webp;base64,UklGRpgKAABXRUJQVlA4WAoAA...</a>.</p><p>It&#039;s in WebP format, so it has a mime type of <code>image/webp</code>. The data is the output of my program, minus the newlines, so the optional Base64 token is there.</p><p>Try clicking on the link, in most browsers you should see my logo, a big K followed by a small C. Originally I encoded the SVG version of my logo, constructed it into a data URL, and used that as a demonstration, but it turns out Mozilla Firefox (and Chrome also, I think) prevents the opening of any Data URL with mime type <code>image/svg+xml</code> because of <a href="https://blog.mozilla.org/security/2017/11/27/blocking-top-level-navigations-data-urls-firefox-59/">security issues</a>.</p>
+  </article>
+  <footer class="text-center pt-8">
+    <hr>
+    <div style="height: 30vh;background-color: #DFDBE5; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 28' width='56' height='28'%3E%3Cpath fill='%239C92AC' fill-opacity='0.4' d='M56 26v2h-7.75c2.3-1.27 4.94-2 7.75-2zm-26 2a2 2 0 1 0-4 0h-4.09A25.98 25.98 0 0 0 0 16v-2c.67 0 1.34.02 2 .07V14a2 2 0 0 0-2-2v-2a4 4 0 0 1 3.98 3.6 28.09 28.09 0 0 1 2.8-3.86A8 8 0 0 0 0 6V4a9.99 9.99 0 0 1 8.17 4.23c.94-.95 1.96-1.83 3.03-2.63A13.98 13.98 0 0 0 0 0h7.75c2 1.1 3.73 2.63 5.1 4.45 1.12-.72 2.3-1.37 3.53-1.93A20.1 20.1 0 0 0 14.28 0h2.7c.45.56.88 1.14 1.29 1.74 1.3-.48 2.63-.87 4-1.15-.11-.2-.23-.4-.36-.59H26v.07a28.4 28.4 0 0 1 4 0V0h4.09l-.37.59c1.38.28 2.72.67 4.01 1.15.4-.6.84-1.18 1.3-1.74h2.69a20.1 20.1 0 0 0-2.1 2.52c1.23.56 2.41 1.2 3.54 1.93A16.08 16.08 0 0 1 48.25 0H56c-4.58 0-8.65 2.2-11.2 5.6 1.07.8 2.09 1.68 3.03 2.63A9.99 9.99 0 0 1 56 4v2a8 8 0 0 0-6.77 3.74c1.03 1.2 1.97 2.5 2.79 3.86A4 4 0 0 1 56 10v2a2 2 0 0 0-2 2.07 28.4 28.4 0 0 1 2-.07v2c-9.2 0-17.3 4.78-21.91 12H30zM7.75 28H0v-2c2.81 0 5.46.73 7.75 2zM56 20v2c-5.6 0-10.65 2.3-14.28 6h-2.7c4.04-4.89 10.15-8 16.98-8zm-39.03 8h-2.69C10.65 24.3 5.6 22 0 22v-2c6.83 0 12.94 3.11 16.97 8zm15.01-.4a28.09 28.09 0 0 1 2.8-3.86 8 8 0 0 0-13.55 0c1.03 1.2 1.97 2.5 2.79 3.86a4 4 0 0 1 7.96 0zm14.29-11.86c1.3-.48 2.63-.87 4-1.15a25.99 25.99 0 0 0-44.55 0c1.38.28 2.72.67 4.01 1.15a21.98 21.98 0 0 1 36.54 0zm-5.43 2.71c1.13-.72 2.3-1.37 3.54-1.93a19.98 19.98 0 0 0-32.76 0c1.23.56 2.41 1.2 3.54 1.93a15.98 15.98 0 0 1 25.68 0zm-4.67 3.78c.94-.95 1.96-1.83 3.03-2.63a13.98 13.98 0 0 0-22.4 0c1.07.8 2.09 1.68 3.03 2.63a9.99 9.99 0 0 1 16.34 0z'%3E%3C/path%3E%3C/svg%3E&quot;);"></div>
+    <hr class="mb-10">
+    <span class="pb-16"><a href="/">return to homepage</a></span>
+  </footer>
+
+
+  </main>
+  
+</body>
+
+</html>

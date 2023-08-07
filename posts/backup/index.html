@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kevin Cao</title>
+
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/stylesheet.css">
+  <script defer src="https://us.umami.is/script.js" data-website-id="4dfdaf2f-089e-440f-b4f3-0162d29805f2"></script>
+  
+  <style>
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+
+  
+  <title>Backing Up My Desktop - Kevin Cao</title>
+  <meta name="description" content="I recently acquired an Ethernet cable and had a spare laptop that was gathering
+dust with a 500GB hard drive in it. I&#39;ve been meaning to backup my desktop since
+I&#39;ve had troublesome moments where I accidentally deleted important files of
+mine or was on the precipice of deleting important files of mine. I thought, why
+not hook my desktop up to that old laptop with the Ethernet cable and copy my
+files and directories over using something like rsync?" />
+
+</head>
+
+<body class="font-serif px-4 mx-auto my-0 text-gray-800 max-w-xl">
+  
+
+  <header class="mt-4">
+    
+    <div class="text-center"><a href="/">back to homepage</a></div>
+    
+  </header>
+
+  <main class="text-justify text-balance hyphens-auto">
+    
+  <article>
+    <header>
+        <h1 class="text-5xl text-gray-700 py-4 text-center">Backing Up My Desktop</h1>
+        <div class="pb-4 text-center"><time>Sep 4, 2022</time></div>
+    </header>
+    <p>I recently acquired an Ethernet cable and had a spare laptop that was gathering dust with a 500GB hard drive in it. I&#039;ve been meaning to backup my desktop since I&#039;ve had troublesome moments where I accidentally deleted important files of mine or was on the precipice of deleting important files of mine. I thought, why not hook my desktop up to that old laptop with the Ethernet cable and copy my files and directories over using something like <code>rsync</code>?</p><p>In case you&#039;re unfamiliar, backing up a computer means copying its files and folders over to another computer, so in case something happens to your files that makes them inaccessible—like a corrupted hard drive, ransomware, or your clumsy fingers irreparably damaging them—you still have a copy on the other machine. <code>rsync</code> is a tool to copy files and folders that&#039;s smart and fast: It doesn&#039;t copy everything, it just copies the things it <em>must</em> copy.</p><p>I install Ubuntu Server on that laptop and create the user <code>kjc</code>. I make three directories in the home folder of <code>kjc</code>: <code>daily</code>, <code>weekly</code>, and <code>monthly</code>, to store my backups at those time increments. I notice that Ubuntu wasn&#039;t using the full 500GB that the hard drive was capable of, instead only registering around 100GB. It turns out I needed to expand the LVM, which is as simple as just two commands:</p><pre><code>$ sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+$ sudo resize2fs /dev/ubuntu-vg/ubuntu-lv</code></pre><p>To get the laptop and the desktop to talk to each other via the Ethernet cable, I assigned each an IP address. On Ubuntu there&#039;s Netplan, so in <code>/etc/netplan/99-ethernet.yaml</code> I write:</p><pre><code><span class="hljs-attr">network:</span>
+  <span class="hljs-attr">version:</span> <span class="hljs-number">2</span>
+  <span class="hljs-attr">renderer:</span> <span class="hljs-string">networkd</span>
+  <span class="hljs-attr">ethernets:</span>
+    <span class="hljs-attr">enp1s0:</span>
+      <span class="hljs-attr">addresses:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.20</span><span class="hljs-string">/24</span></code></pre><p>Then I run <code>sudo netplan apply</code> to register the configuration. On my desktop I have Network Manager, so I run <code>nmcli device modify enp2s0 ipv4.method manual ipv4.address 10.0.0.10/24</code>. Now the laptop has the IP address of <code>10.0.0.20</code>, while my desktop has the IP address <code>10.0.0.10</code>.</p><p>I then authorize two keys on the laptop: The first is my GitHub SSH key so the everyday user on my desktop can SSH in to restore files or maintain the backups; the other is a key with no password generated on my desktop as root to use specifically to store backups (since some of my files need root permissions to access). I also create an alias in <code>/root/.ssh/config</code>:</p><pre><code>Host backup
+        User kjc
+        Hostname 10.0.0.20
+        IdentityFile ~/.ssh/backup</code></pre><p>So I can SSH as root to the laptop without password prompts or any other hassles. To automatically backup my system at time increments, I edit root&#039;s crontab by running <code>sudo EDITOR=vim crontab -e</code>, then write:</p><pre><code>0 0 * * * rsync -AaXH --delete --exclude=&lbrace;&#039;/dev/*&#039;,&#039;/proc/*&#039;,&#039;/sys/*&#039;,&#039;/tmp/*&#039;,&#039;/run/*&#039;,&#039;/mnt/*&#039;,&#039;/media/*&#039;,&#039;/lost+found&#039;,&#039;/var/cache/*&#039;,&#039;/home/kjc/.cache/*&#039;,&#039;/home/kjc/VirtualBox VMs/*&#039;,&#039;/home/kjc/Downloads/*&#039;,&#039;/home/kjc/hugo/*&#039;&rbrace; / backup:/home/kjc/daily
+0 0 * */1 * rsync -AaXH --delete --exclude=&lbrace;&#039;/dev/*&#039;,&#039;/proc/*&#039;,&#039;/sys/*&#039;,&#039;/tmp/*&#039;,&#039;/run/*&#039;,&#039;/mnt/*&#039;,&#039;/media/*&#039;,&#039;/lost+found&#039;,&#039;/var/cache/*&#039;,&#039;/home/kjc/.cache/*&#039;,&#039;/home/kjc/VirtualBox VMs/*&#039;,&#039;/home/kjc/Downloads/*&#039;,&#039;/home/kjc/hugo/*&#039;&rbrace; / backup:/home/kjc/monthly
+0 0 * * 0 rsync -AaXH --delete --exclude=&lbrace;&#039;/dev/*&#039;,&#039;/proc/*&#039;,&#039;/sys/*&#039;,&#039;/tmp/*&#039;,&#039;/run/*&#039;,&#039;/mnt/*&#039;,&#039;/media/*&#039;,&#039;/lost+found&#039;,&#039;/var/cache/*&#039;,&#039;/home/kjc/.cache/*&#039;,&#039;/home/kjc/VirtualBox VMs/*&#039;,&#039;/home/kjc/Downloads/*&#039;,&#039;/home/kjc/hugo/*&#039;&rbrace; / backup:/home/kjc/weekly</code></pre><p>The commands are so long because I had to exclude a lot of directories that aren&#039;t copyable, like <code>/proc</code>, or that are too bulky and worthless to copy like <code>VirtualBox VMs</code> or <code>.cache</code>. The end of each command tells <code>rsync</code> to copy to <code>backup</code>, which utilizes the alias I created earlier and really means <code>-i ~/.ssh/backup kjc@10.0.0.20</code> or &quot;SSH to <code>10.0.0.20</code> as the user <code>kjc</code> and authenticate with the SSH key <code>~/.ssh/backup</code>.&quot; Remember, <code>10.0.0.20</code> is the IP address we assigned to the laptop earlier. All three commands are the same except for the directory they copy to.</p><p>That&#039;s it. Now I can confidently manipulate files and directories, unrestrained by the threat of accidental removal because I probably have a copy of it on the laptop.</p><p>Also, a trick: Say that you&#039;re converting a whole folder of videos to a different format—or anything else that involves mass, potentially destructive manipulation—but you don&#039;t want to lose the original source videos in case you blunder the conversion. You could make another copy of the folder with <code>cp -r videos/ videos~/</code> and that works fine but is <em>very</em> slow if your directory is of substantial size. Instead, what you can do is create a hard link with <code>cp -al videos/ videos~/</code>. The <code>-a</code> flag stands for archive, which tells <code>cp</code> to copy recursively, ignore symbolic links, and preserve everything. The <code>-l</code> flag means create hard links. Even if you manage to mess up the conversion or delete a portion of the videos, since you still have the hard links, you still have the original videos. Of course, this applies to all files (torrents, eBooks, audio, etc.) not just videos.</p>
+  </article>
+  <footer class="text-center pt-8">
+    <hr>
+    <div style="height: 30vh;background-color: #DFDBE5; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 28' width='56' height='28'%3E%3Cpath fill='%239C92AC' fill-opacity='0.4' d='M56 26v2h-7.75c2.3-1.27 4.94-2 7.75-2zm-26 2a2 2 0 1 0-4 0h-4.09A25.98 25.98 0 0 0 0 16v-2c.67 0 1.34.02 2 .07V14a2 2 0 0 0-2-2v-2a4 4 0 0 1 3.98 3.6 28.09 28.09 0 0 1 2.8-3.86A8 8 0 0 0 0 6V4a9.99 9.99 0 0 1 8.17 4.23c.94-.95 1.96-1.83 3.03-2.63A13.98 13.98 0 0 0 0 0h7.75c2 1.1 3.73 2.63 5.1 4.45 1.12-.72 2.3-1.37 3.53-1.93A20.1 20.1 0 0 0 14.28 0h2.7c.45.56.88 1.14 1.29 1.74 1.3-.48 2.63-.87 4-1.15-.11-.2-.23-.4-.36-.59H26v.07a28.4 28.4 0 0 1 4 0V0h4.09l-.37.59c1.38.28 2.72.67 4.01 1.15.4-.6.84-1.18 1.3-1.74h2.69a20.1 20.1 0 0 0-2.1 2.52c1.23.56 2.41 1.2 3.54 1.93A16.08 16.08 0 0 1 48.25 0H56c-4.58 0-8.65 2.2-11.2 5.6 1.07.8 2.09 1.68 3.03 2.63A9.99 9.99 0 0 1 56 4v2a8 8 0 0 0-6.77 3.74c1.03 1.2 1.97 2.5 2.79 3.86A4 4 0 0 1 56 10v2a2 2 0 0 0-2 2.07 28.4 28.4 0 0 1 2-.07v2c-9.2 0-17.3 4.78-21.91 12H30zM7.75 28H0v-2c2.81 0 5.46.73 7.75 2zM56 20v2c-5.6 0-10.65 2.3-14.28 6h-2.7c4.04-4.89 10.15-8 16.98-8zm-39.03 8h-2.69C10.65 24.3 5.6 22 0 22v-2c6.83 0 12.94 3.11 16.97 8zm15.01-.4a28.09 28.09 0 0 1 2.8-3.86 8 8 0 0 0-13.55 0c1.03 1.2 1.97 2.5 2.79 3.86a4 4 0 0 1 7.96 0zm14.29-11.86c1.3-.48 2.63-.87 4-1.15a25.99 25.99 0 0 0-44.55 0c1.38.28 2.72.67 4.01 1.15a21.98 21.98 0 0 1 36.54 0zm-5.43 2.71c1.13-.72 2.3-1.37 3.54-1.93a19.98 19.98 0 0 0-32.76 0c1.23.56 2.41 1.2 3.54 1.93a15.98 15.98 0 0 1 25.68 0zm-4.67 3.78c.94-.95 1.96-1.83 3.03-2.63a13.98 13.98 0 0 0-22.4 0c1.07.8 2.09 1.68 3.03 2.63a9.99 9.99 0 0 1 16.34 0z'%3E%3C/path%3E%3C/svg%3E&quot;);"></div>
+    <hr class="mb-10">
+    <span class="pb-16"><a href="/">return to homepage</a></span>
+  </footer>
+
+
+  </main>
+  
+</body>
+
+</html>

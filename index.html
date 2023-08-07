@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kevin Cao</title>
+
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/stylesheet.css">
+  <script defer src="https://us.umami.is/script.js" data-website-id="4dfdaf2f-089e-440f-b4f3-0162d29805f2"></script>
+  
+  <style>
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+
+  
+  <title>Homepage</title>
+  <meta name="description" content="The website of a computer geek. I write about computers and math. I daily-drive a x86-64 Linux PC so some of the posts below are specific to that platform." />
+  <style>
+      nav a::before{content:'';display:block;position:absolute;bottom:14%;left:0;width:100%;height:40%;transform:rotate(1.5deg);background-color:magenta;z-index:-1;opacity:.3;transition:opacity .2s ease-in-out}nav a:hover::before{opacity:.8}nav a{font-size:1.8rem;display:inline-block;position:relative;-webkit-text-decoration:none;text-decoration:none;color:inherit}.green::before{content:'';display:block;position:absolute;bottom:20%;left:0;width:100%;height:30%;transform:rotate(1.5deg);background-color:lightgreen;z-index:-1;opacity:.3;transition:opacity .2s ease-in-out}.green:hover::before{opacity:.8}.green{font-size:1.2rem;display:inline-block;position:relative;-webkit-text-decoration:none;text-decoration:none;color:inherit}.something{font-size:1.2rem;display:inline-block;position:relative;-webkit-text-decoration:none;text-decoration:none;color:inherit}.green:nth-child(odd):before{transform:rotate(1.8deg)}.read-more::before{content:'';display:block;position:absolute;bottom:14%;left:0;width:100%;height:40%;transform:rotate(-1.8deg);background-color:orange;z-index:-1;opacity:.3;transition:opacity .2s ease-in-out}li:nth-child(odd) .read-more:before{transform:rotate(1.8deg)}.read-more:hover::before{opacity:.8}.read-more{font-size:1.2rem;display:inline-block;position:relative;-webkit-text-decoration:none;text-decoration:none;color:inherit;font-weight:bold}
+  
+    </style>
+
+</head>
+
+<body class="font-serif px-4 mx-auto my-0 text-gray-800 max-w-xl">
+  
+
+  <header class="mt-4">
+    
+  <header class="mt-4 mb-8">
+    <nav class="text-center">
+      <a href="/archive/">archive</a>
+    </nav>
+  </header>
+
+  </header>
+
+  <main class="text-justify text-balance hyphens-auto">
+    
+  <div>
+    <h1 class="text-4xl text-center">Homepage</h1>
+    <p class="text-center text-center px-12">I know HTML, CSS, JavaScript, Python, C, C++, Bash, Haskell, LaTeX, and x86-64 asm. I use vim &amp; arch btw :3</p>
+    <p class="text-center">last build: 2024-03-10T16:31:25.218Z</p>
+    <!-- <p class="text-center">I used to host this website on a spare laptop running Apache but have since moved to Vercel—forwarding ports, fiddling with DNS records, generating HTTPS certificates with Let's Encrypt, configuring Postfix and Dovecot, etc. is all an absolute nightmare. I believe back then I was using a handwritten SSG in C++. I then hopped around different web frameworks (Next.js, Svelte, Vue.js, etc.) before deciding to write my own in Node.js. It crawls for Nunjucks templates and blog posts written in my own Markdown-like document language then renders these. It uses Babel for JavaScript transcompilation and miniaturization, highlight.js to highlight source code, KaTeX for rendering LaTeX math stuff, and Tailwind CSS to make styling easier. A handful of randomly scattered shell scripts aids development.</p> -->
+    <div class="text-center my-8">
+      <span class="something">&#x6b;&#x6a;&#x63;&#x61;&#x6f;&#x40;&#x70;&#x72;&#x6f;&#x74;&#x6f;&#x6e;&#x2e;&#x6d;&#x65;</span><br>
+      <a class="py-1 green" href="https://github.com/kejcao">github.com</a><br>
+      <a class="py-1 green" href="https://crackmes.one/user/kejcao">crackmes.one</a>
+    </div>
+  </div>
+
+  <ul class="m-0 p-0 list-none">
+    
+      
+    <li class="mt-8 rounded-lg shadow-md border-gray-700 border-solid border-2 my-8 p-4">
+      <h1 class="mt-0 text-center"><a class="no-underline text-inherit" href="/posts/pearl-ctf-byteme">Pearl CTF: Byte Me</a></h1>
+      <div class="columns-2">
+        <div class="m-0 text-center">Mar 10, 2024</div>
+      <div class="m-0 text-center">ctf, python, writeup</div>
+      </div>
+      <p><p>A university in Dhanbad, India recently hosted the <a href="https://pearlctf.in/">Pearl CTF</a> challenge. I participated in it and solved a couple challenges, including one titled &quot;byteme&quot; with the description, &quot;I know you are a python expert, but can you reverse this?&quot; We are provided with a single <a href="/store/byteme.pyc"><code>byteme.pyc</code></a> file. Let&#039;s find the flag.</p></p>
+      <p class="text-center m-0"><a class="read-more" href="/posts/pearl-ctf-byteme">...read more</a></p>
+    </li>
+      
+    
+      
+    <li class="rounded-lg shadow-md border-gray-700 border-solid border-2 my-8 p-4">
+      <h1 class="mt-0 text-center"><a class="no-underline text-inherit" href="/posts/transferring-files">A Node.js Script to Transfer Files Between Devices</a></h1>
+      <div class="columns-2">
+        <div class="m-0 text-center">Mar 3, 2024</div>
+      <div class="m-0 text-center">js, web</div>
+      </div>
+      <p><p>I use an iPad Mini 2 to read my eBooks. To transfer them onto the device from my laptop, I run a short Node.js script I wrote. I use it by navigating onto the webpage hosted at my private IP on port 8000 with the iPad&#039;s Safari browser, then clicking the links to download the files.</p></p>
+      <p class="text-center m-0"><a class="read-more" href="/posts/transferring-files">...read more</a></p>
+    </li>
+      
+    
+      
+    <li class="rounded-lg shadow-md border-gray-700 border-solid border-2 my-8 p-4">
+      <h1 class="mt-0 text-center"><a class="no-underline text-inherit" href="/posts/new-google-open-source-models">Google&#039;s New Open Source Models: Magika &amp; Gemma</a></h1>
+      <div class="columns-2">
+        <div class="m-0 text-center">Feb 25, 2024</div>
+      <div class="m-0 text-center">AI, news</div>
+      </div>
+      <p><p>Google haven&#039;t had a spectacular history with AI recently. Whether it be <a href="https://arstechnica.com/information-technology/2023/12/google-admits-it-fudged-a-gemini-ai-demo-video-which-critics-say-misled-viewers/">misleading</a> multimodal LLM benchmarks or woke AI <a href="https://www.nytimes.com/2024/02/22/technology/google-gemini-german-uniforms.html">art generators</a>, Google has been falling behind other companies like Microsoft and OpenAI in terms of development despite inventing the transformer architecture and making other important contributions to the field of machine learning. However, recently, Google released 2 interesting open source AI models.</p></p>
+      <p class="text-center m-0"><a class="read-more" href="/posts/new-google-open-source-models">...read more</a></p>
+    </li>
+      
+    
+      
+    <li class="rounded-lg shadow-md border-gray-700 border-solid border-2 my-8 p-4">
+      <h1 class="mt-0 text-center"><a class="no-underline text-inherit" href="/posts/rotation-matrix">Deriving The 2x2 Rotation Matrix</a></h1>
+      <div class="columns-2">
+        <div class="m-0 text-center">Feb 18, 2024</div>
+      <div class="m-0 text-center">algebra, graphics, math</div>
+      </div>
+      <p><p>In linear algebra we learn that any linear transformation/map between finite-dimensional vector spaces can be represented as a matrix. Furthermore, it is easy to construct said matrix, as its columns are simply the linear map applied to the each basis vector. Specifically, for a map <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mo>:</mo><msup><mi mathvariant="double-struck">R</mi><mi>m</mi></msup><mo>→</mo><msup><mi mathvariant="double-struck">R</mi><mi>n</mi></msup></mrow><annotation encoding="application/x-tex">T : \mathbb{R}^m \to \mathbb{R}^n</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">:</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6889em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">→</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6889em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">n</span></span></span></span></span></span></span></span></span></span></span>, there exists a matrix <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>M</mi></mrow><annotation encoding="application/x-tex">M</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span></span></span></span> such that <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>T</mi><mi>v</mi><mo>=</mo><mi>M</mi><mi>v</mi></mrow><annotation encoding="application/x-tex">Tv = Mv</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">T</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6833em;"></span><span class="mord mathnormal" style="margin-right:0.10903em;">M</span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span></span></span></span> for all <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>v</mi><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mi>m</mi></msup></mrow><annotation encoding="application/x-tex">v \in \mathbb{R}^m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.5782em;vertical-align:-0.0391em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">v</span><span class="mspace" style="margin-right:0.2778em;"></span><span class="mrel">∈</span><span class="mspace" style="margin-right:0.2778em;"></span></span><span class="base"><span class="strut" style="height:0.6889em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span></span></span></span>. Let <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>e</mi><mn>1</mn></msub><mo separator="true">,</mo><mo>…</mo><mo separator="true">,</mo><msub><mi>e</mi><mi>m</mi></msub></mrow><annotation encoding="application/x-tex">e_1, \dotsc, e_m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.625em;vertical-align:-0.1944em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.3011em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">1</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="minner">…</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.1667em;"></span><span class="mord"><span class="mord mathnormal">e</span><span class="msupsub"><span class="vlist-t vlist-t2"><span class="vlist-r"><span class="vlist" style="height:0.1514em;"><span style="top:-2.55em;margin-left:0em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span><span class="vlist-s">​</span></span><span class="vlist-r"><span class="vlist" style="height:0.15em;"><span></span></span></span></span></span></span></span></span></span> be the basis of <span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi mathvariant="double-struck">R</mi><mi>m</mi></msup></mrow><annotation encoding="application/x-tex">\mathbb{R}^m</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.6889em;"></span><span class="mord"><span class="mord mathbb">R</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.6644em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mathnormal mtight">m</span></span></span></span></span></span></span></span></span></span></span>, then,</p></p>
+      <p class="text-center m-0"><a class="read-more" href="/posts/rotation-matrix">...read more</a></p>
+    </li>
+      
+    
+      
+    <li class="rounded-lg shadow-md border-gray-700 border-solid border-2 my-8 p-4">
+      <h1 class="mt-0 text-center"><a class="no-underline text-inherit" href="/posts/google-foobar-level4-1">Running with Bunnies: Google Foobar Level 4</a></h1>
+      <div class="columns-2">
+        <div class="m-0 text-center">Feb 11, 2024</div>
+      <div class="m-0 text-center">cp, foobar</div>
+      </div>
+      <p><p>Google Foobar is an invite-only set of programming challenges consisting of 5 progressively harder levels. To participate, you can use the referral code from someone else who has access to it or you may stumble upon the opportunity like I did when Googling technical topics; for example, I searched something relating to convolutional neural networks and got the request to participate in Foobar.</p></p>
+      <p class="text-center m-0"><a class="read-more" href="/posts/google-foobar-level4-1">...read more</a></p>
+    </li>
+      
+    
+      
+    <li class="rounded-lg shadow-md border-gray-700 border-solid border-2 my-8 p-4">
+      <h1 class="mt-0 text-center"><a class="no-underline text-inherit" href="/posts/speech-synthesis-in-chromium">Speech Synthesis in Chromium</a></h1>
+      <div class="columns-2">
+        <div class="m-0 text-center">Feb 4, 2024</div>
+      <div class="m-0 text-center">chromium, rust, web</div>
+      </div>
+      <p><p>I saw this cool project the other day, a web extension that helps you learn Japanese by showing a new word and its definition on every new tab. I wanted to apply the concept to otherother languages like French though—luckily the extension <a href="https://github.com/Anupya/JapaneseTab">JapaneseTab</a> is open source. I was cleaning and familiarizing myself with the code base, pruning features and UI elements I didn&#039;t like, until I noticed that no matter how hard or how many times I clicked the small play audio button on the right side of the hiragana to pronounce it, no sound would come out.</p></p>
+      <p class="text-center m-0"><a class="read-more" href="/posts/speech-synthesis-in-chromium">...read more</a></p>
+    </li>
+      
+    
+      
+    <li class="rounded-lg shadow-md border-gray-700 border-solid border-2 my-8 p-4">
+      <h1 class="mt-0 text-center"><a class="no-underline text-inherit" href="/posts/tmux-leaking-memory">Preventing tmux from Devouring My RAM</a></h1>
+      <div class="columns-2">
+        <div class="m-0 text-center">Jan 16, 2024</div>
+      <div class="m-0 text-center">linux, tmux</div>
+      </div>
+      <p><p>I use tmux solely to enable scroll and search functionality, since the terminal emulator I drive does not support them. I did originally use alacritty, which has those features built-in, but it had an unacceptable startup latency for my workflow. I have my <kbd><kbd>Win</kbd>+<kbd>space</kbd></kbd> key bound to open a terminal, so to launch an application I launch a terminal then run the application as a CLI command. Basically, I launch a lot of terminals and consequently burn through a lot of tmux sessions.</p></p>
+      <p class="text-center m-0"><a class="read-more" href="/posts/tmux-leaking-memory">...read more</a></p>
+    </li>
+      
+    
+      
+    <li class="rounded-lg shadow-md border-gray-700 border-solid border-2 my-8 p-4">
+      <h1 class="mt-0 text-center"><a class="no-underline text-inherit" href="/posts/lightweight-face-detection">Fast &amp; Lightweight Millisecond-level Face Detector in Python</a></h1>
+      <div class="columns-2">
+        <div class="m-0 text-center">Jan 2, 2024</div>
+      <div class="m-0 text-center">AI, CV, python</div>
+      </div>
+      <p><p>I thought I&#039;ll share some simple Python code to detect faces that makes use of <a href="https://link.springer.com/article/10.1007/s11633-023-1423-y">YuNet: A Tiny Millisecond-level Face Detector</a>. I adapted the code from <a href="https://gist.github.com/UnaNancyOwen/3f06d4a0d04f3a75cc62563aafbac332">here</a> and snatched the model file <code>yunet.onnx</code> from <a href="https://github.com/opencv/opencv_zoo/tree/main/models/face_detection_yunet">here</a>—I couldn&#039;t get the int8 quant to perform perform consistently, so I would just go for the already very light base model.</p></p>
+      <p class="text-center m-0"><a class="read-more" href="/posts/lightweight-face-detection">...read more</a></p>
+    </li>
+      
+    
+      
+    <li class="rounded-lg shadow-md border-gray-700 border-solid border-2 my-8 p-4">
+      <h1 class="mt-0 text-center"><a class="no-underline text-inherit" href="/posts/how-temu-disables-translation">How Temu Disables Google Translate</a></h1>
+      <div class="columns-2">
+        <div class="m-0 text-center">Dec 18, 2023</div>
+      <div class="m-0 text-center">hack, html, web</div>
+      </div>
+      <p><p>My mum loves browsing the Chinese e-commerce store Temu but a big gripe she has is that Google translate doesn&#039;t work on the website. I was quite baffled at this issue and thought it might&#039;ve been a bug in Google translate or something. But then I skimmed an entry on the <a href="https://www.htmhell.dev/adventcalendar/2023/4/">HTMHell</a> advent calender and it mentions how the <code>translate</code> attribute can be &quot;used to indicate whether an element should be translated or not.&quot; My synapses fired and I wondered if this was the reason Google translate refuses to translate Temu. I viewed the source code of the website and grepped for all instance of the phrase &quot;translate&quot; and lo and behold, among the irrelevant CSS properties, we find a single line of JavaScript code that disables translation for all elements.</p></p>
+      <p class="text-center m-0"><a class="read-more" href="/posts/how-temu-disables-translation">...read more</a></p>
+    </li>
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  </ul>
+
+  </main>
+  
+</body>
+
+</html>

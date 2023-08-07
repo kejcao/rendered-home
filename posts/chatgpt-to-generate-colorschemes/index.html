@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Kevin Cao</title>
+
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css" integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFasHpSy3SV" crossorigin="anonymous">
+  <link rel="stylesheet" href="/static/stylesheet.css">
+  <script defer src="https://us.umami.is/script.js" data-website-id="4dfdaf2f-089e-440f-b4f3-0162d29805f2"></script>
+  
+  <style>
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+  </style>
+
+  
+  <title>Using ChatGPT to Generate Vim/Neovim Colorschemes - Kevin Cao</title>
+  <meta name="description" content="ChatGPT is &quot;the fastest-growing consumer application in history,&quot; so no doubt
+you have already heard of it. I saw a Reddit post
+[https://www.reddit.com/r/neovim/comments/14an2bu/texttocolorscheme_a_new_plugin_that_uses/]
+that promotes an extension that makes very creative use of ChatGPT to generate
+colorschemes for the Vim/Neovim text editors. I&#39;d love to add a little flair and
+eye candy to the editor I spend most of my days in—but I don&#39;t what to learn the
+commands and keyboard shortcuts of of yet another wholly unnecessary extension.
+I also don&#39;t have an API key for ChatGPT nor do I want to go through the trouble
+of getting one. I do have an account I made on the website a while ago though,
+so I logged in and used the web interface to prompt it. I don&#39;t know what
+exactly to prompt it with, so I looked through the source code
+[https://github.com/svermeulen/text-to-colorscheme] of the extension and found
+the prompt it uses stored in a string literal
+[https://github.com/svermeulen/text-to-colorscheme/blob/a6226a2d771b52dfadea81b308069a8655e0c978/lua/text-to-colorscheme/internal/openai.lua#L99C1-L99C1].
+I wrote my own prompt, using the extension&#39;s as a template. The original prompt
+told ChatGPT to return Lua code, but I tell it to return Python code so I can
+copy then paste and feed its response into a script." />
+
+</head>
+
+<body class="font-serif px-4 mx-auto my-0 text-gray-800 max-w-xl">
+  
+
+  <header class="mt-4">
+    
+    <div class="text-center"><a href="/">back to homepage</a></div>
+    
+  </header>
+
+  <main class="text-justify text-balance hyphens-auto">
+    
+  <article>
+    <header>
+        <h1 class="text-5xl text-gray-700 py-4 text-center">Using ChatGPT to Generate Vim/Neovim Colorschemes</h1>
+        <div class="pb-4 text-center"><time>Jul 23, 2023</time></div>
+    </header>
+    <p>ChatGPT is &quot;the fastest-growing consumer application in history,&quot; so no doubt you have already heard of it. I saw a Reddit <a href="https://www.reddit.com/r/neovim/comments/14an2bu/texttocolorscheme_a_new_plugin_that_uses/">post</a> that promotes an extension that makes very creative use of ChatGPT to generate colorschemes for the Vim/Neovim text editors. I&#039;d love to add a little flair and eye candy to the editor I spend most of my days in—but I don&#039;t what to learn the commands and keyboard shortcuts of of yet another wholly unnecessary extension. I also don&#039;t have an API key for ChatGPT nor do I want to go through the trouble of getting one. I do have an account I made on the website a while ago though, so I logged in and used the web interface to prompt it. I don&#039;t know what exactly to prompt it with, so I looked through the <a href="https://github.com/svermeulen/text-to-colorscheme">source code</a> of the extension and found the prompt it uses stored in a <a href="https://github.com/svermeulen/text-to-colorscheme/blob/a6226a2d771b52dfadea81b308069a8655e0c978/lua/text-to-colorscheme/internal/openai.lua#L99C1-L99C1">string literal</a>. I wrote my own prompt, using the extension&#039;s as a template. The original prompt told ChatGPT to return Lua code, but I tell it to return Python code so I can copy then paste and feed its response into a script.</p><pre><code><span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">from</span> textwrap <span class="hljs-keyword">import</span> dedent
+
+<span class="hljs-comment"># You will be prompted; respond with a dark-themed color palette</span>
+<span class="hljs-comment"># (as Python code) that best matches the prompt. All colors must</span>
+<span class="hljs-comment"># be brighter than the background color and somewhat distinct from</span>
+<span class="hljs-comment"># each other. For example:</span>
+<span class="hljs-comment">#                                                                  </span>
+<span class="hljs-comment"># ```</span>
+<span class="hljs-comment"># fg = &#x27;&lt;hexcolor&gt;&#x27;</span>
+<span class="hljs-comment"># bg = &#x27;&lt;hexcolor&gt;&#x27;</span>
+<span class="hljs-comment"># c1 = &#x27;&lt;hexcolor&gt;&#x27;</span>
+<span class="hljs-comment"># c2 = &#x27;&lt;hexcolor&gt;&#x27;</span>
+<span class="hljs-comment"># c3 = &#x27;&lt;hexcolor&gt;&#x27;</span>
+<span class="hljs-comment"># c4 = &#x27;&lt;hexcolor&gt;&#x27;</span>
+<span class="hljs-comment"># c5 = &#x27;&lt;hexcolor&gt;&#x27;</span>
+<span class="hljs-comment"># c6 = &#x27;&lt;hexcolor&gt;&#x27;</span>
+<span class="hljs-comment"># c7 = &#x27;&lt;hexcolor&gt;&#x27;</span>
+<span class="hljs-comment"># ```</span>
+
+<span class="hljs-built_in">exec</span>(dedent(sys.stdin.read()))
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;&#x27;&#x27;
+hi Normal guifg=<span class="hljs-subst">&lbrace;fg&rbrace;</span> guibg=<span class="hljs-subst">&lbrace;bg&rbrace;</span>
+
+hi DiffText guifg=<span class="hljs-subst">&lbrace;c1&rbrace;</span> guibg=NONE
+hi ErrorMsg guifg=<span class="hljs-subst">&lbrace;c1&rbrace;</span> guibg=NONE
+hi WarningMsg guifg=<span class="hljs-subst">&lbrace;c1&rbrace;</span> guibg=NONE
+...
+hi StatusLineNC gui=NONE guibg=<span class="hljs-subst">&lbrace;bg&rbrace;</span> guifg=<span class="hljs-subst">&lbrace;fg&rbrace;</span>
+hi Search guibg=<span class="hljs-subst">&lbrace;c5&rbrace;</span> guifg=<span class="hljs-subst">&lbrace;fg&rbrace;</span>
+hi VertSplit gui=NONE guifg=<span class="hljs-subst">&lbrace;c7&rbrace;</span> guibg=NONE
+hi Visual gui=NONE guibg=<span class="hljs-subst">&lbrace;c7&rbrace;</span>
+&#x27;&#x27;&#x27;</span>)</code></pre><p>The comment at the top is the prompt I give ChatGPT. When it then responds in the form of the text between the triple backticks, I run the script then paste in the text. I press Ctrl+D to tell the script that I&#039;m done, and it executes my input as Python code—we dedent it because you know how Python absolutely adores arbitrary indentation. It thus sets the variables <code>fg</code>, <code>bg</code>, <code>c1</code>, etc. to the hex color strings before it simply prints out a formatted multiline string literal which can be copied and pasted into a <code>.vimrc</code>. Note that I cut out a lot of text in the middle of the multiline string to make the code easier to read and less verbose. I got all those <code>hi</code> vimscript commands from the <a href="https://vimcolors.org/">vimcolors.org</a> website. I replaced all the hard-coded colors into variables. Below is a conversation I had with ChatGPT, where I used this method to generate a couple colorschemes, which are shown as images.</p><pre><code>ME:
+    You will be prompted; respond with a dark-themed color palette
+    (as Python code) that best matches the prompt. All colors must
+    be brighter than the background color and somewhat distinct from
+    each other. For example:
+
+    ```
+    fg = &#039;&lt;hexcolor&gt;&#039;
+    bg = &#039;&lt;hexcolor&gt;&#039;
+    c1 = &#039;&lt;hexcolor&gt;&#039;
+    c2 = &#039;&lt;hexcolor&gt;&#039;
+    c3 = &#039;&lt;hexcolor&gt;&#039;
+    c4 = &#039;&lt;hexcolor&gt;&#039;
+    c5 = &#039;&lt;hexcolor&gt;&#039;
+    c6 = &#039;&lt;hexcolor&gt;&#039;
+    c7 = &#039;&lt;hexcolor&gt;&#039;
+    ```
+GPT:
+    fg = &#039;#FFFFFF&#039; # White
+    bg = &#039;#000000&#039; # Black
+    c1 = &#039;#B22222&#039; # Firebrick
+    c2 = &#039;#8B4513&#039; # SaddleBrown
+    c3 = &#039;#FF4500&#039; # OrangeRed
+    c4 = &#039;#FF8C00&#039; # DarkOrange
+    c5 = &#039;#FFFF00&#039; # Yellow
+    c6 = &#039;#00CED1&#039; # DarkTurquoise
+    c7 = &#039;#9932CC&#039; # DarkOrchid
+ME:
+    firelight
+GPT:
+    fg = &#039;#FF4500&#039; # OrangeRed
+    bg = &#039;#000000&#039; # Black
+    c1 = &#039;#FFD700&#039; # Gold
+    c2 = &#039;#FFA500&#039; # Orange
+    c3 = &#039;#FF6347&#039; # Tomato
+    c4 = &#039;#FF8C00&#039; # DarkOrange
+    c5 = &#039;#FFDAB9&#039; # PeachPuff
+    c6 = &#039;#DC143C&#039; # Crimson
+    c7 = &#039;#B22222&#039; # Firebrick</code></pre>
+          <a class="img" href="/static/media/gpt-color-scheme-firelight.jpg">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/static/media/gpt-color-scheme-firelight.jpg"
+              alt="gpt color scheme firelight"
+            />
+          </a>
+        <pre><code>ME:
+    noir
+GPT:
+    fg = &#039;#FFFFFF&#039; # White
+    bg = &#039;#000000&#039; # Black
+    c1 = &#039;#808080&#039; # Gray
+    c2 = &#039;#2F4F4F&#039; # DarkSlateGray
+    c3 = &#039;#696969&#039; # DimGray
+    c4 = &#039;#A9A9A9&#039; # DarkGray
+    c5 = &#039;#708090&#039; # SlateGray
+    c6 = &#039;#363636&#039; # Davy&#039;s Gray
+    c7 = &#039;#1C1C1C&#039; # Jet Black</code></pre>
+          <a class="img" href="/static/media/gpt-color-scheme-noir.jpg">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/static/media/gpt-color-scheme-noir.jpg"
+              alt="gpt color scheme noir"
+            />
+          </a>
+        <pre><code>ME:
+    cyberpunk
+GPT:
+    fg = &#039;#00FF00&#039; # Lime Green
+    bg = &#039;#000000&#039; # Black
+    c1 = &#039;#FF00FF&#039; # Magenta
+    c2 = &#039;#00FFFF&#039; # Cyan
+    c3 = &#039;#FF4500&#039; # OrangeRed
+    c4 = &#039;#FFC0CB&#039; # Pink
+    c5 = &#039;#800080&#039; # Purple
+    c6 = &#039;#FFA500&#039; # Orange
+    c7 = &#039;#FFD700&#039; # Gold</code></pre>
+          <a class="img" href="/static/media/gpt-color-scheme-cyberpunk.jpg">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/static/media/gpt-color-scheme-cyberpunk.jpg"
+              alt="gpt color scheme cyberpunk"
+            />
+          </a>
+        <pre><code>ME:
+    ocean waves
+GPT:
+    fg = &#039;#FFFFFF&#039; # White
+    bg = &#039;#0A192F&#039; # Dark Blue
+    c1 = &#039;#1A759F&#039; # Cerulean
+    c2 = &#039;#4AB6C4&#039; # Light Blue
+    c3 = &#039;#3686A0&#039; # Steel Blue
+    c4 = &#039;#5499C7&#039; # Sky Blue
+    c5 = &#039;#82B3D0&#039; # Pale Blue
+    c6 = &#039;#EAF6FF&#039; # Baby Blue
+    c7 = &#039;#0D2B46&#039; # Dark Navy Blue</code></pre>
+          <a class="img" href="/static/media/gpt-color-scheme-ocean-waves.jpg">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/static/media/gpt-color-scheme-ocean-waves.jpg"
+              alt="gpt color scheme ocean waves"
+            />
+          </a>
+        <pre><code>ME:
+    cherry blossom
+GPT:
+    fg = &#039;#FFFFFF&#039; # White
+    bg = &#039;#F8F8F8&#039; # Light Gray
+    c1 = &#039;#FAD7DB&#039; # Pale Pink
+    c2 = &#039;#F6C3C9&#039; # Light Pink
+    c3 = &#039;#F2AEB2&#039; # Baby Pink
+    c4 = &#039;#ED98A3&#039; # Rose Pink
+    c5 = &#039;#E8828E&#039; # Coral Pink
+    c6 = &#039;#E16D7B&#039; # Salmon Pink
+    c7 = &#039;#DB5868&#039; # Deep Pink</code></pre>
+          <a class="img" href="/static/media/gpt-color-scheme-cherry-blossom-bad.jpg">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/static/media/gpt-color-scheme-cherry-blossom-bad.jpg"
+              alt="gpt color scheme cherry blossom bad"
+            />
+          </a>
+        <pre><code>ME:
+    make the background darker.
+GPT:
+    fg = &#039;#FFFFFF&#039; # White
+    bg = &#039;#301B28&#039; # Dark Purple
+    c1 = &#039;#FFB3C1&#039; # Light Pink
+    c2 = &#039;#FF8CA8&#039; # Pale Pink
+    c3 = &#039;#FF6590&#039; # Baby Pink
+    c4 = &#039;#FF4179&#039; # Rose Pink
+    c5 = &#039;#FF1E63&#039; # Coral Pink
+    c6 = &#039;#FF0050&#039; # Salmon Pink
+    c7 = &#039;#FF003D&#039; # Deep Pink</code></pre>
+          <a class="img" href="/static/media/gpt-color-scheme-cherry-blossom-good.jpg">
+            <img
+              loading="lazy"
+              decoding="async"
+              src="/static/media/gpt-color-scheme-cherry-blossom-good.jpg"
+              alt="gpt color scheme cherry blossom good"
+            />
+          </a>
+        <p>On the last prompt you can see that I can tell ChatGPT to &quot;make the background darker&quot; and perform other color adjustments. Using ChatGPT to generate colorschemes for my text editor is one of the most useful things I&#039;ve ever done with it or any other LLM for that matter.</p><p>I &quot;install&quot; the colorschemes in Neovim by pasting them into appropriately named <code>.vim</code> files under my <code>.config/nvim/colors</code> directory.</p>
+  </article>
+  <footer class="text-center pt-8">
+    <hr>
+    <div style="height: 30vh;background-color: #DFDBE5; background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 28' width='56' height='28'%3E%3Cpath fill='%239C92AC' fill-opacity='0.4' d='M56 26v2h-7.75c2.3-1.27 4.94-2 7.75-2zm-26 2a2 2 0 1 0-4 0h-4.09A25.98 25.98 0 0 0 0 16v-2c.67 0 1.34.02 2 .07V14a2 2 0 0 0-2-2v-2a4 4 0 0 1 3.98 3.6 28.09 28.09 0 0 1 2.8-3.86A8 8 0 0 0 0 6V4a9.99 9.99 0 0 1 8.17 4.23c.94-.95 1.96-1.83 3.03-2.63A13.98 13.98 0 0 0 0 0h7.75c2 1.1 3.73 2.63 5.1 4.45 1.12-.72 2.3-1.37 3.53-1.93A20.1 20.1 0 0 0 14.28 0h2.7c.45.56.88 1.14 1.29 1.74 1.3-.48 2.63-.87 4-1.15-.11-.2-.23-.4-.36-.59H26v.07a28.4 28.4 0 0 1 4 0V0h4.09l-.37.59c1.38.28 2.72.67 4.01 1.15.4-.6.84-1.18 1.3-1.74h2.69a20.1 20.1 0 0 0-2.1 2.52c1.23.56 2.41 1.2 3.54 1.93A16.08 16.08 0 0 1 48.25 0H56c-4.58 0-8.65 2.2-11.2 5.6 1.07.8 2.09 1.68 3.03 2.63A9.99 9.99 0 0 1 56 4v2a8 8 0 0 0-6.77 3.74c1.03 1.2 1.97 2.5 2.79 3.86A4 4 0 0 1 56 10v2a2 2 0 0 0-2 2.07 28.4 28.4 0 0 1 2-.07v2c-9.2 0-17.3 4.78-21.91 12H30zM7.75 28H0v-2c2.81 0 5.46.73 7.75 2zM56 20v2c-5.6 0-10.65 2.3-14.28 6h-2.7c4.04-4.89 10.15-8 16.98-8zm-39.03 8h-2.69C10.65 24.3 5.6 22 0 22v-2c6.83 0 12.94 3.11 16.97 8zm15.01-.4a28.09 28.09 0 0 1 2.8-3.86 8 8 0 0 0-13.55 0c1.03 1.2 1.97 2.5 2.79 3.86a4 4 0 0 1 7.96 0zm14.29-11.86c1.3-.48 2.63-.87 4-1.15a25.99 25.99 0 0 0-44.55 0c1.38.28 2.72.67 4.01 1.15a21.98 21.98 0 0 1 36.54 0zm-5.43 2.71c1.13-.72 2.3-1.37 3.54-1.93a19.98 19.98 0 0 0-32.76 0c1.23.56 2.41 1.2 3.54 1.93a15.98 15.98 0 0 1 25.68 0zm-4.67 3.78c.94-.95 1.96-1.83 3.03-2.63a13.98 13.98 0 0 0-22.4 0c1.07.8 2.09 1.68 3.03 2.63a9.99 9.99 0 0 1 16.34 0z'%3E%3C/path%3E%3C/svg%3E&quot;);"></div>
+    <hr class="mb-10">
+    <span class="pb-16"><a href="/">return to homepage</a></span>
+  </footer>
+
+
+  </main>
+  
+</body>
+
+</html>
