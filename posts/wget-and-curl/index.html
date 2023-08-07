@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Curl: Tips &amp; Tricks - Kevin Cao</title>
+<meta name="description" content="I've been using the command line tools curl and wget for a while now. I've
+picked up a few tricks. Most of them will be on curl, since I use that the most." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Curl: Tips &amp; Tricks</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Jun 23, 2023</time></div>
+  </header>
+  <p>I&#039;ve been using the command line tools <code>curl</code> and <code>wget</code> for a while now. I&#039;ve picked up a few tricks. Most of them will be on <code>curl</code>, since I use that the most.</p><p>I often forget the more esoteric HTTP status codes. For a quick and cute reminder, one can enter something like &quot;<a href="https://http.cat/403">http.cat/403</a>&quot; into the browser search bar and you get a cute cat describing that status code.</p><h3>The Basics</h3><p>We can use <code>wget</code> like we would <code>curl</code> by using the <code>-O</code> flag which specifies a file to output to, where a lone hyphen stands for stdout. <code>-q</code> suppresses the output of progress bars and other unnecessary information.</p><pre >$ wget -qO - example.org
+&lt;!doctype html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Example Domain&lt;/title&gt;
+
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;meta http-equiv=&quot;Content-type&quot; content=&quot;text/html; charset=utf-8&quot; /&gt;
+    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;
+    &lt;style type=&quot;text/css&quot;&gt;
+    body &lbrace;
+...</pre><p>With <code>curl</code> we can print just the status code of a website by using <code>-s</code> to get rid of the progress bar, silencing the response body by redirecting it to <code>/dev/null</code> with the <code>-o</code> flag, and specifying that we want only the HTTP code with <code>-w</code>. A new line is added at the end, though this is optional. This command is useful for say a script. Add in <code>-L</code> to automatically redirect.</p><pre >$ curl -so /dev/null -w &#039;%&lbrace;http_code&rbrace;\n&#039; example.org
+200
+$ curl -so /dev/null -w &#039;%&lbrace;http_code&rbrace;\n&#039; asitethatdoesnotexist.org
+000
+$ curl -so /dev/null -w &#039;%&lbrace;http_code&rbrace;\n&#039; google.com
+301
+$ curl -Lso /dev/null -w &#039;%&lbrace;http_code&rbrace;\n&#039; google.com
+200</pre><p><code>-v</code> stands for verbose and can be used to print additional informaton in <code>curl</code>. Below, we also ignore the response body and set an artifical user-agent with the <code>-A</code> flag.</p><pre >$ curl -svA jUnk/404.0 -o /dev/null example.org
+*   Trying [2606:2800:220:1:248:1893:25c8:1946]:80...
+* Connected to example.org (2606:2800:220:1:248:1893:25c8:1946) port 80 (#0)
+&gt; GET / HTTP/1.1
+&gt; Host: example.org
+&gt; User-Agent: jUnk/404.0
+&gt; Accept: */*
+&gt;
+&lt; HTTP/1.1 200 OK
+&lt; Age: 415408
+&lt; Cache-Control: max-age=604800
+&lt; Content-Type: text/html; charset=UTF-8
+&lt; Date: Tue, 20 Jun 2023 23:48:32 GMT
+&lt; Etag: &quot;3147526947+gzip+ident&quot;
+&lt; Expires: Tue, 27 Jun 2023 23:48:32 GMT
+&lt; Last-Modified: Thu, 17 Oct 2019 07:18:26 GMT
+&lt; Server: ECS (dcb/7F3C)
+&lt; Vary: Accept-Encoding
+&lt; X-Cache: HIT
+&lt; Content-Length: 1256
+&lt;
+&lbrace; [1256 bytes data]
+* Connection #0 to host example.org left intact</pre><p>We can do a similar thing in <code>wget</code> but we can use the <code>-d</code> flag (which stands for debug) to print additional information. <code>-U</code> is used in <code>wget</code> to specify a user-agent instead of the <code>-A</code> used in <code>curl</code>.</p><pre >$ wget -dU jUnk/404.0 example.org
+Setting --user-agent (useragent) to jUnk/404.0
+DEBUG output created by Wget 1.21.4 on linux-gnu.
+
+Reading HSTS entries from /home/kjc/.wget-hsts
+URI encoding = ‘UTF-8’
+Converted file name &#039;index.html&#039; (UTF-8) -&gt; &#039;index.html&#039; (UTF-8)
+--2023-06-20 19:54:57--  http://example.org/
+Resolving example.org (example.org)... 2606:2800:220:1:248:1893:25c8:1946, 93.184.216.34
+Caching example.org =&gt; 2606:2800:220:1:248:1893:25c8:1946 93.184.216.34
+Connecting to example.org (example.org)|2606:2800:220:1:248:1893:25c8:1946|:80... connected.
+Created socket 3.
+Releasing 0x000055ef7cb21200 (new refcount 1).
+
+---request begin---
+GET / HTTP/1.1
+Host: example.org
+User-Agent: jUnk/404.0
+Accept: */*
+Accept-Encoding: identity
+Connection: Keep-Alive
+
+---request end---
+HTTP request sent, awaiting response...
+---response begin---
+HTTP/1.1 200 OK
+Age: 327496
+Cache-Control: max-age=604800
+Content-Type: text/html; charset=UTF-8
+Date: Tue, 20 Jun 2023 23:54:57 GMT
+Etag: &quot;3147526947+ident&quot;
+Expires: Tue, 27 Jun 2023 23:54:57 GMT
+Last-Modified: Thu, 17 Oct 2019 07:18:26 GMT
+Server: ECS (dcb/7EA2)
+Vary: Accept-Encoding
+X-Cache: HIT
+Content-Length: 1256
+
+---response end---
+200 OK
+Registered socket 3 for persistent reuse.
+URI content encoding = ‘UTF-8’
+Length: 1256 (1.2K) [text/html]
+Saving to: ‘index.html.2’
+
+index.html.2         100%[===================&gt;]   1.23K  --.-KB/s    in 0s
+
+2023-06-20 19:54:57 (76.3 MB/s) - ‘index.html.2’ saved [1256/1256]</pre><p><code>-m</code> stands for &quot;mirror&quot; and is used to mirror a webpage onto your local machine in <code>wget</code>. It turns on recursion (with infinite depth) and time-stamping among some other stuff. A few more flags like <code>-k</code> converts links so your browser can browse the local copy, <code>-E</code> is used to automatically add appropriate file extensions, and <code>--random-wait</code> waits between 0.5 to 1.5 seconds between each request—this is to prevent the site from flagging and banning us.</p><pre >$ time wget -mkE --random-wait www.genome.gov
+--2023-06-20 20:24:03--  http://www.genome.gov/
+Resolving www.genome.gov (www.genome.gov)... 52.45.214.169
+Connecting to www.genome.gov (www.genome.gov)|52.45.214.169|:80... connected.
+HTTP request sent, awaiting response... 301 Moved Permanently
+Location: https://www.genome.gov/ [following]
+--2023-06-20 20:24:03--  https://www.genome.gov/
+Loaded CA certificate &#039;/etc/ssl/certs/ca-certificates.crt&#039;
+Connecting to www.genome.gov (www.genome.gov)|52.45.214.169|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 105451 (103K) [text/html]
+Saving to: ‘www.genome.gov/index.html’
+
+...
+
+Converted links in 2739 files in 3.3 seconds.
+
+real    41m51.185s
+user    0m36.615s
+sys     0m48.847s</pre><p>Note the above technique of saving websites doesn&#039;t work very well on really dynamic sites, sites that rely on primarily JavaScript to render everything.</p><h3>Tor</h3><p>Tor anonymizes web browsing by onion routing over volunteer relays and grants access to .onion sites that are usually inaccessible. If you have enabled Tor, it listens on port 9050.</p><pre >$ sudo ss -tlpn | grep tor
+LISTEN 0      4096       127.0.0.1:9050       0.0.0.0:*    users:((&quot;tor&quot;,pid=429,fd=6))</pre><p>Which means we can simply tell <code>curl</code> to use that as a proxy.</p><pre >$ curl -sLx socks5h://localhost:9050 check.torproject.org | grep Congrat
+      Congratulations. This browser is configured to use Tor.
+      Congratulations. This browser is configured to use Tor.
+$ curl -sLx socks5h://localhost:9050 www.nytimesn7cgmftshazwhfgzm37qxb44r64ytbb2dj3x62d2lljsciiyd.onion | head -5
+&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;en&quot; class=&quot; nytapp-vi-homepage&quot;  xmlns:og=&quot;http://opengraphprotocol.org/schema/&quot;&gt;
+  &lt;head&gt;
+    &lt;meta charset=&quot;utf-8&quot; /&gt;
+    &lt;title data-rh=&quot;true&quot;&gt;The New York Times - Breaking News, US News, World News and Videos&lt;/title&gt;</pre><p>A simpler (and probably more robust) way that also works with most other Internet accessing applications that don&#039;t have an option to set a proxy would be <code>torsocks</code>. It hijacks library functions such as <code>connect()</code> or <code>gethostbyname()</code>—which programs usually use to do network stuff—via the environment variable <code>LD_PRELOAD</code>.</p><pre >$ torsocks curl eth0.me
+135.148.149.71
+$ curl -sL check.torproject.org/exit-addresses | grep 135.148.149.71
+ExitAddress 135.148.149.71 2023-06-20 20:03:16</pre><p>Using <code>torsock</code> we can save a .onion page.</p><pre >$ torsocks wget -mkE --random-wait www.nytimesn7cgmftshazwhfgzm37qxb44r64ytbb2dj3x62d2lljsciiyd.onion
+...</pre>
+</article></main></body>
+
+</html>

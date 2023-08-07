@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Making a Personal Image Host - Kevin Cao</title>
+<meta name="description" content="Due to very specific technical requirements, I share images by uploading the
+content to an image hosting service, then distribute the resulting URLs through
+SMS. It looks incredibly stupid, but this method satisfies everyone involved. It
+shares the pictures with a third-party presenting a privacy concern, but I
+couldn't be bothered to find a better solution at the time." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Making a Personal Image Host</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Dec 12, 2024</time></div>
+  </header>
+  <p>Due to very specific technical requirements, I share images by uploading the content to an image hosting service, then distribute the resulting URLs through SMS. It looks incredibly stupid, but this method satisfies everyone involved. It shares the pictures with a third-party presenting a privacy concern, but I couldn&#039;t be bothered to find a better solution at the time.</p><p>Recently, the image hosting service started exhibiting several issues, prompting me to spend an evening making a tiny image host for personal use. Remember my <a href="/posts/setting-up-wireguard-on-oracle">VPN escapade</a>? I am reusing that server to host a Flask application. Here is the Python code for this app:</p><pre ><span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, request, render_template, send_from_directory
+<span class="hljs-keyword">import</span> os.path
+<span class="hljs-keyword">import</span> secrets
+
+app = Flask(__name__)
+UPLOAD_FOLDER = <span class="hljs-string">&#x27;/home/ubuntu/img/storage/&#x27;</span>
+
+<span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/&#x27;</span></span>)</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">index</span>():
+    <span class="hljs-keyword">return</span> render_template(<span class="hljs-string">&#x27;index.html&#x27;</span>)
+
+<span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/storage/&lt;path:name&gt;&#x27;</span></span>)</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">access_storage</span>(<span class="hljs-params">name</span>):
+    <span class="hljs-keyword">return</span> send_from_directory(UPLOAD_FOLDER, name)
+
+<span class="hljs-meta">@app.route(<span class="hljs-params"><span class="hljs-string">&#x27;/upload&#x27;</span>, methods=[<span class="hljs-string">&#x27;POST&#x27;</span>]</span>)</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">upload_file</span>():
+    results = []
+    <span class="hljs-keyword">for</span> file <span class="hljs-keyword">in</span> request.files.getlist(<span class="hljs-string">&#x27;images[]&#x27;</span>):
+        <span class="hljs-keyword">if</span> file <span class="hljs-keyword">and</span> file.filename != <span class="hljs-string">&#x27;&#x27;</span>:
+            ext = os.path.splitext(file.filename)[<span class="hljs-number">1</span>]
+            filename = secrets.token_urlsafe(<span class="hljs-number">16</span>) + ext
+            file.save(os.path.join(UPLOAD_FOLDER, filename))
+            results.append(filename)
+    <span class="hljs-keyword">return</span> &lbrace;<span class="hljs-string">&#x27;names&#x27;</span>: results&rbrace;</pre><p>Extremely simple code. The <code>templates/index.html</code> accesses the upload endpoint to store the images—it&#039;s definitely fragile, but it does somehow work most of the time. And can you blame me, I wrote it in a day.</p><pre ><span class="hljs-meta">&lt;!DOCTYPE <span class="hljs-keyword">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">&quot;UTF-8&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">name</span>=<span class="hljs-string">&quot;viewport&quot;</span> <span class="hljs-attr">content</span>=<span class="hljs-string">&quot;width=device-width, initial-scale=1.0&quot;</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Image Upload<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">style</span>&gt;</span><span class="language-css">
+        <span class="hljs-selector-tag">html</span>, <span class="hljs-selector-tag">body</span> &lbrace;
+            <span class="hljs-attribute">width</span>: <span class="hljs-number">100%</span>;
+            <span class="hljs-attribute">height</span>: <span class="hljs-number">100%</span>;
+        &rbrace;
+
+        <span class="hljs-selector-tag">body</span> &lbrace;
+            <span class="hljs-attribute">display</span>: flex;
+            <span class="hljs-attribute">justify-content</span>: center;
+            <span class="hljs-attribute">align-items</span>: center;
+            <span class="hljs-attribute">overflow</span>: hidden;
+        &rbrace;
+
+        <span class="hljs-selector-tag">button</span> &lbrace;
+            <span class="hljs-attribute">width</span>: <span class="hljs-number">60%</span>;
+            <span class="hljs-attribute">height</span>: <span class="hljs-number">20%</span>;
+            <span class="hljs-attribute">font-size</span>: <span class="hljs-number">300%</span>;
+        &rbrace;
+
+        <span class="hljs-selector-tag">input</span> &lbrace;
+            <span class="hljs-attribute">display</span>: none;
+        &rbrace;
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">style</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">onclick</span>=<span class="hljs-string">&quot;document.getElementById(&#x27;imageInput&#x27;).click()&quot;</span>&gt;</span>按我上传图片<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">input</span> <span class="hljs-attr">type</span>=<span class="hljs-string">&quot;file&quot;</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;imageInput&quot;</span> <span class="hljs-attr">accept</span>=<span class="hljs-string">&quot;image/*&quot;</span> <span class="hljs-attr">onchange</span>=<span class="hljs-string">&quot;submit()&quot;</span> <span class="hljs-attr">multiple</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+        <span class="hljs-keyword">const</span> imageInput = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;imageInput&#x27;</span>);
+        <span class="hljs-keyword">const</span> button = <span class="hljs-variable language_">document</span>.<span class="hljs-title function_">getElementById</span>(<span class="hljs-string">&#x27;button&#x27;</span>);
+
+        <span class="hljs-keyword">async</span> <span class="hljs-keyword">function</span> <span class="hljs-title function_">submit</span>(<span class="hljs-params"></span>) &lbrace;
+            button.<span class="hljs-title function_">setAttribute</span>(<span class="hljs-string">&#x27;disabled&#x27;</span>, <span class="hljs-string">&#x27;disabled&#x27;</span>);
+            <span class="hljs-keyword">let</span> i = <span class="hljs-number">0</span>;
+            <span class="hljs-built_in">setInterval</span>(<span class="hljs-function">() =&gt;</span> &lbrace;
+                button.<span class="hljs-property">innerText</span> = [
+                    <span class="hljs-string">&#x27;请稍等.&#x27;</span>, <span class="hljs-string">&#x27;请稍等..&#x27;</span>, <span class="hljs-string">&#x27;请稍等...&#x27;</span>,
+                    <span class="hljs-string">&#x27;豆豆正在思考.&#x27;</span>, <span class="hljs-string">&#x27;豆豆正在思考..&#x27;</span>, <span class="hljs-string">&#x27;豆豆正在思考...&#x27;</span>,
+                ][i % <span class="hljs-number">6</span>];
+                i += <span class="hljs-number">1</span>;
+            &rbrace;, <span class="hljs-number">500</span>);
+
+            <span class="hljs-keyword">const</span> formData = <span class="hljs-keyword">new</span> <span class="hljs-title class_">FormData</span>();
+            <span class="hljs-title class_">Array</span>.<span class="hljs-title function_">from</span>(imageInput.<span class="hljs-property">files</span>).<span class="hljs-title function_">forEach</span>(<span class="hljs-function"><span class="hljs-params">file</span> =&gt;</span> &lbrace;
+                formData.<span class="hljs-title function_">append</span>(<span class="hljs-string">&#x27;images[]&#x27;</span>, file);
+            &rbrace;);
+
+            <span class="hljs-keyword">const</span> response = <span class="hljs-keyword">await</span> <span class="hljs-title function_">fetch</span>(<span class="hljs-string">&#x27;/upload&#x27;</span>, &lbrace;
+                <span class="hljs-attr">method</span>: <span class="hljs-string">&#x27;POST&#x27;</span>,
+                <span class="hljs-attr">body</span>: formData
+            &rbrace;);
+            <span class="hljs-keyword">const</span> names = (<span class="hljs-keyword">await</span> response.<span class="hljs-title function_">json</span>())[<span class="hljs-string">&#x27;names&#x27;</span>];
+            <span class="hljs-keyword">const</span> paths = names.<span class="hljs-title function_">map</span>(<span class="hljs-function"><span class="hljs-params">x</span> =&gt;</span> <span class="hljs-string">&#x27;https://i26.mooo.com/storage/&#x27;</span> + x);
+            <span class="hljs-keyword">await</span> navigator.<span class="hljs-property">clipboard</span>.<span class="hljs-title function_">writeText</span>(paths.<span class="hljs-title function_">join</span>(<span class="hljs-string">&#x27;\n&#x27;</span>));
+            <span class="hljs-title function_">alert</span>(<span class="hljs-string">&#x27;好啦, 豆豆发送了&#x27;</span>);
+            location.<span class="hljs-title function_">reload</span>();
+        &rbrace;
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span></pre><p>The UI/UX of this frontend is horrible, but I am catering to an audience of one, and that individual is happy with the experience. Anyway, I requested a subdomain from FreeDNS and added A records to point to the IP address of my server. I opened the 80 and 443 ports then ran certbot on the server to generate a certificate. Now, it&#039;s a simple matter of deploying with gunicorn, like this:</p><pre ><span class="hljs-meta">#!/bin/bash</span>
+
+<span class="hljs-built_in">source</span> .venv/bin/activate
+gunicorn \
+	--certfile=/etc/letsencrypt/live/i26.mooo.com/fullchain.pem \
+	--keyfile=/etc/letsencrypt/live/i26.mooo.com/privkey.pem \
+	-b 0.0.0.0:443 app:app</pre><p>I run this script in the background with nohup so the process persists even when I exit the SSH session. And that&#039;s it, easy peasy. I was surprised at how straightforward it was to obtain a Let&#039;s Encrypt certificate, I thought I had to create TXT records or something which would have been inconvenient because it takes an hour for the FreeDNS records to propagate.</p>
+</article></main></body>
+
+</html>

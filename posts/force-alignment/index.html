@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul, ol {
+		text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #fcfcfc;
+      border: 1px solid #f2f2f2;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+	[id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+	}
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .hideaway {
+      height: 18rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hideaway::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0) 80%);
+      height: 100%;
+      width: 100%;
+      pointer-events: none;
+    }
+
+    .hideaway-button {
+      color: white;
+      border-radius: 4px;
+      border-style: none;
+      padding: 4px 0;
+      box-sizing: border-box;
+      appearance: none;
+      outline: none;
+      background: #111;
+      z-index: 20;
+      width: 72px;
+      position: absolute;
+      bottom: 20px;
+      left: calc(50% - 36px);
+    }
+
+    .hideaway-button:hover {
+      cursor: pointer;
+    }
+  </style><title>Lazy Forced Alignment - Kevin Cao</title>
+<meta name="description" content="Given an audio file and a ground truth transcription of the speech, you want to
+assign timestamped subtitles. This problem is called forced alignment, and there
+appears to be special made solutions like the Montreal Forced Aligner. I find
+these tools quite incapable for my problem though. I've had two scenarios where
+I needed to perform forced alignment:" />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Lazy Forced Alignment</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Apr 1, 2025</time></div>
+  </header>
+  <p>Given an audio file and a ground truth transcription of the speech, you want to assign timestamped subtitles. This problem is called forced alignment, and there appears to be special made solutions like the Montreal Forced Aligner. I find these tools quite incapable for my problem though. I&#039;ve had two scenarios where I needed to perform forced alignment:</p><ol><li> You are reading from a script you wrote and want to upload the video onto a video sharing platform. YouTube doesn&#039;t generate subtitles for your language, so you have to provide your own SRT file.
+</li>
+<li> You are like me and cannot parse the words spoken in various songs. Therefore, you want subtitles for song lyrics. You have the exact lyrics (from a Google search result) and the audio.
+</li>
+</ol><p>For both the solution I used was the to use OpenAI&#039;s Whisper turbo model to transcribe the text from the audio file, with timestamps. Then, I use the dynamic time warping algorithm to align the ground truth with the incorrect transcription from Whisper. This works well.</p><p>I didn&#039;t really understand the DTW. I was just blindly employing it.</p><pre ><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> groupby
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">dedupe</span>(<span class="hljs-params">xs</span>):
+    <span class="hljs-keyword">return</span> [<span class="hljs-built_in">list</span>(g)[-<span class="hljs-number">1</span>] <span class="hljs-keyword">for</span> _, g <span class="hljs-keyword">in</span> groupby(xs, key=<span class="hljs-keyword">lambda</span> x: x[<span class="hljs-number">0</span>])]
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">normalize</span>(<span class="hljs-params">s</span>):
+    <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-string">&#x27;。，、：？；！《》（）—\n\t&quot;-\&#x27; &#x27;</span>:
+        s = s.replace(c, <span class="hljs-string">&#x27;&#x27;</span>)
+    <span class="hljs-keyword">return</span> s
+
+<span class="hljs-comment"># INPUT DATA IS HERE (didn&#x27;t bother with proper cli interface)</span>
+ground_truth = normalize(<span class="hljs-string">&quot;&lt;INSERT MANDRAIN TEXT HERE&gt;&quot;</span>)
+<span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;input.srt&#x27;</span>) <span class="hljs-keyword">as</span> f:
+    content = <span class="hljs-string">&#x27;\n&#x27;</span>.join(l.strip() <span class="hljs-keyword">for</span> l <span class="hljs-keyword">in</span> f.readlines())
+
+transcript = []
+headers = []
+<span class="hljs-keyword">for</span> sub <span class="hljs-keyword">in</span> content.split(<span class="hljs-string">&#x27;\n\n&#x27;</span>):
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> sub.strip():
+        <span class="hljs-keyword">continue</span>
+
+    lines = sub.split(<span class="hljs-string">&#x27;\n&#x27;</span>)
+    <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(lines) &gt;= <span class="hljs-number">2</span>
+    start, end = [parse_timestamp(x) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> lines[<span class="hljs-number">1</span>].split(<span class="hljs-string">&#x27; --&gt; &#x27;</span>)]
+    <span class="hljs-keyword">if</span> end - start &lt; <span class="hljs-number">0.05</span>: <span class="hljs-comment"># remove errors with transcription</span>
+        <span class="hljs-keyword">continue</span>
+
+    index = <span class="hljs-built_in">len</span>(headers)
+    transcript += [(c, index) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> normalize(<span class="hljs-string">&#x27; &#x27;</span>.join(lines[<span class="hljs-number">2</span>:]))]
+    headers.append(lines[<span class="hljs-number">0</span>] + <span class="hljs-string">&#x27;\n&#x27;</span> + lines[<span class="hljs-number">1</span>])
+
+_, optimal_path = dtw(
+    ground_truth,
+    [c <span class="hljs-keyword">for</span> c, _ <span class="hljs-keyword">in</span> transcript],
+    <span class="hljs-keyword">lambda</span> a, b: a != b
+)
+optimal_path = dedupe(optimal_path)
+optimal_path = [
+    <span class="hljs-built_in">list</span>(g) <span class="hljs-keyword">for</span> _, g <span class="hljs-keyword">in</span> groupby(optimal_path, <span class="hljs-keyword">lambda</span> x: transcript[x[<span class="hljs-number">1</span>]][<span class="hljs-number">1</span>])
+]
+<span class="hljs-keyword">for</span> i, sub <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(optimal_path):
+    <span class="hljs-built_in">print</span>(headers[i])
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#x27;</span>.join([ground_truth[a] <span class="hljs-keyword">for</span> a, _ <span class="hljs-keyword">in</span> sub]))
+    <span class="hljs-built_in">print</span>()</pre><p>Here <code>transcript</code> stores the transcription by the Whisper model, as a list of characters where we attach an &quot;index&quot; to each that refers the header that character belongs to. Not the most elegant solution, but it was the first thing I thought of. We compute the optimal path using the DTW algorithm between the ground truth and the transcript.</p><p>The final output SRT file should go through each ground truth character exactly once, so if we have duplicated ground truth results in the optimal path, we remove them and choose the last one in the duplicate run because I find it works well. Finally, we group the ground truth characters with respect to the transcript index (which stores the header timestamps).</p><p>Now, it is trivial. We loop over the list and for each chunk we print the header and the corresponding ground truth text.</p>
+</article></main></body>
+
+</html>

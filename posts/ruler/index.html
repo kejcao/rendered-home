@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>A Digital Ruler in Python - Kevin Cao</title>
+<meta name="description" content="I occasionally need to measure something in the corporeal world but never seem
+to have a ruler handy, so I wrote a bit of Python code that uses the turtle
+graphics module to draw a to-life scale digital ruler. The turtle module is a
+wrapper around a Tkinter canvas and is meant for introducing kids to programming
+so it isn't powerful, but for the simple use case of drawing a ruler turtle can
+handle it. It's been a while since I've used the module so the code isn't very
+clean." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>A Digital Ruler in Python</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>May 2, 2023</time></div>
+  </header>
+  <p>I occasionally need to measure something in the corporeal world but never seem to have a ruler handy, so I wrote a bit of Python code that uses the <code>turtle</code> graphics module to draw a to-life scale digital ruler. The <code>turtle</code> module is a wrapper around a Tkinter canvas and is meant for introducing kids to programming so it isn&#039;t powerful, but for the simple use case of drawing a ruler <code>turtle</code> can handle it. It&#039;s been a while since I&#039;ve used the module so the code isn&#039;t very clean.</p>
+						<a class="img" href="/static/media/digital-ruler.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/digital-ruler.png"
+							  alt="digital ruler"
+							/>
+						</a>
+					<p>The code shown below should draw the above image of a standard yellow ruler onto an unresizable pop up window.</p><pre ><span class="hljs-comment">#!/usr/bin/python3</span>
+
+<span class="hljs-keyword">from</span> turtle <span class="hljs-keyword">import</span> *
+<span class="hljs-keyword">from</span> tkinter <span class="hljs-keyword">import</span> *
+
+PPM = <span class="hljs-number">4.857685009487666</span>
+PPI = PPM * <span class="hljs-number">25.4</span>
+
+WIDTH = PPM * <span class="hljs-number">303</span>
+HEIGHT = <span class="hljs-number">100</span>
+START_OFFSET = PPM
+
+root = Tk()
+root.title(<span class="hljs-string">&#x27;turtle ruler&#x27;</span>)
+root.resizable(<span class="hljs-literal">False</span>, <span class="hljs-literal">False</span>)
+canvas = Canvas(root, width=WIDTH, height=HEIGHT)
+canvas.pack()
+screen = TurtleScreen(canvas)
+turtle = RawTurtle(screen)
+
+screen.bgcolor(<span class="hljs-string">&#x27;#f1aa00&#x27;</span>)
+screen.tracer(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)
+screen.setworldcoordinates(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, WIDTH, HEIGHT)
+
+turtle.forward(START_OFFSET)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">int</span>(WIDTH / PPM)):
+    turtle.left(<span class="hljs-number">90</span>)
+
+    travel = <span class="hljs-number">12</span>
+    <span class="hljs-keyword">if</span> i % <span class="hljs-number">10</span> == <span class="hljs-number">0</span>:
+        travel = <span class="hljs-number">24</span>
+    <span class="hljs-keyword">elif</span> i % <span class="hljs-number">5</span> == <span class="hljs-number">0</span>:
+        travel = <span class="hljs-number">18</span>
+    turtle.forward(travel)
+    <span class="hljs-keyword">if</span> i % <span class="hljs-number">10</span> == <span class="hljs-number">0</span>:
+        turtle.write(i//<span class="hljs-number">10</span>, align=<span class="hljs-string">&#x27;center&#x27;</span>)
+    turtle.back(travel)
+
+    turtle.right(<span class="hljs-number">90</span>)
+    turtle.forward(PPM)
+
+turtle.penup()
+turtle.goto(<span class="hljs-number">0</span>, HEIGHT+<span class="hljs-number">1</span>)
+turtle.pendown()
+
+turtle.forward(START_OFFSET)
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">int</span>(WIDTH / (PPI/<span class="hljs-number">6</span>))+<span class="hljs-number">1</span>):
+    turtle.right(<span class="hljs-number">90</span>)
+
+    travel = <span class="hljs-number">12</span>
+    <span class="hljs-keyword">if</span> i % <span class="hljs-number">6</span> == <span class="hljs-number">0</span>:
+        travel = <span class="hljs-number">24</span>
+    <span class="hljs-keyword">elif</span> i % <span class="hljs-number">3</span> == <span class="hljs-number">0</span>:
+        travel = <span class="hljs-number">18</span>
+    turtle.forward(travel)
+    <span class="hljs-keyword">if</span> i % <span class="hljs-number">6</span> == <span class="hljs-number">0</span>:
+        turtle.penup()
+        turtle.forward(<span class="hljs-number">16</span>)
+        turtle.pendown()
+        turtle.write(i//<span class="hljs-number">6</span>, align=<span class="hljs-string">&#x27;center&#x27;</span>)
+        turtle.penup()
+        turtle.backward(<span class="hljs-number">16</span>)
+        turtle.pendown()
+    turtle.back(travel)
+
+    turtle.left(<span class="hljs-number">90</span>)
+    turtle.forward(PPI/<span class="hljs-number">6</span>)
+
+turtle.penup()
+turtle.home()
+canvas.bind(<span class="hljs-string">&#x27;&lt;Button-1&gt;&#x27;</span>, <span class="hljs-keyword">lambda</span> event: root.destroy(), <span class="hljs-literal">None</span>)
+canvas.tk.mainloop()</pre><p>To draw accurate measurements the code needs to know either the PPM (Pixels Per Millimeter) or PPI (Pixels Per Inch). I figured out the PPM on my Linux PC by evoking <code>xrandr</code>:</p><pre >$ xrandr
+Screen 0: minimum 320 x 200, current 2560 x 1440, maximum 16384 x 16384
+HDMI-1 connected primary 2560x1440+0+0 (normal left inverted right x axis y axis) 527mm x 296mm
+   2560x1440     59.95*+
+   1920x1440     60.00
+   1920x1200     59.95
+   1920x1080     60.00    50.00    59.94
+   1920x1080i    60.00    50.00    59.94
+   1680x1050     59.88
+   1400x1050     59.95
+   1280x1024     75.02    60.02
+   1440x900      59.90
+   1152x864      75.00
+   1280x720      60.00    50.00    59.94
+   1440x576      50.00
+   1024x768      75.03    70.07    60.00
+   832x624       74.55
+   800x600       72.19    75.00    60.32    56.25
+   720x576       50.00
+   720x576i      50.00
+   720x480       60.00    59.94
+   720x480i      60.00    59.94
+   640x480       75.00    72.81    66.67    60.00    59.94
+   720x400       70.08
+DP-1 disconnected (normal left inverted right x axis y axis)</pre><p>And you can see that at the very top it says that my monitor is 2560px across and 527mm across, so with some basic math $2560\text{px}/527\text{mm} \approx 4.857\,\text{PPM}$. To get the PPI the code just does a simple conversion from millimeter to inch.</p><p>As I stated above, it&#039;s been a while since I&#039;ve used <code>turtle</code> so some of the code is probably redundant and can be achieved in an easier way. I have to use <code>RawTurtle</code> and create my own window because I need the screen to be unresizable and while we could try to make use of <code>turtle</code>&#039;s internal functions and hack together something like</p><pre ><span class="hljs-keyword">from</span> turtle <span class="hljs-keyword">import</span> *
+
+turtle = Turtle()
+screen = Screen()
+
+screen.getcanvas()._root().resizable(<span class="hljs-literal">False</span>, <span class="hljs-literal">False</span>)
+
+screen.exitonclick()</pre><p>There are several problems with this approach and besides I don&#039;t want the border <code>turtle</code> always draws on initialization. It&#039;s much easier to make our own Tkinter window and canvas and pass it to <code>turtle</code>.</p><p>BTW <code>turtle</code>&#039;s source code is just 4000 lines and very easy to read. Many times during the short development of the ruler code, I consulted the source code.</p>
+</article></main></body>
+
+</html>

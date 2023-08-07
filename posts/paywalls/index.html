@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Circumventing Online Paywalls - Kevin Cao</title>
+<meta name="description" content="Many paywalls on the Internet can be easily circumvented. There are two types of
+paywalls: Hard paywalls which require a paid subscription before any content can
+be accessed and soft paywalls which grant the customer a preview first, a
+limited amount of content, before demanding payment." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Circumventing Online Paywalls</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Mar 9, 2023</time></div>
+  </header>
+  <p>Many paywalls on the Internet can be easily circumvented. There are two types of paywalls: Hard paywalls which require a paid subscription before any content can be accessed and soft paywalls which grant the customer a preview first, a limited amount of content, before demanding payment.</p><p>Soft paywalls usually rely on cookies to track how much content you&#039;ve already consumed. Simply clear your cookies and the site will have no idea you were ever there. To do this on Chrome click the three vertically stacked dots on the very right of the search bar, then click on the item that says &quot;Settings.&quot; Click the &quot;Privacy and security&quot; tab to the left, then click the &quot;Cookies and other site data&quot; menu item. Then click &quot;See all site data and permissions.&quot; Search with the search bar at the top-right for whatever website you want and click on the trash icon to the right to delete it.</p><p>Hard paywalls like <em>The Times</em> or <em>The Wall Street Journal</em> are forced to display their content in full to web crawlers to rank high on Google&#039;s search reuslts, so simply archive the page on an archive site like <a href="https://archive.ph/">archive.ph</a>; This work because archive sites archive pages in a similar way Google does.</p><p>A more conveninent option may be trying to refresh the page (by pressing the button directly to the left of the searchbar or pressing Ctrl+R) and before the page loads you should see that button turns into an X. Click it right before the page finishes loading. If the page instantly loads before you have a chance to press the X button, try pressing Ctrl+Shift+R to clear your cache for that page before reloading—this makes the page load slower. This almost always works, you just have to time it correctly—it may take a couple of tries. News sites like The Atlantic, The New York Times, or National Geographic all work with this technique.</p><p>Alternatively you could try installing a browser extension like <a href="https://ublockorigin.com/">uBlock Origin</a> and using its zapper mode to erase or zap away the elements blocking your view.</p><p>In summary, there are four options to bypass paywalls:</p><ul><li> Clearing your cookies.</li><li> Archiving the site.</li><li> Interrupting refresh.</li><li> Zapping an element with AdBlock.</li></ul>
+</article></main></body>
+
+</html>

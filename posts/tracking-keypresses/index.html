@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Tracking Keypresses - Kevin Cao</title>
+<meta name="description" content="I wanted to track/record my keypresses—it would be interesting to analyze the
+various statistics associated with that. I wrote some code that reads directly
+from /dev/input to get this data, similar to the tool evtest. Firstly, we can
+create an event.rs file that implements a method to deserialize the data stream
+from any character device in /dev/input. We obviously use Rust here, because
+Python would have too great an overhead. For code that is activated each time a
+key is pressed, it needs to be lean." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Tracking Keypresses</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Nov 3, 2024</time></div>
+  </header>
+  <p>I wanted to track/record my keypresses—it would be interesting to analyze the various statistics associated with that. I wrote some code that reads directly from <code>/dev/input</code> to get this data, similar to the tool <code>evtest</code>. Firstly, we can create an <code>event.rs</code> file that implements a method to deserialize the data stream from any character device in <code>/dev/input</code>. We obviously use Rust here, because Python would have too great an overhead. For code that is activated each time a key is pressed, it needs to be lean.</p><pre ><span class="hljs-keyword">use</span> byteorder::&lbrace;LittleEndian, ReadBytesExt&rbrace;;
+<span class="hljs-keyword">use</span> std::fs::File;
+<span class="hljs-keyword">use</span> std::io::&lbrace;Cursor, Read, <span class="hljs-type">Result</span>&rbrace;;
+
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">const</span> SAVE_PATH: &amp;<span class="hljs-type">str</span> = <span class="hljs-string">&quot;/home/kjc/keys.stat&quot;</span>;
+
+<span class="hljs-meta">#[derive(Debug)]</span>
+<span class="hljs-keyword">pub</span> <span class="hljs-keyword">struct</span> <span class="hljs-title class_">Event</span> &lbrace;
+    secs: <span class="hljs-type">u64</span>,
+    usec: <span class="hljs-type">u64</span>,
+    event_type: <span class="hljs-type">u16</span>,
+    code: <span class="hljs-type">u16</span>,
+    value: <span class="hljs-type">i32</span>,
+&rbrace;
+
+<span class="hljs-keyword">impl</span> <span class="hljs-title class_">Event</span> &lbrace;
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">read_from</span>(file: &amp;<span class="hljs-keyword">mut</span> File) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;<span class="hljs-keyword">Self</span>&gt; &lbrace;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">buf</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-number">0_u8</span>; <span class="hljs-number">24</span>];
+        file.<span class="hljs-title function_ invoke__">read</span>(&amp;<span class="hljs-keyword">mut</span> buf)?;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">rdr</span> = Cursor::<span class="hljs-title function_ invoke__">new</span>(buf);
+        <span class="hljs-title function_ invoke__">Ok</span>(Event &lbrace;
+            secs: rdr.read_u64::&lt;LittleEndian&gt;()?,
+            usec: rdr.read_u64::&lt;LittleEndian&gt;()?,
+            event_type: rdr.read_u16::&lt;LittleEndian&gt;()?,
+            code: rdr.read_u16::&lt;LittleEndian&gt;()?,
+            value: rdr.read_i32::&lt;LittleEndian&gt;()?,
+        &rbrace;)
+    &rbrace;
+
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">is_keypress</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">bool</span> &lbrace;
+        <span class="hljs-keyword">self</span>.event_type == <span class="hljs-number">1</span> &amp;&amp; <span class="hljs-keyword">self</span>.value == <span class="hljs-number">1</span>
+    &rbrace;
+
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">keycode</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">u16</span> &lbrace;
+        <span class="hljs-keyword">self</span>.code
+    &rbrace;
+
+    <span class="hljs-keyword">pub</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">timestamp</span>(&amp;<span class="hljs-keyword">self</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">f64</span> &lbrace;
+        <span class="hljs-keyword">self</span>.secs <span class="hljs-keyword">as</span> <span class="hljs-type">f64</span> + <span class="hljs-keyword">self</span>.usec <span class="hljs-keyword">as</span> <span class="hljs-type">f64</span> / <span class="hljs-number">1e6</span>
+    &rbrace;
+&rbrace;</pre><p>Now as I write this article, I&#039;m thinking it might&#039;ve been a prudent idea to just redirect the output from the character device to a log file using Bash commands and then to process the data later into a more usable form. Well, too late for that. I&#039;ve already written all the code. It would be a waste to kill this darling.</p><p>In the <code>main.rs</code> file we can simply deserialize in a loop forever and write the results into a log file, discarding the irrelevant information. I considered implementing some form of compression, but only briefly, because the size of the log file is so minutely trivial in comparison to my total hard drive space that it would&#039;ve be worthless—increasing only implementation complexity. Premature optimization is the root of all evil, as they say.</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word"><span class="hljs-keyword">use</span> byteorder::&lbrace;LittleEndian, WriteBytesExt&rbrace;;
+<span class="hljs-keyword">use</span> std::fs::File;
+<span class="hljs-keyword">use</span> std::fs::OpenOptions;
+
+<span class="hljs-keyword">use</span> keys::event;
+
+<span class="hljs-keyword">const</span> KEYBOARD_EVENT_PATH: &amp;<span class="hljs-type">str</span> = <span class="hljs-string">&quot;/dev/input/by-path/platform-i8042-serio-0-event-kbd&quot;</span>;
+
+<span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() &lbrace;
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">out_file</span> = OpenOptions::<span class="hljs-title function_ invoke__">new</span>()
+        .<span class="hljs-title function_ invoke__">append</span>(<span class="hljs-literal">true</span>)
+        .<span class="hljs-title function_ invoke__">create</span>(<span class="hljs-literal">true</span>)
+        .<span class="hljs-title function_ invoke__">open</span>(event::SAVE_PATH)
+        .<span class="hljs-title function_ invoke__">unwrap</span>();
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">events_file</span> = File::<span class="hljs-title function_ invoke__">open</span>(KEYBOARD_EVENT_PATH).<span class="hljs-title function_ invoke__">unwrap</span>();
+    <span class="hljs-keyword">loop</span> &lbrace;
+        <span class="hljs-keyword">match</span> event::Event::<span class="hljs-title function_ invoke__">read_from</span>(&amp;<span class="hljs-keyword">mut</span> events_file) &lbrace;
+            <span class="hljs-title function_ invoke__">Err</span>(why) =&gt; <span class="hljs-built_in">panic!</span>(<span class="hljs-string">&quot;&lbrace;&rbrace;&quot;</span>, why),
+            <span class="hljs-title function_ invoke__">Ok</span>(event) =&gt; &lbrace;
+                <span class="hljs-keyword">if</span> event.<span class="hljs-title function_ invoke__">is_keypress</span>() &lbrace;
+                    out_file
+                        .write_f64::&lt;LittleEndian&gt;(event.<span class="hljs-title function_ invoke__">timestamp</span>())
+                        .<span class="hljs-title function_ invoke__">unwrap</span>();
+                    out_file.write_u16::&lt;LittleEndian&gt;(event.<span class="hljs-title function_ invoke__">keycode</span>()).<span class="hljs-title function_ invoke__">unwrap</span>();
+                &rbrace;
+            &rbrace;
+        &rbrace;
+    &rbrace;
+&rbrace;</pre><p>Now, we can write a Python script to analyze that data in various ways. Numpy has a convenient feature here that allows us to rapidly read in the information (it would be slower to use the <code>struct</code> package).</p><pre ><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime
+
+<span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;/home/kjc/keys.stat&#x27;</span>, <span class="hljs-string">&#x27;rb&#x27;</span>) <span class="hljs-keyword">as</span> fp:
+    data = np.fromfile(fp, dtype=[(<span class="hljs-string">&#x27;timestamp&#x27;</span>, <span class="hljs-string">&#x27;d&#x27;</span>), (<span class="hljs-string">&#x27;keycode&#x27;</span>, <span class="hljs-string">&#x27;H&#x27;</span>)])
+
+start = datetime.fromtimestamp(np.<span class="hljs-built_in">min</span>(data[<span class="hljs-string">&#x27;timestamp&#x27;</span>]))
+end = datetime.fromtimestamp(np.<span class="hljs-built_in">max</span>(data[<span class="hljs-string">&#x27;timestamp&#x27;</span>]))
+days = (end - start).days
+<span class="hljs-built_in">print</span>(start.date(), <span class="hljs-string">&#x27;—&#x27;</span>, end.date(), <span class="hljs-string">f&#x27;(<span class="hljs-subst">&lbrace;days&rbrace;</span> days)&#x27;</span>)
+
+cnt = data.shape[<span class="hljs-number">0</span>]
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;<span class="hljs-subst">&lbrace;cnt:,&rbrace;</span> keys pressed (<span class="hljs-subst">&lbrace;cnt // days&rbrace;</span> per day)&#x27;</span>)
+
+<span class="hljs-comment"># OUTPUT:</span>
+<span class="hljs-comment"># 2024-10-19 — 2024-11-03 (14 days)</span>
+<span class="hljs-comment"># 509,602 keys pressed (36400 per day)</span></pre><p>We can graph the deltas.</p><pre ><span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+
+deltas = data[<span class="hljs-string">&#x27;timestamp&#x27;</span>][<span class="hljs-number">1</span>:] - data[<span class="hljs-string">&#x27;timestamp&#x27;</span>][:-<span class="hljs-number">1</span>]
+plt.plot(np.linspace(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>, <span class="hljs-number">128</span>), np.histogram(deltas, <span class="hljs-built_in">range</span>=(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>), bins=<span class="hljs-number">128</span>)[<span class="hljs-number">0</span>])
+plt.show()</pre><p>It would be interesting to trawl through this data once it grows. As you can see, I&#039;ve been running this software for only 14 days. I could possibly use Markov chains to &quot;mimic&quot; myself typing any piece of text, replicating the latencies between characters in the observed data. Perhaps I could observe how my typing patterns have changed over time.</p><p>I project that the log file will reach 130 MB in one year: I will consider implementing a compression method then. It would be stimulating. I have some ideas; clearly we must store the deltas rather than the timestamps themselves. I would probably take some inspiration from Facebook&#039;s time series database, Gorilla. Maybe I would use an rANS entropy coder—haven&#039;t done that before.</p>
+</article></main></body>
+
+</html>

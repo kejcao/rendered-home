@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>41% of Roads Lead to Homotopical Algebra - Kevin Cao</title>
+<meta name="description" content="By repeatedly clicking the first link on a Wikipedia article, you reach the
+article on philosophy 97% of the time. I wondered if a similar principle applied
+to a wiki about mathematics and physics from an abstract point of view called
+nLab." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>41% of Roads Lead to Homotopical Algebra</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Jan 13, 2025</time></div>
+  </header>
+  <p>By repeatedly clicking the first link on a Wikipedia article, you reach the article on philosophy 97% of the time. I wondered if a similar principle applied to a wiki about mathematics and physics from an abstract point of view called nLab.</p><p>nLab hosts a mirror of its <a href="https://github.com/ncatlab/nlab-content">source code</a> on GitHub. I shallow cloned a copy onto my computer, specifically the commit <code>be209ad</code> or revision <code>216776</code> which dates to the 10th of January, 2025. Here is the Python code I used to process the articles into a digraph:</p><pre ><span class="hljs-keyword">import</span> glob
+<span class="hljs-keyword">import</span> re
+<span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path
+
+<span class="hljs-keyword">import</span> networkx <span class="hljs-keyword">as</span> nx
+<span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> tqdm
+
+redirects = &lbrace;&rbrace;
+data = &lbrace;&rbrace;
+<span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> tqdm(glob.glob(<span class="hljs-string">&#x27;**/content.md&#x27;</span>, recursive=<span class="hljs-literal">True</span>)):
+    p = Path(p)
+
+    name = (p.parent / <span class="hljs-string">&#x27;name&#x27;</span>).read_text().strip()
+    data[name] = []
+    redirects[name] = name
+
+    lines = [
+        line
+        <span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> p.read_text().splitlines()
+        <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> line.startswith(<span class="hljs-string">&#x27;&gt;&#x27;</span>) <span class="hljs-comment"># remove blockquotes</span>
+    ]
+    <span class="hljs-keyword">try</span>:
+        lines = lines[lines.index(<span class="hljs-string">&#x27;&lbrace;:toc&rbrace;&#x27;</span>) :]
+    <span class="hljs-keyword">except</span> ValueError:
+        <span class="hljs-keyword">pass</span>
+
+    <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> re.findall(<span class="hljs-string">r&#x27;\[\[.*?]]&#x27;</span>, <span class="hljs-string">&#x27;\n&#x27;</span>.join(lines)):
+        m = m[<span class="hljs-number">2</span>:-<span class="hljs-number">2</span>]
+        <span class="hljs-keyword">if</span> m.startswith(<span class="hljs-string">&#x27;!redirects&#x27;</span>):
+            redirects[m.removeprefix(<span class="hljs-string">&#x27;!redirects&#x27;</span>).strip()] = name
+        <span class="hljs-keyword">elif</span> <span class="hljs-keyword">not</span> m.startswith(<span class="hljs-string">&#x27;!&#x27;</span>):
+            <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(data[name]) &gt;= <span class="hljs-number">1</span>:
+                <span class="hljs-keyword">continue</span>
+            <span class="hljs-keyword">if</span> m.lower().startswith(<span class="hljs-string">&#x27;nlab:&#x27;</span>):
+                m = m[<span class="hljs-number">5</span>:]
+            <span class="hljs-keyword">if</span> <span class="hljs-string">&#x27;#&#x27;</span> <span class="hljs-keyword">in</span> m:
+                m = m.split(<span class="hljs-string">&#x27;#&#x27;</span>)[<span class="hljs-number">0</span>]
+            data[name].append(m.split(<span class="hljs-string">&#x27;|&#x27;</span>)[<span class="hljs-number">0</span>].strip())
+
+<span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">list</span>(data.keys()):
+    <span class="hljs-comment"># print links that do not exist, for debugging.</span>
+    <span class="hljs-comment"># for link in data[k]:</span>
+    <span class="hljs-comment">#     if link not in redirects:</span>
+    <span class="hljs-comment">#         print(link)</span>
+    data[k] = <span class="hljs-built_in">set</span>([redirects[link] <span class="hljs-keyword">for</span> link <span class="hljs-keyword">in</span> data[k] <span class="hljs-keyword">if</span> link <span class="hljs-keyword">in</span> redirects])
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(data[k]) == <span class="hljs-number">0</span> <span class="hljs-keyword">or</span> k <span class="hljs-keyword">in</span> data[k]:  <span class="hljs-comment"># remove empty nodes and loops</span>
+        <span class="hljs-keyword">del</span> data[k]
+
+G = nx.DiGraph(data)
+nx.write_graphml(G, <span class="hljs-string">&#x27;graph.gml&#x27;</span>)
+nx.write_gexf(G, <span class="hljs-string">&#x27;graph.gexf&#x27;</span>)
+nx.nx_agraph.write_dot(G, <span class="hljs-string">&#x27;graph.dot&#x27;</span>)</pre><p>The code is complicated by the existence of &quot;redirects&quot; and other considerations. For example, the code does not count links before the table of contents or links inside block quotes.</p><p>I wrote two functions to find the simple longest path (simple in that the path contains only unique vertices) and the strongly connected components that are sinks in the sense that no vertex in the component connects outside the component. We can also enumerate all articles that are reachable into one of these sinks.</p><pre >G = nx.read_graphml(<span class="hljs-string">&#x27;graph.gml&#x27;</span>)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">find_longest_path</span>(<span class="hljs-params">G</span>):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dfs</span>(<span class="hljs-params">path</span>):
+        best = path.copy()
+        <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> G.neighbors(path[-<span class="hljs-number">1</span>]):
+            <span class="hljs-keyword">if</span> n <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> path:
+                new = dfs(path + [n])
+                <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(new) &gt; <span class="hljs-built_in">len</span>(best):
+                    best = new
+        <span class="hljs-keyword">return</span> best
+
+    h = []
+    <span class="hljs-keyword">for</span> node <span class="hljs-keyword">in</span> G.nodes():
+        path = dfs([node])
+        heapq.heappush(h, (-<span class="hljs-built_in">len</span>(path), path))
+
+    <span class="hljs-built_in">print</span>(heapq.heappop(h)[<span class="hljs-number">1</span>])
+    <span class="hljs-built_in">print</span>(heapq.heappop(h)[<span class="hljs-number">1</span>])
+    <span class="hljs-built_in">print</span>(heapq.heappop(h)[<span class="hljs-number">1</span>])
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">find_all_sinks</span>(<span class="hljs-params">G</span>):
+    sinks = []
+    <span class="hljs-keyword">for</span> scc <span class="hljs-keyword">in</span> nx.strongly_connected_components(G):
+        <span class="hljs-keyword">for</span> node <span class="hljs-keyword">in</span> scc:
+            <span class="hljs-keyword">if</span> <span class="hljs-built_in">any</span>(n <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> scc <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> G.successors(node)):
+                <span class="hljs-keyword">break</span>
+        <span class="hljs-keyword">else</span>:  <span class="hljs-comment"># no break</span>
+            sinks.append(scc)
+
+    <span class="hljs-keyword">for</span> sink <span class="hljs-keyword">in</span> sinks:
+        node = <span class="hljs-built_in">list</span>(sink)[<span class="hljs-number">0</span>]
+        
+        <span class="hljs-built_in">print</span>(sink)
+        <span class="hljs-built_in">print</span>(reachable_nodes := &lbrace;
+            n <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> G.nodes()
+            <span class="hljs-keyword">if</span> nx.has_path(G, n, node)
+        &rbrace;)</pre><p>If we examine the connected sinks, we find that the top 10 represent 93% of the total 18,356 articles. It means, if you randomly choose an article on nLab, there is a 93% chance that by clicking on the first link you will end up on one of these articles:</p><ol><li> homotopical algebra, higher algebra (7,593 articles lead to these)
+</li>
+<li> interaction, experimental observation, physics, classical mechanics, measurement, classical physics, observable universe, Lagrangian density (2,853 articles lead to these)
+</li>
+<li> point, edge, category, vertex, quiver, graph (2,614 articles lead to these)
+</li>
+<li> topological space, space (1,910 articles lead to these)
+</li>
+<li> logic, deduction (1,431 articles lead to these)
+</li>
+<li> computer science, program (243 articles lead to these)
+</li>
+<li> cartesian product (151 articles lead to these)
+</li>
+<li> measure space, measure theory, measurable space (124 articles lead to these)
+</li>
+<li> Alexander Grothendieck, EGA (90 articles lead to these)
+</li>
+<li> symmetry (88 articles lead to these)
+</li>
+</ol><p>Notably, there is a (surprising) 41% chance you end up on either homotopical or higher algebra. I did not expect them to rank so highly, given that I&#039;ve never heard of those subjects before. Apparently homotopical algebra is just homological algebra but in an non-abelian setting.</p><p>Now, if we take a look at the longest simple path, it would take you an impressive 21 steps starting from the history of universal homotopy theories to arrive at homotopical algebra.</p><pre > 1. Universal homotopy theories &gt; history
+ 2. Universal Homotopy Theories
+ 3. Daniel Dugger
+ 4. Michael Hopkins
+ 5. Mark Mahowald
+ 6. Haynes Miller
+ 7. elliptic Chern character
+ 8. higher chromatic Chern character
+ 9. Chern character
+10. universal characteristic class
+11. characteristic class
+12. cohomology
+13. (infinity,1)-category
+14. (n,r)-category
+15. higher category theory
+16. category theory
+17. mathematics
+18. philosophy of mathematics
+19. philosophy
+20. higher algebra
+21. homotopical algebra</pre><p>In fact, there exists only one other path of the same length, which arrives at Michael Hopkins through <code>equivariant homotopy theory -- table</code> &gt; <code>Global Homotopy Theory and Cohesion</code> &gt; <code>Charles Rezk</code> &gt; <code>Michael Hopkins</code> instead.</p><p>I tried visualizing the graph with gephi and other tools but its nothing worth showing. No insights to be gleamed that way. It might be interesting to consider not just the first link but, say, the first 20 links; we can then analyze the popularity of an article (with pagerank?), run community detection algorithms, or analyze various centrality metrics.</p>
+</article></main></body>
+
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>OpenAI Whisper: Speech To Text Using AI - Kevin Cao</title>
+<meta name="description" content="I've been messing around with Whisper [https://github.com/openai/whisper] these
+past few days. It's a machine learning model that OpenAI trained which
+automatically generates subtitles in multiple languages. In other words, it
+transcribes audio into text using some AI black magic. It's ironic that for an
+organization named "OpenAI," this is one of the few models—to my knowledge—that
+they've made open source." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>OpenAI Whisper: Speech To Text Using AI</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Oct 22, 2023</time></div>
+  </header>
+  <p>I&#039;ve been messing around with <a href="https://github.com/openai/whisper">Whisper</a> these past few days. It&#039;s a machine learning model that OpenAI trained which automatically generates subtitles in multiple languages. In other words, it transcribes audio into text using some AI black magic. It&#039;s ironic that for an organization named &quot;OpenAI,&quot; this is one of the few models—to my knowledge—that they&#039;ve made open source.</p><p>In a Microsoft <a href="https://www.microsoft.com/en-us/research/wp-content/uploads/2017/06/paper-revised2.pdf">paper</a> I found online, they basically state that a human transcriber can achieve 4–5% WER (word error rate). OpenAI Whisper can achieve 4.4% WER with the medium model. This means Whisper can transcribe English as well if not better than a human being, which is amazing. We&#039;re going to use the medium model for the rest of this article since the large one requires 2x CPU and more RAM but is only very marginally better at transcribing English.</p><p>I made it 2–4x faster by installing and using <a href="https://github.com/guillaumekln/faster-whisper">Faster Whisper</a> instead of OpenAI&#039;s version. Although you can install both using PIP, my package manager prohibits me from doing that for some reason. So what I did was clone the repo, create a virtual environment, and install all the requirements.</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">git <span class="hljs-built_in">clone</span> https://github.com/guillaumekln/faster-whisper</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cd</span> faster-whisper/</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">python3 -m venv .</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">. bin/activate</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">python3 -m pip install -r requirements.txt</span></pre><p>I wrote a very simple command-line interface for it that takes a single argument referencing an audio or video file and outputs the SRT subtitles. Only notable thing about the script is that we are given a float as the timestamp, so we need a function that converts the float into the time format SRT uses.</p><pre ><span class="hljs-keyword">import</span> sys
+
+<span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(sys.argv) != <span class="hljs-number">2</span>:
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;usage: <span class="hljs-subst">&lbrace;sys.argv[<span class="hljs-number">0</span>]&rbrace;</span> file&#x27;</span>)
+    sys.exit(<span class="hljs-number">1</span>)
+
+<span class="hljs-keyword">from</span> faster_whisper <span class="hljs-keyword">import</span> WhisperModel
+<span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime
+
+segments, _ = (
+    WhisperModel(<span class="hljs-string">&#x27;medium&#x27;</span>, compute_type=<span class="hljs-string">&#x27;float32&#x27;</span>)
+        .transcribe(sys.argv[<span class="hljs-number">1</span>]))
+
+<span class="hljs-keyword">for</span> i, segment <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(segments):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fmt</span>(<span class="hljs-params">t: <span class="hljs-built_in">float</span></span>) -&gt; <span class="hljs-built_in">str</span>:
+        <span class="hljs-keyword">return</span> (datetime
+            .utcfromtimestamp(t)
+            .strftime(<span class="hljs-string">&#x27;%H:%M:%S,%f&#x27;</span>)[:-<span class="hljs-number">3</span>])
+
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;&#x27;&#x27;
+<span class="hljs-subst">&lbrace;i+<span class="hljs-number">1</span>&rbrace;</span>
+<span class="hljs-subst">&lbrace;fmt(segment.start)&rbrace;</span> --&gt; <span class="hljs-subst">&lbrace;fmt(segment.end)&rbrace;</span>
+<span class="hljs-subst">&lbrace;segment.text.strip()&rbrace;</span>
+    &#x27;&#x27;&#x27;</span>.lstrip(), flush=<span class="hljs-literal">True</span>)</pre><p>It&#039;s around 2x faster than OpenAI&#039;s Whisper without any loss or difference in quality. 4–5x faster (depending on how much silence you have in the audio) if you enable <code>vad_filter</code> which works by only running Whisper on parts of the audio that have speech. Faster Whisper transcribes English faster than realtime on my AMD Ryzen 7 PRO 6850U (which almost reaches 1 TFLOP, for reference). For the 16-minute Oscar-Nominated short &quot;<a href="https://www.youtube.com/watch?v=bAX9_rDvO_c">Affairs of the Art</a>&quot; it took about 12 minutes. You can download the full <a href="/affairs-of-the-art.srt">subtitles</a> but the beginning looks like this (I erased the timestamps, they take up too much space):</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word">I&#039;m into art now. I&#039;m drinking from the cup of creativity again. I&#039;m back on track, hooked, besotted with drawing. It&#039;s all I want to do. I think I&#039;m quite good at it, you know, in a russuesque sort of way. Ivers, my model, I work him to the bone. He&#039;s very tolerant, though. Last week when I asked him to be a nude, descending a stack, as he said. Who we referencing, bear? Duchamp or Boccioni? Art. I&#039;m obsessed. I think I&#039;m turning into my sister Beverly. She never liked drawing or playing with dolls like me. She liked insects, woodlice and beetles. She kept them all in a big fishbowl. She&#039;d wait until they pegged out and she&#039;d put them in coffins she&#039;d made out of little...</pre><p>One problem that annoys me but not enough for me to fix it is that the first timestamp always starts at 0:00, so the first subtitle is displayed minutes before any characters even begin speaking. Also, I don&#039;t think the model incorporates context, so it gets some words wrong that I don&#039;t. For example, the model mistakes &quot;grand&quot; with &quot;grant&quot; but I understand that she says &quot;grand&quot; in reference to her grandmother. If I went purely off sound, I would&#039;ve been mistaken too.</p>
+</article></main></body>
+
+</html>

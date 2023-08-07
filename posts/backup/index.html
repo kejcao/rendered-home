@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Backing Up My Desktop - Kevin Cao</title>
+<meta name="description" content="I recently acquired an Ethernet cable and had a spare laptop that was gathering
+dust with a 500GB hard drive in it. I've been meaning to backup my desktop since
+I've had troublesome moments where I accidentally deleted important files of
+mine or was on the precipice of deleting important files of mine. I thought, why
+not hook my desktop up to that old laptop with the Ethernet cable and copy my
+files and directories over using something like rsync?" />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Backing Up My Desktop</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Sep 4, 2022</time></div>
+  </header>
+  <p>I recently acquired an Ethernet cable and had a spare laptop that was gathering dust with a 500GB hard drive in it. I&#039;ve been meaning to backup my desktop since I&#039;ve had troublesome moments where I accidentally deleted important files of mine or was on the precipice of deleting important files of mine. I thought, why not hook my desktop up to that old laptop with the Ethernet cable and copy my files and directories over using something like <code>rsync</code>?</p><p>In case you&#039;re unfamiliar, backing up a computer means copying its files and folders over to another computer, so in case something happens to your files that makes them inaccessible—like a corrupted hard drive, ransomware, or your clumsy fingers irreparably damaging them—you still have a copy on the other machine. <code>rsync</code> is a tool to copy files and folders that&#039;s smart and fast: It doesn&#039;t copy everything, it just copies the things it <em>must</em> copy.</p><p>I install Ubuntu Server on that laptop and create the user <code>kjc</code>. I make three directories in the home folder of <code>kjc</code>: <code>daily</code>, <code>weekly</code>, and <code>monthly</code>, to store my backups at those time increments. I notice that Ubuntu wasn&#039;t using the full 500GB that the hard drive was capable of, instead only registering around 100GB. It turns out I needed to expand the LVM, which is as simple as just two commands:</p><pre >$ sudo lvextend -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
+$ sudo resize2fs /dev/ubuntu-vg/ubuntu-lv</pre><p>To get the laptop and the desktop to talk to each other via the Ethernet cable, I assigned each an IP address. On Ubuntu there&#039;s Netplan, so in <code>/etc/netplan/99-ethernet.yaml</code> I write:</p><pre ><span class="hljs-attr">network:</span>
+  <span class="hljs-attr">version:</span> <span class="hljs-number">2</span>
+  <span class="hljs-attr">renderer:</span> <span class="hljs-string">networkd</span>
+  <span class="hljs-attr">ethernets:</span>
+    <span class="hljs-attr">enp1s0:</span>
+      <span class="hljs-attr">addresses:</span>
+        <span class="hljs-bullet">-</span> <span class="hljs-number">10.0</span><span class="hljs-number">.0</span><span class="hljs-number">.20</span><span class="hljs-string">/24</span></pre><p>Then I run <code>sudo netplan apply</code> to register the configuration. On my desktop I have Network Manager, so I run <code>nmcli device modify enp2s0 ipv4.method manual ipv4.address 10.0.0.10/24</code>. Now the laptop has the IP address of <code>10.0.0.20</code>, while my desktop has the IP address <code>10.0.0.10</code>.</p><p>I then authorize two keys on the laptop: The first is my GitHub SSH key so the everyday user on my desktop can SSH in to restore files or maintain the backups; the other is a key with no password generated on my desktop as root to use specifically to store backups (since some of my files need root permissions to access). I also create an alias in <code>/root/.ssh/config</code>:</p><pre >Host backup
+        User kjc
+        Hostname 10.0.0.20
+        IdentityFile ~/.ssh/backup</pre><p>So I can SSH as root to the laptop without password prompts or any other hassles. To automatically backup my system at time increments, I edit root&#039;s crontab by running <code>sudo EDITOR=vim crontab -e</code>, then write:</p><pre >0 0 * * * rsync -AaXH --delete --exclude=&lbrace;&#039;/dev/*&#039;,&#039;/proc/*&#039;,&#039;/sys/*&#039;,&#039;/tmp/*&#039;,&#039;/run/*&#039;,&#039;/mnt/*&#039;,&#039;/media/*&#039;,&#039;/lost+found&#039;,&#039;/var/cache/*&#039;,&#039;/home/kjc/.cache/*&#039;,&#039;/home/kjc/VirtualBox VMs/*&#039;,&#039;/home/kjc/Downloads/*&#039;,&#039;/home/kjc/hugo/*&#039;&rbrace; / backup:/home/kjc/daily
+0 0 * */1 * rsync -AaXH --delete --exclude=&lbrace;&#039;/dev/*&#039;,&#039;/proc/*&#039;,&#039;/sys/*&#039;,&#039;/tmp/*&#039;,&#039;/run/*&#039;,&#039;/mnt/*&#039;,&#039;/media/*&#039;,&#039;/lost+found&#039;,&#039;/var/cache/*&#039;,&#039;/home/kjc/.cache/*&#039;,&#039;/home/kjc/VirtualBox VMs/*&#039;,&#039;/home/kjc/Downloads/*&#039;,&#039;/home/kjc/hugo/*&#039;&rbrace; / backup:/home/kjc/monthly
+0 0 * * 0 rsync -AaXH --delete --exclude=&lbrace;&#039;/dev/*&#039;,&#039;/proc/*&#039;,&#039;/sys/*&#039;,&#039;/tmp/*&#039;,&#039;/run/*&#039;,&#039;/mnt/*&#039;,&#039;/media/*&#039;,&#039;/lost+found&#039;,&#039;/var/cache/*&#039;,&#039;/home/kjc/.cache/*&#039;,&#039;/home/kjc/VirtualBox VMs/*&#039;,&#039;/home/kjc/Downloads/*&#039;,&#039;/home/kjc/hugo/*&#039;&rbrace; / backup:/home/kjc/weekly</pre><p>The commands are so long because I had to exclude a lot of directories that aren&#039;t copyable, like <code>/proc</code>, or that are too bulky and worthless to copy like <code>VirtualBox VMs</code> or <code>.cache</code>. The end of each command tells <code>rsync</code> to copy to <code>backup</code>, which utilizes the alias I created earlier and really means <code>-i ~/.ssh/backup kjc@10.0.0.20</code> or &quot;SSH to <code>10.0.0.20</code> as the user <code>kjc</code> and authenticate with the SSH key <code>~/.ssh/backup</code>.&quot; Remember, <code>10.0.0.20</code> is the IP address we assigned to the laptop earlier. All three commands are the same except for the directory they copy to.</p><p>That&#039;s it. Now I can confidently manipulate files and directories, unrestrained by the threat of accidental removal because I probably have a copy of it on the laptop.</p><p>Also, a trick: Say that you&#039;re converting a whole folder of videos to a different format—or anything else that involves mass, potentially destructive manipulation—but you don&#039;t want to lose the original source videos in case you blunder the conversion. You could make another copy of the folder with <code>cp -r videos/ videos~/</code> and that works fine but is <em>very</em> slow if your directory is of substantial size. Instead, what you can do is create a hard link with <code>cp -al videos/ videos~/</code>. The <code>-a</code> flag stands for archive, which tells <code>cp</code> to copy recursively, ignore symbolic links, and preserve everything. The <code>-l</code> flag means create hard links. Even if you manage to mess up the conversion or delete a portion of the videos, since you still have the hard links, you still have the original videos. Of course, this applies to all files (torrents, eBooks, audio, etc.) not just videos.</p>
+</article></main></body>
+
+</html>

@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Generating Strong Pseudoprimes to Fixed Bases - Kevin Cao</title>
+<meta name="description" content="The hardest challenge in the mathematics section of CryptoHack, entitled "Prime
+and Prejudice," essentially involves finding a strong pseudoprime to a set of
+fixed bases—with the aim of tricking the Miller–Rabin implementation to accept
+our composite number as prime. The title of the challenge is a reference to a
+2018 paper exposing security flaws related to adversarial primality testing in
+cryptographic libraries." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Generating Strong Pseudoprimes to Fixed Bases</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Sep 12, 2024</time></div>
+  </header>
+  <p>The hardest challenge in the mathematics section of CryptoHack, entitled &quot;Prime and Prejudice,&quot; essentially involves finding a strong pseudoprime to a set of fixed bases—with the aim of tricking the Miller–Rabin implementation to accept our composite number as prime. The title of the challenge is a reference to a 2018 paper exposing security flaws related to adversarial primality testing in cryptographic libraries.</p><p>In the appendix of that paper, they summarize Arnault&#039;s method of generating strong pseudoprimes to a set of fixed bases. It&#039;s quite involved, but becomes easier to understand once you cross reference the theory with the SageMath implementation. The basic idea is that if $n=p_1\cdots p_h$ is a product of distinct odd primes then it is a strong pseudoprime to a base $a$ if it satisfies these three requirements:</p><ol><li> $\gcd(a,n)=1$.
+</li>
+<li> $(a/p_i) = -1$ for all $1 \leq i\leq h$ where $(a/p)$ denotes the Legendre symbol.
+</li>
+<li> Define,
+
+$$
+k_i = frac{p_i-1}{p_1-1}, quad m_i = frac{prod_{jneq i} p_j - 1}{p_i-1},
+$$
+
+then the coefficients $k_i$ and $m_i$ must be integers for all $2 \leq i \leq h$ and $k_i$ must be odd.
+</li>
+</ol><p>We begin by choosing random odd primes as the coefficients $k_i$ then work backwards to derive $n=p_1\dotsc p_h$ that fulfills the requirements. By the definition of $k_i$ we know that $p_i = k_i(p_1-1) + 1$. Therefore, we need only find a value for $p_1$ that will fit the other requirements—the other $p_i$ can be easily calculated from $p_1$. Arnault&#039;s method essentially involves enumerating candidate values for $p_1$ until we find the one that works. Let $S_a \subset \mathbb{Z}_{4a}$ be such that, for any prime $p$,</p><p>$$(a/p) = -1 \iff p \bmod {4a} \in S_a.$$</p><p>The quadratic reciprocity law ensures that $(a/p)=(p/a)$ unless $a\equiv p\equiv3 \pmod{4}$ in which case $(a/p) = -(p/a)$. Hence $S_a$ is trivial to compute. $p_1 \bmod{4a}$ must be an element in $S_a$ because of requirement 2, so $S_a$ is the set of candidate values for $p_1$. By noticing that $p_i = k_i(p_1-1) + 1$ can be rewritten as $p_1 = k_i^{-1}(p_i - 1) + 1$ we can further narrow down the possible values for $p_1$ to a subset of $S_a$. Call this subset $S_a'$, then the number $p_1 \bmod{4a}$ must be an element of $S_a' \subset S_a$, where,</p><p>$$S_a' := \bigcap_{i=1}^h k_i^{-1}(S_a + k_i - 1)$$</p><p>and $k_i^{-1}(S_a + k_i - 1)$ denotes the set $\{k_i^{-1}(s+k_i-1) : s \in S_a\}$. To recap, $n=p_1 \dotsc p_h$ is (almost) a strong pseudoprime to base $a$ if its an element of $S_a'$. In general, for a set of bases $A=\{a_1, \dotsc, a_t\}$, by selecting a candidate value $z_a \in S_a'$ for each $a\in A$ we have a system of modular congruences $p_1 \equiv z_a \pmod {4a}$. I say almost, because in addition, we need to add the following congruences in the system to ensure that the coefficients $m_i$ are integers for $h=3$ (we discuss the general case where $h=n$ later):</p><p>$$\begin{aligned}
+    p_1 &\equiv -k_3^{-1} \pmod{k_2} \\
+    p_1 &\equiv -k_2^{-1} \pmod{k_3}
+\end{aligned}$$</p><p>Now we have this system of congruences that $p_1$ must satisfy. We choose random candidates $z_a\in S_a'$ and try to solve the system with CRT—this succeeds only occasionally, however, because the moduli are not coprime. Arnault&#039;s method involves bruteforcing different values for $z_a$ until CRT works. As you might&#039;ve noticed, Arnault&#039;s method is quite a fragile and complicated process that requires the correct selection of $k_i$ values.</p><p>I haven&#039;t done a stellar job explaining how Arnault&#039;s method works. I might&#039;ve made mathematical errors, thus if you&#039;re a stickler for proofs and details go read Arnault&#039;s original 1995 paper that introduced this method. If you&#039;re confused—which is totally expected, I am confused reading what I just wrote—cross reference the following SageMath implementation with the above mathematics. It makes the method more concrete and makes more sense.</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">S</span>(<span class="hljs-params">a</span>):
+    <span class="hljs-keyword">return</span> &lbrace;
+        p <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>*a + <span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+        <span class="hljs-keyword">if</span> kronecker_symbol(a, p) == -<span class="hljs-number">1</span>
+    &rbrace;
+
+<span class="hljs-comment"># A is set of prime bases to be strong pseudoprime against</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">strong_pseudoprime</span>(<span class="hljs-params">A, ks</span>):
+    <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(ks) == <span class="hljs-number">3</span> <span class="hljs-comment"># we remove this restriction later</span>
+
+    <span class="hljs-comment"># subsets is dict that maps bases a to subsets of residues mod 4a</span>
+    subsets = &lbrace;&rbrace;
+    <span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> A:
+        subsets[a] = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">set</span>.intersection(*(
+            &lbrace;(<span class="hljs-built_in">pow</span>(k, -<span class="hljs-number">1</span>, <span class="hljs-number">4</span>*a) * (s + k - <span class="hljs-number">1</span>)) % (<span class="hljs-number">4</span>*a) <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> S(a)&rbrace;
+            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> ks
+        )))
+
+    <span class="hljs-comment"># bruteforce candidate values for p_1 until CRT works</span>
+    r, m = <span class="hljs-literal">None</span>, <span class="hljs-literal">None</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+        <span class="hljs-comment"># initial conditions to ensure m_i are integers</span>
+        rs = [
+            <span class="hljs-built_in">pow</span>(-ks[<span class="hljs-number">2</span>], -<span class="hljs-number">1</span>, ks[<span class="hljs-number">1</span>]),
+            <span class="hljs-built_in">pow</span>(-ks[<span class="hljs-number">1</span>], -<span class="hljs-number">1</span>, ks[<span class="hljs-number">2</span>])
+        ] <span class="hljs-comment"># residues</span>
+        ms = [ks[<span class="hljs-number">1</span>], ks[<span class="hljs-number">2</span>]] <span class="hljs-comment"># moduli</span>
+
+        <span class="hljs-comment"># choose random candidate value</span>
+        <span class="hljs-keyword">for</span> a, s <span class="hljs-keyword">in</span> subsets.items():
+            rs.append(random.choice(s))
+            ms.append(a * <span class="hljs-number">4</span>)
+
+        <span class="hljs-comment"># does CRT work?</span>
+        <span class="hljs-keyword">try</span>:
+            r = crt(rs, ms)
+            m = lcm(ms)
+        <span class="hljs-keyword">except</span> ValueError:
+            <span class="hljs-keyword">continue</span>
+        <span class="hljs-keyword">break</span>
+
+    <span class="hljs-comment"># found a value for p_1! Now, find p_2, ..., p_h</span>
+    i = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+        p1 = m*i + r
+        ps = [p1] + [
+            k*(p1 - <span class="hljs-number">1</span>) + <span class="hljs-number">1</span>
+            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> ks[<span class="hljs-number">1</span>:]
+        ]
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">all</span>(is_prime(p) <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> ps):
+            <span class="hljs-keyword">return</span> product(ps)
+        i += <span class="hljs-number">1</span></pre><p>The code above is quite naive and only meant to illustrate the concept. It has a major limitation: $h$ must be equal to 3. I&#039;ve shown the specific congruences needed for $h=3$, but haven&#039;t discussed the general case when $h=n$ yet. Let me explain that now. Arnault, in Lemma 2.2 and Remark 2.3, points out that $m_i$ is an integer if $p_1$ is a root of $f_i$ modulo $k_i$, where,</p><p>$$f_i(x) = \frac{(\prod_{j\neq i} (k_j(x-1) + 1)) - 1}{x-1}.$$</p><p>For example, when $h=3$ we have $f_2(x) = k_3x+1$. The congruence corresponds to</p><p>$$\begin{aligned}
+f_2(p_1) &\equiv 0 \pmod{k_2} \\
+k_3p_1+1 &\equiv 0 \pmod{k_2} \\
+p_1 &\equiv -k_3^{-1} \pmod{k_2}
+\end{aligned}$$</p><p>which is exactly the same congruence I showed you earlier for when $h=3$. Instead of hard coding these congruences to ensure $m_i$ are integers, we can model the function $f_i$ in SageMath and basically solve for $x$ on the fly to derive the congruences. Be warned—I&#039;m not entirely confident that I&#039;ve implemented this procedure correctly. I&#039;ve only tested the code with $h=3$ for the most part.</p><p>A major speedup can be achieved by systematically working through each candidate value $z_a$, and backtracking as soon as the CRT fails. The following implementation finds all possible valid candidates from selected values of $k_i$ and returns them as a generator.</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">S</span>(<span class="hljs-params">a</span>):
+    <span class="hljs-keyword">return</span> &lbrace;
+        p <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>, <span class="hljs-number">4</span>*a + <span class="hljs-number">1</span>, <span class="hljs-number">2</span>)
+        <span class="hljs-keyword">if</span> kronecker_symbol(a, p) == -<span class="hljs-number">1</span>
+    &rbrace;
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">strong_pseudoprime</span>(<span class="hljs-params">A, ks</span>):
+    x = var(<span class="hljs-string">&#x27;x&#x27;</span>)
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>(<span class="hljs-params">i</span>):
+        p = product(ks[j]*(x-<span class="hljs-number">1</span>)+<span class="hljs-number">1</span> <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(ks)) <span class="hljs-keyword">if</span> j != i)
+        <span class="hljs-keyword">return</span> (p - <span class="hljs-number">1</span>) / (x - <span class="hljs-number">1</span>)
+
+    <span class="hljs-comment"># subsets is dict that maps bases a_i to subsets of residues mod 4a</span>
+    subsets = &lbrace;&rbrace;
+    <span class="hljs-keyword">for</span> a <span class="hljs-keyword">in</span> A:
+        subsets[a] = <span class="hljs-built_in">list</span>(<span class="hljs-built_in">set</span>.intersection(*(
+            &lbrace;(<span class="hljs-built_in">pow</span>(k, -<span class="hljs-number">1</span>, <span class="hljs-number">4</span>*a) * (s + k - <span class="hljs-number">1</span>)) % (<span class="hljs-number">4</span>*a) <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> S(a)&rbrace;
+            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> ks
+        )))
+
+    indices = [<span class="hljs-number">0</span>] * <span class="hljs-built_in">len</span>(subsets)
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">bruteforce</span>(<span class="hljs-params">i, r, m</span>):
+        <span class="hljs-keyword">if</span> i == <span class="hljs-built_in">len</span>(indices):
+            <span class="hljs-keyword">yield</span> find_pseudoprime(r, m)
+            <span class="hljs-keyword">return</span>
+
+        <span class="hljs-keyword">for</span> residue <span class="hljs-keyword">in</span> subsets[A[i]]:
+            <span class="hljs-keyword">try</span>:
+                r = crt([r, residue], [m, A[i] * <span class="hljs-number">4</span>])
+            <span class="hljs-keyword">except</span> ValueError:
+                <span class="hljs-keyword">continue</span>
+            <span class="hljs-keyword">yield</span> <span class="hljs-keyword">from</span> bruteforce(i + <span class="hljs-number">1</span>, r, lcm(m, A[i] * <span class="hljs-number">4</span>))
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">find_pseudoprime</span>(<span class="hljs-params">r, m</span>):
+        i = <span class="hljs-number">0</span>
+        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+            p1 = m*i + r
+            ps = [p1] + [
+                k*(p1 - <span class="hljs-number">1</span>) + <span class="hljs-number">1</span>
+                <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> ks[<span class="hljs-number">1</span>:]
+            ]
+            <span class="hljs-keyword">if</span> <span class="hljs-built_in">all</span>(is_prime(p) <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> ps):
+                <span class="hljs-keyword">return</span> ps
+            i += <span class="hljs-number">1</span>
+
+    <span class="hljs-comment"># initial congruences to ensure m_i is integer</span>
+    rs, ms = [], []
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-built_in">len</span>(ks)):
+        sol, = solve_mod(f(i).full_simplify(), ks[i])[<span class="hljs-number">0</span>]
+        rs.append(<span class="hljs-built_in">int</span>(sol)); ms.append(ks[i])
+
+    <span class="hljs-keyword">yield</span> <span class="hljs-keyword">from</span> bruteforce(<span class="hljs-number">0</span>, crt(rs, ms), lcm(ms))
+
+<span class="hljs-comment"># USAGE</span>
+A = prime_range(<span class="hljs-number">2</span>, <span class="hljs-number">61</span>+<span class="hljs-number">1</span>)
+<span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> strong_pseudoprime(A, [<span class="hljs-number">1</span>, <span class="hljs-number">2081</span>, <span class="hljs-number">4177</span>]):
+    <span class="hljs-comment"># assert miller_rabin(product(p), A)</span>
+    <span class="hljs-built_in">print</span>(p)</pre><p>If the code throws an exception, most likely the choices of $k_i$ are wrong. Ideally, for $h \geq 3$, we would iterate over each of the roots of $f_i$ as a possible congruence instead of simply choosing the first one. You can set the <code>i</code> variable in the <code>find_pseudoprime</code> function to a random big value like <code>1000000</code> if you require a bigger pseudoprime, which was needed to complete the CryptoHack CTF challenge.</p>
+</article></main></body>
+
+</html>

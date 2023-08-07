@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Adansonia: A Disk Usage Analyzer in Rust - Kevin Cao</title>
+<meta name="description" content="Baobab is a disk usage analyzer from Gnome which I enjoy using. The right panel
+has nifty visualizations, but their usefulness is limited in practice. More eye
+candy than anything. On launch, Baobab has to crawl and index the entire
+directory to calculate the sizes of each file entry, but the indexing felt
+unnecessarily slow—I suspected it could've be done faster. Hence, I wrote my own
+TUI app to replicate its functionality in Rust." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Adansonia: A Disk Usage Analyzer in Rust</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Dec 22, 2024</time></div>
+  </header>
+  <p>Baobab is a disk usage analyzer from Gnome which I enjoy using. The right panel has nifty visualizations, but their usefulness is limited in practice. More eye candy than anything. On launch, Baobab has to crawl and index the entire directory to calculate the sizes of each file entry, but the indexing felt unnecessarily slow—I suspected it could&#039;ve be done faster. Hence, I wrote my own TUI app to replicate its functionality in Rust.</p>
+						<a class="img" href="/static/media/baobab.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/baobab.png"
+							  alt="baobab"
+							/>
+						</a>
+					<p>I named the TUI app Adansonia, the Latin name for a genus of trees commonly referred to as baobabs. This website now supports Asciinema casts, so here&#039;s one of my TUI app in action:</p><script src="/static/asciinema-player.min.js"></script>
+						<div id="asciinema-cast-1"></div>
+						<script>AsciinemaPlayer.create('/static/media/adansonia-demo.cast', document.getElementById('asciinema-cast-1'))</script>
+					<p>Baobab probably uses a tree-like data structure internally to represent the directory tree, because that seems like the most natural type to use here. Instead, I am employing a much dumber method that works surprisingly well—my app stores the directory tree as a dynamic array of paths with metadata. The paths are sorted later in lexicographic order, meaning we can binary search. More on this later.</p><pre ><span class="hljs-meta">#[derive(Clone)]</span>
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Info</span> &lbrace;
+    path: PathBuf,
+    depth: <span class="hljs-type">usize</span>,
+    size: <span class="hljs-type">u64</span>,
+    is_dir: <span class="hljs-type">bool</span>,
+&rbrace;
+
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Tree</span> &lbrace;
+    data: <span class="hljs-type">Vec</span>&lt;Info&gt;,
+&rbrace;</pre><p>To index a directory, the <code>scan</code> function recursively crawls the directory and populates a <code>Tree</code>. I ended up implementing my own code for this instead of using a library. It was very educational. The function takes a path called <code>root</code> and returns a <code>Tree</code>.</p><pre ><span class="hljs-keyword">fn</span> <span class="hljs-title function_">scan</span>(root: &amp;Path) <span class="hljs-punctuation">-&gt;</span> Tree &lbrace;
+    ...
+&rbrace;</pre><p>I was inspired by the parallel approach in the CLI tool <code>fd</code>. Modern SSDs can handle many concurrent I/O operations so significant speedups can be gained by multithreading. To start, we instantiate a group of workers and their corresponding stealers. We push the root path into one of the workers. We also need to remember the metadata and the device the root directory is on for later.</p><pre ><span class="hljs-keyword">let</span> <span class="hljs-variable">root_metadata</span> = root.<span class="hljs-title function_ invoke__">metadata</span>().<span class="hljs-title function_ invoke__">unwrap</span>();
+<span class="hljs-keyword">let</span> <span class="hljs-variable">root_dev</span> = root_metadata.<span class="hljs-title function_ invoke__">dev</span>();
+
+<span class="hljs-keyword">let</span> <span class="hljs-variable">num_threads</span> = <span class="hljs-number">16</span>;
+<span class="hljs-keyword">let</span> <span class="hljs-variable">workers</span>: <span class="hljs-type">Vec</span>&lt;_&gt; = (<span class="hljs-number">0</span>..num_threads)
+    .<span class="hljs-title function_ invoke__">map</span>(|_| Worker::&lt;PathBuf&gt;::<span class="hljs-title function_ invoke__">new_lifo</span>())
+    .<span class="hljs-title function_ invoke__">collect</span>();
+<span class="hljs-keyword">let</span> <span class="hljs-variable">stealers</span>: <span class="hljs-type">Vec</span>&lt;_&gt; = workers.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">map</span>(|w| w.<span class="hljs-title function_ invoke__">stealer</span>()).<span class="hljs-title function_ invoke__">collect</span>();
+workers[<span class="hljs-number">0</span>].<span class="hljs-title function_ invoke__">push</span>(PathBuf::<span class="hljs-title function_ invoke__">from</span>(root));</pre><p>The action happens when we spawn a bunch of threads. Each takes their respective worker, clones a copy of the others&#039; stealers, and proceed to loop forever: in each iteration, the thread tries to take a path from its own worker stack; if the stack is empty, it tries to steal from one of the other threads—and if all the stacks are empty, indicating there is nothing left to do, the thread breaks from its loop and exits.</p><p>After a thread takes a path we list its entries. The path the thread takes is always a directory. Symbolic links and entries from a different device are skipped. The entry is then appended into the result vector, and if the entry is a directory we push it onto our local worker stack. That&#039;s it. Once all worker stacks are exhausted, every thread&#039;s steal attempt fails, and we have completed.</p><pre ><span class="hljs-keyword">let</span> <span class="hljs-variable">handles</span>: <span class="hljs-type">Vec</span>&lt;_&gt; = workers
+    .<span class="hljs-title function_ invoke__">into_iter</span>()
+    .<span class="hljs-title function_ invoke__">enumerate</span>()
+    .<span class="hljs-title function_ invoke__">map</span>(|(i, worker)| &lbrace;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">stealers</span> = stealers.<span class="hljs-title function_ invoke__">clone</span>();
+        stealers.<span class="hljs-title function_ invoke__">remove</span>(i); <span class="hljs-comment">// remove our own stealer</span>
+        stealers.<span class="hljs-title function_ invoke__">rotate_right</span>(i); <span class="hljs-comment">// so no one stealer is swamped</span>
+
+        thread::<span class="hljs-title function_ invoke__">spawn</span>(<span class="hljs-keyword">move</span> || &lbrace;
+            <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">result</span>: <span class="hljs-type">Vec</span>&lt;Info&gt; = <span class="hljs-built_in">vec!</span>[];
+            <span class="hljs-keyword">loop</span> &lbrace;
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">path</span> = worker
+                    .<span class="hljs-title function_ invoke__">pop</span>() <span class="hljs-comment">// try to take from local stack</span>
+                    .<span class="hljs-title function_ invoke__">or_else</span>(|| &lbrace;
+                        <span class="hljs-keyword">for</span> <span class="hljs-variable">s</span> <span class="hljs-keyword">in</span> &amp;stealers &lbrace;
+                            <span class="hljs-comment">// loop until steal is not Steal::Retry</span>
+                            <span class="hljs-keyword">while</span> <span class="hljs-keyword">let</span> <span class="hljs-variable">Some</span>(_) = <span class="hljs-keyword">match</span> s.<span class="hljs-title function_ invoke__">steal</span>() &lbrace;
+                                Steal::<span class="hljs-title function_ invoke__">Success</span>(path) =&gt; <span class="hljs-keyword">return</span> <span class="hljs-title function_ invoke__">Some</span>(path),
+                                Steal::Empty =&gt; <span class="hljs-literal">None</span>,
+                                Steal::Retry =&gt; <span class="hljs-title function_ invoke__">Some</span>(()),
+                            &rbrace; &lbrace;&rbrace;
+                        &rbrace;
+                        <span class="hljs-literal">None</span> <span class="hljs-comment">// if all stealers are empty, then exit thread.</span>
+                    &rbrace;);
+
+                <span class="hljs-keyword">if</span> path.<span class="hljs-title function_ invoke__">is_none</span>() &lbrace;
+                    <span class="hljs-keyword">break</span>;
+                &rbrace;
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">path</span> = path.<span class="hljs-title function_ invoke__">unwrap</span>();
+
+                <span class="hljs-comment">// sometimes fs::read_dir fails with permission error or</span>
+                <span class="hljs-comment">// whatever, in which case we just ignore the error.</span>
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">_</span> = fs::<span class="hljs-title function_ invoke__">read_dir</span>(path).<span class="hljs-title function_ invoke__">map</span>(|it| &lbrace;
+                    <span class="hljs-keyword">for</span> <span class="hljs-variable">entry</span> <span class="hljs-keyword">in</span> it &lbrace;
+                        <span class="hljs-keyword">let</span> <span class="hljs-variable">entry</span> = entry.<span class="hljs-title function_ invoke__">unwrap</span>();
+
+                        <span class="hljs-comment">// skip symlinks and files in different devices.</span>
+                        <span class="hljs-keyword">let</span> <span class="hljs-variable">metadata</span> = entry.<span class="hljs-title function_ invoke__">metadata</span>().<span class="hljs-title function_ invoke__">unwrap</span>();
+                        <span class="hljs-keyword">if</span> metadata.<span class="hljs-title function_ invoke__">is_symlink</span>() || root_dev != metadata.<span class="hljs-title function_ invoke__">dev</span>() &lbrace;
+                            <span class="hljs-keyword">continue</span>;
+                        &rbrace;
+
+                        result.<span class="hljs-title function_ invoke__">push</span>(Info &lbrace;
+                            path: entry.<span class="hljs-title function_ invoke__">path</span>().<span class="hljs-title function_ invoke__">to_path_buf</span>(),
+                            depth: entry.<span class="hljs-title function_ invoke__">path</span>().<span class="hljs-title function_ invoke__">components</span>().<span class="hljs-title function_ invoke__">count</span>(),
+                            size: metadata.<span class="hljs-title function_ invoke__">size</span>(),
+                            is_dir: metadata.<span class="hljs-title function_ invoke__">is_dir</span>(),
+                        &rbrace;);
+                        <span class="hljs-keyword">if</span> metadata.<span class="hljs-title function_ invoke__">is_dir</span>() &lbrace;
+                            worker.<span class="hljs-title function_ invoke__">push</span>(entry.<span class="hljs-title function_ invoke__">path</span>().<span class="hljs-title function_ invoke__">to_path_buf</span>());
+                        &rbrace;
+                    &rbrace;
+                &rbrace;);
+            &rbrace;
+            <span class="hljs-keyword">return</span> result;
+        &rbrace;)
+    &rbrace;)
+    .<span class="hljs-title function_ invoke__">collect</span>();</pre><p>There are multiple deficiencies with this code—it doesn&#039;t account for hard links, if the first thread pops the root path then there is temporarily no work to do and other threads might exit, etc. But it seems to work fine for now.</p><p>Anyway, the last bit of code in the <code>scan</code> function joins the threads and returns the combined results. The fast parallel sort function from the <code>rayon</code> library sorts the final result vector in lexicographic order—this is important, because it allows us to binary search the vector.</p><pre ><span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">result</span> = <span class="hljs-built_in">vec!</span>[Info &lbrace;
+    path: root.<span class="hljs-title function_ invoke__">to_path_buf</span>(),
+    depth: root.<span class="hljs-title function_ invoke__">components</span>().<span class="hljs-title function_ invoke__">count</span>(),
+    size: root_metadata.<span class="hljs-title function_ invoke__">size</span>(),
+    is_dir: <span class="hljs-literal">true</span>,
+&rbrace;];
+<span class="hljs-keyword">for</span> <span class="hljs-variable">handle</span> <span class="hljs-keyword">in</span> handles &lbrace;
+    result.<span class="hljs-title function_ invoke__">append</span>(&amp;<span class="hljs-keyword">mut</span> handle.<span class="hljs-title function_ invoke__">join</span>().<span class="hljs-title function_ invoke__">unwrap</span>());
+&rbrace;
+
+result.<span class="hljs-title function_ invoke__">par_sort_unstable_by</span>(|a, b| a.path.<span class="hljs-title function_ invoke__">cmp</span>(&amp;b.path));
+<span class="hljs-keyword">return</span> Tree &lbrace; data: result &rbrace;;</pre><p>Now that we have a flat array of paths, we must &quot;accumulate&quot; in the bottom–up direction the sizes of each entry under the directories. Since the array is in order, a linear traversal accomplishes this quickly. Even for millions of paths, it only takes ~10ms. I&#039;m unsure of its correctness, in that there are probably edgecases relating to exotic filenames where this procedure fails, but the results seem to match the <code>du</code> command line tool well enough.</p><p>To list the entries in a directory we can binary search the start and end ranges of the directory then filter for only the entries on the same depth level as the directory. Surprisingly, even for the home folder with millions of paths, this linear filtering process does not induce a noticeable latency.</p><pre ><span class="hljs-keyword">impl</span> <span class="hljs-title class_">Tree</span> &lbrace;
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">accumulate</span>(<span class="hljs-keyword">self</span>: &amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">Self</span>) &lbrace;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">sums</span>: [<span class="hljs-type">u64</span>; <span class="hljs-number">4096</span>] = [<span class="hljs-number">0</span>; <span class="hljs-number">4096</span>];
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">prev_depth</span> = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">i</span> <span class="hljs-keyword">in</span> (<span class="hljs-number">0</span>..<span class="hljs-keyword">self</span>.data.<span class="hljs-title function_ invoke__">len</span>()).<span class="hljs-title function_ invoke__">rev</span>() &lbrace;
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">depth</span> = <span class="hljs-keyword">self</span>.data[i].depth;
+            <span class="hljs-keyword">if</span> depth &lt; prev_depth &lbrace;
+                <span class="hljs-keyword">self</span>.data[i].size += sums[prev_depth];
+                sums[prev_depth] = <span class="hljs-number">0</span>;
+            &rbrace;
+            sums[depth] += <span class="hljs-keyword">self</span>.data[i].size;
+            prev_depth = depth;
+        &rbrace;
+    &rbrace;
+
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">get</span>(<span class="hljs-keyword">self</span>: &amp;<span class="hljs-keyword">Self</span>, p: &amp;Path) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Vec</span>&lt;Info&gt; &lbrace;
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">start</span> = <span class="hljs-keyword">self</span>
+            .data
+            .<span class="hljs-title function_ invoke__">binary_search_by</span>(|x| x.path.<span class="hljs-title function_ invoke__">cmp</span>(&amp;p.<span class="hljs-title function_ invoke__">to_path_buf</span>()))
+            .<span class="hljs-title function_ invoke__">unwrap</span>();
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">end</span> = <span class="hljs-keyword">self</span>
+            .data[start..]
+            .<span class="hljs-title function_ invoke__">partition_point</span>(|x| x.path.<span class="hljs-title function_ invoke__">starts_with</span>(&amp;p.<span class="hljs-title function_ invoke__">to_path_buf</span>()));
+
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">target</span> = p.<span class="hljs-title function_ invoke__">components</span>().<span class="hljs-title function_ invoke__">count</span>() + <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">items</span>: <span class="hljs-type">Vec</span>&lt;Info&gt; = <span class="hljs-keyword">self</span>.data[start..start + end]
+            .<span class="hljs-title function_ invoke__">iter</span>()
+            .<span class="hljs-title function_ invoke__">filter</span>(|x| x.depth == target)
+            .<span class="hljs-title function_ invoke__">cloned</span>()
+            .<span class="hljs-title function_ invoke__">collect</span>();
+        items.<span class="hljs-title function_ invoke__">sort_by</span>(|a, b| b.size.<span class="hljs-title function_ invoke__">cmp</span>(&amp;a.size));
+        items
+    &rbrace;
+&rbrace;</pre><p>And that&#039;s it. The rest of code deals with the TUI, and is of no interest. Check out the <a href="https://github.com/kejcao/adansonia/">GitHub repo</a> if you&#039;re interested in trying it out or seeing the full code. Flat arrays are fast, surprisingly so. Computers are fast.</p>
+</article></main></body>
+
+</html>

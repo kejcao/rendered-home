@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>A Strange Hello World Program in C - Kevin Cao</title>
+<meta name="description" content="Compile the C code below with either GCC or Clang on a x86-64 Linux platform" />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>A Strange Hello World Program in C</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>May 11, 2023</time></div>
+  </header>
+  <p>Compile the C code below with either GCC or Clang on a x86-64 Linux platform</p><pre >__attribute__((section(<span class="hljs-string">&quot;.text&quot;</span>))) <span class="hljs-type">const</span> <span class="hljs-type">char</span> main[] = &lbrace;
+    <span class="hljs-number">0x55</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>, <span class="hljs-number">0xe5</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x83</span>, <span class="hljs-number">0xec</span>, <span class="hljs-number">0x10</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0xb8</span>,
+    <span class="hljs-number">0x68</span>, <span class="hljs-number">0x65</span>, <span class="hljs-number">0x6c</span>, <span class="hljs-number">0x6c</span>, <span class="hljs-number">0x6f</span>, <span class="hljs-number">0x2c</span>, <span class="hljs-number">0x20</span>, <span class="hljs-number">0x77</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>,
+    <span class="hljs-number">0x45</span>, <span class="hljs-number">0xf1</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0xb8</span>, <span class="hljs-number">0x77</span>, <span class="hljs-number">0x6f</span>, <span class="hljs-number">0x72</span>, <span class="hljs-number">0x6c</span>, <span class="hljs-number">0x64</span>, <span class="hljs-number">0x21</span>,
+    <span class="hljs-number">0x0a</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>, <span class="hljs-number">0x45</span>, <span class="hljs-number">0xf8</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x8d</span>, <span class="hljs-number">0x45</span>, <span class="hljs-number">0xf1</span>,
+    <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>, <span class="hljs-number">0xc6</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0xc0</span>, <span class="hljs-number">0x01</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>,
+    <span class="hljs-number">0x48</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0x01</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0xc2</span>,
+    <span class="hljs-number">0x0f</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x0f</span>, <span class="hljs-number">0x05</span>, <span class="hljs-number">0xb8</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>,
+    <span class="hljs-number">0x00</span>, <span class="hljs-number">0xc9</span>, <span class="hljs-number">0xc3</span>
+&rbrace;;</pre><p>And you will get</p><pre >$ gcc main.c
+/tmp/ccJRPyPq.s: Assembler messages:
+/tmp/ccJRPyPq.s:4: Warning: ignoring changed section attributes for .text
+$ clang main.c
+main.c:1:1: warning: variable named &#039;main&#039; with external linkage has undefined behavior [-Wmain]
+__attribute__((section(&quot;.text&quot;))) const char main[] = &lbrace;
+^
+1 warning generated.
+$ ./a.out
+hello, world!</pre><p>Both compilers emit warnings but if we ignore them and run the executable anyway it prints &quot;hello, world!&quot;. This is surprising as we&#039;re seemingly assigning random bytes to a variable called <code>main</code>, and the fact that it compiles at all is astonishing.</p><p>The trick is to recall that computers make no differentiation between data and code. A CPU fetches then executes 0s and 1s (called machine code) from memory and doesn&#039;t care where those 0s and 1s come from. It will happily try to run an image or a word document and interpret that as machine code, although it will likely run itself into an invalid state and segfault.</p><p>Each CPU has a different type of machine code, according to the ISA (Instruction Set Architecture) it chooses to implement. For example, Intel CPUs implement the x86/x86-64 ISA and the ARM brand of CPUs implement the eponymous ARM ISA. Machine code can be considered as a sequence of individual instructions, each of which performs a really simple task such as moving an immediate (a constant value) into a register (which are variables the CPU have) or adding two numbers. For each instruction an opcode identifies the type of instruction and parameters specify what the instruction should be done on; this is all encoded in a few bytes.</p><p>Machine code is just 0s and 1s so it&#039;s time consuming and difficult for programmers to directly write in, so programmers have invented assembly language, which is essentially the same as machine code except each instruction is identified by a mnemonic instead of an opcode—for example <code>mov</code> for move, <code>add</code> for addition, and <code>lea</code> for load effective address. Below is x86-64 machine code followed by assembly</p><pre >b8 0a 00 00 00  =  mov eax, 10
+bb 0d 00 00 00  =  mov ebx, 13
+01 d8           =  add eax, ebx</pre><p>So the sequence of bytes <code>0x01</code>, <code>0xd8</code> tell the CPU to add whatever is in the <code>ebx</code> register to the <code>eax</code> register. If we compile the following C code that prints &quot;hello, world!&quot; in a very straightforward manner</p><pre ><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &lbrace;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;hello, world!\n&quot;</span>);
+&rbrace;</pre><p>Then disassemble it</p><pre >...
+0000000000001140 &lt;main&gt;:
+    1140:        55                           push   %rbp
+    1141:        48 89 e5                     mov    %rsp,%rbp
+    1144:        48 8d 3d b9 0e 00 00         lea    0xeb9(%rip),%rdi        # 2004 &lt;_IO_stdin_used+0x4&gt;
+    114b:        b0 00                        mov    $0x0,%al
+    114d:        e8 de fe ff ff               call   1030 &lt;printf@plt&gt;
+    1152:        31 c0                        xor    %eax,%eax
+    1154:        5d                           pop    %rbp
+    1155:        c3                           ret
+...</pre><p>We can see the assembly that the compiler generates from our C source code. In the middle column of the listing we see the actual machine code, the bits and bytes, stored in the executable. Instead of the compiler generating the assembly and then the assembler assembling the assembly, why not skip the middlemen and directly assign the machine code to our main function/array? If we try to compile that</p><pre ><span class="hljs-type">const</span> <span class="hljs-type">char</span> main[] = &lbrace;
+    <span class="hljs-number">0x55</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>, <span class="hljs-number">0xe5</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x8d</span>, <span class="hljs-number">0x3d</span>, <span class="hljs-number">0xb9</span>, <span class="hljs-number">0x0e</span>, <span class="hljs-number">0x00</span>,
+    <span class="hljs-number">0x00</span>, <span class="hljs-number">0xb0</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0xe8</span>, <span class="hljs-number">0xde</span>, <span class="hljs-number">0xfe</span>, <span class="hljs-number">0xff</span>, <span class="hljs-number">0xff</span>, <span class="hljs-number">0x31</span>, <span class="hljs-number">0xc0</span>,
+    <span class="hljs-number">0x5d</span>, <span class="hljs-number">0xc3</span>,
+&rbrace;;</pre><p>Then running the resulting executable</p><pre >$ ./a.out
+Segmentation fault (core dumped)</pre><p>We get a segfault. This is because of a couple problems:</p><ol><li> If we <code>objdump -d a.out</code>, we don&#039;t even see the main function. Try <code>objdump -D a.out</code> and we see that our main function is hidden away in the <code>.rodata</code> section, which is marked non-executable.
+</li>
+<li> Take note of the disassembly of our normal hello world function, see how <code>call 1030 &lt;printf@plt&gt;</code> is calling an external symbol <code>printf</code> that is resolved at runtime by the dynamic linker. The linker can&#039;t do its job properly if GCC doesn&#039;t even know we&#039;re using the symbol <code>printf</code>.
+</li>
+</ol><p>The solution to the first problem is to explicitly force the compiler to put the main variable into the .text section. This is achieved with <code>__attribute__((section(&quot;.text&quot;)))</code>.</p><p>The solution to the second problem is to use Linux syscalls. Instead of using a constant string we&#039;ll be putting the string onto the stack instead, so it&#039;s nearby and easily addressed. Compile the following code with <code>-fno-stack-protector</code> which just simplifies the assembly by getting rid of the extraneous stack protector code</p><pre ><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &lbrace;
+    <span class="hljs-type">char</span> s[] = <span class="hljs-string">&quot;hello, world!\n&quot;</span>;
+    <span class="hljs-built_in">printf</span>(s);
+&rbrace;</pre><p>Disassembling the resulting executable yields</p><pre >...
+0000000000001139 &lt;main&gt;:
+    1139:        55                           push   %rbp
+    113a:        48 89 e5                     mov    %rsp,%rbp
+    113d:        48 83 ec 10                  sub    $0x10,%rsp
+    1141:        48 b8 68 65 6c 6c 6f         movabs $0x77202c6f6c6c6568,%rax
+    1148:        2c 20 77
+    114b:        48 89 45 f1                  mov    %rax,-0xf(%rbp)
+    114f:        48 b8 77 6f 72 6c 64         movabs $0xa21646c726f77,%rax
+    1156:        21 0a 00
+    1159:        48 89 45 f8                  mov    %rax,-0x8(%rbp)
+    115d:        48 8d 45 f1                  lea    -0xf(%rbp),%rax
+    1161:        48 89 c7                     mov    %rax,%rdi
+    1164:        b8 00 00 00 00               mov    $0x0,%eax
+    1169:        e8 c2 fe ff ff               call   1030 &lt;printf@plt&gt;
+    116e:        b8 00 00 00 00               mov    $0x0,%eax
+    1173:        c9                           leave
+    1174:        c3                           ret
+...</pre><p>We can copy the assembly into a temporary source file and switch out the call to <code>printf</code> with our syscall</p><pre >.text
+.globl main
+main:
+    push   %rbp
+    mov    %rsp,%rbp
+    sub    $0x10,%rsp
+    movabs $0x77202c6f6c6c6568,%rax
+    
+    mov    %rax,-0xf(%rbp)
+    movabs $0xa21646c726f77,%rax
+    
+    mov    %rax,-0x8(%rbp)
+    lea    -0xf(%rbp),%rax
+    #mov    %rax,%rdi
+    mov    %rax,%rsi # move address of string into rsi instead of rdi
+    #mov    $0x0,%eax
+
+    mov $0x1,%rax # syscall number (0x1 is write)
+    mov $0x1,%rdi # file descriptor (0x1 is stdout)
+    mov $0xf,%rdx # length of string (14 + 1 for null terminator)
+    syscall
+    #call   1030 &lt;printf@plt&gt;
+
+    mov    $0x0,%eax
+    leave
+    ret</pre><p>Then we assemble and link the assembly and disassemble again</p><pre >$ gcc main.s
+$ objdump -d a.out
+...
+0000000000001119 &lt;main&gt;:
+    1119:        55                           push   %rbp
+    111a:        48 89 e5                     mov    %rsp,%rbp
+    111d:        48 83 ec 10                  sub    $0x10,%rsp
+    1121:        48 b8 68 65 6c 6c 6f         movabs $0x77202c6f6c6c6568,%rax
+    1128:        2c 20 77
+    112b:        48 89 45 f1                  mov    %rax,-0xf(%rbp)
+    112f:        48 b8 77 6f 72 6c 64         movabs $0xa21646c726f77,%rax
+    1136:        21 0a 00
+    1139:        48 89 45 f8                  mov    %rax,-0x8(%rbp)
+    113d:        48 8d 45 f1                  lea    -0xf(%rbp),%rax
+    1141:        48 89 c6                     mov    %rax,%rsi
+    1144:        b8 00 00 00 00               mov    $0x0,%eax
+    1149:        48 c7 c0 01 00 00 00         mov    $0x1,%rax
+    1150:        48 c7 c7 01 00 00 00         mov    $0x1,%rdi
+    1157:        48 c7 c2 0f 00 00 00         mov    $0xf,%rdx
+    115e:        0f 05                        syscall
+    1160:        b8 00 00 00 00               mov    $0x0,%eax
+    1165:        c9                           leave
+    1166:        c3                           ret
+...</pre><p>Now we can finally copy that machine code and combine our technique of explicitly telling the compiler to put the main variable into the .text section</p><pre >__attribute__((section(<span class="hljs-string">&quot;.text&quot;</span>))) <span class="hljs-type">const</span> <span class="hljs-type">char</span> main[] = &lbrace;
+    <span class="hljs-number">0x55</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>, <span class="hljs-number">0xe5</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x83</span>, <span class="hljs-number">0xec</span>, <span class="hljs-number">0x10</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0xb8</span>,
+    <span class="hljs-number">0x68</span>, <span class="hljs-number">0x65</span>, <span class="hljs-number">0x6c</span>, <span class="hljs-number">0x6c</span>, <span class="hljs-number">0x6f</span>, <span class="hljs-number">0x2c</span>, <span class="hljs-number">0x20</span>, <span class="hljs-number">0x77</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>,
+    <span class="hljs-number">0x45</span>, <span class="hljs-number">0xf1</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0xb8</span>, <span class="hljs-number">0x77</span>, <span class="hljs-number">0x6f</span>, <span class="hljs-number">0x72</span>, <span class="hljs-number">0x6c</span>, <span class="hljs-number">0x64</span>, <span class="hljs-number">0x21</span>,
+    <span class="hljs-number">0x0a</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>, <span class="hljs-number">0x45</span>, <span class="hljs-number">0xf8</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0x8d</span>, <span class="hljs-number">0x45</span>, <span class="hljs-number">0xf1</span>,
+    <span class="hljs-number">0x48</span>, <span class="hljs-number">0x89</span>, <span class="hljs-number">0xc6</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0xc0</span>, <span class="hljs-number">0x01</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>,
+    <span class="hljs-number">0x48</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0x01</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x48</span>, <span class="hljs-number">0xc7</span>, <span class="hljs-number">0xc2</span>,
+    <span class="hljs-number">0x0f</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x0f</span>, <span class="hljs-number">0x05</span>, <span class="hljs-number">0xb8</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>, <span class="hljs-number">0x00</span>,
+    <span class="hljs-number">0x00</span>, <span class="hljs-number">0xc9</span>, <span class="hljs-number">0xc3</span>
+&rbrace;;</pre><p>Which is what was shown at the beginning. Note the machine code is specific to x86-64 processors and I&#039;m doing a Linux syscall, which would be done differently on other OSes. The code is a fun party trick but for obvious reasons is not portable and horrible in practice.</p>
+</article></main></body>
+
+</html>

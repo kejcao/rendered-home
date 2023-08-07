@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Lanczos Image Resizing - Kevin Cao</title>
+<meta name="description" content="I wrote a document viewer [https://github.com/kejcao/PDFViewer] to read my PDF
+files, but I wanted to view my CBZ files with it too. CBZ files are ZIP archives
+of images used as a format to store comic books. On starting, the problem I ran
+into was that resizing the images using SFML left aliasing artifacts and
+jaggies. I'd heard that Lanczos was the best algorithm to resize images, so I
+implemented it:" />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Lanczos Image Resizing</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Feb 26, 2025</time></div>
+  </header>
+  <p>I wrote a <a href="https://github.com/kejcao/PDFViewer">document viewer</a> to read my PDF files, but I wanted to view my CBZ files with it too. CBZ files are ZIP archives of images used as a format to store comic books. On starting, the problem I ran into was that resizing the images using SFML left aliasing artifacts and jaggies. I&#039;d heard that Lanczos was the best algorithm to resize images, so I implemented it:</p><pre ><span class="hljs-comment">// Follows the definition on Wikipedia:</span>
+<span class="hljs-comment">// https://en.wikipedia.org/wiki/Lanczos_resampling</span>
+<span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">lanczos2</span><span class="hljs-params">(<span class="hljs-type">double</span> x)</span> </span>&lbrace;
+    <span class="hljs-keyword">constexpr</span> <span class="hljs-type">double</span> a = <span class="hljs-number">2</span>;
+    <span class="hljs-keyword">if</span> (x == <span class="hljs-number">0</span>)
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (-a &lt;= x &amp;&amp; x &lt; a)
+        <span class="hljs-keyword">return</span> a * <span class="hljs-built_in">sin</span>(M_PI * x) * <span class="hljs-built_in">sin</span>(M_PI * x / a) / (M_PI * M_PI * x * x);
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+&rbrace;
+
+<span class="hljs-function">sf::Image <span class="hljs-title">resize</span><span class="hljs-params">(sf::Image img, <span class="hljs-type">float</span> zoom)</span> </span>&lbrace;
+    <span class="hljs-comment">// src &amp; out data are len(w * h * 4); 4 channels, RGBA.</span>
+    <span class="hljs-keyword">auto</span> [src_w, src_h] = img.<span class="hljs-built_in">getSize</span>();
+    <span class="hljs-type">const</span> <span class="hljs-type">uint8_t</span>* src_data = img.<span class="hljs-built_in">getPixelsPtr</span>();
+
+    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> out_w = src_w * zoom;
+    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> out_h = src_h * zoom;
+    <span class="hljs-type">uint8_t</span>* out_data = (<span class="hljs-type">uint8_t</span>*)<span class="hljs-built_in">malloc</span>(out_w * out_h * <span class="hljs-number">4</span>);
+
+    <span class="hljs-comment">// For each output pixel we can map/scale it to a corresponding</span>
+    <span class="hljs-comment">// position in the source image; we then take the five nearest pixels</span>
+    <span class="hljs-comment">// to this position and compute their distances, and we apply the</span>
+    <span class="hljs-comment">// lanczos function to these distances (its called lanczos resampling,</span>
+    <span class="hljs-comment">// after all). The resulting numbers are called &quot;weights.&quot;</span>
+    <span class="hljs-comment">//</span>
+    <span class="hljs-comment">// This is a memoization/caching step -- computing lanczos2 25-times</span>
+    <span class="hljs-comment">// for each output pixel (x,y) is expensive, but by mapping the output</span>
+    <span class="hljs-comment">// pixel to a position in the source image and pre-computing the</span>
+    <span class="hljs-comment">// weights we gain huge savings/speedups.</span>
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">KernelEntry</span> &lbrace;
+        <span class="hljs-type">int</span> lo, hi;
+        <span class="hljs-type">double</span> weights[<span class="hljs-number">5</span>];
+    &rbrace;;
+
+    <span class="hljs-comment">// compute the weights in the y-direction.</span>
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">KernelEntry</span> weights_ys[out_h];
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; y &lt; out_h; ++y) &lbrace;
+        <span class="hljs-type">double</span> srcY = (<span class="hljs-type">double</span>)y / zoom;
+
+        <span class="hljs-type">int</span> lo = <span class="hljs-built_in">ceil</span>(srcY - <span class="hljs-number">3</span>);
+        <span class="hljs-keyword">if</span> (lo &lt; <span class="hljs-number">0</span>)
+            lo = <span class="hljs-number">0</span>;
+        <span class="hljs-type">int</span> hi = <span class="hljs-built_in">floor</span>(srcY + <span class="hljs-number">3</span> - <span class="hljs-number">1e-6</span>f);
+        <span class="hljs-keyword">if</span> (hi &gt; src_h - <span class="hljs-number">1</span>)
+            hi = src_h - <span class="hljs-number">1</span>;
+        <span class="hljs-built_in">assert</span>(hi - lo &lt;= <span class="hljs-number">5</span>);
+
+        weights_ys[y] = (<span class="hljs-keyword">struct</span> KernelEntry) &lbrace; lo, hi &rbrace;;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> y_ = lo; y_ &lt;= hi; ++y_) &lbrace;
+            weights_ys[y].weights[y_ - lo] = <span class="hljs-built_in">lanczos2</span>(y_ - srcY);
+        &rbrace;
+    &rbrace;
+
+    <span class="hljs-comment">// compute the weights in the x-direction.</span>
+    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">KernelEntry</span> weights_xs[out_w];
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> x = <span class="hljs-number">0</span>; x &lt; out_w; ++x) &lbrace;
+        <span class="hljs-type">double</span> srcX = (<span class="hljs-type">double</span>)x / zoom;
+
+        <span class="hljs-type">int</span> lo = <span class="hljs-built_in">ceil</span>(srcX - <span class="hljs-number">3</span>);
+        <span class="hljs-keyword">if</span> (lo &lt; <span class="hljs-number">0</span>)
+            lo = <span class="hljs-number">0</span>;
+        <span class="hljs-type">int</span> hi = <span class="hljs-built_in">floor</span>(srcX + <span class="hljs-number">3</span> - <span class="hljs-number">1e-6</span>f);
+        <span class="hljs-keyword">if</span> (hi &gt; src_w - <span class="hljs-number">1</span>)
+            hi = src_w - <span class="hljs-number">1</span>;
+        <span class="hljs-built_in">assert</span>(hi - lo &lt;= <span class="hljs-number">5</span>);
+
+        weights_xs[x] = (<span class="hljs-keyword">struct</span> KernelEntry) &lbrace; lo, hi &rbrace;;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> x_ = lo; x_ &lt;= hi; ++x_) &lbrace;
+            weights_xs[x].weights[x_ - lo] = <span class="hljs-built_in">lanczos2</span>(x_ - srcX);
+        &rbrace;
+    &rbrace;
+
+    <span class="hljs-comment">// loop through each output pixel</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; y &lt; out_h; ++y) &lbrace;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> x = <span class="hljs-number">0</span>; x &lt; out_w; ++x) &lbrace;
+            <span class="hljs-type">int</span> out_i = (y * out_w + x) * <span class="hljs-number">4</span>;
+            out_data[out_i + <span class="hljs-number">3</span>] = <span class="hljs-number">255</span>; <span class="hljs-comment">// alpha = 255</span>
+
+            <span class="hljs-comment">// loop through each color channel independently (RGB)</span>
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> channel = <span class="hljs-number">0</span>; channel &lt; <span class="hljs-number">3</span>; ++channel) &lbrace;
+                <span class="hljs-type">double</span> sum = <span class="hljs-number">0</span>;
+                <span class="hljs-type">double</span> total_weight = <span class="hljs-number">0</span>;
+
+                <span class="hljs-comment">// compute the kernel stuff</span>
+                <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> y_ = weights_ys[y].lo; y_ &lt;= weights_ys[y].hi; ++y_) &lbrace;
+                    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> x_ = weights_xs[x].lo; x_ &lt;= weights_xs[x].hi; ++x_) &lbrace;
+                        <span class="hljs-type">double</span> wy = weights_ys[y].weights[y_ - weights_ys[y].lo];
+                        <span class="hljs-type">double</span> wx = weights_xs[x].weights[x_ - weights_xs[x].lo];
+
+                        <span class="hljs-type">double</span> weight = wx * wy;
+                        sum += src_data[(y_ * src_w + x_) * <span class="hljs-number">4</span> + channel] * weight;
+                        total_weight += weight;
+                    &rbrace;
+                &rbrace;
+                out_data[out_i + channel] = std::<span class="hljs-built_in">clamp</span>((<span class="hljs-type">int</span>)(sum / total_weight), <span class="hljs-number">0</span>, <span class="hljs-number">255</span>);
+            &rbrace;
+        &rbrace;
+    &rbrace;
+
+    <span class="hljs-keyword">return</span> sf::<span class="hljs-built_in">Image</span>(&lbrace; out_w, out_h &rbrace;, out_data);
+&rbrace;</pre><p>The core algorithm is simple: Loop over each output pixel and map it to a position in the source image. Think of the nearest pixels to this position as square buckets of paint (I know, a cardinal sin, but nevertheless) and multiply the values of these pixels by the appropriate weight—which, in this case, is the Lanczos function applied to the distance between the mapped position plus or minus an integer increment, that lays within the pixel.</p><p>The two loops in the middle compute the &quot;kernel entries&quot; and are strictly unnecessary. But, they precompute the mapping of output pixels to source positions and the corresponding five Lanczos weights, which saves a lot of time compared to calculating the Lanczos function 25 times per pixel.</p><p>I noticed slight jaggies in the final output image around text and such, but this was solved by prefiltering the image with a Gaussian blur before resampling. This led to much better visual results in my opinion, although at the expense of a little sharpness. Here is the code for computing a Gaussian kernel with a certain sigma value, which is set depending on the zoom level:</p><pre ><span class="hljs-type">double</span> gaussian_kernel[<span class="hljs-number">5</span>][<span class="hljs-number">5</span>];
+<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">init_gaussian_kernel</span><span class="hljs-params">(<span class="hljs-type">double</span> sigma)</span> </span>&lbrace;
+    <span class="hljs-type">double</span> a[<span class="hljs-number">5</span>];
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">-2</span>; i &lt; <span class="hljs-number">3</span>; ++i) &lbrace;
+        a[i + <span class="hljs-number">2</span>] = <span class="hljs-built_in">exp</span>(<span class="hljs-number">-.5</span> * i * i / (sigma * sigma));
+    &rbrace;
+
+    <span class="hljs-type">double</span> sum = <span class="hljs-number">0</span>;
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; y &lt; <span class="hljs-number">5</span>; ++y) &lbrace;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> x = <span class="hljs-number">0</span>; x &lt; <span class="hljs-number">5</span>; ++x) &lbrace;
+            gaussian_kernel[y][x] = a[y] * a[x];
+            sum += gaussian_kernel[y][x];
+        &rbrace;
+    &rbrace;
+
+    <span class="hljs-comment">// normalize</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; y &lt; <span class="hljs-number">5</span>; ++y) &lbrace;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> x = <span class="hljs-number">0</span>; x &lt; <span class="hljs-number">5</span>; ++x) &lbrace;
+            gaussian_kernel[y][x] /= sum;
+        &rbrace;
+    &rbrace;
+&rbrace;</pre><p>And in the resize function, we add this near the beginning:</p><pre ><span class="hljs-keyword">if</span> (zoom &lt; <span class="hljs-number">1.0</span>) &lbrace; <span class="hljs-comment">// if downsampling apply gaussian blur for better results</span>
+    <span class="hljs-built_in">init_gaussian_kernel</span>(<span class="hljs-number">0.5</span> * (<span class="hljs-number">1.0</span> / zoom));
+    <span class="hljs-type">uint8_t</span>* filtered_src_data = (<span class="hljs-type">uint8_t</span>*)<span class="hljs-built_in">malloc</span>(src_w * src_h * <span class="hljs-number">4</span>);
+
+<span class="hljs-meta">#<span class="hljs-keyword">pragma</span> omp parallel for</span>
+    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> y = <span class="hljs-number">0</span>; y &lt; src_h; ++y) &lbrace;
+        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> x = <span class="hljs-number">0</span>; x &lt; src_w; ++x) &lbrace;
+            <span class="hljs-type">int</span> y_lo = y - <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span> (y_lo &lt; <span class="hljs-number">0</span>)
+                y_lo = <span class="hljs-number">0</span>;
+            <span class="hljs-type">int</span> y_hi = y + <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span> (y_hi &gt; src_h - <span class="hljs-number">1</span>)
+                y_hi = src_h - <span class="hljs-number">1</span>;
+
+            <span class="hljs-type">int</span> x_lo = x - <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span> (x_lo &lt; <span class="hljs-number">0</span>)
+                x_lo = <span class="hljs-number">0</span>;
+            <span class="hljs-type">int</span> x_hi = x + <span class="hljs-number">2</span>;
+            <span class="hljs-keyword">if</span> (x_hi &gt; src_w - <span class="hljs-number">1</span>)
+                x_hi = src_w - <span class="hljs-number">1</span>;
+
+            <span class="hljs-type">double</span> r = <span class="hljs-number">0</span>, g = <span class="hljs-number">0</span>, b = <span class="hljs-number">0</span>;
+            <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> ky = y_lo; ky &lt;= y_hi; ++ky) &lbrace;
+                <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> kx = x_lo; kx &lt;= x_hi; ++kx) &lbrace;
+                    r += (<span class="hljs-type">double</span>)src_data[(ky * src_w + kx) * <span class="hljs-number">4</span> + <span class="hljs-number">0</span>] * gaussian_kernel[ky - y_lo][kx - x_lo];
+                    g += (<span class="hljs-type">double</span>)src_data[(ky * src_w + kx) * <span class="hljs-number">4</span> + <span class="hljs-number">1</span>] * gaussian_kernel[ky - y_lo][kx - x_lo];
+                    b += (<span class="hljs-type">double</span>)src_data[(ky * src_w + kx) * <span class="hljs-number">4</span> + <span class="hljs-number">2</span>] * gaussian_kernel[ky - y_lo][kx - x_lo];
+                &rbrace;
+            &rbrace;
+
+            filtered_src_data[(y * src_w + x) * <span class="hljs-number">4</span> + <span class="hljs-number">0</span>] = (<span class="hljs-type">int</span>)r;
+            filtered_src_data[(y * src_w + x) * <span class="hljs-number">4</span> + <span class="hljs-number">1</span>] = (<span class="hljs-type">int</span>)g;
+            filtered_src_data[(y * src_w + x) * <span class="hljs-number">4</span> + <span class="hljs-number">2</span>] = (<span class="hljs-type">int</span>)b;
+            filtered_src_data[(y * src_w + x) * <span class="hljs-number">4</span> + <span class="hljs-number">3</span>] = <span class="hljs-number">255</span>;
+        &rbrace;
+    &rbrace;
+    src_data = filtered_src_data;
+&rbrace;</pre><p>Also, I added two lines of code leveraging OpenMP to easily parallelize both the Gaussian blurring and resampling loops. This significantly speeds up the page render times from around 600ms to only 100ms! (Also including the time taken to decode JPG/PNG). 100ms is fast enough to feel no noticeable latency when flipping through pages.</p><p>It amazes me how the code needs to touch 6,774,840 pixels, 25 + 25 times, for each color channel, so at least a billion addition and multiplication operations. And my computer can complete them in less than 100ms?!? Sure, it&#039;s on multiple cores, but someone tell me I&#039;m doing the math wrong. I haven&#039;t fully appreciated how fast CPUs are until now.</p><p>It&#039;s truly a testament to the ingenious engineering present (at every level of the stack) of modern computing systems, that I can write such trash code, yet through the power of compiler optimizations, CPU black magic and friendship, the code manages to scale and render 2091x3240 images in under 100ms. The embarrassingly parallel nature of the loops here and the 16 cores of my laptop are really saving my ass.</p><p>It would be better to implement Lanczos resampling on GPUs, but I&#039;m not familiar with them. 100ms is sufficient speed.</p>
+</article></main></body>
+
+</html>

@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Writing a Chrome Extension to Count Open Tabs - Kevin Cao</title>
+<meta name="description" content="I was curious as to how many Google Chrome tabs I have open (I estimated at
+least 100) but I couldn't think of any way to have a precise count except to
+manually tally each tab—which with at least 100 tabs is going to be a very
+menial task, so I searched online for alternative solutions. I found a Stack
+Exchange question
+[https://superuser.com/questions/967064/how-to-get-tab-count-in-chrome-desktop-without-app-extension]
+with many different answers but the only one that worked for me was the
+extension someone was promoting. I don't trust extensions (the only one I have
+is uBlock Origin), especially ones with low userbases. Beyond that I've never
+coded a web browser extension before so writing one that counts tabs seems like
+an easy first project to get into this area of development." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Writing a Chrome Extension to Count Open Tabs</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Jun 4, 2023</time></div>
+  </header>
+  <p>I was curious as to how many Google Chrome tabs I have open (I estimated at least 100) but I couldn&#039;t think of any way to have a precise count except to manually tally each tab—which with at least 100 tabs is going to be a very menial task, so I searched online for alternative solutions. I found a Stack Exchange <a href="https://superuser.com/questions/967064/how-to-get-tab-count-in-chrome-desktop-without-app-extension">question</a> with many different answers but the only one that worked for me was the extension someone was promoting. I don&#039;t trust extensions (the only one I have is uBlock Origin), especially ones with low userbases. Beyond that I&#039;ve never coded a web browser extension before so writing one that counts tabs seems like an easy first project to get into this area of development.</p><p>I wrote the extension in a night, extrapolating from Google Chrome&#039;s series of well-written introductory <a href="https://developer.chrome.com/docs/extensions/mv3/getstarted/">articles</a> for people like me. My code is available on a <a href="https://github.com/kejcao/tabs">GitHub repo</a>. The extension shows the number of tabs you have open as text on a blue background below the icon. When you click on the icon it will show a popup with more information, including the number of windows, how many of which are incognito (this only works if you enable the extension on incognito windows) and the most commonly used sites you have open.</p>
+						<a class="img" href="/static/media/tabs-chrome-extension.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/tabs-chrome-extension.png"
+							  alt="tabs chrome extension"
+							/>
+						</a>
+					<p>It isn&#039;t shown in the screenshot, but if you hover over the icon you should get a popup giving you a summary of how many tabs and windows are open.</p><h3>The Details</h3><p>Every chrome extension needs to have a <code>manifest.json</code> file that describes what the extension is and should do. My extension is no exception:</p><pre ><span class="hljs-punctuation">&lbrace;</span>
+  <span class="hljs-attr">&quot;manifest_version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-number">3</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;name&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;Tabs&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;description&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;A small tool to count tabs and windows.&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;author&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;kejcao@proton.me&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;version&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;1.0&quot;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;icons&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&lbrace;</span>
+    <span class="hljs-attr">&quot;16&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;tabs.png&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;32&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;tabs.png&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;48&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;tabs.png&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;128&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;tabs.png&quot;</span>
+  <span class="hljs-punctuation">&rbrace;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;action&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&lbrace;</span>
+    <span class="hljs-attr">&quot;default_popup&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;popup.html&quot;</span><span class="hljs-punctuation">,</span>
+    <span class="hljs-attr">&quot;default_icon&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;tabs.png&quot;</span>
+  <span class="hljs-punctuation">&rbrace;</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;permissions&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span>
+    <span class="hljs-string">&quot;tabs&quot;</span>
+  <span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>
+  <span class="hljs-attr">&quot;background&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-punctuation">&lbrace;</span>
+    <span class="hljs-attr">&quot;service_worker&quot;</span><span class="hljs-punctuation">:</span> <span class="hljs-string">&quot;background.js&quot;</span>
+  <span class="hljs-punctuation">&rbrace;</span>
+<span class="hljs-punctuation">&rbrace;</span></pre><p>I got the icon from some random stock photo site. Essentially all the code works by using the following two functions,</p><pre >chrome.<span class="hljs-property">tabs</span>.<span class="hljs-title function_">query</span>(&lbrace;&rbrace;, <span class="hljs-function"><span class="hljs-params">tabs</span> =&gt;</span> &lbrace; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(tabs); &rbrace;);
+chrome.<span class="hljs-property">windows</span>.<span class="hljs-title function_">getAll</span>(&lbrace;&rbrace;, <span class="hljs-function"><span class="hljs-params">wins</span> =&gt;</span> &lbrace; <span class="hljs-variable language_">console</span>.<span class="hljs-title function_">log</span>(wins); &rbrace;);</pre><p><code>tabs</code> is an array of tabs and <code>wins</code> is an array of windows. Each element in these arrays correspond to a tab or window and contain information about it. So, to get the number of tabs or windows we can simply get the length of the <code>tabs</code> or <code>wins</code> array in the callback. The first argument in those two functions is for filtering, which we don&#039;t do—after all we want to count all the tabs/windows.</p><p>Each element in the <code>wins</code> array contains the property <code>incognito</code>, a boolean value describing whether the window is incognito or not. So to get the number of incognito windows, we can simply do something like <code>wins.filter(w =&gt; w.incognito).length</code>.</p><p>To set the badge text (the little number on the bottom of the icon in a blue box) and the title (the text that pops up when you hover over the icon for a while) we can use the following functions,</p><pre >chrome.<span class="hljs-property">action</span>.<span class="hljs-title function_">setBadgeText</span>(&lbrace; <span class="hljs-attr">text</span>: <span class="hljs-string">&quot;10&quot;</span> &rbrace;);
+chrome.<span class="hljs-property">action</span>.<span class="hljs-title function_">setTitle</span>(&lbrace; <span class="hljs-attr">title</span>: <span class="hljs-string">&quot;10 tabs&quot;</span> &rbrace;);</pre><p>These functions are used in the <code>background.js</code> file, which I believe runs at the beginning of the extension. In the extension the <code>text</code> and <code>title</code> values are dynamic and depends on the result of <code>chrome.tabs.query</code> and <code>chrome.windows.getAll</code> so we need to run these functions every time a new tab or window appears or disappears, which ensures the numbers stay accurate. This is done by hooking event listeners, where the <code>update</code> function sets the badge text and title to the appropriate values.</p><pre >chrome.<span class="hljs-property">tabs</span>.<span class="hljs-property">onCreated</span>.<span class="hljs-title function_">addListener</span>(update);
+chrome.<span class="hljs-property">tabs</span>.<span class="hljs-property">onRemoved</span>.<span class="hljs-title function_">addListener</span>(update);
+chrome.<span class="hljs-property">windows</span>.<span class="hljs-property">onCreated</span>.<span class="hljs-title function_">addListener</span>(update);
+chrome.<span class="hljs-property">windows</span>.<span class="hljs-property">onRemoved</span>.<span class="hljs-title function_">addListener</span>(update);</pre><p>Each element in the array <code>tabs</code> contain additional properties such as <code>url</code> (note this only appears if we have <code>&quot;permissions&quot;: [&quot;tabs&quot;]</code> in the manifest) so we can do something like this,</p><pre ><span class="hljs-keyword">let</span> urls = &lbrace;&rbrace;;
+<span class="hljs-keyword">for</span> (<span class="hljs-keyword">const</span> t <span class="hljs-keyword">of</span> tabs) &lbrace;
+  <span class="hljs-keyword">const</span> host = <span class="hljs-keyword">new</span> <span class="hljs-title function_">URL</span>(t.<span class="hljs-property">url</span>).<span class="hljs-property">hostname</span>;
+  <span class="hljs-keyword">if</span> (!(host <span class="hljs-keyword">in</span> urls)) &lbrace;
+    urls[host] = <span class="hljs-number">0</span>;
+  &rbrace;
+  urls[host] += <span class="hljs-number">1</span>;
+&rbrace;</pre><p>Where we make the dictionary <code>urls</code> where the keys are websites and the values are how many tabs are open to that website. We can sort this by number of tabs by first converting the dictionary to an array then sorting it,</p><pre >urls = <span class="hljs-title class_">Object</span>.<span class="hljs-title function_">entries</span>(urls).<span class="hljs-title function_">sort</span>(<span class="hljs-function">(<span class="hljs-params">lhs, rhs</span>) =&gt;</span> &lbrace;
+  <span class="hljs-keyword">return</span> rhs[<span class="hljs-number">1</span>] - lhs[<span class="hljs-number">1</span>];
+&rbrace;).<span class="hljs-title function_">slice</span>(<span class="hljs-number">0</span>, <span class="hljs-number">10</span>);</pre><p>Note that we take the top 10 results only, that&#039;s why we slice at the end. We can then iterate over this and print it or something.</p><p>I should mention that the layout for the popup window shown on the screenshot above is in the file <code>popup.html</code> which runs <code>popup.js</code> whom is responsible for fetching and filling in the dynamic information regarding tabs and windows.</p><p>Remember, all the code for the fully working extension is in my <a href="https://github.com/kejcao/tabs">GitHub repo</a>.</p>
+</article></main></body>
+
+</html>

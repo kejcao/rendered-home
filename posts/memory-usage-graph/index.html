@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Memory Usage Graphs in Python - Kevin Cao</title>
+<meta name="description" content="As of late I've been writing a raytracer and was rendering polygon meshes
+composed of millions of triangles so I was interested in how much memory I used
+and how much I could save by switching to floats (vs using doubles) or making
+optimizations to how I store my BVH nodes." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Memory Usage Graphs in Python</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Sep 8, 2023</time></div>
+  </header>
+  <p>As of late I&#039;ve been writing a raytracer and was rendering polygon meshes composed of millions of triangles so I was interested in how much memory I used and how much I could save by switching to floats (vs using doubles) or making optimizations to how I store my BVH nodes.</p><p>I decided to cook up a general purpose script to measure this kind of thing. It&#039;s written in Python and pretty straightforward, in fact there&#039;s not much to explain. We open a subprocess running the command specified by the user, then query certain files in <code>/proc</code> that show memory usage every interval (specified by the user, but by default half a second) and when the subprocess terminates we pop open a Matplotlib graph to show the results.</p><pre ><span class="hljs-comment">#!/usr/bin/python3</span>
+
+<span class="hljs-keyword">import</span> argparse
+<span class="hljs-keyword">import</span> subprocess
+<span class="hljs-keyword">import</span> sys
+<span class="hljs-keyword">import</span> time
+
+<span class="hljs-keyword">import</span> matplotlib.pyplot <span class="hljs-keyword">as</span> plt
+<span class="hljs-keyword">import</span> matplotlib.ticker <span class="hljs-keyword">as</span> ticker
+
+parser = argparse.ArgumentParser(
+    prog=<span class="hljs-string">&#x27;ram.py&#x27;</span>,
+    description=<span class="hljs-string">&#x27;Measure RAM usage of program.&#x27;</span>,
+)
+parser.add_argument(
+    <span class="hljs-string">&#x27;cmd&#x27;</span>, nargs=<span class="hljs-string">&#x27;+&#x27;</span>,
+    <span class="hljs-built_in">help</span>=<span class="hljs-string">&#x27;the command to run&#x27;</span>
+)
+parser.add_argument(
+    <span class="hljs-string">&#x27;-n&#x27;</span>, <span class="hljs-string">&#x27;--interval&#x27;</span>, default=<span class="hljs-number">.5</span>, <span class="hljs-built_in">type</span>=<span class="hljs-built_in">float</span>,
+    <span class="hljs-built_in">help</span>=<span class="hljs-string">&#x27;wait INTERVAL seconds before querying for RAM&#x27;</span>
+)
+args = parser.parse_args()
+
+<span class="hljs-keyword">with</span> subprocess.Popen(args.cmd) <span class="hljs-keyword">as</span> p:
+    rss, vsz = [], []
+    <span class="hljs-keyword">try</span>:
+        <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+            <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">f&#x27;/proc/<span class="hljs-subst">&lbrace;p.pid&rbrace;</span>/smaps_rollup&#x27;</span>) <span class="hljs-keyword">as</span> fp:
+                fp.readline()
+                rss.append(<span class="hljs-built_in">int</span>(fp.readline().split()[<span class="hljs-number">1</span>]) / <span class="hljs-number">1024</span>)
+            <span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">f&#x27;/proc/<span class="hljs-subst">&lbrace;p.pid&rbrace;</span>/stat&#x27;</span>) <span class="hljs-keyword">as</span> fp:
+                vsz.append(<span class="hljs-built_in">int</span>(fp.readline().split()[<span class="hljs-number">22</span>]) / <span class="hljs-number">1024</span> / <span class="hljs-number">1024</span>)
+            <span class="hljs-keyword">try</span>:
+                p.wait(timeout=args.interval)
+            <span class="hljs-keyword">except</span> subprocess.TimeoutExpired:
+                <span class="hljs-keyword">pass</span>
+            <span class="hljs-keyword">else</span>: <span class="hljs-comment"># no except</span>
+                <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">except</span> FileNotFoundError:
+        <span class="hljs-keyword">pass</span>
+
+plt.plot([args.interval*i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(rss))], rss, label=<span class="hljs-string">&#x27;rss&#x27;</span>)
+plt.plot([args.interval*i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(vsz))], vsz, label=<span class="hljs-string">&#x27;vsz&#x27;</span>)
+plt.gca().yaxis.set_major_formatter(ticker.FormatStrFormatter(<span class="hljs-string">&#x27;%d MB&#x27;</span>))
+plt.ylabel(<span class="hljs-string">&#x27;ram usage&#x27;</span>)
+plt.legend()
+plt.show()</pre><p>One thing of note is that it shows both the RSS (resident set size) and VSZ (virtual memory size) usage. RSS is the amount of physical RAM held by the process and VSZ is how much memory the process has used or theoretically has access to, if that makes sense.  Below is a graph drawn by &quot;<code>ram.py -n .1 ./raytracer</code>&quot;. It renders Stanford&#039;s <a href="https://graphics.stanford.edu/data/3Dscanrep/">3D scan</a> of a dragon—made of roughly a million triangles. I could easily save 100MB of RAM by switching to floats rather than using doubles.</p>
+						<a class="img" href="/static/media/ram-usage-graph.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/ram-usage-graph.png"
+							  alt="ram usage graph"
+							/>
+						</a>
+					
+</article></main></body>
+
+</html>

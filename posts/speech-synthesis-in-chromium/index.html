@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Speech Synthesis in Chromium - Kevin Cao</title>
+<meta name="description" content="I saw this cool project the other day, a web extension that helps you learn
+Japanese by showing a new word and its definition on every new tab. I wanted to
+apply the concept to otherother languages like French though—luckily the
+extension JapaneseTab [https://github.com/Anupya/JapaneseTab] is open source. I
+was cleaning and familiarizing myself with the code base, pruning features and
+UI elements I didn't like, until I noticed that no matter how hard or how many
+times I clicked the small play audio button on the right side of the hiragana to
+pronounce it, no sound would come out." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Speech Synthesis in Chromium</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Feb 4, 2024</time></div>
+  </header>
+  <p>I saw this cool project the other day, a web extension that helps you learn Japanese by showing a new word and its definition on every new tab. I wanted to apply the concept to otherother languages like French though—luckily the extension <a href="https://github.com/Anupya/JapaneseTab">JapaneseTab</a> is open source. I was cleaning and familiarizing myself with the code base, pruning features and UI elements I didn&#039;t like, until I noticed that no matter how hard or how many times I clicked the small play audio button on the right side of the hiragana to pronounce it, no sound would come out.</p>
+						<a class="img" href="/static/media/japanese-tab-web-extension.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/japanese-tab-web-extension.png"
+							  alt="japanese tab web extension"
+							/>
+						</a>
+					<p>I ruled out idiotic possibilities like muted audio and dug further. JapaneseTab uses the Web Speech API for speech synthesis. In fact, press <kbd><kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>j</kbd></kbd> right now and a panel should appear. Paste the following code into that panel, and a robotic voice should tell you about the Web Speech API:</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word"><span class="hljs-variable language_">window</span>.<span class="hljs-property">speechSynthesis</span>.<span class="hljs-title function_">speak</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">SpeechSynthesisUtterance</span>(<span class="hljs-string">&quot;The Web Speech API, an API supported by all major browsers, allows for easy speech recognition and synthesis.&quot;</span>));</pre><p>No sound came out for me though, when running the code in the console panel. I suspected that Chromium didn&#039;t have this API builtin. I searched online for anyone else who might&#039;ve had this problem with Chromium and found an answer by <a href="https://askubuntu.com/a/937969">Luis Rebelo</a> who claimed that I needed to use a certain flag and install certain packages. I did so,</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo pacman -S espeak-ng speech-dispatcher</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">pkill chromium</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">chromium --enable-speech-dispatcher</span></pre><p>And I saw this really intimating warning message when I launched Chromium again, stating that, &quot;You are using an unsupported command-line flag: --enable-speech-dispatcher. Stability and security will suffer.&quot; No new bad thing has happened yet that I can attribute to this flag though—hopefully it stays this way.</p><p>By the way, the speech-dispatcher package allows one to access TTS on the CLI with a consistent interface, despite different backends, in various languages:</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">spd-say -l fr bonjour</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">spd-say -l cmn-latn-pinyin 你好</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">spd-say -l ja こんにちは</span></pre><p>And just one last thing before I end off. I wrote some Rust code (for practice) to generate definitions and example sentences for the most frequent French words using an LLM. More specifically, it runs Mistral-7b locally through Ollama, which is a project I submitted a PR to once to fix a tiny <code>readline</code> library inconsistency, but I digress.</p><pre ><span class="hljs-keyword">use</span> serde::Deserialize;
+<span class="hljs-keyword">use</span> std::io::prelude::*;
+
+<span class="hljs-meta">#[derive(Deserialize)]</span>
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Response</span> &lbrace;
+    response: <span class="hljs-type">String</span>,
+&rbrace;
+
+<span class="hljs-meta">#[tokio::main]</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">Result</span>&lt;(), reqwest::Error&gt; &lbrace;
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">client</span> = reqwest::Client::<span class="hljs-title function_ invoke__">new</span>();
+
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">reader</span> = std::io::BufReader::<span class="hljs-title function_ invoke__">new</span>(
+        std::fs::File::<span class="hljs-title function_ invoke__">open</span>(<span class="hljs-string">&quot;french.txt&quot;</span>).<span class="hljs-title function_ invoke__">unwrap</span>());
+
+    <span class="hljs-keyword">for</span> <span class="hljs-variable">line</span> <span class="hljs-keyword">in</span> reader.<span class="hljs-title function_ invoke__">lines</span>() &lbrace;
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">line</span> = line.<span class="hljs-title function_ invoke__">unwrap</span>();
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">word</span> = line.<span class="hljs-title function_ invoke__">split_whitespace</span>().<span class="hljs-title function_ invoke__">last</span>().<span class="hljs-title function_ invoke__">unwrap</span>();
+
+        <span class="hljs-keyword">if</span> word.<span class="hljs-title function_ invoke__">len</span>() &gt; <span class="hljs-number">2</span> &lbrace;
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">prompt</span> =
+                <span class="hljs-built_in">format!</span>(<span class="hljs-string">&quot;
+Me: déranger
+You: to bother; Ne dérange pas mes livres, s’il te plaît.
+Me: paris
+You: Paris; Cela fait huit ans qu’elle habite à Paris.
+Me: vêtements
+You: clothing; Les vêtements sont essentiels pour se protéger du froid.
+Me: prophète
+You: prophet; Nul n’est prophète en son pays.
+Me: &lbrace;&rbrace;
+You:
+                &quot;</span>, word)
+                .<span class="hljs-title function_ invoke__">trim</span>()
+                .<span class="hljs-title function_ invoke__">replace</span>(<span class="hljs-string">&quot;\n&quot;</span>, <span class="hljs-string">&quot;\\n&quot;</span>);
+
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">response</span> = client
+                .<span class="hljs-title function_ invoke__">post</span>(<span class="hljs-string">&quot;http://localhost:11434/api/generate&quot;</span>)
+                .<span class="hljs-title function_ invoke__">body</span>(
+                    <span class="hljs-built_in">format!</span>(<span class="hljs-string">r#&quot;&lbrace;&lbrace;
+                        &quot;model&quot;: &quot;mistral:instruct&quot;,
+                        &quot;prompt&quot;: &quot;&lbrace;&rbrace;&quot;,
+                        &quot;options&quot;: &lbrace;&lbrace;
+                            &quot;stop&quot;: [&quot;Me:&quot;, &quot;You:&quot;],
+                            &quot;temperature&quot;: 0.2,
+                            &quot;top_k&quot;: 12,
+                            &quot;top_p&quot;: 0.5,
+                            &quot;num_thread&quot;: 3
+                        &rbrace;&rbrace;,
+                        &quot;raw&quot;: true,
+                        &quot;stream&quot;: false
+                    &rbrace;&rbrace;&quot;#</span>, prompt)
+                    .<span class="hljs-title function_ invoke__">to_string</span>(),
+                )
+                .<span class="hljs-title function_ invoke__">send</span>().<span class="hljs-keyword">await</span>?
+                .json::&lt;Response&gt;().<span class="hljs-keyword">await</span>?;
+
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">response</span>: <span class="hljs-type">Vec</span>&lt;&amp;<span class="hljs-type">str</span>&gt; = response.response.<span class="hljs-title function_ invoke__">split</span>(<span class="hljs-string">&quot;; &quot;</span>).<span class="hljs-title function_ invoke__">collect</span>();
+            <span class="hljs-built_in">println!</span>(
+                <span class="hljs-string">&quot;[&lbrace;word:?&rbrace;, &lbrace;:?&rbrace;, &lbrace;:?&rbrace;],&quot;</span>,
+                response[<span class="hljs-number">0</span>].<span class="hljs-title function_ invoke__">trim</span>(),
+                response[<span class="hljs-number">1</span>].<span class="hljs-title function_ invoke__">trim</span>()
+            );
+        &rbrace;
+    &rbrace;
+
+    <span class="hljs-title function_ invoke__">Ok</span>(())
+&rbrace;</pre>
+</article></main></body>
+
+</html>

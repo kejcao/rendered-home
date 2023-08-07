@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Archive</title>
+<meta name="description"
+  content="Explore the full archives of Kevin Cao, containing technical articles, tutorials, and resources on a variety of different computer science and technology topics." />
+<style>
+  ul {
+    text-align: start;
+    padding: 0;
+  }
+
+  ul>a {
+    color: inherit;
+    text-decoration-line: none;
+    text-align: center;
+  }
+
+  ul li {
+    list-style-type: none;
+    border: 1px solid #333;
+    border-radius: .25rem;
+    box-shadow: 3px 3px 4px #ccc;
+    padding: 1rem;
+    margin: 1rem 0;
+  }
+
+  ul li:hover {
+    box-shadow: 3px 3px 4px #999;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><h1>Archive</h1>
+<ul><a href="/posts/openECSC-2025">
+    <li>
+      <b>OpenECSC 2025 Writeups</b>
+      <br>
+      <small><code>Oct 12, 2025 [ctf,writeup]</code></small>
+    </li>
+  </a><a href="/posts/smileyctf-2025">
+    <li>
+      <b>SmileyCTF 2025</b>
+      <br>
+      <small><code>Jun 16, 2025 [ctf,writeup]</code></small>
+    </li>
+  </a><a href="/posts/aictf-phdays-2025">
+    <li>
+      <b>PHDays AICTF 2025 Writeup</b>
+      <br>
+      <small><code>May 29, 2025 [ctf,writeup]</code></small>
+    </li>
+  </a><a href="/posts/image-resizing">
+    <li>
+      <b>Lanczos Image Resizing</b>
+      <br>
+      <small><code>Feb 26, 2025 [algo,cpp]</code></small>
+    </li>
+  </a><a href="/posts/lcs-haskell">
+    <li>
+      <b>Longest Common Substring in Haskell</b>
+      <br>
+      <small><code>Feb 14, 2025 [algo,hs]</code></small>
+    </li>
+  </a><a href="/posts/nlab-graph">
+    <li>
+      <b>41% of Roads Lead to Homotopical Algebra</b>
+      <br>
+      <small><code>Jan 13, 2025 [graph,nlab,py]</code></small>
+    </li>
+  </a><a href="/posts/adansonia-disk-usage">
+    <li>
+      <b>Adansonia: A Disk Usage Analyzer in Rust</b>
+      <br>
+      <small><code>Dec 22, 2024 [rust,tui]</code></small>
+    </li>
+  </a><a href="/posts/private-image-hosting">
+    <li>
+      <b>Making a Personal Image Host</b>
+      <br>
+      <small><code>Dec 12, 2024 [admin,web]</code></small>
+    </li>
+  </a><a href="/posts/haar-cascades-in-rust">
+    <li>
+      <b>Running Haar Cascades from Scratch in Rust</b>
+      <br>
+      <small><code>Nov 30, 2024 [cv,rust]</code></small>
+    </li>
+  </a><a href="/posts/tracking-keypresses">
+    <li>
+      <b>Tracking Keypresses</b>
+      <br>
+      <small><code>Nov 3, 2024 [rust,tracking]</code></small>
+    </li>
+  </a><a href="/posts/random-topics-1">
+    <li>
+      <b>Random Topics: 001</b>
+      <br>
+      <small><code>Oct 24, 2024 [random]</code></small>
+    </li>
+  </a><a href="/posts/generating-strong-pseudoprimes">
+    <li>
+      <b>Generating Strong Pseudoprimes to Fixed Bases</b>
+      <br>
+      <small><code>Sep 12, 2024 [algo,ctf,math]</code></small>
+    </li>
+  </a><a href="/posts/setting-up-wireguard-on-oracle">
+    <li>
+      <b>Configuring WireGuard VPN on Oracle</b>
+      <br>
+      <small><code>Aug 23, 2024 [linux]</code></small>
+    </li>
+  </a><a href="/posts/algo-order-preserving-mphf">
+    <li>
+      <b>Generating Order-Preserving Minimal Perfect Hash Functions</b>
+      <br>
+      <small><code>Aug 7, 2024 [algo]</code></small>
+    </li>
+  </a><a href="/posts/eliminating-terminal-startup-latency">
+    <li>
+      <b>Eliminating Terminal Startup Latency</b>
+      <br>
+      <small><code>Aug 4, 2024 [dwm,workflow]</code></small>
+    </li>
+  </a><a href="/posts/python-tempfile">
+    <li>
+      <b>The <code>tempfile</code> Module in Python</b>
+      <br>
+      <small><code>Jul 26, 2024 [python]</code></small>
+    </li>
+  </a><a href="/posts/ukulele-tuner">
+    <li>
+      <b>A Ukulele Tuner in React</b>
+      <br>
+      <small><code>Jul 15, 2024 [react,web]</code></small>
+    </li>
+  </a><a href="/posts/delta-compressing-images">
+    <li>
+      <b>Losslessly Compressing 25000 Images</b>
+      <br>
+      <small><code>Jun 26, 2024 [compression,python]</code></small>
+    </li>
+  </a><a href="/posts/fibonacci">
+    <li>
+      <b>Calculating the 1 Billionth Fibonacci Number in 8 Seconds</b>
+      <br>
+      <small><code>Jun 9, 2024 [algo,math,py]</code></small>
+    </li>
+  </a><a href="/posts/chatbot-python-playground">
+    <li>
+      <b>Playing Around With LLM Chatbots</b>
+      <br>
+      <small><code>May 18, 2024 [llm,python]</code></small>
+    </li>
+  </a><a href="/posts/vim-config-1">
+    <li>
+      <b>Configuring Neovim</b>
+      <br>
+      <small><code>May 7, 2024 [neovim,workflow]</code></small>
+    </li>
+  </a><a href="/posts/plaid-2024-ctf-icmp">
+    <li>
+      <b>Plaid CTF 2024: An Approach to ICMP</b>
+      <br>
+      <small><code>Apr 14, 2024 [ctf,cv,writeup]</code></small>
+    </li>
+  </a><a href="/posts/artificial-intelligence">
+    <li>
+      <b>Artificial Intelligence for Dummies</b>
+      <br>
+      <small><code>Apr 3, 2024 [AI,laymen]</code></small>
+    </li>
+  </a><a href="/posts/pearl-ctf-byteme">
+    <li>
+      <b>Pearl CTF: Byte Me</b>
+      <br>
+      <small><code>Mar 10, 2024 [ctf,python,writeup]</code></small>
+    </li>
+  </a><a href="/posts/transferring-files">
+    <li>
+      <b>A Node.js Script to Transfer Files Between Devices</b>
+      <br>
+      <small><code>Mar 3, 2024 [js,web]</code></small>
+    </li>
+  </a><a href="/posts/new-google-open-source-models">
+    <li>
+      <b>Google&#039;s New Open Source Models: Magika &amp; Gemma</b>
+      <br>
+      <small><code>Feb 25, 2024 [AI,news]</code></small>
+    </li>
+  </a><a href="/posts/rotation-matrix">
+    <li>
+      <b>Deriving The 2x2 Rotation Matrix</b>
+      <br>
+      <small><code>Feb 18, 2024 [algebra,graphics,math]</code></small>
+    </li>
+  </a><a href="/posts/google-foobar-level4-1">
+    <li>
+      <b>Running with Bunnies: Google Foobar Level 4</b>
+      <br>
+      <small><code>Feb 11, 2024 [cp,foobar]</code></small>
+    </li>
+  </a><a href="/posts/speech-synthesis-in-chromium">
+    <li>
+      <b>Speech Synthesis in Chromium</b>
+      <br>
+      <small><code>Feb 4, 2024 [chromium,rust,web]</code></small>
+    </li>
+  </a><a href="/posts/tmux-leaking-memory">
+    <li>
+      <b>Preventing tmux from Devouring My RAM</b>
+      <br>
+      <small><code>Jan 16, 2024 [linux,tmux]</code></small>
+    </li>
+  </a><a href="/posts/lightweight-face-detection">
+    <li>
+      <b>Fast &amp; Lightweight Millisecond-level Face Detector in Python</b>
+      <br>
+      <small><code>Jan 2, 2024 [AI,CV,python]</code></small>
+    </li>
+  </a><a href="/posts/how-temu-disables-translation">
+    <li>
+      <b>How Temu Disables Google Translate</b>
+      <br>
+      <small><code>Dec 18, 2023 [hack,html,web]</code></small>
+    </li>
+  </a><a href="/posts/ebook-reader-with-svelte">
+    <li>
+      <b>Writing an eBook Reader with Svelte</b>
+      <br>
+      <small><code>Nov 15, 2023 [css,html,svelte,web]</code></small>
+    </li>
+  </a><a href="/posts/openai-stt-whisper">
+    <li>
+      <b>OpenAI Whisper: Speech To Text Using AI</b>
+      <br>
+      <small><code>Oct 22, 2023 [AI,python]</code></small>
+    </li>
+  </a><a href="/posts/adding-kbd-html-tags-to-my-site">
+    <li>
+      <b>Stylizing Keyboard Shortcuts on My Website</b>
+      <br>
+      <small><code>Sep 25, 2023 [html,js,meta,ssg,web]</code></small>
+    </li>
+  </a><a href="/posts/memory-usage-graph">
+    <li>
+      <b>Memory Usage Graphs in Python</b>
+      <br>
+      <small><code>Sep 8, 2023 [python]</code></small>
+    </li>
+  </a><a href="/posts/gradients-in-python">
+    <li>
+      <b>Linear, Radial &amp; Conic Gradients in Python from Scratch</b>
+      <br>
+      <small><code>Aug 17, 2023 [algorithm,python]</code></small>
+    </li>
+  </a><a href="/posts/p-adic-valuation-in-haskell">
+    <li>
+      <b><em>p</em>-adic Valuation &amp; Legendre&#039;s Formula in Haskell</b>
+      <br>
+      <small><code>Aug 7, 2023 [haskell,math]</code></small>
+    </li>
+  </a><a href="/posts/chatgpt-to-generate-colorschemes">
+    <li>
+      <b>Using ChatGPT to Generate Vim/Neovim Colorschemes</b>
+      <br>
+      <small><code>Jul 23, 2023 [AI,ChatGPT,LLM,python,vim]</code></small>
+    </li>
+  </a><a href="/posts/downloading-comic-books">
+    <li>
+      <b>Scraping Graphic Novels/Comics with Selenium</b>
+      <br>
+      <small><code>Jul 12, 2023 [ebook,piracy,python,scraping,selenium]</code></small>
+    </li>
+  </a><a href="/posts/viewing-csv-files">
+    <li>
+      <b>Viewing CSV Files</b>
+      <br>
+      <small><code>Jul 5, 2023 [linux]</code></small>
+    </li>
+  </a><a href="/posts/wget-and-curl">
+    <li>
+      <b>Curl: Tips &amp; Tricks</b>
+      <br>
+      <small><code>Jun 23, 2023 [linux]</code></small>
+    </li>
+  </a><a href="/posts/chrome-extension">
+    <li>
+      <b>Writing a Chrome Extension to Count Open Tabs</b>
+      <br>
+      <small><code>Jun 4, 2023 [chrome,javascript]</code></small>
+    </li>
+  </a><a href="/posts/hex-words">
+    <li>
+      <b>Writing English Words as Hexadecimal</b>
+      <br>
+      <small><code>May 25, 2023 [nlp,python]</code></small>
+    </li>
+  </a><a href="/posts/c-hello-world">
+    <li>
+      <b>A Strange Hello World Program in C</b>
+      <br>
+      <small><code>May 11, 2023 [C,assembly,linux,low-level]</code></small>
+    </li>
+  </a><a href="/posts/ruler">
+    <li>
+      <b>A Digital Ruler in Python</b>
+      <br>
+      <small><code>May 2, 2023 [GUI,python]</code></small>
+    </li>
+  </a><a href="/posts/blanking-display">
+    <li>
+      <b>Blanking Displays on Linux</b>
+      <br>
+      <small><code>Apr 26, 2023 [linux]</code></small>
+    </li>
+  </a><a href="/posts/ioli-crackmes">
+    <li>
+      <b>Reverse Engineering IOLI Crackmes</b>
+      <br>
+      <small><code>Apr 20, 2023 [RE,linux]</code></small>
+    </li>
+  </a><a href="/posts/quicksort">
+    <li>
+      <b>A Decent Quicksort Function in C</b>
+      <br>
+      <small><code>Apr 13, 2023 [C,algorithm]</code></small>
+    </li>
+  </a><a href="/posts/llama">
+    <li>
+      <b>LLaMA: Facebook&#039;s New Language Model</b>
+      <br>
+      <small><code>Mar 31, 2023 [LLM,ai]</code></small>
+    </li>
+  </a><a href="/posts/roots-of-unity">
+    <li>
+      <b>Roots of Unity</b>
+      <br>
+      <small><code>Mar 14, 2023 [interactive,math]</code></small>
+    </li>
+  </a><a href="/posts/paywalls">
+    <li>
+      <b>Circumventing Online Paywalls</b>
+      <br>
+      <small><code>Mar 9, 2023 [piracy]</code></small>
+    </li>
+  </a><a href="/posts/sentiment">
+    <li>
+      <b>Sentiment Analysis: Detecting The Sentiment of a Text</b>
+      <br>
+      <small><code>Feb 1, 2023 [NLP,interactive]</code></small>
+    </li>
+  </a><a href="/posts/huffman">
+    <li>
+      <b>Experimenting with Huffman Coding</b>
+      <br>
+      <small><code>Jan 3, 2023 [algorithm,python]</code></small>
+    </li>
+  </a><a href="/posts/ipad">
+    <li>
+      <b>Having Fun with an iPad</b>
+      <br>
+      <small><code>Dec 4, 2022 [linux]</code></small>
+    </li>
+  </a><a href="/posts/mandelbrot">
+    <li>
+      <b>Drawing the Mandelbrot Set</b>
+      <br>
+      <small><code>Oct 31, 2022 [C,algorithm]</code></small>
+    </li>
+  </a><a href="/posts/footnotes">
+    <li>
+      <b>Fixing A Don Quixote EPUB Book&#039;s Footnotes</b>
+      <br>
+      <small><code>Oct 7, 2022 [ebook,python]</code></small>
+    </li>
+  </a><a href="/posts/backup">
+    <li>
+      <b>Backing Up My Desktop</b>
+      <br>
+      <small><code>Sep 4, 2022 [backup,linux]</code></small>
+    </li>
+  </a><a href="/posts/dwmbar">
+    <li>
+      <b>dwmbar: Create a DWM Status Bar</b>
+      <br>
+      <small><code>Aug 15, 2022 [C,dwm,linux]</code></small>
+    </li>
+  </a><a href="/posts/rep">
+    <li>
+      <b>rep: A Tool for Repeating Commands</b>
+      <br>
+      <small><code>Jul 18, 2022 [C,linux]</code></small>
+    </li>
+  </a><a href="/posts/base64">
+    <li>
+      <b>Base64: Encoding Binary Data</b>
+      <br>
+      <small><code>Jun 9, 2022 [C,algorithm]</code></small>
+    </li>
+  </a></ul></main></body>
+
+</html>

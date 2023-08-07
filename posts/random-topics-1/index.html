@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Random Topics: 001 - Kevin Cao</title>
+<meta name="description" content="I've been engaging in several disparate activities as of late, none of which are
+mature enough to be developed into their own individual article. Instead, like
+one great big spring mix salad, I'm going to amalgamate each of them into this
+one article covering the tiny pursuits that have captured my interests recently." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Random Topics: 001</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Oct 24, 2024</time></div>
+  </header>
+  <p>I&#039;ve been engaging in several disparate activities as of late, none of which are mature enough to be developed into their own individual article. Instead, like one great big spring mix salad, I&#039;m going to amalgamate each of them into this one article covering the tiny pursuits that have captured my interests recently.</p><h3>Python Hackery</h3><p><a href="https://github.com/gotcha/ipdb">ipdb</a> can be considered as a drop-in replacement for the standard pdb debugger, incorporating syntax highlighting and other convenient IPython features to brighten up your debugging experience. I wanted the <code>breakpoint</code> builtin to call ipdb instead of pdb. We can start by obtaining the directory that Python uses to stores external modules.</p><pre ><span class="hljs-keyword">import</span> site
+<span class="hljs-built_in">print</span>(site.getsitepackages()) <span class="hljs-comment"># output: [&#x27;/usr/lib/python3.12/site-packages&#x27;]</span></pre><p>What&#039;s interesting about this directory is that the Python interpreter loads the <code>sitecustomize.py</code> file in that directory on start. So, we can populate this file with some code that overrides the <code>breakpoint</code> builtin with a custom function that launches ipdb instead.</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">f</span>():
+    <span class="hljs-keyword">import</span> ipdb
+    <span class="hljs-keyword">import</span> sys
+    ipdb.__main__._init_pdb().set_trace(sys._getframe().f_back)
+<span class="hljs-keyword">import</span> builtins
+builtins.__dict__[<span class="hljs-string">&#x27;breakpoint&#x27;</span>] = f</pre><p>The code might look daunting, especially with the weird way I&#039;m launching ipdb. I&#039;m don&#039;t remember why exactly, but the conventional way of calling ipdb had some peculiar detail that I disliked—so I sifted through the source code, and found <code>ipdb/ipdb/__main__.py</code>. It contains the internals for launching ipdb and by skipping some of the steps we can tell ipdb to ignore the <code>sitecustomize.py</code> file and jump straight into the code listing in the actual program code.</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">_init_pdb</span>(<span class="hljs-params">context=<span class="hljs-literal">None</span>, commands=[]</span>):
+    <span class="hljs-keyword">if</span> context <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+        context = os.getenv(<span class="hljs-string">&quot;IPDB_CONTEXT_SIZE&quot;</span>, get_context_from_config())
+    debugger_cls = _get_debugger_cls()
+    <span class="hljs-keyword">try</span>:
+        p = debugger_cls(context=context)
+    <span class="hljs-keyword">except</span> TypeError:
+        p = debugger_cls()
+    p.rcLines.extend(commands)
+    <span class="hljs-keyword">return</span> p
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">wrap_sys_excepthook</span>():
+    <span class="hljs-comment"># make sure we wrap it only once or we would end up with a cycle</span>
+    <span class="hljs-comment">#  BdbQuit_excepthook.excepthook_ori == BdbQuit_excepthook</span>
+    <span class="hljs-keyword">if</span> sys.excepthook != BdbQuit_excepthook:
+        BdbQuit_excepthook.excepthook_ori = sys.excepthook
+        sys.excepthook = BdbQuit_excepthook
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">set_trace</span>(<span class="hljs-params">frame=<span class="hljs-literal">None</span>, context=<span class="hljs-literal">None</span>, cond=<span class="hljs-literal">True</span></span>):
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> cond:
+        <span class="hljs-keyword">return</span>
+    wrap_sys_excepthook()
+    <span class="hljs-keyword">if</span> frame <span class="hljs-keyword">is</span> <span class="hljs-literal">None</span>:
+        frame = sys._getframe().f_back
+    p = _init_pdb(context).set_trace(frame)
+    <span class="hljs-keyword">if</span> p <span class="hljs-keyword">and</span> <span class="hljs-built_in">hasattr</span>(p, <span class="hljs-string">&quot;shell&quot;</span>):
+        p.shell.restore_sys_module_state()</pre><p>Anyway, I also have <code>export PYTHONSTARTUP=~/.pyrc.py</code> set to import commonly used packages like numpy in the Python interpreter.</p><h3>Gaze Estimation</h3><p>I noticed that when I move my mouse cursor to an UI element, my eye gaze naturally moves to that target location first. So it would be very convenient and fluid to have my mouse cursor snap to my eye gaze location. I looked for existing solutions, but most required special hardware while I wanted to accomplish this with just my consumer grade webcam.</p><p>I&#039;m not going to go into detail here, because I&#039;m still working on this project which will hopefully be robust enough in the near future for me to write an article on it. I trained a CNN on the MPIIFaceGaze dataset and it worked, just not well. Very low accuracy and head movements throw it off. I&#039;m reading more academic papers on this subject and investigating this master&#039;s student&#039;s GitHub repo on the subject.</p><h3>Exposed Machine Learning Services</h3><p>On the subject of machine learning, 404 Media had an <a href="https://www.404media.co/thousands-of-internal-ai-training-datasets-tools-exposed-to-anyone-on-the-internet/">article</a> showing how many internal AI training tools are exposed out on the Internet for everyone to see. Indeed this is the case; I used <a href="https://hunter.how/">hunter.how</a> (poor man&#039;s Shodan) to search for a couple of these instances. Not very exciting, nothing important in them.</p><h3>Mathematics</h3><p>John D. Cook has an amazing twitter account <a href="https://x.com/algebrafact">Algebra Etc.</a> that usually posts tantalizingly strange mathematical facts. He maintains other accounts on topology and logic, but those are less in tune with my preferences. From the algebra account I met an interesting inequality, which had me looking into Ravi substitution. The idea is that $a,b,c$ are the sides to a non-degenerate triangle iff $a+b>c$, $a+c>b$, and $b+c>a$. Hence, if the problem specifies that the variables to an inequality form the sides of a triangle, we can subsitute them like so: $a = x+y$, $b=y+z$, $c=z+x$.</p><p>I was also casually browsing graph theory articles on Wikipedia. Learned about perfect matchings and edge spaces. It&#039;s quite interesting, how you can think of an incidence matrix as a linear transformation from the edge space to the vertex space and the adjacency matrix as a linear operator on the vertex space. Read a presentation on how many different graph operations can be thought of as matrix multiplications.</p><p>I&#039;ve been reading Benjamin C. Pierce&#039;s book <em>Basic Category Theory for Computer Scientists</em>. It&#039;s quite mind numbing. It shows how individual monoids can be thought of as a category with a single object where the arrows are elements and composition acts as the binary operation—in fact, add the requirement that each arrow is an isomorphism, and you get a group. But also the collection of all monoids and homomorphisms between them is a category in and of itself. Also, apparently the concepts of injectivity and surjectivity permit neat (with definitions quite symmetrical) generalizations as mono- and epi- morphisms.</p><h3>Mixed Boolean-Arithmetic</h3><p>I was reading about concolic analysis, then stumbled onto some subjects about code obfuscation. The idea of MBA (Mixed Boolean-Arithmetic) is that we can make really complicated appearing identities by expressing operations as the linear combination of bitwise operations. For example, instead of writing <code>x+y</code> we can write <code>(x^y)+2*(x&amp;y)</code>, which is equivalent.</p><p>I read a couple interesting papers relating to this. Rivest of RSA fame wrote a paper about permutation polynomials over finite rings in 2001, characterizing the conditions in which they map bijectively. I might write an article on this in the future, when I investigate this subject in more depth. It&#039;s quite interesting.</p><h3>Katana - A Lightweight Templating Engine</h3><p>I clobbered together some code one evening to replace Nunjucks as the templating engine powering the website you&#039;re reading on right now. Sticking with the Japanese theme, I nickname it &quot;Katana.&quot; It&#039;s only 177 lines of JS code—very lean, very fast, very flexible.</p><p>The parsing is done recursively &quot;by feel.&quot; It segments a template document into blocks. To render, the code &quot;implants&quot; the document into the layout/parent which it inherits from, then reduces each block to the appropriate content.</p><p>An interesting feature is that Katana permits complex JS expressions such as <code>posts.slice(0,9)</code> because it evaluates these in a separate node VM context. The expression can&#039;t have white space though, because the tokenization is stupid.</p><pre ><span class="hljs-keyword">const</span> vm = <span class="hljs-built_in">require</span>(<span class="hljs-string">&#x27;node:vm&#x27;</span>);
+
+<span class="hljs-keyword">function</span> <span class="hljs-title function_">evaluate</span>(<span class="hljs-params">expr, context</span>) &lbrace;
+  <span class="hljs-keyword">const</span> c = vm.<span class="hljs-title function_">createContext</span>(context);
+  <span class="hljs-keyword">return</span> vm.<span class="hljs-title function_">runInContext</span>(expr, c);
+&rbrace;</pre><p>Yes, I still use CJS for this website, because many components break whenever I attempt to shuffle everything to ESM.</p><h3>Ida &amp; Ghidra</h3><p>I&#039;ve been playing around with RE and binary exploitation recently. I found a cracked/leaked version of Ida 9.0 Pro beta a while ago and have been experimenting with that. Nevertheless, I remain attached to Ghidra. I&#039;ve been not so successfully attempting to learn Angr, this automatic concolic analysis tool. So confusing.</p>
+</article></main></body>
+
+</html>

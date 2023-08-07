@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>DD: Sudoku - Kevin Cao</title>
+<meta name="description" content="Sudoku is a puzzle where the objective is to fill a 9x9 grid with digits such
+that each column, row, and 3x3 subgrid contain all the digits from 1 to 9, are
+unique, or sum to 45—these are equivalent statements. I know of five ways to
+solve Sudoku. We will first explore backtracking, an introductory algorithm
+often posed to burgeoning programmers. Then, the next two will involve thinking
+of Soduku as another problem, as either a SMT problem or an algebraic geometric
+one. We end with Donald Knuth's speedy and beautiful dancing links algorithm." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>DD: Sudoku</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Jul 30, 2024</time></div>
+  </header>
+  <p>Sudoku is a puzzle where the objective is to fill a 9x9 grid with digits such that each column, row, and 3x3 subgrid contain all the digits from 1 to 9, are unique, or sum to 45—these are equivalent statements. I know of five ways to solve Sudoku. We will first explore backtracking, an introductory algorithm often posed to burgeoning programmers. Then, the next two will involve thinking of Soduku as another problem, as either a SMT problem or an algebraic geometric one. We end with Donald Knuth&#039;s speedy and beautiful dancing links algorithm.</p><p>We make some assumptions.</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">flatten</span>(<span class="hljs-params">xss</span>):
+    <span class="hljs-keyword">return</span> [x <span class="hljs-keyword">for</span> xs <span class="hljs-keyword">in</span> xss <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> xs]
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">chunk</span>(<span class="hljs-params">xs, size</span>):
+    <span class="hljs-keyword">return</span> (xs[i : i + size] <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-built_in">len</span>(xs), size))</pre><h3>Backtracking</h3><p>The tried and true method for solving Sudoku is by backtracking. If the Sudoku board is completely filled, then check whether this is a valid configuration, and if it is yield the result. Otherwise, find the first position in the Sudoku board that is empty. Loop through the possible numbers that can fill that spot and fill it. Then, recursively call <code>backtrack</code> on the board. Remember to clean up after ourselves by setting that position back to zero, so we can recurs.</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">backtrack</span>(<span class="hljs-params">soduku: Soduku</span>):
+    <span class="hljs-keyword">if</span> soduku.filled():
+        <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> soduku.rows():
+            <span class="hljs-keyword">if</span> <span class="hljs-built_in">sum</span>(row) != <span class="hljs-number">45</span>: <span class="hljs-keyword">return</span>
+        <span class="hljs-keyword">for</span> col <span class="hljs-keyword">in</span> soduku.cols():
+            <span class="hljs-keyword">if</span> <span class="hljs-built_in">sum</span>(col) != <span class="hljs-number">45</span>: <span class="hljs-keyword">return</span>
+        <span class="hljs-keyword">for</span> blk <span class="hljs-keyword">in</span> soduku.blocks():
+            <span class="hljs-keyword">if</span> <span class="hljs-built_in">sum</span>(blk) != <span class="hljs-number">45</span>: <span class="hljs-keyword">return</span>
+
+        <span class="hljs-keyword">yield</span> soduku
+        <span class="hljs-keyword">return</span>
+
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(soduku)):
+        <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(soduku)):
+            <span class="hljs-keyword">if</span> soduku.grid[i][j] == <span class="hljs-number">0</span>:
+                <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> (
+                    candidates := <span class="hljs-built_in">set</span>(<span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>))
+                    - <span class="hljs-built_in">set</span>(soduku.rows()[i])
+                    - <span class="hljs-built_in">set</span>(soduku.cols()[j])
+                ):
+                    soduku.grid[i][j] = k
+                    <span class="hljs-keyword">yield</span> <span class="hljs-keyword">from</span> backtrack(soduku)
+                soduku.grid[i][j] = <span class="hljs-number">0</span>
+                <span class="hljs-keyword">return</span></pre><p>Instead of naively testing all the values from 1 to 9 for each position on the board, we make the simple observation that an unfilled spot may only be filled by a number that is not already in the column and row the spot is on. Remember, all numbers on the same row or column must be unique. Therefore, we only need test the <code>candidate</code> values, greatly reducing the time the algorithm takes to run.</p><p>The <code>Soduku</code> class provides the methods <code>rows</code>, <code>cols</code>, and <code>blocks</code> which simply return lists of the rows, columns, and 3x3 blocks of the Sudoku board respectively. A zero value in the Sudoku board indicates an unfilled spot. In fact, it looks like this:</p><pre ><span class="hljs-keyword">class</span> <span class="hljs-title class_">Soduku</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, s</span>):
+        self.grid = [<span class="hljs-built_in">list</span>(row) <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> chunk(s, <span class="hljs-number">9</span>)]
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.grid)):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(self.grid)):
+                <span class="hljs-keyword">if</span> self.grid[i][j] == <span class="hljs-string">&#x27;.&#x27;</span>:
+                    self.grid[i][j] = <span class="hljs-number">0</span>
+                self.grid[i][j] = <span class="hljs-built_in">int</span>(self.grid[i][j])
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">filled</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">all</span>(x != <span class="hljs-number">0</span> <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> flatten(self.grid))
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">rows</span>(<span class="hljs-params">self</span>): <span class="hljs-keyword">return</span> self.grid
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">cols</span>(<span class="hljs-params">self</span>): <span class="hljs-keyword">return</span> [*<span class="hljs-built_in">zip</span>(*self.grid)]
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">blocks</span>(<span class="hljs-params">self</span>):
+        f = flatten(self.grid)
+        blocks = []
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">3</span>):
+                <span class="hljs-comment"># columns of block</span>
+                blocks.append(
+                    f[i*<span class="hljs-number">3</span>+<span class="hljs-number">0</span>::<span class="hljs-number">9</span>][j*<span class="hljs-number">3</span>:j*<span class="hljs-number">3</span>+<span class="hljs-number">3</span>] +
+                    f[i*<span class="hljs-number">3</span>+<span class="hljs-number">1</span>::<span class="hljs-number">9</span>][j*<span class="hljs-number">3</span>:j*<span class="hljs-number">3</span>+<span class="hljs-number">3</span>] +
+                    f[i*<span class="hljs-number">3</span>+<span class="hljs-number">2</span>::<span class="hljs-number">9</span>][j*<span class="hljs-number">3</span>:j*<span class="hljs-number">3</span>+<span class="hljs-number">3</span>]
+                )
+        <span class="hljs-keyword">return</span> blocks
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__len__</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">return</span> <span class="hljs-number">9</span></pre><h3>SMT Problem</h3><h3>Algebraic Geometry</h3><p>Algebraic geometry is a field in mathematics where we study the solutions to systems of polynomial equations.</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">cs</span>(<span class="hljs-params">c, n</span>): <span class="hljs-comment"># returns [&#x27;c1&#x27;, &#x27;c2&#x27;, ... &#x27;cn&#x27;]</span>
+    <span class="hljs-keyword">return</span> [c + <span class="hljs-built_in">str</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, n+<span class="hljs-number">1</span>)]
+
+A = PolynomialRing(QQ, [<span class="hljs-string">&#x27;t&#x27;</span>, *cs(<span class="hljs-string">&#x27;t&#x27;</span>, <span class="hljs-number">9</span>)], order=<span class="hljs-string">&#x27;lex&#x27;</span>)
+A.inject_variables()</pre><pre >p = prod(t-g <span class="hljs-keyword">for</span> g <span class="hljs-keyword">in</span> A.gens()[<span class="hljs-number">1</span>:]) - \
+    prod(t-i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>, <span class="hljs-number">10</span>))
+J = A.ideal([p.coefficient(&lbrace;t: i&rbrace;) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">9</span>)])
+J2 = A.ideal(J.groebner_basis()[-<span class="hljs-number">2</span>:])</pre><p>I was inspired by this <a href="https://x.com/7etsuo/status/1813482989139161344">Twitter post</a> to use algebraic geometry to solve Soduku. The author provided a C solution that just used standard backtracking, though. I found a <a href="https://hkopp.github.io/2021/08/solving-sudoku-algebraically">blog post</a> that detailed the procedure and provided an implementation in SymPy, however it was terribly slow and couldn&#039;t arrive at the solution even after 2 hours. Finally, I this <a href="https://mathoverflow.net/questions/91666/gr%C3%B6bner-basis-for-sudoku">MathOverflow</a> post which gave an obtuse, supposedly efficient, solution in Singular code. I rewrote the solution in SageMath.</p><h3>Dancing Links</h3>
+</article></main></body>
+
+</html>

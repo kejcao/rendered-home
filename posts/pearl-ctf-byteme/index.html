@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Pearl CTF: Byte Me - Kevin Cao</title>
+<meta name="description" content="A university in Dhanbad, India recently hosted the Pearl CTF
+[https://pearlctf.in/] challenge. I participated in it and solved a couple
+challenges, including one titled "byteme" with the description, "I know you are
+a python expert, but can you reverse this?" We are provided with a single
+byteme.pyc [/store/byteme.pyc] file. Let's find the flag." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Pearl CTF: Byte Me</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Mar 10, 2024</time></div>
+  </header>
+  <p>A university in Dhanbad, India recently hosted the <a href="https://pearlctf.in/">Pearl CTF</a> challenge. I participated in it and solved a couple challenges, including one titled &quot;byteme&quot; with the description, &quot;I know you are a python expert, but can you reverse this?&quot; We are provided with a single <a href="/store/byteme.pyc"><code>byteme.pyc</code></a> file. Let&#039;s find the flag.</p><p>Python is a bytecode interpreter which operate by essentially compiling high-level source code into a sort of idealized assembly, called bytecode—this bytecode is then ran by the Python virtual machine (PVM), which is how your code is actually executed.</p><p>If you&#039;ve ever used Python before, you might&#039;ve noticed the <code>__pycache__</code> directory. That directory contains <code>*.pyc</code> files which are basically just raw bytecode. We can directly run the <code>*.pyc</code> file with the Python command as we would a <code>*.py</code> file. However if we try to run <code>byteme.pyc</code>, Python whines about a bad magic number.</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">python byteme.pyc</span> 
+RuntimeError: Bad magic number in .pyc file
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">xxd -l32 byteme.pyc</span> 
+00000000: f00d 0d0a 0000 0000 4716 e865 4225 0000  ........G..eB%..
+00000010: e300 0000 0000 0000 0000 0000 0006 0000  ................</pre><p>The magic number in question is <code>0x0df0</code> or 3568 in decimal. From the CPython source code in file <a href="https://github.com/python/cpython/blob/5b8664433829ea967c150363cf49a5c4c1380fe8/PC/launcher.c#L1250-L1275">PC/launcher.c</a> we see that since 3568 is in the range of 3550–3599, the <code>byteme.pyc</code> file was produced from a 3.13 version of the CPython interpeter.</p><p>I happen to have the CPython source code on my local machine on the latest commit as of writing, <code>b4b4e764a798bab60324871074ce4cdebb9d01bb</code>. This version of CPython has the magic number 3569. We want a version with the magic number 3568, so let&#039;s look for the commit that changed this magic number and checkout the commit right before that.</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">git <span class="hljs-built_in">log</span> -1 -L 485,485:Lib/importlib/_bootstrap_external.py</span>
+commit 7114cf20c015b99123b32c1ba4f5475b7a6c3a13
+Author: Ken Jin &lt;kenjin@python.org&gt;
+Date:   Thu Mar 7 03:30:11 2024 +0800
+
+    gh-116381: Specialize CONTAINS_OP (GH-116385)
+    
+    * Specialize CONTAINS_OP
+    
+    * 📜🤖 Added by blurb_it.
+    
+    * Add PyAPI_FUNC for JIT
+    
+    ---------
+    
+    Co-authored-by: blurb-it[bot] &lt;43283697+blurb-it[bot]@users.noreply.github.com&gt;
+
+diff --git a/Lib/importlib/_bootstrap_external.py b/Lib/importlib/_bootstrap_external.py
+--- a/Lib/importlib/_bootstrap_external.py
++++ b/Lib/importlib/_bootstrap_external.py
+@@ -484,1 +485,1 @@
+-MAGIC_NUMBER = (3568).to_bytes(2, &#x27;little&#x27;) + b&#x27;\r\n&#x27;
++MAGIC_NUMBER = (3569).to_bytes(2, &#x27;little&#x27;) + b&#x27;\r\n&#x27;
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">git checkout 7114cf20c015b99123b32c1ba4f5475b7a6c3a13^</span></pre><p>Then we can build CPython as <a href="https://devguide.python.org/getting-started/setup-building/">instructed</a> by the official documentation. If we ran the file, it prompts us for a password. From now on, all Python files should be interpreted with our newly built Python interpreter, on the commit before <code>7114cf20c015b99123b32c1ba4f5475b7a6c3a13</code>.</p><p>We can disassemble the bytecode by simply skipping the magic number, timestamp, and some other junk before loading and disassembling the raw bytecode.</p><pre ><span class="hljs-keyword">import</span> dis
+<span class="hljs-keyword">import</span> marshal
+
+<span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;byteme.pyc&#x27;</span>, <span class="hljs-string">&#x27;rb&#x27;</span>) <span class="hljs-keyword">as</span> f:
+    f.seek(<span class="hljs-number">16</span>)
+    dis.dis(marshal.load(f))</pre><p>I provide the full output of this code (the disassembly of <code>byteme.pyc</code>) in this <a href="/store/byteme-disassembly.txt">text file</a> for those interested.</p><h2>Part 1: Starting at the End</h2><p>A cursory overview of the disassembly yields 3 <code>input()</code> statements, and thus 3 input-the-right-password type challenges. I tried to reverse engineer the first challenge, but I see a conditional requirement for a password of length 12 and a md5 hash that would take too long to brute-force. I don&#039;t know how to precede with the first input challenge, so let us begin by looking and cracking the last one. This is the disassembly:</p><pre >220           LOAD_GLOBAL              9 (input + NULL)
+              LOAD_CONST               6 (&#039;&gt; &#039;)
+              CALL                     1
+              STORE_FAST               2 (chain)
+
+221           LOAD_GLOBAL              3 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+223           BUILD_LIST               0
+              LOAD_CONST               7 ((117, 84, 87, 108, 59, 85, 66, 71, 71, 30, 16))
+              LIST_EXTEND              1
+              STORE_FAST               3 (best)
+
+224           LOAD_GLOBAL             11 (list + NULL)
+              CALL                     0
+              STORE_FAST               4 (mod)
+
+225           LOAD_CONST               8 (69)
+              STORE_FAST               5 (plier)
+
+227           LOAD_GLOBAL             13 (range + NULL)
+              LOAD_GLOBAL             15 (len + NULL)
+              LOAD_FAST                2 (chain)
+              CALL                     1
+              CALL                     1
+              GET_ITER
+      L3:     FOR_ITER                47 (to L4)
+              STORE_FAST               6 (i)
+
+228           LOAD_FAST                4 (mod)
+              LOAD_ATTR               17 (append + NULL|self)
+              LOAD_FAST                5 (plier)
+              LOAD_GLOBAL             19 (ord + NULL)
+              LOAD_FAST_LOAD_FAST     38 (chain, i)
+              BINARY_SUBSCR
+              CALL                     1
+              BINARY_OP               12 (^)
+              CALL                     1
+              POP_TOP
+
+229           LOAD_GLOBAL             19 (ord + NULL)
+              LOAD_FAST_LOAD_FAST     38 (chain, i)
+              BINARY_SUBSCR
+              CALL                     1
+              STORE_FAST               5 (plier)
+              JUMP_BACKWARD           49 (to L3)
+
+227   L4:     END_FOR
+              POP_TOP
+
+231           LOAD_FAST_LOAD_FAST     67 (mod, best)
+              COMPARE_OP              88 (bool(==))
+              POP_JUMP_IF_FALSE       78 (to L5)</pre><p>If you are unfamiliar with Python bytecode, then this is a great opportunity to learn some. Try to see how it corresponds with my high-level Python translation:</p><pre >chain = <span class="hljs-built_in">input</span>()
+<span class="hljs-built_in">print</span>()
+
+best = [<span class="hljs-number">117</span>, <span class="hljs-number">84</span>, <span class="hljs-number">87</span>, <span class="hljs-number">108</span>, <span class="hljs-number">59</span>, <span class="hljs-number">85</span>, <span class="hljs-number">66</span>, <span class="hljs-number">71</span>, <span class="hljs-number">71</span>, <span class="hljs-number">30</span>, <span class="hljs-number">16</span>]
+mod = <span class="hljs-built_in">list</span>()
+plier = <span class="hljs-number">69</span>
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(chain)):
+    mod.append(plier ^ <span class="hljs-built_in">ord</span>(chain[i]))
+    plier = <span class="hljs-built_in">ord</span>(chain[i])
+
+<span class="hljs-keyword">if</span> mod != best:
+    ... <span class="hljs-comment"># jump to L5, the failure case</span></pre><p>It is clear we need a list of integers in <code>chain</code> that matches <code>best</code>. It is simple enough to write some code that constructs the correct list and prints it out.</p><pre >best = [<span class="hljs-number">117</span>, <span class="hljs-number">84</span>, <span class="hljs-number">87</span>, <span class="hljs-number">108</span>, <span class="hljs-number">59</span>, <span class="hljs-number">85</span>, <span class="hljs-number">66</span>, <span class="hljs-number">71</span>, <span class="hljs-number">71</span>, <span class="hljs-number">30</span>, <span class="hljs-number">16</span>]
+plier = <span class="hljs-number">69</span>
+chain = [plier := plier ^ n <span class="hljs-keyword">for</span> n <span class="hljs-keyword">in</span> best]
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">chr</span>(i) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> chain))</pre><p>If we run the code we get <code>0d3_d1s4sm}</code> which is a string that appears to be the end of the flag.</p><h2>Part 2: Brute-Forcing MD5</h2><p>Now we know each password input corresponds to a part of the flag. I suspect that the first 6 characters of the MD5 hash in the first challenge is <code>pearl{</code>, the prefix that every flag starts with in Pearl CTF. This is the disassembly:</p><pre > 39           LOAD_GLOBAL              3 (input + NULL)
+              LOAD_CONST               8 (&#039;&gt; &#039;)
+              CALL                     1
+              STORE_FAST               0 (spell)
+
+ 40           LOAD_GLOBAL              1 (print + NULL)
+              CALL                     0
+              POP_TOP
+
+ 42           LOAD_GLOBAL              5 (len + NULL)
+              LOAD_FAST                0 (spell)
+              LOAD_ATTR                7 (strip + NULL|self)
+              CALL                     0
+              CALL                     1
+              LOAD_CONST               9 (12)
+              COMPARE_OP             119 (bool(!=))
+              POP_JUMP_IF_TRUE        57 (to L1)
+              LOAD_GLOBAL              9 (md5 + NULL)
+              LOAD_FAST                0 (spell)
+              LOAD_ATTR                7 (strip + NULL|self)
+              CALL                     0
+              LOAD_ATTR               11 (encode + NULL|self)
+              CALL                     0
+              CALL                     1
+              LOAD_ATTR               13 (hexdigest + NULL|self)
+              CALL                     0
+              LOAD_CONST              10 (&#039;9ce86143889d80b01586f8a819d20f0c&#039;)
+              COMPARE_OP             119 (bool(!=))
+              POP_JUMP_IF_FALSE       43 (to L2)</pre><p>From the disassembly it is evident that our input must be 12 characters in length. In addition, given the that the last part of the flag we recovered in Part 1 has only alphanumeric characters + underscore, we can presume that the full flag will be composed solely of those characters. It is easy enough to brute-force the hash. I use John the Ripper.</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">john --format=Raw-MD5 --mask=pearl&lbrace;[0-9a-z_][0-9a-z_][0-9a-z_][0-9a-z_][0-9a-z_][0-9a-z_] &lt;(<span class="hljs-built_in">echo</span> 9ce86143889d80b01586f8a819d20f0c)</span>
+Press &#x27;q&#x27; or Ctrl-C to abort, almost any other key for status
+0g 0:00:00:12 22.38% (ETA: 08:42:15) 0g/s 47774Kp/s 47774Kc/s 47774KC/s pearl&lbrace;usuea8..pearl&lbrace;_xuea8
+0g 0:00:00:17 32.02% (ETA: 08:42:15) 0g/s 48269Kp/s 48269Kc/s 48269KC/s pearl&lbrace;i1advb..pearl&lbrace;o6advb
+0g 0:00:00:22 41.71% (ETA: 08:42:14) 0g/s 48601Kp/s 48601Kc/s 48601KC/s pearl&lbrace;b3e1gf..pearl&lbrace;h8e1gf
+0g 0:00:00:31 59.07% (ETA: 08:42:14) 0g/s 48853Kp/s 48853Kc/s 48853KC/s pearl&lbrace;xt8mvl..pearl&lbrace;2z8mvl
+pearl&lbrace;e4sy_p     (?)
+1g 0:00:00:36 DONE (2024-03-09 08:41) 0.02718g/s 49003Kp/s 49003Kc/s 49003KC/s pearl&lbrace;k1sy_p..pearl&lbrace;q6sy_p</pre><p>In 36 seconds we receive the beginning of the flag, <code>pearl{e4sy_p</code>.</p><h2>Part 3: Solving Linear Constraints</h2><p>The second challenge is much like the previous ones. The <code>input()</code> is stored in the variable <code>answer</code> and the validity checks are 14 chunks of bytecode where each looks similar to this:</p><pre > 113    L2:     LOAD_FAST                0 (answer)
+                LOAD_CONST               8 (6)
+                BINARY_SUBSCR
+                LOAD_FAST                0 (answer)
+                LOAD_CONST               9 (7)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              10 (8)
+                BINARY_SUBSCR
+                BINARY_OP                0 (+)
+                LOAD_FAST                0 (answer)
+                LOAD_CONST              11 (5)
+                BINARY_SUBSCR
+                BINARY_OP               10 (-)
+                LOAD_CONST              12 (190)
+                COMPARE_OP              88 (bool(==))
+                POP_JUMP_IF_TRUE         2 (to L3)
+                LOAD_ASSERTION_ERROR
+                RAISE_VARARGS            1</pre><p>I wrote some short, scrappy code which I won&#039;t share here to automatically extract those chunks into arithmetic constraints. I pasted these constraints into a Python script to throw at the Z3 theorem prover to solve for the array.</p><pre ><span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *
+
+solver = Solver()
+a = [Int(<span class="hljs-string">f&#x27;a[<span class="hljs-subst">&lbrace;i&rbrace;</span>]&#x27;</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">10</span>)]
+
+solver.add(
+    [
+        a[<span class="hljs-number">6</span>] + a[<span class="hljs-number">7</span>] + a[<span class="hljs-number">8</span>] - a[<span class="hljs-number">5</span>] == <span class="hljs-number">190</span>,
+        a[<span class="hljs-number">6</span>] + a[<span class="hljs-number">5</span>] + a[<span class="hljs-number">5</span>] - a[<span class="hljs-number">2</span>] == <span class="hljs-number">202</span>,
+        a[<span class="hljs-number">9</span>] + a[<span class="hljs-number">3</span>] + a[<span class="hljs-number">2</span>] + a[<span class="hljs-number">5</span>] == <span class="hljs-number">433</span>,
+        a[<span class="hljs-number">7</span>] + a[<span class="hljs-number">0</span>] - a[<span class="hljs-number">0</span>] + a[<span class="hljs-number">3</span>] == <span class="hljs-number">237</span>,
+        a[<span class="hljs-number">1</span>] - a[<span class="hljs-number">9</span>] - a[<span class="hljs-number">5</span>] + a[<span class="hljs-number">4</span>] == -<span class="hljs-number">50</span>,
+        a[<span class="hljs-number">2</span>] - a[<span class="hljs-number">3</span>] + a[<span class="hljs-number">1</span>] - a[<span class="hljs-number">1</span>] == -<span class="hljs-number">6</span>,
+        a[<span class="hljs-number">8</span>] - a[<span class="hljs-number">7</span>] - a[<span class="hljs-number">6</span>] + a[<span class="hljs-number">5</span>] == -<span class="hljs-number">88</span>,
+        a[<span class="hljs-number">0</span>] + a[<span class="hljs-number">8</span>] - a[<span class="hljs-number">5</span>] - a[<span class="hljs-number">3</span>] == -<span class="hljs-number">117</span>,
+        a[<span class="hljs-number">5</span>] + a[<span class="hljs-number">6</span>] + a[<span class="hljs-number">8</span>] + a[<span class="hljs-number">2</span>] == <span class="hljs-number">385</span>,
+        a[<span class="hljs-number">5</span>] - a[<span class="hljs-number">4</span>] - a[<span class="hljs-number">5</span>] + a[<span class="hljs-number">9</span>] == <span class="hljs-number">4</span>,
+        a[<span class="hljs-number">2</span>] - a[<span class="hljs-number">9</span>] + a[<span class="hljs-number">5</span>] - a[<span class="hljs-number">0</span>] == <span class="hljs-number">63</span>,
+        a[<span class="hljs-number">2</span>] - a[<span class="hljs-number">5</span>] + a[<span class="hljs-number">4</span>] - a[<span class="hljs-number">9</span>] == <span class="hljs-number">13</span>,
+        a[<span class="hljs-number">8</span>] + a[<span class="hljs-number">3</span>] + a[<span class="hljs-number">7</span>] - a[<span class="hljs-number">6</span>] == <span class="hljs-number">167</span>,
+        a[<span class="hljs-number">6</span>] - a[<span class="hljs-number">5</span>] - a[<span class="hljs-number">0</span>] - a[<span class="hljs-number">5</span>] == -<span class="hljs-number">126</span>,
+        a[<span class="hljs-number">2</span>] - a[<span class="hljs-number">5</span>] - a[<span class="hljs-number">6</span>] - a[<span class="hljs-number">4</span>] == -<span class="hljs-number">199</span>,
+    ]
+)
+
+<span class="hljs-keyword">if</span> solver.check() == sat:
+    model = solver.model()
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(
+        <span class="hljs-built_in">chr</span>(model.evaluate(a[i]).as_long())
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(a))
+    ))</pre><p>It prints the middle of the flag, <code>34sy_byt3c</code>.</p><p>In conclusion, the full flag stitched together is</p><pre >pearl&lbrace;e4sy_p34sy_byt3c0d3_d1s4sm&rbrace;</pre><p>and this was a fun challenge that really tested my Python expertise and improved my knowledge of Python bytecode. The Pearl CTF website was quite laggy for me. Some of the challenges were broken—I think they had upwards of 500 support tickets—and, the rating system is sort of scuffed. I got the same amount of points for exploiting a simple PRNG vulnerability in a Flask application as I did this one.</p>
+</article></main></body>
+
+</html>

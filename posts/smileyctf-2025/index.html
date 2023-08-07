@@ -1,0 +1,1161 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>SmileyCTF 2025 - Kevin Cao</title>
+<meta name="description" content="I played a few challenges in smileyCTF." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>SmileyCTF 2025</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Jun 16, 2025</time></div>
+  </header>
+  <p>I played a few challenges in smileyCTF.</p><h3>rev/Success</h3><p>We are given Haskell code of this form, consisting of 70 nested if statements involving arithmetic and bitwise operations on random character pairs:</p><pre ><span class="hljs-title">checkFlag</span> :: <span class="hljs-type">String</span> -&gt; <span class="hljs-type">IO</span> ()
+<span class="hljs-title">checkFlag</span> flag = <span class="hljs-keyword">do</span>
+    <span class="hljs-keyword">if</span> length flag /= <span class="hljs-number">39</span>
+        <span class="hljs-keyword">then</span> <span class="hljs-keyword">do</span>
+            putStrLn <span class="hljs-string">&quot;bruh its 39 characters long&quot;</span>
+            exitFailure
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">do</span>
+            <span class="hljs-keyword">let</span> chars :: [<span class="hljs-type">Integer</span>]
+                chars = map fromIntegral . map fromEnum $ flag
+            <span class="hljs-keyword">if</span> (*) (chars !! <span class="hljs-number">37</span>) (chars !! <span class="hljs-number">15</span>) == <span class="hljs-number">3366</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">do</span>
+                <span class="hljs-keyword">if</span> (+) (chars !! <span class="hljs-number">8</span>) (chars !! <span class="hljs-number">21</span>) == <span class="hljs-number">197</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">do</span>
+                    <span class="hljs-keyword">if</span> (*) (chars !! <span class="hljs-number">8</span>) (chars !! <span class="hljs-number">13</span>) == <span class="hljs-number">9215</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">do</span>
+                        <span class="hljs-keyword">if</span> (*) (chars !! <span class="hljs-number">0</span>) (chars !! <span class="hljs-number">3</span>) == <span class="hljs-number">2714</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">do</span>
+                            <span class="hljs-keyword">if</span> (+) (chars !! <span class="hljs-number">3</span>) (chars !! <span class="hljs-number">21</span>) == <span class="hljs-number">159</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">do</span>
+                                <span class="hljs-keyword">if</span> (*) (chars !! <span class="hljs-number">1</span>) (chars !! <span class="hljs-number">20</span>) == <span class="hljs-number">5723</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">do</span>
+                                    <span class="hljs-keyword">if</span> (.|.) (chars !! <span class="hljs-number">6</span>) (chars !! <span class="hljs-number">37</span>) == <span class="hljs-number">105</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">do</span>
+                                        <span class="hljs-keyword">if</span> (*) (chars !! <span class="hljs-number">11</span>) (chars !! <span class="hljs-number">7</span>) == <span class="hljs-number">11990</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">do</span>
+                                            <span class="hljs-keyword">if</span> (.&amp;.) (chars !! <span class="hljs-number">29</span>) (chars !! <span class="hljs-number">25</span>) == <span class="hljs-number">100</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">do</span>
+... etc.</pre><p>We can simply copy these constraints into a Z3 script to solve for the flag.</p><pre ><span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *
+
+s = Solver()
+v = [BitVec(<span class="hljs-string">f&quot;v<span class="hljs-subst">&lbrace;i&rbrace;</span>&quot;</span>, <span class="hljs-number">32</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">39</span>)]
+
+s.add(v[<span class="hljs-number">37</span>] * v[<span class="hljs-number">15</span>] == <span class="hljs-number">3366</span>)
+s.add(v[<span class="hljs-number">8</span>] + v[<span class="hljs-number">21</span>] == <span class="hljs-number">197</span>)
+s.add(v[<span class="hljs-number">8</span>] * v[<span class="hljs-number">13</span>] == <span class="hljs-number">9215</span>)
+s.add(v[<span class="hljs-number">0</span>] * v[<span class="hljs-number">3</span>] == <span class="hljs-number">2714</span>)
+s.add(v[<span class="hljs-number">3</span>] + v[<span class="hljs-number">21</span>] == <span class="hljs-number">159</span>)
+s.add(v[<span class="hljs-number">1</span>] * v[<span class="hljs-number">20</span>] == <span class="hljs-number">5723</span>)
+s.add(v[<span class="hljs-number">6</span>] | v[<span class="hljs-number">37</span>] == <span class="hljs-number">105</span>)
+s.add(v[<span class="hljs-number">11</span>] * v[<span class="hljs-number">7</span>] == <span class="hljs-number">11990</span>)
+s.add(v[<span class="hljs-number">29</span>] &amp; v[<span class="hljs-number">25</span>] == <span class="hljs-number">100</span>)
+<span class="hljs-meta">... </span><span class="hljs-comment"># more conditions</span>
+
+<span class="hljs-keyword">assert</span> s.check() == sat
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&quot;</span>.join(<span class="hljs-built_in">chr</span>(s.model().<span class="hljs-built_in">eval</span>(c).as_long()) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> v))
+<span class="hljs-comment"># result: .;,;.&lbrace;imagine_if_i_made_it_compiled!!!&rbrace;</span></pre><h3>rev/fORtran</h3><p>IDA gives this code for the main function:</p><div class="code-preview collapsed" id="1"><pre >__int64 <span class="hljs-title function_">sub_1246</span><span class="hljs-params">()</span>
+&lbrace;
+  __int64 v0; <span class="hljs-comment">// rdx</span>
+  __int64 v1; <span class="hljs-comment">// rcx</span>
+  __int64 v2; <span class="hljs-comment">// r8</span>
+  __int64 v3; <span class="hljs-comment">// r9</span>
+  __int64 v4; <span class="hljs-comment">// rdx</span>
+  __int64 v5; <span class="hljs-comment">// rcx</span>
+  __int64 v6; <span class="hljs-comment">// r8</span>
+  __int64 v7; <span class="hljs-comment">// r9</span>
+  <span class="hljs-type">int</span> v8; <span class="hljs-comment">// eax</span>
+  __int64 v9; <span class="hljs-comment">// rdx</span>
+  __int64 v10; <span class="hljs-comment">// rcx</span>
+  __int64 v11; <span class="hljs-comment">// r8</span>
+  __int64 v12; <span class="hljs-comment">// r9</span>
+  _BYTE *v13; <span class="hljs-comment">// rsi</span>
+  <span class="hljs-type">int</span> v14; <span class="hljs-comment">// ebx</span>
+  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> *v15; <span class="hljs-comment">// rdi</span>
+  __int64 v16; <span class="hljs-comment">// rcx</span>
+  __int64 v17; <span class="hljs-comment">// r8</span>
+  __int64 v18; <span class="hljs-comment">// r9</span>
+  _BOOL8 v19; <span class="hljs-comment">// rdx</span>
+  __int64 v20; <span class="hljs-comment">// rdx</span>
+  __int64 v21; <span class="hljs-comment">// rcx</span>
+  __int64 v22; <span class="hljs-comment">// r8</span>
+  __int64 v23; <span class="hljs-comment">// r9</span>
+  __int64 v24; <span class="hljs-comment">// rdx</span>
+  __int64 v25; <span class="hljs-comment">// rcx</span>
+  __int64 v26; <span class="hljs-comment">// r8</span>
+  __int64 v27; <span class="hljs-comment">// r9</span>
+  __int64 i; <span class="hljs-comment">// rbx</span>
+  <span class="hljs-type">int</span> v30; <span class="hljs-comment">// [rsp+0h] [rbp-310h] BYREF</span>
+  <span class="hljs-type">int</span> v31; <span class="hljs-comment">// [rsp+4h] [rbp-30Ch]</span>
+  <span class="hljs-type">const</span> <span class="hljs-type">char</span> *v32; <span class="hljs-comment">// [rsp+8h] [rbp-308h]</span>
+  <span class="hljs-type">int</span> v33; <span class="hljs-comment">// [rsp+10h] [rbp-300h]</span>
+  <span class="hljs-type">char</span> *v34; <span class="hljs-comment">// [rsp+50h] [rbp-2C0h]</span>
+  __int64 v35; <span class="hljs-comment">// [rsp+58h] [rbp-2B8h]</span>
+  <span class="hljs-type">char</span> v36; <span class="hljs-comment">// [rsp+21Fh] [rbp-F1h] BYREF</span>
+  __int64 v37; <span class="hljs-comment">// [rsp+220h] [rbp-F0h]</span>
+  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v38; <span class="hljs-comment">// [rsp+22Ch] [rbp-E4h] BYREF</span>
+  _BYTE v39[<span class="hljs-number">72</span>]; <span class="hljs-comment">// [rsp+230h] [rbp-E0h] BYREF</span>
+  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v40; <span class="hljs-comment">// [rsp+278h] [rbp-98h] BYREF</span>
+  _DWORD v41[<span class="hljs-number">30</span>]; <span class="hljs-comment">// [rsp+27Ch] [rbp-94h] BYREF</span>
+  <span class="hljs-type">int</span> v42; <span class="hljs-comment">// [rsp+2F4h] [rbp-1Ch]</span>
+  <span class="hljs-type">int</span> v43; <span class="hljs-comment">// [rsp+2F8h] [rbp-18h]</span>
+  <span class="hljs-type">int</span> v44; <span class="hljs-comment">// [rsp+2FCh] [rbp-14h]</span>
+
+  v37 = <span class="hljs-number">0LL</span>;
+  sub_19BD(<span class="hljs-string">&quot;*&quot;</span>);
+  v44 = sub_1954((__int64)dword_4020, &amp;dword_201C);
+  v44 = sub_190F(&amp;v38);
+  v44 = sub_18C2(&amp;dword_2020);
+  sub_185D((__int64)v39, dword_4020, <span class="hljs-number">64LL</span>);
+  v32 = <span class="hljs-string">&quot;bfl.f90&quot;</span>;
+  v33 = <span class="hljs-number">21</span>;
+  v30 = <span class="hljs-number">128</span>;
+  v31 = <span class="hljs-number">6</span>;
+  _gfortran_st_write(&amp;v30, dword_4020, v0, v1, v2, v3);
+  _gfortran_transfer_character_write(&amp;v30, <span class="hljs-string">&quot;key:(A)&quot;</span>, <span class="hljs-number">4LL</span>);
+  _gfortran_st_write_done(&amp;v30);
+  v32 = <span class="hljs-string">&quot;bfl.f90&quot;</span>;
+  v33 = <span class="hljs-number">22</span>;
+  v34 = <span class="hljs-string">&quot;(A)&quot;</span>;
+  v35 = <span class="hljs-number">3LL</span>;
+  v30 = <span class="hljs-number">4096</span>;
+  v31 = <span class="hljs-number">5</span>;
+  ((<span class="hljs-type">void</span> (__fastcall *)(<span class="hljs-type">int</span> *, <span class="hljs-type">const</span> <span class="hljs-type">char</span> *, __int64, __int64, __int64, __int64))_gfortran_st_read)(
+    &amp;v30,
+    <span class="hljs-string">&quot;key:(A)&quot;</span>,
+    v4,
+    v5,
+    v6,
+    v7);
+  _gfortran_transfer_character(&amp;v30, v39, <span class="hljs-number">64LL</span>);
+  _gfortran_st_read_done(&amp;v30);
+  v43 = <span class="hljs-number">24</span>;
+  v8 = _gfortran_string_len_trim(<span class="hljs-number">64LL</span>, v39);
+  <span class="hljs-keyword">if</span> ( v43 &gt; v8 )
+  &lbrace;
+    v32 = <span class="hljs-string">&quot;bfl.f90&quot;</span>;
+    v33 = <span class="hljs-number">26</span>;
+    v30 = <span class="hljs-number">128</span>;
+    v31 = <span class="hljs-number">6</span>;
+    _gfortran_st_write(&amp;v30, v39, v9, v10, v11, v12);
+    _gfortran_transfer_character_write(&amp;v30, <span class="hljs-string">&quot;*&quot;</span>, <span class="hljs-number">0LL</span>);
+    _gfortran_st_write_done(&amp;v30);
+    _gfortran_stop_string(<span class="hljs-number">0LL</span>, <span class="hljs-number">0LL</span>, <span class="hljs-number">0LL</span>);
+  &rbrace;
+  v38 = <span class="hljs-number">0</span>;
+  v13 = v39;
+  v14 = _gfortran_string_len_trim(<span class="hljs-number">64LL</span>, v39);
+  <span class="hljs-keyword">for</span> ( v41[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>; v14 &gt;= v41[<span class="hljs-number">0</span>]; ++v41[<span class="hljs-number">0</span>] )
+  &lbrace;
+    v38 += (<span class="hljs-type">unsigned</span> __int8)v39[v41[<span class="hljs-number">0</span>] - <span class="hljs-number">1</span>];
+    v13 = v41;
+    v44 = sub_17A4(&amp;v38, v41);
+  &rbrace;
+  v15 = &amp;v38;
+  v44 = sub_19BD(&amp;v38);
+  v40 = v38;
+  <span class="hljs-keyword">for</span> ( v41[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>; v41[<span class="hljs-number">0</span>] &lt;= <span class="hljs-number">28</span>; ++v41[<span class="hljs-number">0</span>] )
+  &lbrace;
+    v44 = sub_18C2(&amp;v40);
+    v40 = (<span class="hljs-number">4919</span> * v40) ^ <span class="hljs-number">0xDEADBEEF</span>;
+    v41[v41[<span class="hljs-number">0</span>]] = dword_4020[v41[<span class="hljs-number">0</span>] - <span class="hljs-number">1</span>] ^ (<span class="hljs-type">unsigned</span> __int8)v40;
+    v15 = &amp;v40;
+    v44 = sub_190F(&amp;v40);
+  &rbrace;
+  <span class="hljs-keyword">for</span> ( v41[<span class="hljs-number">0</span>] = <span class="hljs-number">1</span>; v41[<span class="hljs-number">0</span>] &lt;= <span class="hljs-number">28</span>; ++v41[<span class="hljs-number">0</span>] )
+  &lbrace;
+    v42 = v41[v41[<span class="hljs-number">0</span>]];
+    v19 = v42 &lt;= <span class="hljs-number">31</span>;
+    <span class="hljs-keyword">if</span> ( v19 || v42 &gt; <span class="hljs-number">126</span> )
+    &lbrace;
+      sub_11C9((__int64)v15, (__int64)v13, v19, v16, v17, v18);
+      v32 = <span class="hljs-string">&quot;bfl.f90&quot;</span>;
+      v33 = <span class="hljs-number">49</span>;
+      v30 = <span class="hljs-number">128</span>;
+      v31 = <span class="hljs-number">6</span>;
+      _gfortran_st_write(&amp;v30, v13, v20, v21, v22, v23);
+      _gfortran_transfer_character_write(&amp;v30, <span class="hljs-string">&quot;*&quot;</span>, <span class="hljs-number">0LL</span>);
+      _gfortran_st_write_done(&amp;v30);
+      v13 = <span class="hljs-number">0LL</span>;
+      v15 = <span class="hljs-number">0LL</span>;
+      _gfortran_stop_string(<span class="hljs-number">0LL</span>, <span class="hljs-number">0LL</span>, <span class="hljs-number">0LL</span>);
+    &rbrace;
+  &rbrace;
+  v44 = sub_19BD(&amp;dword_201C);
+  v32 = <span class="hljs-string">&quot;bfl.f90&quot;</span>;
+  v33 = <span class="hljs-number">55</span>;
+  v30 = <span class="hljs-number">128</span>;
+  v31 = <span class="hljs-number">6</span>;
+  _gfortran_st_write(&amp;v30, v13, v24, v25, v26, v27);
+  <span class="hljs-keyword">for</span> ( i = <span class="hljs-number">1LL</span>; i &lt;= <span class="hljs-number">28</span>; ++i )
+  &lbrace;
+    v36 = v41[i];
+    _gfortran_transfer_character_write(&amp;v30, &amp;v36, <span class="hljs-number">1LL</span>);
+  &rbrace;
+  <span class="hljs-keyword">return</span> _gfortran_st_write_done(&amp;v30);
+&rbrace;</pre><button class="expand-btn" onclick="(()=>{const p=document.getElementById('1');const btn=p.querySelector('.expand-btn');if(p.classList.contains('collapsed')){p.classList.remove('collapsed');btn.textContent='Show Less'}else{p.classList.add('collapsed');btn.textContent='Show More';p.scrollIntoView({behavior:'instant',block:'start'})}})()">Show More</button></div><p>It seems all of the function calls are red herrings, as they do nothing to effect the program. Cleaning up the decompilation, we are left with essentially this:</p><div class="code-preview collapsed" id="2"><pre ><span class="hljs-type">int</span> dword_4020[<span class="hljs-number">28</span>] = &lbrace;<span class="hljs-number">0xBF</span>, <span class="hljs-number">0xF3</span>, <span class="hljs-number">0x3B</span>, <span class="hljs-number">0x25</span>, <span class="hljs-number">0xB3</span>, <span class="hljs-number">0x2F</span>, <span class="hljs-number">0x97</span>,
+                      <span class="hljs-number">0x1A</span>, <span class="hljs-number">0xD9</span>, <span class="hljs-number">0xBF</span>, <span class="hljs-number">0xAA</span>, <span class="hljs-number">0xA2</span>, <span class="hljs-number">0xA6</span>, <span class="hljs-number">0x55</span>,
+                      <span class="hljs-number">0xC4</span>, <span class="hljs-number">0xCA</span>, <span class="hljs-number">0x15</span>, <span class="hljs-number">0x90</span>, <span class="hljs-number">0x93</span>, <span class="hljs-number">0x51</span>, <span class="hljs-number">0x8B</span>,
+                      <span class="hljs-number">0x34</span>, <span class="hljs-number">0x41</span>, <span class="hljs-number">0x6E</span>, <span class="hljs-number">0x0B</span>, <span class="hljs-number">0x24</span>, <span class="hljs-number">0xF1</span>, <span class="hljs-number">0xBB</span>&rbrace;;
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &lbrace;
+  <span class="hljs-type">char</span> input[<span class="hljs-number">64</span>] = &lbrace;<span class="hljs-number">0</span>&rbrace;;
+  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v25 = <span class="hljs-number">0</span>;
+  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v27 = <span class="hljs-number">0</span>;
+  <span class="hljs-type">int</span> result[<span class="hljs-number">29</span>] = &lbrace;<span class="hljs-number">0</span>&rbrace;;
+
+  <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;key:&quot;</span>);
+  <span class="hljs-keyword">if</span> (!fgets(input, <span class="hljs-keyword">sizeof</span>(input), <span class="hljs-built_in">stdin</span>))
+    <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);
+
+  <span class="hljs-comment">// .strip()</span>
+  <span class="hljs-type">size_t</span> len = <span class="hljs-built_in">strcspn</span>(input, <span class="hljs-string">&quot;\n&quot;</span>);
+  input[len] = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">while</span> (len &gt; <span class="hljs-number">0</span> &amp;&amp; input[len - <span class="hljs-number">1</span>] == <span class="hljs-string">&#x27; &#x27;</span>)
+    input[--len] = <span class="hljs-number">0</span>;
+  <span class="hljs-keyword">if</span> (len &lt; <span class="hljs-number">24</span>) &lbrace;
+    <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;*\n&quot;</span>);
+    <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);
+  &rbrace;
+
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= len; ++i) &lbrace;
+    v25 += (<span class="hljs-type">unsigned</span> <span class="hljs-type">char</span>)input[i - <span class="hljs-number">1</span>];
+  &rbrace;
+  v27 = v25;
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">28</span>; ++i) &lbrace;
+    v27 = (<span class="hljs-number">4919</span> * v27) ^ <span class="hljs-number">0xDEADBEEF</span>;
+    result[i] = dword_4020[i - <span class="hljs-number">1</span>] ^ (v27 &amp; <span class="hljs-number">0xFF</span>);
+  &rbrace;
+
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">28</span>; ++i) &lbrace;
+    <span class="hljs-keyword">if</span> (result[i] &lt; <span class="hljs-number">32</span> || result[i] &gt; <span class="hljs-number">126</span>) &lbrace;
+      <span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;*\n&quot;</span>);
+      <span class="hljs-built_in">exit</span>(<span class="hljs-number">1</span>);
+    &rbrace;
+  &rbrace;
+  <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">1</span>; i &lt;= <span class="hljs-number">28</span>; ++i) &lbrace;
+    <span class="hljs-built_in">putchar</span>(result[i]);
+  &rbrace;
+  <span class="hljs-built_in">putchar</span>(<span class="hljs-string">&#x27;\n&#x27;</span>);
+&rbrace;</pre><button class="expand-btn" onclick="(()=>{const p=document.getElementById('2');const btn=p.querySelector('.expand-btn');if(p.classList.contains('collapsed')){p.classList.remove('collapsed');btn.textContent='Show Less'}else{p.classList.add('collapsed');btn.textContent='Show More';p.scrollIntoView({behavior:'instant',block:'start'})}})()">Show More</button></div><p>The program collapses the input into a single number (by summing) then iterates some process on this number, where the residuals must be ASCII. Again, a simple Z3 script is sufficient.</p><pre ><span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *
+
+dword_4020 = [...]
+
+s = BitVec(<span class="hljs-string">&quot;s&quot;</span>, <span class="hljs-number">32</span>)
+
+solver = Solver()
+v = s
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">28</span>):
+    v = (<span class="hljs-number">4919</span> * v) ^ <span class="hljs-number">0xDEADBEEF</span>
+    res = dword_4020[i] ^ (v &amp; <span class="hljs-number">0xFF</span>)
+    solver.add(res &gt;= <span class="hljs-number">32</span>)
+    solver.add(res &lt;= <span class="hljs-number">126</span>)
+
+<span class="hljs-keyword">assert</span> solver.check() == sat
+v = solver.model()[s].as_long()
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">28</span>):
+    v = (<span class="hljs-number">4919</span> * v) ^ <span class="hljs-number">0xDEADBEEF</span>
+    res = dword_4020[i] ^ (v &amp; <span class="hljs-number">0xFF</span>)
+    <span class="hljs-built_in">print</span>(end=<span class="hljs-built_in">chr</span>(res))
+<span class="hljs-built_in">print</span>()
+<span class="hljs-comment"># result: .;,;.&lbrace;t00_e4sy_h4h4_f0rtr4n&rbrace;</span></pre><h3>rev/Easy Come Easy Go</h3><p>So IDA gives this disgusting code:</p><div class="code-preview collapsed" id="3"><pre ><span class="hljs-comment">// main.main</span>
+<span class="hljs-comment">// local variable allocation has failed, the output may be wrong!</span>
+<span class="hljs-type">void</span> __golang <span class="hljs-title function_">main_main</span><span class="hljs-params">()</span>
+&lbrace;
+  runtime_hchan_0 *v0; <span class="hljs-comment">// rcx</span>
+  __int128 v1; <span class="hljs-comment">// xmm15</span>
+  uintptr v2; <span class="hljs-comment">// rax</span>
+  runtime_hchan_0 *v3; <span class="hljs-comment">// rcx</span>
+  uintptr v4; <span class="hljs-comment">// rax</span>
+  runtime_hchan_0 *v5; <span class="hljs-comment">// rcx</span>
+  uintptr v6; <span class="hljs-comment">// rax</span>
+  runtime_hchan_0 *v7; <span class="hljs-comment">// rcx</span>
+  uintptr v8; <span class="hljs-comment">// rax</span>
+  runtime_hchan_0 *v9; <span class="hljs-comment">// rcx</span>
+  runtime_hchan_0 *v10; <span class="hljs-comment">// rax</span>
+  <span class="hljs-type">int</span> v11; <span class="hljs-comment">// rax</span>
+  <span class="hljs-type">int</span> v12; <span class="hljs-comment">// r8</span>
+  os_File_0 *v13; <span class="hljs-comment">// rbx OVERLAPPED</span>
+  __int64 v14; <span class="hljs-comment">// r8</span>
+  __int64 v15; <span class="hljs-comment">// r9</span>
+  <span class="hljs-type">int</span> v16; <span class="hljs-comment">// r10</span>
+  __int64 v17; <span class="hljs-comment">// rcx</span>
+  <span class="hljs-type">int</span> v18; <span class="hljs-comment">// r8</span>
+  error_0 v19; <span class="hljs-comment">// r9</span>
+  runtime_funcval *v20; <span class="hljs-comment">// rax</span>
+  uintptr v21; <span class="hljs-comment">// rcx</span>
+  uintptr v22; <span class="hljs-comment">// rdx</span>
+  uintptr *v23; <span class="hljs-comment">// r11</span>
+  runtime_funcval *v24; <span class="hljs-comment">// rax</span>
+  uintptr v25; <span class="hljs-comment">// rcx</span>
+  uintptr v26; <span class="hljs-comment">// rdx</span>
+  uintptr *v27; <span class="hljs-comment">// r11</span>
+  runtime_funcval *v28; <span class="hljs-comment">// rax</span>
+  <span class="hljs-type">int</span> v29; <span class="hljs-comment">// rcx</span>
+  uintptr v30; <span class="hljs-comment">// rdx</span>
+  uintptr v31; <span class="hljs-comment">// rbx</span>
+  uintptr v32; <span class="hljs-comment">// rsi</span>
+  uintptr v33; <span class="hljs-comment">// rdi</span>
+  runtime_hchan_0 *v34; <span class="hljs-comment">// r8</span>
+  <span class="hljs-type">int</span> *v35; <span class="hljs-comment">// r11</span>
+  <span class="hljs-type">int</span> v36; <span class="hljs-comment">// r8</span>
+  error_0 v37; <span class="hljs-comment">// r9</span>
+  os_File_0 *v38; <span class="hljs-comment">// rbx</span>
+  <span class="hljs-type">const</span> internal_abi_ITab *v39; <span class="hljs-comment">// rax OVERLAPPED</span>
+  <span class="hljs-type">void</span> *p_cap; <span class="hljs-comment">// rcx OVERLAPPED</span>
+  __int64 v41; <span class="hljs-comment">// rdi</span>
+  __int64 v42; <span class="hljs-comment">// rsi</span>
+  error_0 v43; <span class="hljs-comment">// [rsp-3Eh] [rbp-E8h]</span>
+  <span class="hljs-type">char</span> elem; <span class="hljs-comment">// [rsp+1h] [rbp-A9h] BYREF</span>
+  runtime_hchan_0 *c; <span class="hljs-comment">// [rsp+2h] [rbp-A8h]</span>
+  uintptr v46; <span class="hljs-comment">// [rsp+Ah] [rbp-A0h]</span>
+  uintptr v47; <span class="hljs-comment">// [rsp+12h] [rbp-98h]</span>
+  uintptr v48; <span class="hljs-comment">// [rsp+1Ah] [rbp-90h]</span>
+  uintptr v49; <span class="hljs-comment">// [rsp+22h] [rbp-88h]</span>
+  _slice_interface_ v50; <span class="hljs-comment">// [rsp+2Ah] [rbp-80h] BYREF</span>
+  <span class="hljs-type">char</span> **v51; <span class="hljs-comment">// [rsp+42h] [rbp-68h]</span>
+  _slice_interface_ v52; <span class="hljs-comment">// [rsp+4Ah] [rbp-60h] BYREF</span>
+  <span class="hljs-type">char</span> **v53; <span class="hljs-comment">// [rsp+62h] [rbp-48h]</span>
+  __int128 v54; <span class="hljs-comment">// [rsp+6Ah] [rbp-40h]</span>
+  _slice_interface_ a; <span class="hljs-comment">// [rsp+7Ah] [rbp-30h] BYREF</span>
+  <span class="hljs-type">char</span> **v56; <span class="hljs-comment">// [rsp+92h] [rbp-18h]</span>
+  <span class="hljs-type">int</span> v57; <span class="hljs-comment">// [rsp+9Ah] [rbp-10h]</span>
+  error_0 v58; <span class="hljs-comment">// 0:r9.16</span>
+  io_Writer_0 v59; <span class="hljs-comment">// 0:rax.8,8:rbx.8</span>
+  io_Writer_0 v60; <span class="hljs-comment">// 0:rax.8,8:rbx.8</span>
+  io_Writer_0 v61; <span class="hljs-comment">// 0:rax.8,8:rbx.8</span>
+  _slice_interface_ v62; <span class="hljs-comment">// 0:rcx.8,8:rdi.16 OVERLAPPED</span>
+  _slice_interface_ v63; <span class="hljs-comment">// 0:rcx.8,8:rdi.16</span>
+  _slice_interface_ v64; <span class="hljs-comment">// 0:rcx.8,8:rdi.16</span>
+
+  runtime_makechan((internal_abi_ChanType *)&amp;RTYPE_chan_int, <span class="hljs-number">0LL</span>, v0);
+  v49 = v2;
+  runtime_makechan((internal_abi_ChanType *)&amp;RTYPE_chan_uint8, <span class="hljs-number">0LL</span>, v3);
+  v48 = v4;
+  runtime_makechan((internal_abi_ChanType *)&amp;RTYPE_chan_uint8, <span class="hljs-number">0LL</span>, v5);
+  v47 = v6;
+  runtime_makechan((internal_abi_ChanType *)&amp;RTYPE_chan_uint8, <span class="hljs-number">0LL</span>, v7);
+  v46 = v8;
+  runtime_makechan((internal_abi_ChanType *)&amp;RTYPE_chan_bool, <span class="hljs-number">0LL</span>, v9);
+  c = v10;
+  runtime_newobject((internal_abi_Type *)&amp;RTYPE__slice_uint8, <span class="hljs-number">0LL</span>);
+  v57 = v11;
+  a.cap = (<span class="hljs-type">int</span>)&amp;RTYPE_string;
+  v56 = &amp;off_4EB170;
+  v59.data = os_Stdout;
+  v59.tab = (internal_abi_ITab *)&amp;go_itab__ptr_os_File_comma_io_Writer;
+  v62.<span class="hljs-built_in">array</span> = (interface__0 *)&amp;a.cap;
+  v62.len = <span class="hljs-number">1LL</span>;
+  v62.cap = <span class="hljs-number">1LL</span>;
+  fmt_Fprint(v59, v62, v12, v58);
+  a.<span class="hljs-built_in">array</span> = (interface__0 *)&amp;RTYPE__ptr__slice_uint8;
+  a.len = v57;
+  v13 = os_Stdin;
+  v59.tab = (internal_abi_ITab *)&amp;go_itab__ptr_os_File_comma_io_Reader;
+  v62.<span class="hljs-built_in">array</span> = (interface__0 *)<span class="hljs-string">&quot;%s&quot;</span>;
+  v62.len = <span class="hljs-number">2LL</span>;
+  v62.cap = (<span class="hljs-type">int</span>)&amp;a;
+  v14 = <span class="hljs-number">1LL</span>;
+  v15 = <span class="hljs-number">1LL</span>;
+  fmt_Fscanf(*(io_Reader_0 *)&amp;(&amp;v13)[<span class="hljs-number">-1</span>], *(string_0 *)&amp;v62.<span class="hljs-built_in">array</span>, *(_slice_interface_ *)&amp;v62.cap, v16, v43);
+  <span class="hljs-keyword">if</span> ( v13 )
+  &lbrace;
+    v54 = v1;
+    v52.cap = (<span class="hljs-type">int</span>)&amp;RTYPE_string;
+    v53 = &amp;off_4EB180;
+    *(os_File_0 *)&amp;v54 = v13[<span class="hljs-number">1</span>];
+    *((_QWORD *)&amp;v54 + <span class="hljs-number">1</span>) = v17;
+    v60.data = os_Stdout;
+    v60.tab = (internal_abi_ITab *)&amp;go_itab__ptr_os_File_comma_io_Writer;
+    v63.<span class="hljs-built_in">array</span> = (interface__0 *)&amp;v52.cap;
+    v63.len = <span class="hljs-number">2LL</span>;
+    v63.cap = <span class="hljs-number">2LL</span>;
+    fmt_Fprintln(v60, v63, v18, v19);
+  &rbrace;
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ( *(_QWORD *)(v57 + <span class="hljs-number">8</span>) == <span class="hljs-number">24LL</span> )
+  &lbrace;
+    runtime_newobject((internal_abi_Type *)&amp;stru_4B5BC0, <span class="hljs-number">0LL</span>);
+    v20-&gt;fn = (uintptr)main_main_func1;
+    <span class="hljs-keyword">if</span> ( *(_DWORD *)&amp;runtime_writeBarrier.enabled )
+    &lbrace;
+      runtime_gcWriteBarrier2();
+      v21 = v49;
+      *v23 = v49;
+      v22 = v47;
+      v23[<span class="hljs-number">1</span>] = v47;
+    &rbrace;
+    <span class="hljs-keyword">else</span>
+    &lbrace;
+      v21 = v49;
+      v22 = v47;
+    &rbrace;
+    v20[<span class="hljs-number">1</span>].fn = v21;
+    v20[<span class="hljs-number">2</span>].fn = v22;
+    runtime_newproc(v20);
+    runtime_newobject((internal_abi_Type *)&amp;stru_4B5C60, <span class="hljs-number">0LL</span>);
+    v24-&gt;fn = (uintptr)main_main_func2;
+    <span class="hljs-keyword">if</span> ( *(_DWORD *)&amp;runtime_writeBarrier.enabled )
+    &lbrace;
+      runtime_gcWriteBarrier2();
+      v25 = v48;
+      *v27 = v48;
+      v26 = v46;
+      v27[<span class="hljs-number">1</span>] = v46;
+    &rbrace;
+    <span class="hljs-keyword">else</span>
+    &lbrace;
+      v25 = v48;
+      v26 = v46;
+    &rbrace;
+    v24[<span class="hljs-number">1</span>].fn = v25;
+    v24[<span class="hljs-number">2</span>].fn = v26;
+    runtime_newproc(v24);
+    runtime_newobject((internal_abi_Type *)&amp;stru_4BB720, <span class="hljs-number">0LL</span>);
+    v28-&gt;fn = (uintptr)main_main_func3;
+    <span class="hljs-keyword">if</span> ( *(_DWORD *)&amp;runtime_writeBarrier.enabled )
+    &lbrace;
+      runtime_gcWriteBarrier6();
+      v29 = v57;
+      *v35 = v57;
+      v30 = v49;
+      v35[<span class="hljs-number">1</span>] = v49;
+      v31 = v47;
+      v35[<span class="hljs-number">2</span>] = v47;
+      v32 = v48;
+      v35[<span class="hljs-number">3</span>] = v48;
+      v33 = v46;
+      v35[<span class="hljs-number">4</span>] = v46;
+      v34 = c;
+      v35[<span class="hljs-number">5</span>] = (<span class="hljs-type">int</span>)c;
+    &rbrace;
+    <span class="hljs-keyword">else</span>
+    &lbrace;
+      v29 = v57;
+      v30 = v49;
+      v31 = v47;
+      v32 = v48;
+      v33 = v46;
+      v34 = c;
+    &rbrace;
+    v28[<span class="hljs-number">1</span>].fn = v29;
+    v28[<span class="hljs-number">2</span>].fn = v30;
+    v28[<span class="hljs-number">3</span>].fn = v31;
+    v28[<span class="hljs-number">4</span>].fn = v32;
+    v28[<span class="hljs-number">5</span>].fn = v33;
+    v28[<span class="hljs-number">6</span>].fn = (uintptr)v34;
+    runtime_newproc(v28);
+    elem = <span class="hljs-number">0</span>;
+    runtime_chanrecv1(c, &amp;elem);
+    <span class="hljs-keyword">if</span> ( elem )
+    &lbrace;
+      v50.cap = (<span class="hljs-type">int</span>)&amp;RTYPE_string;
+      v51 = &amp;off_4EB1A0;
+      v38 = os_Stdout;
+      v39 = &amp;go_itab__ptr_os_File_comma_io_Writer;
+      p_cap = &amp;v50.cap;
+    &rbrace;
+    <span class="hljs-keyword">else</span>
+    &lbrace;
+      v50.<span class="hljs-built_in">array</span> = (interface__0 *)&amp;RTYPE_string;
+      v50.len = (<span class="hljs-type">int</span>)&amp;off_4EB190;
+      v38 = os_Stdout;
+      v39 = &amp;go_itab__ptr_os_File_comma_io_Writer;
+      p_cap = &amp;v50;
+    &rbrace;
+    v41 = <span class="hljs-number">1LL</span>;
+    v42 = <span class="hljs-number">1LL</span>;
+    fmt_Fprintln(*(io_Writer_0 *)&amp;v39, *(_slice_interface_ *)&amp;p_cap, v36, v37);
+  &rbrace;
+  <span class="hljs-keyword">else</span>
+  &lbrace;
+    v52.<span class="hljs-built_in">array</span> = (interface__0 *)&amp;RTYPE_string;
+    v52.len = (<span class="hljs-type">int</span>)&amp;off_4EB190;
+    v61.data = os_Stdout;
+    v61.tab = (internal_abi_ITab *)&amp;go_itab__ptr_os_File_comma_io_Writer;
+    v64.<span class="hljs-built_in">array</span> = (interface__0 *)&amp;v52;
+    v64.len = <span class="hljs-number">1LL</span>;
+    v64.cap = <span class="hljs-number">1LL</span>;
+    fmt_Fprintln(v61, v64, v18, v19);
+  &rbrace;
+&rbrace;</pre><button class="expand-btn" onclick="(()=>{const p=document.getElementById('3');const btn=p.querySelector('.expand-btn');if(p.classList.contains('collapsed')){p.classList.remove('collapsed');btn.textContent='Show Less'}else{p.classList.add('collapsed');btn.textContent='Show More';p.scrollIntoView({behavior:'instant',block:'start'})}})()">Show More</button></div><p>From it we see what appears to be a length check on the input followed by goroutines running on the input. These are the goroutines:</p><div class="code-preview collapsed" id="4"><pre ><span class="hljs-comment">// main.main.func1</span>
+<span class="hljs-type">void</span> __golang <span class="hljs-title function_">main_main_func1</span><span class="hljs-params">()</span>
+&lbrace;
+  __int64 v0; <span class="hljs-comment">// rdx</span>
+  runtime_hchan_0 *v1; <span class="hljs-comment">// rcx</span>
+  runtime_hchan_0 *v2; <span class="hljs-comment">// rax</span>
+  <span class="hljs-type">char</span> v3; <span class="hljs-comment">// al</span>
+  __int64 v4; <span class="hljs-comment">// rax</span>
+  _QWORD v5[<span class="hljs-number">3</span>]; <span class="hljs-comment">// [rsp+0h] [rbp-38h] BYREF</span>
+  __int64 elem; <span class="hljs-comment">// [rsp+18h] [rbp-20h] BYREF</span>
+  runtime_hchan_0 *v7; <span class="hljs-comment">// [rsp+20h] [rbp-18h]</span>
+  runtime_hchan_0 *c; <span class="hljs-comment">// [rsp+28h] [rbp-10h]</span>
+
+  v1 = *(runtime_hchan_0 **)(v0 + <span class="hljs-number">16</span>);
+  v7 = v1;
+  v2 = *(runtime_hchan_0 **)(v0 + <span class="hljs-number">8</span>);
+  c = v2;
+  v5[<span class="hljs-number">0</span>] = <span class="hljs-number">0x47300FC1F251843E</span>LL;
+  v5[<span class="hljs-number">1</span>] = <span class="hljs-number">0x6C1AB14C445D2D6F</span>LL;
+  v5[<span class="hljs-number">2</span>] = <span class="hljs-number">0x257CC82AC421251</span>LL;
+  <span class="hljs-keyword">while</span> ( <span class="hljs-number">1</span> )
+  &lbrace;
+    runtime_chanrecv2(v2, &amp;elem, (<span class="hljs-type">bool</span>)v1);
+    <span class="hljs-keyword">if</span> ( !v3 )
+      <span class="hljs-keyword">break</span>;
+    v4 = elem;
+    elem = <span class="hljs-number">24LL</span>;
+    <span class="hljs-keyword">if</span> ( v4 &gt;= <span class="hljs-number">24</span> )
+    &lbrace;
+      runtime_chansend1(v7, &amp;runtime_egcbss);
+    &rbrace;
+    <span class="hljs-keyword">else</span>
+    &lbrace;
+      <span class="hljs-keyword">if</span> ( (<span class="hljs-type">unsigned</span> __int64)v4 &gt;= <span class="hljs-number">0x18</span> )
+        runtime_panicIndex();
+      runtime_chansend1(v7, (<span class="hljs-type">char</span> *)v5 + v4);
+    &rbrace;
+    v2 = c;
+  &rbrace;
+&rbrace;
+
+<span class="hljs-comment">// main.main.func2</span>
+<span class="hljs-type">void</span> __golang <span class="hljs-title function_">main_main_func2</span><span class="hljs-params">()</span>
+&lbrace;
+  __int64 v0; <span class="hljs-comment">// rdx</span>
+  runtime_hchan_0 *v1; <span class="hljs-comment">// rcx</span>
+  runtime_hchan_0 *v2; <span class="hljs-comment">// rax</span>
+  <span class="hljs-type">unsigned</span> __int64 v3; <span class="hljs-comment">// rdx</span>
+  <span class="hljs-type">char</span> v4; <span class="hljs-comment">// al</span>
+  _QWORD v5[<span class="hljs-number">3</span>]; <span class="hljs-comment">// [rsp+1h] [rbp-39h]</span>
+  <span class="hljs-type">char</span> elem; <span class="hljs-comment">// [rsp+19h] [rbp-21h] BYREF</span>
+  <span class="hljs-type">unsigned</span> __int64 v7; <span class="hljs-comment">// [rsp+1Ah] [rbp-20h]</span>
+  runtime_hchan_0 *c; <span class="hljs-comment">// [rsp+22h] [rbp-18h]</span>
+  runtime_hchan_0 *v9; <span class="hljs-comment">// [rsp+2Ah] [rbp-10h]</span>
+
+  v1 = *(runtime_hchan_0 **)(v0 + <span class="hljs-number">16</span>);
+  c = v1;
+  v2 = *(runtime_hchan_0 **)(v0 + <span class="hljs-number">8</span>);
+  v9 = v2;
+  v5[<span class="hljs-number">0</span>] = <span class="hljs-number">0x912EFA6C49BD6BE</span>LL;
+  v5[<span class="hljs-number">1</span>] = <span class="hljs-number">0x6A163B0583444D46</span>LL;
+  v5[<span class="hljs-number">2</span>] = <span class="hljs-number">0x24E61FF4643EA395</span>LL;
+  v3 = <span class="hljs-number">0LL</span>;
+  <span class="hljs-keyword">while</span> ( <span class="hljs-number">1</span> )
+  &lbrace;
+    v7 = v3;
+    runtime_chanrecv2(v2, &amp;elem, (<span class="hljs-type">bool</span>)v1);
+    <span class="hljs-keyword">if</span> ( !v4 )
+      <span class="hljs-keyword">break</span>;
+    <span class="hljs-keyword">if</span> ( v7 &gt;= <span class="hljs-number">0x18</span> )
+      runtime_panicIndex();
+    elem ^= *((_BYTE *)v5 + v7);
+    runtime_chansend1(c, &amp;elem);
+    v3 = v7 + <span class="hljs-number">1</span>;
+    v2 = v9;
+  &rbrace;
+&rbrace;
+
+<span class="hljs-comment">// main.main.func3</span>
+<span class="hljs-type">void</span> __golang <span class="hljs-title function_">main_main_func3</span><span class="hljs-params">()</span>
+&lbrace;
+  __int64 v0; <span class="hljs-comment">// rdx</span>
+  __int64 *v1; <span class="hljs-comment">// rsi</span>
+  runtime_hchan_0 *v2; <span class="hljs-comment">// rax</span>
+  runtime_hchan_0 *v3; <span class="hljs-comment">// rdi</span>
+  __int64 v4; <span class="hljs-comment">// r10</span>
+  <span class="hljs-type">signed</span> __int64 v5; <span class="hljs-comment">// rsi</span>
+  <span class="hljs-type">unsigned</span> __int64 v6; <span class="hljs-comment">// rcx</span>
+  <span class="hljs-type">char</span> v7; <span class="hljs-comment">// r11</span>
+  <span class="hljs-type">char</span> v8; <span class="hljs-comment">// [rsp+0h] [rbp-122h]</span>
+  <span class="hljs-type">char</span> v9; <span class="hljs-comment">// [rsp+1h] [rbp-121h] BYREF</span>
+  _QWORD v10[<span class="hljs-number">3</span>]; <span class="hljs-comment">// [rsp+2h] [rbp-120h]</span>
+  <span class="hljs-type">unsigned</span> __int64 v11; <span class="hljs-comment">// [rsp+1Ah] [rbp-108h]</span>
+  _QWORD elem[<span class="hljs-number">24</span>]; <span class="hljs-comment">// [rsp+22h] [rbp-100h] BYREF</span>
+  <span class="hljs-type">signed</span> __int64 v13; <span class="hljs-comment">// [rsp+E2h] [rbp-40h]</span>
+  runtime_hchan_0 *v14; <span class="hljs-comment">// [rsp+EAh] [rbp-38h]</span>
+  runtime_hchan_0 *v15; <span class="hljs-comment">// [rsp+F2h] [rbp-30h]</span>
+  runtime_hchan_0 *c; <span class="hljs-comment">// [rsp+FAh] [rbp-28h]</span>
+  runtime_hchan_0 *v17; <span class="hljs-comment">// [rsp+102h] [rbp-20h]</span>
+  runtime_hchan_0 *v18; <span class="hljs-comment">// [rsp+10Ah] [rbp-18h]</span>
+  __int64 v19; <span class="hljs-comment">// [rsp+112h] [rbp-10h]</span>
+
+  v1 = *(__int64 **)(v0 + <span class="hljs-number">8</span>);
+  v2 = *(runtime_hchan_0 **)(v0 + <span class="hljs-number">48</span>);
+  v14 = v2;
+  v3 = *(runtime_hchan_0 **)(v0 + <span class="hljs-number">16</span>);
+  v18 = v3;
+  c = *(runtime_hchan_0 **)(v0 + <span class="hljs-number">24</span>);
+  v17 = *(runtime_hchan_0 **)(v0 + <span class="hljs-number">32</span>);
+  v15 = *(runtime_hchan_0 **)(v0 + <span class="hljs-number">40</span>);
+  elem[<span class="hljs-number">0</span>] = <span class="hljs-number">21LL</span>;
+  elem[<span class="hljs-number">1</span>] = <span class="hljs-number">23LL</span>;
+  elem[<span class="hljs-number">2</span>] = <span class="hljs-number">1LL</span>;
+  elem[<span class="hljs-number">3</span>] = <span class="hljs-number">3LL</span>;
+  elem[<span class="hljs-number">4</span>] = <span class="hljs-number">14LL</span>;
+  elem[<span class="hljs-number">5</span>] = <span class="hljs-number">18LL</span>;
+  elem[<span class="hljs-number">6</span>] = <span class="hljs-number">13LL</span>;
+  elem[<span class="hljs-number">7</span>] = <span class="hljs-number">0LL</span>;
+  elem[<span class="hljs-number">8</span>] = <span class="hljs-number">20LL</span>;
+  elem[<span class="hljs-number">9</span>] = <span class="hljs-number">10LL</span>;
+  elem[<span class="hljs-number">10</span>] = <span class="hljs-number">6LL</span>;
+  elem[<span class="hljs-number">11</span>] = <span class="hljs-number">11LL</span>;
+  elem[<span class="hljs-number">12</span>] = <span class="hljs-number">17LL</span>;
+  elem[<span class="hljs-number">13</span>] = <span class="hljs-number">2LL</span>;
+  elem[<span class="hljs-number">14</span>] = <span class="hljs-number">15LL</span>;
+  elem[<span class="hljs-number">15</span>] = <span class="hljs-number">8LL</span>;
+  elem[<span class="hljs-number">16</span>] = <span class="hljs-number">9LL</span>;
+  elem[<span class="hljs-number">17</span>] = <span class="hljs-number">12LL</span>;
+  elem[<span class="hljs-number">18</span>] = <span class="hljs-number">16LL</span>;
+  elem[<span class="hljs-number">19</span>] = <span class="hljs-number">4LL</span>;
+  elem[<span class="hljs-number">20</span>] = <span class="hljs-number">22LL</span>;
+  elem[<span class="hljs-number">21</span>] = <span class="hljs-number">7LL</span>;
+  elem[<span class="hljs-number">22</span>] = <span class="hljs-number">5LL</span>;
+  elem[<span class="hljs-number">23</span>] = <span class="hljs-number">19LL</span>;
+  v10[<span class="hljs-number">0</span>] = <span class="hljs-number">0x58C4D6920D33EF5C</span>LL;
+  v10[<span class="hljs-number">1</span>] = <span class="hljs-number">0x77250476F61923AC</span>LL;
+  v10[<span class="hljs-number">2</span>] = <span class="hljs-number">0xF5903C93901FDBD0</span>LL;
+  v4 = *v1;
+  v19 = *v1;
+  v5 = v1[<span class="hljs-number">1</span>];
+  v13 = v5;
+  v6 = <span class="hljs-number">0LL</span>;
+  <span class="hljs-keyword">while</span> ( (__int64)v6 &lt; v5 )
+  &lbrace;
+    v7 = *(_BYTE *)(v4 + v6);
+    <span class="hljs-keyword">if</span> ( v6 &gt;= <span class="hljs-number">0x18</span> )
+      runtime_panicIndex();
+    v11 = v6;
+    v8 = v7;
+    runtime_chansend1(v3, &amp;elem[v6]);
+    v9 = <span class="hljs-number">0</span>;
+    runtime_chanrecv1(c, &amp;v9);
+    v9 ^= v8;
+    runtime_chansend1(v17, &amp;v9);
+    v9 = <span class="hljs-number">0</span>;
+    runtime_chanrecv1(v15, &amp;v9);
+    <span class="hljs-keyword">if</span> ( *((_BYTE *)v10 + v11) != v9 )
+    &lbrace;
+      runtime_chansend1(v14, &amp;runtime_egcbss);
+      <span class="hljs-keyword">return</span>;
+    &rbrace;
+    v6 = v11 + <span class="hljs-number">1</span>;
+    v5 = v13;
+    v3 = v18;
+    v4 = v19;
+    v2 = v14;
+  &rbrace;
+  runtime_chansend1(v2, &amp;runtime_gcbits__ptr_);
+&rbrace;</pre><button class="expand-btn" onclick="(()=>{const p=document.getElementById('4');const btn=p.querySelector('.expand-btn');if(p.classList.contains('collapsed')){p.classList.remove('collapsed');btn.textContent='Show Less'}else{p.classList.add('collapsed');btn.textContent='Show More';p.scrollIntoView({behavior:'instant',block:'start'})}})()">Show More</button></div><p>The third goroutine is important; it seems to use the other two. The <code>elem</code> array forms a permutation. Each index <code>i</code> is permuted by <code>elem</code> and passed into the first channel. The result is XORed with the input byte. Then, this data is passed into the second channel which XORs with some array. We want this byte to be equal to <code>expected_results</code>. Essentially, its just a bunch of XORs. We could probably solve this by XORing manually, but here is a Z3 script nevertheless.</p><pre ><span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *
+
+magic_data = [...] <span class="hljs-comment"># v5 from main_main_func1</span>
+xor_data = [...] <span class="hljs-comment"># v5 from main_main_func2</span>
+expected_results = [...] <span class="hljs-comment"># v10 from main_main_func3</span>
+elem = [...] <span class="hljs-comment"># elem from main_main_func3</span>
+
+s = Solver()
+<span class="hljs-built_in">input</span> = [BitVec(<span class="hljs-string">f&quot;v<span class="hljs-subst">&lbrace;i&rbrace;</span>&quot;</span>, <span class="hljs-number">8</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">24</span>)]
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">24</span>):
+    s.add(magic_data[elem[i]] ^ <span class="hljs-built_in">input</span>[i] ^ xor_data[i] == expected_results[i])
+
+<span class="hljs-keyword">assert</span> s.check() == sat
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;&quot;</span>.join(<span class="hljs-built_in">chr</span>(s.model()[c].as_long()) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> <span class="hljs-built_in">input</span>))
+<span class="hljs-comment"># result: .;,;.&lbrace;goh3m1an_rh4p50dy&rbrace;</span></pre><h3>crypto/never enough</h3><p>The point of this challenge is quite obvious, the difficultly lies in the fact that we are given occluded (top 20 bits) samples. Indeed, the program notes itself that we are 328 bits short of the 19968 bits needed to fully solve for the state.</p><pre ><span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> getrandbits
+<span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES
+<span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256
+danger = <span class="hljs-number">624</span>*<span class="hljs-number">32</span> <span class="hljs-comment"># i hear you need this much.</span>
+given = []
+key = <span class="hljs-string">&quot;&quot;</span>
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(danger//<span class="hljs-number">20</span> - <span class="hljs-number">16</span>): <span class="hljs-comment"># should be fine if im only giving u this much :3</span>
+    x = getrandbits(<span class="hljs-number">32</span>)
+    <span class="hljs-comment"># we share &lt;3</span>
+    key += <span class="hljs-built_in">str</span>(x % <span class="hljs-number">2</span>**<span class="hljs-number">12</span>)
+    given.append(x &gt;&gt; <span class="hljs-number">12</span>)
+
+key = key[:<span class="hljs-number">100</span>]
+key = sha256(key.encode()).digest()
+flag = <span class="hljs-built_in">open</span>(<span class="hljs-string">&quot;flag.txt&quot;</span>, <span class="hljs-string">&quot;rb&quot;</span>).read().strip()
+cipher = AES.new(key, AES.MODE_ECB)
+<span class="hljs-built_in">print</span>(given)
+<span class="hljs-built_in">print</span>(cipher.encrypt(flag + <span class="hljs-string">b&quot;\x00&quot;</span> * (<span class="hljs-number">16</span> - <span class="hljs-built_in">len</span>(flag) % <span class="hljs-number">16</span>)).<span class="hljs-built_in">hex</span>())</pre><p>This challenge actually gave me an opportunity to look at Mersenne twister in more depth. I understand it better now. I wrote this general solver, adopted from the code given by <a href="https://github.com/icemonster/symbolic_mersenne_cracker/tree/main">icemonster</a>:</p><div class="code-preview collapsed" id="5"><pre ><span class="hljs-keyword">from</span> itertools <span class="hljs-keyword">import</span> count
+<span class="hljs-keyword">from</span> random <span class="hljs-keyword">import</span> Random
+
+<span class="hljs-keyword">import</span> z3
+
+counter = count()
+BitVec = <span class="hljs-keyword">lambda</span> n: z3.BitVec(<span class="hljs-string">f&#x27;x<span class="hljs-subst">&lbrace;<span class="hljs-built_in">next</span>(counter)&rbrace;</span>&#x27;</span>, n)  <span class="hljs-comment"># for convenience</span>
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">temper</span>(<span class="hljs-params">y</span>):
+    y = y ^ (y &gt;&gt; <span class="hljs-number">11</span>)
+    y = y ^ ((y &lt;&lt; <span class="hljs-number">7</span>) &amp; <span class="hljs-number">0x9D2C5680</span>)
+    y = y ^ ((y &lt;&lt; <span class="hljs-number">15</span>) &amp; <span class="hljs-number">0xEFC60000</span>)
+    y = y ^ (y &gt;&gt; <span class="hljs-number">18</span>)
+    <span class="hljs-keyword">return</span> y
+
+
+<span class="hljs-comment"># based off of https://github.com/icemonster/symbolic_mersenne_cracker/tree/main</span>
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">Untwister</span>:
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self</span>):
+        self.MT = [BitVec(<span class="hljs-number">32</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">624</span>)]
+        self.index = <span class="hljs-number">0</span>
+        self.solver = z3.Solver()
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">untemper</span>(<span class="hljs-params">self, num</span>):
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">temper</span>(<span class="hljs-params">y</span>):
+            y = y ^ (z3.LShR(y, <span class="hljs-number">11</span>))
+            y = y ^ ((y &lt;&lt; <span class="hljs-number">7</span>) &amp; <span class="hljs-number">0x9D2C5680</span>)
+            y = y ^ ((y &lt;&lt; <span class="hljs-number">15</span>) &amp; <span class="hljs-number">0xEFC60000</span>)
+            y = y ^ (z3.LShR(y, <span class="hljs-number">18</span>))
+            <span class="hljs-keyword">return</span> y
+
+        y = BitVec(<span class="hljs-number">32</span>)
+        self.solver.add(temper(y) == num)
+        <span class="hljs-keyword">return</span> y
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">twist</span>(<span class="hljs-params">
+        self,
+        n=<span class="hljs-number">624</span>,
+        upper_mask=<span class="hljs-number">0x80000000</span>,
+        lower_mask=<span class="hljs-number">0x7FFFFFFF</span>,
+        a=<span class="hljs-number">0x9908B0DF</span>,
+        m=<span class="hljs-number">397</span>,
+    </span>):
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+            x = (self.MT[i] &amp; upper_mask) + (self.MT[(i + <span class="hljs-number">1</span>) % n] &amp; lower_mask)
+            xA = z3.LShR(x, <span class="hljs-number">1</span>)
+            xB = z3.If(x &amp; <span class="hljs-number">1</span> == <span class="hljs-number">0</span>, xA, xA ^ a)
+            self.MT[i] = self.MT[(i + m) % n] ^ xB
+        next_mt = self.MT
+        self.MT = [BitVec(<span class="hljs-number">32</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">624</span>)]
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">624</span>):
+            self.solver.add(self.MT[i] == next_mt[i])
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">submit</span>(<span class="hljs-params">self, guess</span>):
+        <span class="hljs-keyword">if</span> self.index &gt;= <span class="hljs-number">624</span>:  <span class="hljs-comment"># we need to refresh the state by twisting.</span>
+            self.twist()
+            self.index = <span class="hljs-number">0</span>
+
+        <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(guess) &lt;= <span class="hljs-number">32</span>
+        guess = guess.zfill(<span class="hljs-number">32</span>)[::-<span class="hljs-number">1</span>]
+        x = BitVec(<span class="hljs-number">32</span>)
+        <span class="hljs-keyword">for</span> i, bit <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(guess):
+            <span class="hljs-keyword">if</span> bit != <span class="hljs-string">&#x27;?&#x27;</span>:
+                self.solver.add(z3.Extract(i, i, x) == bit)
+        x = self.untemper(x)
+        self.solver.add(self.MT[self.index] == x)
+        self.index += <span class="hljs-number">1</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">solve</span>(<span class="hljs-params">self</span>):
+        <span class="hljs-keyword">import</span> bitwuzla
+
+        options = bitwuzla.Options()
+        options.<span class="hljs-built_in">set</span>(bitwuzla.Option.PRODUCE_MODELS, <span class="hljs-literal">True</span>)
+        tm = bitwuzla.TermManager()
+        parser = bitwuzla.Parser(tm, options)
+        parser.parse(self.solver.to_smt2(), parse_file=<span class="hljs-literal">False</span>, parse_only=<span class="hljs-literal">True</span>)
+        solver = parser.bitwuzla()
+        <span class="hljs-keyword">if</span> solver.check_sat() != bitwuzla.Result.SAT:
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+        model = &lbrace;
+            term.symbol(): solver.get_value(term) <span class="hljs-keyword">for</span> term <span class="hljs-keyword">in</span> parser.get_declared_funs()
+        &rbrace;
+
+        <span class="hljs-comment"># generated numbers (useful for partially occluded input)</span>
+        <span class="hljs-keyword">return</span> [temper(<span class="hljs-built_in">int</span>(model[<span class="hljs-string">f&#x27;x<span class="hljs-subst">&lbrace;i&rbrace;</span>&#x27;</span>].value(), <span class="hljs-number">2</span>)) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">624</span>)]
+
+        <span class="hljs-comment"># # try to recover complete state</span>
+        <span class="hljs-comment"># state = [int(model[str(x)].value(), 2) for x in self.MT]</span>
+        <span class="hljs-comment"># r = Random()</span>
+        <span class="hljs-comment"># r.setstate((3, (*state, self.index), None))</span>
+        <span class="hljs-comment"># return r</span></pre><button class="expand-btn" onclick="(()=>{const p=document.getElementById('5');const btn=p.querySelector('.expand-btn');if(p.classList.contains('collapsed')){p.classList.remove('collapsed');btn.textContent='Show Less'}else{p.classList.add('collapsed');btn.textContent='Show More';p.scrollIntoView({behavior:'instant',block:'start'})}})()">Show More</button></div><p>Its ~30x faster since I swapped out Z3 for bitwuzla. Also, we don&#039;t need to fully solve for the state (its not going to be right anyway since we have so few bits). Instead, we just extract the numbers from the first internal state. Empirically, I found it to be completely correct except for the first number, which is wrong for some reason. Not a problem; we can just bruteforce it. Here is the code for the challenge, it takes only 8 seconds:</p><pre >ut = Untwister()
+<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> given:
+    ut.submit(<span class="hljs-built_in">bin</span>(x)[<span class="hljs-number">2</span>:] + <span class="hljs-number">12</span> * <span class="hljs-string">&#x27;?&#x27;</span>)
+
+guess = ut.solve()
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>**<span class="hljs-number">12</span>):
+    key = <span class="hljs-built_in">str</span>(i)
+    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> guess[<span class="hljs-number">1</span>:]:
+        key += <span class="hljs-built_in">str</span>(x % <span class="hljs-number">2</span>**<span class="hljs-number">12</span>)
+    key = key[:<span class="hljs-number">100</span>]
+    key = sha256(key.encode()).digest()
+    cipher = AES.new(key, AES.MODE_ECB)
+    s = cipher.decrypt(<span class="hljs-built_in">bytes</span>.fromhex(encrypted_data))
+    <span class="hljs-keyword">if</span> s[<span class="hljs-number">0</span>] == <span class="hljs-built_in">ord</span>(<span class="hljs-string">&#x27;.&#x27;</span>):
+        <span class="hljs-built_in">print</span>(s) <span class="hljs-comment"># prints 17 lines, one of which contains the actual flag.</span></pre>
+</article></main></body>
+
+</html>

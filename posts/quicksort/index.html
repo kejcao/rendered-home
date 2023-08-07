@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>A Decent Quicksort Function in C - Kevin Cao</title>
+<meta name="description" content="We'll be writing a quicksort function whose header file looks like this" />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>A Decent Quicksort Function in C</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Apr 13, 2023</time></div>
+  </header>
+  <p>We&#039;ll be writing a quicksort function whose header file looks like this</p><pre ><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> SORT_H</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> SORT_H</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stddef.h&gt;</span></span>
+
+<span class="hljs-keyword">typedef</span> <span class="hljs-title function_">int</span> <span class="hljs-params">(*<span class="hljs-type">cmpfn_t</span>)</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *)</span>;
+<span class="hljs-type">void</span> <span class="hljs-title function_">sort</span><span class="hljs-params">(<span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size, <span class="hljs-type">cmpfn_t</span> cmp)</span>;
+
+<span class="hljs-meta">#<span class="hljs-keyword">endif</span></span></pre><p>The header file defines the type <code>cmpfn_t</code> as a function pointer that returns an integer and takes two void pointers. You can see the function signature of the <code>sort</code> function we&#039;ll be implementing; it takes a void pointer to an array, the number of elements in this array, the size of each element, and a function to compare elements. For <code>cmp(a,b)</code> it should return an integer less than zero if a&lt;b, equal to zero if a=b, and greater than zero if a&gt;b.</p><p>Let&#039;s look at a basic implementation</p><pre ><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;sort.h&quot;</span></span>
+
+<span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">swap</span><span class="hljs-params">(<span class="hljs-type">char</span> *a, <span class="hljs-type">char</span> *b, <span class="hljs-type">size_t</span> size)</span> &lbrace;
+    <span class="hljs-keyword">while</span>(size --&gt; <span class="hljs-number">0</span>) &lbrace;
+        <span class="hljs-type">char</span> tmp = *a;
+        *a++ = *b;
+        *b++ = tmp;
+    &rbrace;
+&rbrace;
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> a(i) (base + (i)*size)</span>
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">sort</span><span class="hljs-params">(<span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size, <span class="hljs-type">cmpfn_t</span> cmp)</span> &lbrace;
+    <span class="hljs-keyword">if</span>(nmemb &lt;= <span class="hljs-number">1</span>) &lbrace;
+        <span class="hljs-keyword">return</span>;
+    &rbrace;
+
+    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, j = nmemb;
+    <span class="hljs-keyword">for</span>(;;) &lbrace;
+        <span class="hljs-keyword">do</span> &lbrace; ++i; &rbrace; <span class="hljs-keyword">while</span>(cmp(a(i), base) &lt; <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">do</span> &lbrace; --j; &rbrace; <span class="hljs-keyword">while</span>(cmp(a(j), base) &gt; <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">if</span>(i &gt;= j) &lbrace;
+            <span class="hljs-keyword">break</span>;
+        &rbrace;
+        swap(a(i), a(j), size);
+    &rbrace;
+    swap(a(j), base, size);
+
+    sort(a(<span class="hljs-number">0</span>), j, size, cmp);
+    sort(a(j+<span class="hljs-number">1</span>), nmemb-j<span class="hljs-number">-1</span>, size, cmp);
+&rbrace;</pre><p>We need to be able to swap elements so we define a simple swap function and we also define a simple macro <code>a(i)</code> to convert an array index into a pointer to the element by multiplying the index by the size of each element and adding that to the array pointer (which points to the first element).</p><p>In the quicksort function, an array of zero or one elements is already sorted so we just return. The partitioning happens by &quot;collapsing the walls&quot; or constricting the two pointers <code>i</code> in the forward direction and <code>j</code> in the backward direction until they intersect or pass each other by, in which case we break out of the loop since the array is partitioned. We&#039;re using the first element as the pivot, so in the <code>for</code> loop we first increment <code>i</code> while the element at <code>i</code> is smaller than the first element (the pivot)—basically we&#039;re advancing <code>i</code> until the element at <code>i</code> is in the wrong place, aka it&#039;s greater than the pivot. Similar logic for the loop with <code>j</code> but in the opposite direction. When both <code>i</code> and <code>j</code> are pointing to elements in the wrong places, we swap them, placing them in the right places.</p><p>At the end everything to the left of <code>j</code> should be smaller than or equal the first element (the pivot) and everything to the right should be bigger. We swap <code>j</code> with the first element (the pivot) so the pivot is in the middle and we recursively sort everything to the left and to the right of <code>j</code> (where the pivot is now).</p><p>I wrote this program to test the sorting function</p><pre ><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;time.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;sort.h&quot;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> LEN (2&lt;&lt;14)</span>
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">swap</span><span class="hljs-params">(<span class="hljs-type">int</span> *a, <span class="hljs-type">int</span> *b)</span> &lbrace;
+    <span class="hljs-type">int</span> *c = a;
+    *a = *b;
+    *b = *c;
+&rbrace;
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">cmpint</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *a, <span class="hljs-type">const</span> <span class="hljs-type">void</span> *b)</span> &lbrace;
+    <span class="hljs-keyword">return</span> *(<span class="hljs-type">int</span> *)a - *(<span class="hljs-type">int</span> *)b;
+&rbrace;
+
+<span class="hljs-comment">/* completely random */</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> T1()                   \
+    for(int i=0; i&lt;LEN; ++i) &lbrace; \
+        a[i] = rand();         \
+    &rbrace;</span>
+
+<span class="hljs-comment">/* nearly sorted */</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> T2()                            \
+    for(int i=0; i&lt;LEN; ++i) &lbrace;          \
+        a[i] = i;                       \
+        <span class="hljs-keyword">if</span>(i != 0 &amp;&amp; rand()%256 == 0) &lbrace; \
+            swap(&amp;a[i], &amp;a[i-1]);       \
+        &rbrace;                               \
+    &rbrace;                                   \
+</span>
+<span class="hljs-comment">/* sorted in reverse */</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> T3()                   \
+    for(int i=0; i&lt;LEN; ++i) &lbrace; \
+        a[i] = LEN-i;          \
+    &rbrace;</span>
+
+<span class="hljs-comment">/* random with some uniques */</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> T4()                    \
+    for(int i=0; i&lt;LEN; ++i) &lbrace;  \
+        a[i] = rand() % (LEN/5) \
+    &rbrace;</span>
+
+<span class="hljs-comment">/* pipe organ */</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> T5()                       \
+    for(int i=0; i&lt;LEN/2; ++i) &lbrace;   \
+        a[i] = i;                  \
+    &rbrace;                              \
+    for(int i=LEN/2; i&lt;LEN; ++i) &lbrace; \
+        a[i] = LEN-i;              \
+    &rbrace;                              \
+</span>
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &lbrace;
+    <span class="hljs-comment">//srand(time(NULL));</span>
+
+    <span class="hljs-type">int</span> *a = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>) * LEN);
+
+    T2();
+
+    sort(a, LEN, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">int</span>), cmpint);
+    <span class="hljs-comment">//qsort(a, LEN, sizeof(int), cmpint);</span>
+&rbrace;</pre><p>You can uncomment the <code>srand</code> line to get new random numbers each time you run the program and you can uncomment the <code>qsort</code> line to test stdlib&#039;s sort function instead of ours. For me, I&#039;m pretty sure that that&#039;s the glibc implementation. You can switch the <code>T2()</code> line with the other macros, they generate different pathological inputs—that is, specific inputs that are purposefully designed to make an algorithm run slower than it usually does. For example, quicksort runs on average $O(n\log n)$ but on pathlogical inputs it runs closer to $O(n^2)$.</p><p>On my computer running the program takes 1 second, we can reduce that to 7 milliseconds by choosing a wiser pivot, because consider what our function is doing on a nearly sorted array: it&#039;s taking 0 as a pivot and sorting everything to the right of it, then it chooses 1 as a pivot and sorts everything to the right of that, then it chooses 2 as a pivot and sorts everything to the right of that, and so on. We get $O(n^2)$ performance rather than our expected $O(n\log n)$. We can prevent this by choosing the element at the middle as the pivot but then the reverse sort and pipe organ array stymies the function in a similar way. The solution is to estimate the median of an array by choosing the median out of the first, middle, and last element.</p><pre ><span class="hljs-type">static</span> <span class="hljs-type">void</span> *<span class="hljs-title function_">med3</span><span class="hljs-params">(<span class="hljs-type">void</span> *a, <span class="hljs-type">void</span> *b, <span class="hljs-type">void</span> *c, <span class="hljs-type">cmpfn_t</span> cmp)</span> &lbrace;
+    <span class="hljs-keyword">return</span> cmp(a,b) &lt; <span class="hljs-number">0</span>
+        ? (cmp(a,c) &lt; <span class="hljs-number">0</span> ? (cmp(b,c) &lt; <span class="hljs-number">0</span> ? b : c) : a)
+        : (cmp(a,c) &lt; <span class="hljs-number">0</span> ? a : (cmp(b,c) &lt; <span class="hljs-number">0</span> ? c : b));
+&rbrace;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">sort</span><span class="hljs-params">(<span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size, <span class="hljs-type">cmpfn_t</span> cmp)</span> &lbrace;
+    <span class="hljs-keyword">if</span>(nmemb &lt;= <span class="hljs-number">1</span>) &lbrace;
+        <span class="hljs-keyword">return</span>;
+    &rbrace;
+
+    <span class="hljs-keyword">if</span>(nmemb &gt; <span class="hljs-number">16</span>) &lbrace;
+        swap(base, med3(base, a(nmemb/<span class="hljs-number">2</span>), a(nmemb<span class="hljs-number">-1</span>), cmp), size);
+    &rbrace; <span class="hljs-keyword">else</span> &lbrace;
+        swap(base, a(nmemb/<span class="hljs-number">2</span>), size);
+    &rbrace;
+
+    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, j = nmemb;
+    <span class="hljs-keyword">for</span>(;;) &lbrace;
+        <span class="hljs-keyword">do</span> &lbrace; ++i; &rbrace; <span class="hljs-keyword">while</span>(cmp(a(i), base) &lt; <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">do</span> &lbrace; --j; &rbrace; <span class="hljs-keyword">while</span>(cmp(a(j), base) &gt; <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">if</span>(i &gt;= j) &lbrace;
+            <span class="hljs-keyword">break</span>;
+        &rbrace;
+        swap(a(i), a(j), size);
+    &rbrace;
+    swap(a(j), base, size);
+
+    sort(a(<span class="hljs-number">0</span>), j, size, cmp);
+    sort(a(j+<span class="hljs-number">1</span>), nmemb-j<span class="hljs-number">-1</span>, size, cmp);
+&rbrace;</pre><p>We have a new <code>med3</code> function that takes three elements and chooses the median out of them. If we have less than 16 elements than we can just choose the middle as the pivot; otherwise we become more sophisticated with our choice and choose the median out of the first, middle, and last element. We choose a pivot by swapping the pivot with the first element, since our algorithm uses the first element as the pivot.</p><p>This is better, but it still chokes on the pipe organ input. When we have more than 32 elements we can be yet more sophisticated with our approach and choose the &quot;ninther,&quot; the median of medians—look at the code below</p><pre ><span class="hljs-type">void</span> <span class="hljs-title function_">sort</span><span class="hljs-params">(<span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size, <span class="hljs-type">cmpfn_t</span> cmp)</span> &lbrace;
+    <span class="hljs-keyword">if</span>(nmemb &lt;= <span class="hljs-number">1</span>) &lbrace;
+        <span class="hljs-keyword">return</span>;
+    &rbrace;
+
+    <span class="hljs-keyword">if</span>(nmemb &gt; <span class="hljs-number">32</span>) &lbrace;
+        <span class="hljs-type">size_t</span> unit = nmemb/<span class="hljs-number">8</span>;
+        swap(base, med3(
+            med3(a(unit*<span class="hljs-number">0</span>), a(unit*<span class="hljs-number">1</span>), a(unit*<span class="hljs-number">2</span>), cmp),
+            med3(a(unit*<span class="hljs-number">3</span>), a(unit*<span class="hljs-number">4</span>), a(unit*<span class="hljs-number">5</span>), cmp),
+            med3(a(unit*<span class="hljs-number">6</span>), a(unit*<span class="hljs-number">7</span>), a(unit*<span class="hljs-number">8</span><span class="hljs-number">-1</span>), cmp), cmp), size);
+    &rbrace; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(nmemb &gt; <span class="hljs-number">16</span>) &lbrace;
+        swap(base, med3(base, a(nmemb/<span class="hljs-number">2</span>), a(nmemb<span class="hljs-number">-1</span>), cmp), size);
+    &rbrace; <span class="hljs-keyword">else</span> &lbrace;
+        swap(base, a(nmemb/<span class="hljs-number">2</span>), size);
+    &rbrace;
+
+    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, j = nmemb;
+    <span class="hljs-keyword">for</span>(;;) &lbrace;
+        <span class="hljs-keyword">do</span> &lbrace; ++i; &rbrace; <span class="hljs-keyword">while</span>(cmp(a(i), base) &lt; <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">do</span> &lbrace; --j; &rbrace; <span class="hljs-keyword">while</span>(cmp(a(j), base) &gt; <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">if</span>(i &gt;= j) &lbrace;
+            <span class="hljs-keyword">break</span>;
+        &rbrace;
+        swap(a(i), a(j), size);
+    &rbrace;
+    swap(a(j), base, size);
+
+    sort(a(<span class="hljs-number">0</span>), j, size, cmp);
+    sort(a(j+<span class="hljs-number">1</span>), nmemb-j<span class="hljs-number">-1</span>, size, cmp);
+&rbrace;</pre><p>We find the median of 9 evenly spaced elements in our array by finding the median three elements three times then finding the median of that. Thus the name median of medians.</p><p>One final optimization is to switch to insertion sort for arrays with smaller elements since quicksort and recursion is a little too heavy-handed for an array of 4 or 5 elements.</p><pre ><span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">isort</span><span class="hljs-params">(<span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size, <span class="hljs-type">cmpfn_t</span> cmp)</span> &lbrace;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">void</span> *pi = base + size; pi &lt; base + nmemb*size; pi+=size) &lbrace;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">void</span> *pj = pi; pj &gt; base &amp;&amp; cmp(pj, pj-size) &lt; <span class="hljs-number">0</span>; pj-=size) &lbrace;
+            swap(pj, pj-size, size);
+        &rbrace;
+    &rbrace;
+&rbrace;
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">sort</span><span class="hljs-params">(<span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size, <span class="hljs-type">cmpfn_t</span> cmp)</span> &lbrace;
+    <span class="hljs-keyword">if</span>(nmemb &lt; <span class="hljs-number">8</span>) &lbrace;
+        isort(base, nmemb, size, cmp);
+        <span class="hljs-keyword">return</span>;
+    &rbrace;
+
+    <span class="hljs-keyword">if</span>(nmemb &gt; <span class="hljs-number">32</span>) &lbrace;
+        <span class="hljs-type">size_t</span> unit = nmemb/<span class="hljs-number">8</span>;
+        swap(base, med3(
+            med3(a(unit*<span class="hljs-number">0</span>), a(unit*<span class="hljs-number">1</span>), a(unit*<span class="hljs-number">2</span>), cmp),
+            med3(a(unit*<span class="hljs-number">3</span>), a(unit*<span class="hljs-number">4</span>), a(unit*<span class="hljs-number">5</span>), cmp),
+            med3(a(unit*<span class="hljs-number">6</span>), a(unit*<span class="hljs-number">7</span>), a(unit*<span class="hljs-number">8</span><span class="hljs-number">-1</span>), cmp), cmp), size);
+    &rbrace; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(nmemb &gt; <span class="hljs-number">16</span>) &lbrace;
+        swap(base, med3(base, a(nmemb/<span class="hljs-number">2</span>), a(nmemb<span class="hljs-number">-1</span>), cmp), size);
+    &rbrace; <span class="hljs-keyword">else</span> &lbrace;
+        swap(base, a(nmemb/<span class="hljs-number">2</span>), size);
+    &rbrace;
+
+    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, j = nmemb;
+    <span class="hljs-keyword">for</span>(;;) &lbrace;
+        <span class="hljs-keyword">do</span> &lbrace; ++i; &rbrace; <span class="hljs-keyword">while</span>(cmp(a(i), base) &lt; <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">do</span> &lbrace; --j; &rbrace; <span class="hljs-keyword">while</span>(cmp(a(j), base) &gt; <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">if</span>(i &gt;= j) &lbrace;
+            <span class="hljs-keyword">break</span>;
+        &rbrace;
+        swap(a(i), a(j), size);
+    &rbrace;
+    swap(a(j), base, size);
+
+    sort(a(<span class="hljs-number">0</span>), j, size, cmp);
+    sort(a(j+<span class="hljs-number">1</span>), nmemb-j<span class="hljs-number">-1</span>, size, cmp);
+&rbrace;</pre><p>The insertion sort works as you&#039;ll expect, but it uses pointers instead of indices. Basically we loop on <code>pi</code> from the second element until the last and at each iteration we loop from <code>pi</code> to the first element and while our element isn&#039;t in the right place, we swap it.</p><p>The constants I chose here like 8 or 16 or 32 are completely arbitrary and I haven&#039;t tested them to see if better ones are available. Also, I&#039;m not sure I covered all the edgecases and pathological inputs. If you spot any mistakes give me an email. In total the code looks like this</p><pre ><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;sort.h&quot;</span></span>
+
+<span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">swap</span><span class="hljs-params">(<span class="hljs-type">char</span> *a, <span class="hljs-type">char</span> *b, <span class="hljs-type">size_t</span> size)</span> &lbrace;
+    <span class="hljs-keyword">while</span>(size --&gt; <span class="hljs-number">0</span>) &lbrace;
+        <span class="hljs-type">char</span> tmp = *a;
+        *a++ = *b;
+        *b++ = tmp;
+    &rbrace;
+&rbrace;
+
+<span class="hljs-type">static</span> <span class="hljs-type">void</span> <span class="hljs-title function_">isort</span><span class="hljs-params">(<span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size, <span class="hljs-type">cmpfn_t</span> cmp)</span> &lbrace;
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">void</span> *pi = base + size; pi &lt; base + nmemb*size; pi+=size) &lbrace;
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">void</span> *pj = pi; pj &gt; base &amp;&amp; cmp(pj, pj-size) &lt; <span class="hljs-number">0</span>; pj-=size) &lbrace;
+            swap(pj, pj-size, size);
+        &rbrace;
+    &rbrace;
+&rbrace;
+
+<span class="hljs-type">static</span> <span class="hljs-type">void</span> *<span class="hljs-title function_">med3</span><span class="hljs-params">(<span class="hljs-type">void</span> *a, <span class="hljs-type">void</span> *b, <span class="hljs-type">void</span> *c, <span class="hljs-type">cmpfn_t</span> cmp)</span> &lbrace;
+    <span class="hljs-keyword">return</span> cmp(a,b) &lt; <span class="hljs-number">0</span>
+        ? (cmp(a,c) &lt; <span class="hljs-number">0</span> ? (cmp(b,c) &lt; <span class="hljs-number">0</span> ? b : c) : a)
+        : (cmp(a,c) &lt; <span class="hljs-number">0</span> ? a : (cmp(b,c) &lt; <span class="hljs-number">0</span> ? c : b));
+&rbrace;
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> a(i) (base + (i)*size)</span>
+
+<span class="hljs-type">void</span> <span class="hljs-title function_">sort</span><span class="hljs-params">(<span class="hljs-type">void</span> *base, <span class="hljs-type">size_t</span> nmemb, <span class="hljs-type">size_t</span> size, <span class="hljs-type">cmpfn_t</span> cmp)</span> &lbrace;
+    <span class="hljs-keyword">if</span>(nmemb &lt; <span class="hljs-number">8</span>) &lbrace;
+        isort(base, nmemb, size, cmp);
+        <span class="hljs-keyword">return</span>;
+    &rbrace;
+
+    <span class="hljs-keyword">if</span>(nmemb &gt; <span class="hljs-number">32</span>) &lbrace;
+        <span class="hljs-type">size_t</span> unit = nmemb/<span class="hljs-number">8</span>;
+        swap(base, med3(
+            med3(a(unit*<span class="hljs-number">0</span>), a(unit*<span class="hljs-number">1</span>), a(unit*<span class="hljs-number">2</span>), cmp),
+            med3(a(unit*<span class="hljs-number">3</span>), a(unit*<span class="hljs-number">4</span>), a(unit*<span class="hljs-number">5</span>), cmp),
+            med3(a(unit*<span class="hljs-number">6</span>), a(unit*<span class="hljs-number">7</span>), a(unit*<span class="hljs-number">8</span><span class="hljs-number">-1</span>), cmp), cmp), size);
+    &rbrace; <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(nmemb &gt; <span class="hljs-number">16</span>) &lbrace;
+        swap(base, med3(base, a(nmemb/<span class="hljs-number">2</span>), a(nmemb<span class="hljs-number">-1</span>), cmp), size);
+    &rbrace; <span class="hljs-keyword">else</span> &lbrace;
+        swap(base, a(nmemb/<span class="hljs-number">2</span>), size);
+    &rbrace;
+
+    <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>, j = nmemb;
+    <span class="hljs-keyword">for</span>(;;) &lbrace;
+        <span class="hljs-keyword">do</span> &lbrace; ++i; &rbrace; <span class="hljs-keyword">while</span>(cmp(a(i), base) &lt; <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">do</span> &lbrace; --j; &rbrace; <span class="hljs-keyword">while</span>(cmp(a(j), base) &gt; <span class="hljs-number">0</span>);
+        <span class="hljs-keyword">if</span>(i &gt;= j) &lbrace;
+            <span class="hljs-keyword">break</span>;
+        &rbrace;
+        swap(a(i), a(j), size);
+    &rbrace;
+    swap(a(j), base, size);
+
+    sort(a(<span class="hljs-number">0</span>), j, size, cmp);
+    sort(a(j+<span class="hljs-number">1</span>), nmemb-j<span class="hljs-number">-1</span>, size, cmp);
+&rbrace;</pre><p>I measured the performance of our homemade sort function and stdlib&#039;s sort function (probably glibc&#039;s implementation). I compiled with <code>-O3</code> and ran <code>perf stat -r 5 ./a.out</code> which basically measures the time it took to run <code>./a.out</code>, repeats that measurement 5 times, then averages the run times. I compiled 10 executables, testing the 5 different inputs on both our function and stdlib&#039;s.</p><table>
+    <tr>
+        <td></td>
+        <th>mine</th>
+        <th>stdlib</th>
+    </tr>
+    <tr>
+        <th>T1() random</th>
+        <td>1.39s</td>
+        <td>1.47s</td>
+    </tr>
+    <tr>
+        <th>T2() sorted</th>
+        <td>0.50s</td>
+        <td>0.44s</td>
+    </tr>
+    <tr>
+        <th>T3() sorted reversed</th>
+        <td>0.47s</td>
+        <td>0.35s</td>
+    </tr>
+    <tr>
+        <th>T4() with uniques</th>
+        <td>1.32s</td>
+        <td>1.46s</td>
+    </tr>
+    <tr>
+        <th>T5() pipe organ</th>
+        <td>0.71s</td>
+        <td>0.34s</td>
+    </tr>
+</table><p>From this table we can see our algorithm runs slightly faster on completely random inputs but slower on pathological ones.</p><p>Some good resources on quicksort are:</p><ul><li> <a href="https://web.ecs.syr.edu/~royer/cis675/slides/07engSort.pdf">Lecture slides on quicksort</a>.</li><li> The original paper on ninther (median of medians) is John W. Tukey&#039;s <a href="https://sci-hub.se/10.1016/b978-0-12-204750-3.50024-1">&quot;The Ninther, a Technique for Low-Effort Robust (Resistant) Location in Large Samples&quot;</a>.</li><li> A paper <a href="https://arxiv.org/abs/1904.01009">arXiv:1904.01009 [cs.PL]</a> which among other algorithms has a couple good implementations of quicksort.</li><li> glibc source code implements quicksort at <a href="https://elixir.bootlin.com/glibc/latest/source/stdlib/qsort.c">stdlib/qsort.c</a>.</li></ul>
+</article></main></body>
+
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Plaid CTF 2024: An Approach to ICMP - Kevin Cao</title>
+<meta name="description" content=""(Inter-Corporeality Messaging Protocol) We left an ouija board out as a joke,
+but then it started moving and it stopped being a joke." This was the
+description of a challenge in the 2024 Plaid CTF where we are given a 2 hour
+long YouTube video [https://www.youtube.com/watch?v=FGRs-6mMFTU] featuring a
+ghost telekinetically controlling a planchette over a Ouiji board, communicating
+certain symbols to us by pausing over them." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Plaid CTF 2024: An Approach to ICMP</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Apr 14, 2024</time></div>
+  </header>
+  <p>&quot;(Inter-Corporeality Messaging Protocol) We left an ouija board out as a joke, but then it started moving and it stopped being a joke.&quot; This was the description of a challenge in the 2024 Plaid CTF where we are given a 2 hour long <a href="https://www.youtube.com/watch?v=FGRs-6mMFTU">YouTube video</a> featuring a ghost telekinetically controlling a planchette over a Ouiji board, communicating certain symbols to us by pausing over them.</p><p>In the Plaid CTF Discord, some thought the only option was to bruteforce it with manual human labour. Instead, the challenge can be though of as a computer vision problem. The observation I made is that the hole in the planchette has a high-contrast white outline. To detect the hole then, we can use the circle Hough Transform. We can increase the contrast and sharpen the image beforehand to make the hole easier to detect.</p>
+						<a class="img" href="/static/media/opencv-annotated-ouiji-board.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/opencv-annotated-ouiji-board.png"
+							  alt="opencv annotated ouiji board"
+							/>
+						</a>
+					<p>An accidental property of this approach I observed was that the circle Hough Transform only detects the hole in the planchette when it is paused, and not when it is in motion (because it becomes slightly blurred). Therefore, we can simply count the number of consecutive frames where we can detect a circle and where the planchette is therefore paused. If this pause duration exceeds a certain threshold, then the planchette has paused for a length of time and we can assume that the ghost is attempting to communicate a particular character.</p><p>I&#039;ve uploaded a <a href="https://www.youtube.com/watch?v=iW8Vxv-fLX4">YouTube video</a> showing the <code>video_output</code> of the script. The <code>m</code> dictionary annotates the position of every character on the Ouiji board—the positions were found manually. The approach of relying on whether the circle Hough Transform is successful or not at detection to determine whether the planchette is stationary seems iffy, and in fact isn&#039;t reliable. It&#039;s right 99% of the time.</p><pre ><span class="hljs-keyword">import</span> cv2
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">import</span> math
+
+m = &lbrace;
+    (<span class="hljs-number">369.0</span>, <span class="hljs-number">316.0</span>): <span class="hljs-string">&#x27;a&#x27;</span>,
+    (<span class="hljs-number">415.5</span>, <span class="hljs-number">284.0</span>): <span class="hljs-string">&#x27;b&#x27;</span>,
+    (<span class="hljs-number">465.0</span>, <span class="hljs-number">267.0</span>): <span class="hljs-string">&#x27;c&#x27;</span>,
+    (<span class="hljs-number">508.0</span>, <span class="hljs-number">255.0</span>): <span class="hljs-string">&#x27;d&#x27;</span>,
+    (<span class="hljs-number">552.5</span>, <span class="hljs-number">246.0</span>): <span class="hljs-string">&#x27;e&#x27;</span>,
+    (<span class="hljs-number">592.5</span>, <span class="hljs-number">241.5</span>): <span class="hljs-string">&#x27;f&#x27;</span>,
+    (<span class="hljs-number">640.5</span>, <span class="hljs-number">238.5</span>): <span class="hljs-string">&#x27;g&#x27;</span>,
+    (<span class="hljs-number">684.5</span>, <span class="hljs-number">241.5</span>): <span class="hljs-string">&#x27;h&#x27;</span>,
+    (<span class="hljs-number">726.0</span>, <span class="hljs-number">248.0</span>): <span class="hljs-string">&#x27;i&#x27;</span>,
+    (<span class="hljs-number">760.5</span>, <span class="hljs-number">259.0</span>): <span class="hljs-string">&#x27;j&#x27;</span>,
+    (<span class="hljs-number">801.0</span>, <span class="hljs-number">267.0</span>): <span class="hljs-string">&#x27;k&#x27;</span>,
+    (<span class="hljs-number">847.5</span>, <span class="hljs-number">288.5</span>): <span class="hljs-string">&#x27;l&#x27;</span>,
+    (<span class="hljs-number">893.5</span>, <span class="hljs-number">316.0</span>): <span class="hljs-string">&#x27;m&#x27;</span>,
+    (<span class="hljs-number">372.0</span>, <span class="hljs-number">402.0</span>): <span class="hljs-string">&#x27;n&#x27;</span>,
+    (<span class="hljs-number">419.5</span>, <span class="hljs-number">376.0</span>): <span class="hljs-string">&#x27;o&#x27;</span>,
+    (<span class="hljs-number">451.5</span>, <span class="hljs-number">353.0</span>): <span class="hljs-string">&#x27;p&#x27;</span>,
+    (<span class="hljs-number">502.0</span>, <span class="hljs-number">336.5</span>): <span class="hljs-string">&#x27;q&#x27;</span>,
+    (<span class="hljs-number">539.5</span>, <span class="hljs-number">319.5</span>): <span class="hljs-string">&#x27;r&#x27;</span>,
+    (<span class="hljs-number">585.5</span>, <span class="hljs-number">313.0</span>): <span class="hljs-string">&#x27;s&#x27;</span>,
+    (<span class="hljs-number">632.5</span>, <span class="hljs-number">313.0</span>): <span class="hljs-string">&#x27;t&#x27;</span>,
+    (<span class="hljs-number">680.0</span>, <span class="hljs-number">311.5</span>): <span class="hljs-string">&#x27;u&#x27;</span>,
+    (<span class="hljs-number">727.5</span>, <span class="hljs-number">317.5</span>): <span class="hljs-string">&#x27;v&#x27;</span>,
+    (<span class="hljs-number">777.5</span>, <span class="hljs-number">335.5</span>): <span class="hljs-string">&#x27;w&#x27;</span>,
+    (<span class="hljs-number">822.5</span>, <span class="hljs-number">359.5</span>): <span class="hljs-string">&#x27;x&#x27;</span>,
+    (<span class="hljs-number">862.5</span>, <span class="hljs-number">385.0</span>): <span class="hljs-string">&#x27;y&#x27;</span>,
+    (<span class="hljs-number">901.5</span>, <span class="hljs-number">413.5</span>): <span class="hljs-string">&#x27;z&#x27;</span>,
+    (<span class="hljs-number">447.0</span>, <span class="hljs-number">451.0</span>): <span class="hljs-string">&#x27;1&#x27;</span>,
+    (<span class="hljs-number">481.0</span>, <span class="hljs-number">449.0</span>): <span class="hljs-string">&#x27;2&#x27;</span>,
+    (<span class="hljs-number">524.0</span>, <span class="hljs-number">448.0</span>): <span class="hljs-string">&#x27;3&#x27;</span>,
+    (<span class="hljs-number">566.5</span>, <span class="hljs-number">452.5</span>): <span class="hljs-string">&#x27;4&#x27;</span>,
+    (<span class="hljs-number">613.5</span>, <span class="hljs-number">452.0</span>): <span class="hljs-string">&#x27;5&#x27;</span>,
+    (<span class="hljs-number">661.0</span>, <span class="hljs-number">452.0</span>): <span class="hljs-string">&#x27;6&#x27;</span>,
+    (<span class="hljs-number">704.5</span>, <span class="hljs-number">451.5</span>): <span class="hljs-string">&#x27;7&#x27;</span>,
+    (<span class="hljs-number">747.0</span>, <span class="hljs-number">453.0</span>): <span class="hljs-string">&#x27;8&#x27;</span>,
+    (<span class="hljs-number">786.5</span>, <span class="hljs-number">451.0</span>): <span class="hljs-string">&#x27;9&#x27;</span>,
+    (<span class="hljs-number">830.5</span>, <span class="hljs-number">449.5</span>): <span class="hljs-string">&#x27;0&#x27;</span>,
+    (<span class="hljs-number">575.0</span>, <span class="hljs-number">520.5</span>): <span class="hljs-string">&#x27;(GOOD)&#x27;</span>,
+    (<span class="hljs-number">729.5</span>, <span class="hljs-number">520.0</span>): <span class="hljs-string">&#x27;(BYE)&#x27;</span>,
+    (<span class="hljs-number">823.0</span>, <span class="hljs-number">180.5</span>): <span class="hljs-string">&#x27;(NO)&#x27;</span>,
+    (<span class="hljs-number">464.0</span>, <span class="hljs-number">171.5</span>): <span class="hljs-string">&#x27;(YES)&#x27;</span>,
+&rbrace;
+cap = cv2.VideoCapture(<span class="hljs-string">&#x27;Inter-Corporeality Messaging Protocol [FGRs-6mMFTU].mkv&#x27;</span>)
+
+output_video = cv2.VideoWriter(
+    <span class="hljs-string">&#x27;out.mp4&#x27;</span>,
+    cv2.VideoWriter_fourcc(*<span class="hljs-string">&#x27;mp4v&#x27;</span>),
+    cap.get(cv2.CAP_PROP_FPS),
+    (<span class="hljs-built_in">int</span>(cap.get(cv2.CAP_PROP_FRAME_WIDTH)), <span class="hljs-built_in">int</span>(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))),
+)
+text_ring = []
+circle_streak = <span class="hljs-number">0</span>
+<span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+    success, frame = cap.read()
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> success:
+        <span class="hljs-keyword">break</span>
+
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    frame = cv2.convertScaleAbs(frame, alpha=<span class="hljs-number">1.4</span>)  <span class="hljs-comment"># Increase the contrast of the image</span>
+    frame = cv2.addWeighted(
+        frame, <span class="hljs-number">2.4</span>, cv2.GaussianBlur(frame, (<span class="hljs-number">0</span>, <span class="hljs-number">0</span>), <span class="hljs-number">2.0</span>), -<span class="hljs-number">1.0</span>, <span class="hljs-number">0</span>
+    )  <span class="hljs-comment"># Sharpen the image</span>
+
+    <span class="hljs-comment"># Perform circle Hough Transform on cropped frame, where the planchette is</span>
+    (x, y, w, h) = (<span class="hljs-number">305</span>, <span class="hljs-number">117</span>, <span class="hljs-number">682</span>, <span class="hljs-number">463</span>)
+    circles = cv2.HoughCircles(
+        frame[y : y + h, x : x + w],
+        cv2.HOUGH_GRADIENT,
+        <span class="hljs-number">1</span>,
+        <span class="hljs-number">20</span>,
+        param1=<span class="hljs-number">200</span>,
+        param2=<span class="hljs-number">30</span>,
+        minRadius=<span class="hljs-number">25</span>,
+        maxRadius=<span class="hljs-number">50</span>,
+    )
+
+    frame = cv2.cvtColor(frame, cv2.COLOR_GRAY2BGR)
+
+    circle_exists = <span class="hljs-literal">False</span>
+    <span class="hljs-keyword">if</span> circles <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:
+        circles = np.uint16(np.around(circles))
+        <span class="hljs-keyword">for</span> circle <span class="hljs-keyword">in</span> circles[<span class="hljs-number">0</span>, :]:
+            <span class="hljs-comment"># Remember, we performed circle detection on cropped frame. (cx,cy) are coordinates normalized to entire frame.</span>
+            cx = x + circle[<span class="hljs-number">0</span>]
+            cy = y + circle[<span class="hljs-number">1</span>]
+
+            <span class="hljs-comment"># There are 2 common mis-detections at specific coordinates, this code is to avoid them.</span>
+            <span class="hljs-keyword">if</span> math.sqrt((cx - <span class="hljs-number">363</span>) ** <span class="hljs-number">2</span> + (cy - <span class="hljs-number">161</span>) ** <span class="hljs-number">2</span>) &lt; <span class="hljs-number">15</span>:
+                <span class="hljs-keyword">continue</span>
+            <span class="hljs-keyword">if</span> math.sqrt((cx - <span class="hljs-number">906</span>) ** <span class="hljs-number">2</span> + (cy - <span class="hljs-number">178</span>) ** <span class="hljs-number">2</span>) &lt; <span class="hljs-number">15</span>:
+                <span class="hljs-keyword">continue</span>
+
+            <span class="hljs-comment"># At this stage, the circle belongs to the planchette</span>
+            circle_exists = <span class="hljs-literal">True</span>
+            <span class="hljs-keyword">if</span> circle_streak == <span class="hljs-number">6</span>:
+                <span class="hljs-comment"># Not much to say, we find which letter the center of this circle is closest to</span>
+                best = (math.inf, <span class="hljs-literal">None</span>)
+                <span class="hljs-keyword">for</span> (cx_, cy_), letter <span class="hljs-keyword">in</span> m.items():
+                    distance = math.sqrt((cx - cx_) ** <span class="hljs-number">2</span> + (cy - cy_) ** <span class="hljs-number">2</span>)
+                    <span class="hljs-keyword">if</span> distance &lt; best[<span class="hljs-number">0</span>]:
+                        best = (distance, letter)
+                <span class="hljs-built_in">print</span>(best[<span class="hljs-number">1</span>], end=<span class="hljs-string">&#x27;&#x27;</span>, flush=<span class="hljs-literal">True</span>)
+
+                <span class="hljs-comment"># For the debug output video</span>
+                text_ring.append(best[<span class="hljs-number">1</span>])
+                <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(text_ring) &gt; <span class="hljs-number">3</span>:
+                    text_ring = text_ring[<span class="hljs-number">1</span>:]
+
+            <span class="hljs-comment"># Draw the circle, for the debug output video</span>
+            cv2.circle(frame, (cx, cy), circle[<span class="hljs-number">2</span>], (<span class="hljs-number">0</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0</span>), <span class="hljs-number">2</span>)
+
+    <span class="hljs-comment"># If we have detected the circle, then increase streak - if not, then reset the streak.</span>
+    <span class="hljs-keyword">if</span> circle_exists:
+        circle_streak += <span class="hljs-number">1</span>
+    <span class="hljs-keyword">else</span>:
+        circle_streak = <span class="hljs-number">0</span>
+
+    <span class="hljs-comment"># Paint debug text and add frame to video</span>
+    cv2.putText(
+        frame,
+        <span class="hljs-string">f&quot;(<span class="hljs-subst">&lbrace;<span class="hljs-string">&#x27;, &#x27;</span>.join(text_ring)&rbrace;</span>)&quot;</span>,
+        (<span class="hljs-number">0</span>, <span class="hljs-number">24</span>),
+        cv2.FONT_HERSHEY_SIMPLEX,
+        <span class="hljs-number">1</span>,
+        (<span class="hljs-number">255</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>),
+        <span class="hljs-number">2</span>,
+        cv2.LINE_AA,
+    )
+    output_video.write(frame)
+
+<span class="hljs-built_in">print</span>()
+output_video.release()
+cap.release()
+cv2.destroyAllWindows()</pre><p>On my CPU the code took 42 minutes to complete so it runs at roughly ~3x the speed of the video input.</p><p>Here is the full message the Python script transcribed with the beginning segmented and the base64 output interpreted according to the ghost&#039;s instruction. Note that the base64 is a JPEG file, but it&#039;s corrupted because my transcription is inaccurate—and I didn&#039;t managed to get the flag 😔😔 After the CTF I did a diff of the official solution against mine, and it turns out that out of the 3861 characters my script got 30 wrong, so less than a 1% error rate but base64 is sensitive to errors like that. One of the solutions was to extract a background image then track the planchette that way, and I&#039;m only a little upset that I missed that solution 🙃 To be fair with me, the first error was ~500 characters in, and my manual translations for the initial text matched the automated scripts results so I assumed it would be accurate all the way through.</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word">hello is anyone listening i need to show you something important im going to send you a message in base64 im starting in uppercase and will use (YES) as capslock instead of slash i will use (NO) instead of plus i will use (GOOD) instead of equals i will use (BYE) are you ready starting in 321
+
+/9j/2wBDACAWGBwYFCAcGhwkIiAmMFA0MCwsMGJGSjpQdGZ6eHJmcG6AkLicgIiuim5woNqirr7EztDOfJri8uDI8LjKzsb/2wBDASIkJDAqMF40NF7GhHCExsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsbGxsb/wgARCACQAMgDASIAAhEBAxEB/8QAGQAAAwEBAQAAAAAAAAAAAAAAAAAAIDAQQF/8QAFwEBAQEBAAAAAAAAAAAAAAAAAAECA//aAAwDAQACEAMQAAABoOY2hQOfk6ubWcGBRgUbKw0MNDNADAYXIevP0kzSXt3NzoAOKTLvDblDS/NW5dSS9IcxdjmOtDmx0gzcF7OP0DmAl7Nzc6M2VnEG7ztZBdZhfIhfIuVaKF9lpHKyDNUPT8/qiZUloBnW8/Rx2RZW3k3Ok5zrkRzrDkKTgyz1zFkMUIFZa6FrDN7AJGM2aOHu87UGVtQ6eZirSCrc1DJXkUrCqKludUAjM3K6pVlm9JMlvuEJxdHNuNuXsidDHKdPOKO5Gi0IjOTquC5uGYOdEemGboGddC7KyUnTWW6ea9jUkg0mA3WFvkS8KzLTeIRtAXo5+qWvPWOdOYLWeqQMN821AcTR3iDCgwoO0tWjREZNwzp5umVpsudBgbq6Gbog5UygSywkc6MOc6cOc6MqBbEllQndclfVaVDCz///EACYQAAAEDAwQCAwADAAAAAAAAAAAEAAhEQEiEDIDEyIjAjQEITM0H/2gAIAQEAAQUChQoULUw315UlSVJVxVxVxQ8m7db6emJYONmr3qWEKwhWFFpCtKikehmNHa7tRnbhSv3Bukp/DcNBMOwpwTJ2AfHsPWrEzKt800yptaeslrQUHG4m3d+3CHV1Om+YpeYvMSVfi/BYdjMvcfm1Rmut7pOzR7uy9+dOur2qziAi4r9YIAmjG3KwBEBERt0EEzLKv7VgW8I5Q5d1HVCQ0wo8X87G40Vpc75KDyFcbpQeg4KFcpDgCLXZdsdjSTeaPPj6g8gVuFuzXQ4q84o2A0QoAUNn/SIVotAlfxmIKsMWmLTsZl+psKfUBRlfkcv7HqxFEQXHyzLyQj0po+W1Kd2pfi8RdmfFmHOAWC4Q1N7tVpv5TnEp/WmimdaH0AwnOu3XEoOIReSiZq3GkxHlH6p/rZy7sKwFaFaFarVaVaVBUH1uOW9n8/QgKArQrQrUBCAo7NP//EABoRAAMAAwEAAAAAAAAAAAABAAAAABERAwUCD/2gAIAQMBAT8B6r1ImHqXAhCEJ5//xAAZEQACAwEAAAAAABAAAAAAAAAAAABEQAwUCD/2gAIAQIBAT8ByBaLRluOPr//xAAjEAABAwMEAwEBAAAAAAAAAAABACAhAhARMDFAYUFxgSJR/oACAEBAAY/AuHuzsOHDr1Z1CXFk3lEi0LPlZWXUhpYUVgqq0IIYQ70AOkdSG+FsGhw4h9oHQ+r3acQtmSocTYhhZ8QwqUTY3/Shx1M2lbKEOlK3dS06cM2DQNDJWSLHdRbOWZcEWi9KpU7o3FiUSoR/ijZBh0O13bClQcqm0r6pVK6QF6jxZYe+TTyfXN//8QAJBABAAICAgICAwADAAAAAAAAAAQARITEQUUFhIHEwgZGhscH/2gAIAQEAAAT8h+AWxecfizM9svs/2ex/s9jPdnsnt/wASrr+QioVs9/JZH74qVKlSpTKZTKZmZmfk+RWJo+Ktesc7agtpEFpENkygYaKYowyl1LSmU/B1x9u+JFaQ3xmZ3824pcw8DxBCXr3BDYubL3iWd2gl5sRN6F6l7ML1qZ5rl4t7+fi6T1wcULPUsgbqCpCwEfqMlXwxYWyw5P2z2BuMAN7SxDSwBgG+45b5dwy1NTKl8HS944Oc+IrvgSuFfMCoMqp4mYbyQZQPtAtFoAtOXcFD3Ki9TFe/gsH74NfCmZ/AsVePgbL1FZj6RHr0cHAKXHmDEOQQ/kc0Hk1HKSb1DTfuO5SYAu8ULejuVi/OeXXAq/xO0z34K2hwSjI7Rsrbcz22zBGf+yzYxjUuIPriqTuYH/SCUay2D4xy64yHbCKvvzoubzDfK2LnUfuMi4V4h1RuZY4/cbKlqVKViHKK34lUNf1FY8vGOh3FR5o4j8NEXwcTN3y7m2pai8S9Lhz/Y8Gpgi/EweT4l5svNExCYdRp6JdBh3X6iKiUWs+pmqp4TEcympiumoj54dwUPcyX1RCHDxU8XBNRzfiWoH39TGD2RWxN+ZZoRKrixHtnnh6mCiZwREfOCWsWI0svDEQpPhPM98iy9E2e1huHCtubvWOCFaV9p1Olzc14qIQNygObkI3FYTVFQbU3cdhWNx2ZdwUaRtq8OyYyFQPuOuMPRN5wRUQykW1YTHwsDKRg5t4tMkdxZhBxuKDTHqM7dx4yUYqTBEIreH188zMtly5cuWSyYjxgXfBs5FxbxwfZK9s+89xPonqj0Mp6fwmWoSAYwE8kN/kOaOiPUT1T7J90r2wlfnxKLzNIylElM//aAAwDAQACAAMAAAAQNxRCy084g8GOyqWmqA4YQEW6+8qFQkEEEAY0sYw2GEoIcCU8+gS/bhc8osE5s+oFAnkc8A004QcIp+B291NVBV9tqeM0ttJx19IRRXG9rKgsdHmABZWGO///EAB0RAAEFAQADAAAAAAAAAAAAAAEAEBEwMUEgIUD/2gAIAQMBAT8QY78wc1BBjQRMerQyLbsBHaQjxuVBHEMeAoCj4/BQC43/8QAHBEAAgMBAAMAAAAAAAAAAAAAAAEQETAxIEBB/9oACAECAQE/EIXPWcruTnvJ63POqxYtGLo4stlst+HstDZ9j//EACgQAAECAwcEAwEAAAAAAAAAAAAAEAESExQRAgUWFxgaGRwfDxMLHh0f/aAAgBAQABPxC4BfGEe8qE7H4QXpCopaEgxCZNYyZbLN+qZGRkZNcaDMcoemLjrZ60AhIpValZ2wUKJE7qVLJBcoohrvnZ47XmbZNoG4C9xQEbBixjeWUDAjkCnHeMfxE1ZZnARRzCltvGVcr0N6UUaGTKKEaoeBSkaQu8We0/wDLuTZ3JZutqYKR9kJjwQhapuNOiec8yhAuk+dU/VFboSrLz1L2OJkJFq+NVPaiaqo7iw1SBGFn2Wof3G5s/dQQQpHUohRSSvUO2y2tF03SKwDF6qVrdNuDzB19prCvq5u83GyayZG+MKycErWNxDstuj2Nx/I7jNTgB+rTsdgHIUFSLyI5VAmUdB0ISQVIwBcGaxJSvGEs1J6ep1k9ujKx+qPVHqh1IOtzVq4D3CEwRYmeSGmf3R0d+xRYC4JRKBhv2c/lhVA3w9o6K54j9U4SSXM2A/UdEaOF3HFi/wAQqC4LX0wdE3D2RWIqVLNPCzmigIThlIIecS4FFla+xSKn9/YVj0eSz7N3qVjy6j1J/YG3OpHx5Fqd7SqIb+rmAgGBr9kIWQ9j3nYW+MXAVXx7CRGeGcTD2gFtuCyTJYD1CJ6JiwsyHAc8UVndA68Nd7NEFcG3xQr3tHTOci6T9TaYksTpB/S8KjAIgahJNMYqqTA+yGrFJVTot1jzZE2KHIoYevJ0Uh4Ox9LLh9FQY0jBl9fokj8yHj2+Cfwl4EVy8b6C0wVQXYzsun7KDKuMJKxAFMMIPwDDJYopRoHUtkeEVl7f1SmuXijmz7gK1KkqNmBalFY21+o38UbCt0s/jYdHtyhUtTYBOnTydBUnaVLI9SfYIqmW87E3ZGm3Mjs1/Nr46dH+BfTodmuT90XFQpJOivggLLwGzgfFUGqT/wDax1RI8JEyunuunvGR/KvCoBVVyoDNZtKATHYS/k=</pre><p>I investigated another approach actually, which involved tracking the planchette using a CSRT tracker, but over the long-term the tracking quality severely degrades and the tracker gets caught/stuck on certain circular background symbols.</p>
+</article></main></body>
+
+</html>

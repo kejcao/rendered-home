@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Artificial Intelligence for Dummies - Kevin Cao</title>
+<meta name="description" content="I haven't written anything in a few weeks, since I'm busy researching NTT and
+how someone can efficiently solve large Vandermonde systems over arbitrary prime
+fields in $O(n \log^2 n)$ using Lagrange interpolation. I might write about
+those topics in the future." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Artificial Intelligence for Dummies</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Apr 3, 2024</time></div>
+  </header>
+  <p>I haven&#039;t written anything in a few weeks, since I&#039;m busy researching NTT and how someone can efficiently solve large Vandermonde systems over arbitrary prime fields in $O(n \log^2 n)$ using Lagrange interpolation. I might write about those topics in the future.</p><p>For now, in this post, I&#039;ll try to explain artificial intelligence to a non-technical audience—that is, for the laity who aren&#039;t conversant with computing concepts, like my dad. I&#039;m not very familiar with the field of AI myself, so if you spot any factual inaccuracies or find a specific topic confusing, give me an email.</p><hr><p>There&#039;s been a lot of talk on artificial intelligence recently, with companies and startups using the term indiscriminately to market their products. I&#039;ll begin by giving a quick overview of what AI is, some common terminology, a simple example of machine learning, then explain at a high-level about how modern systems like ChatGPT and Stable Diffusion work.</p><h2>An Overview</h2><p><em>Artificial intelligence</em> (AI) is when computers try to act like humans and do things that require intelligence, like understanding language or making decisions. AI is a very general concept and really depends on someone&#039;s personal preconception of what human intelligence is.</p><p><em>Machine learning</em> (ML) is a popular type of AI where computers specifically learn from examples using computer algorithms. With machine learning, computers look at a lot of data and find patterns in it. They then use those patterns to make predictions or decisions about new information they haven&#039;t seen before.</p><p>Machine learning is split into 3 broad categories:</p><ul><li> <em>Supervised learning</em> - The computer is given labeled example data and learns to make predictions or decisions based on that.</li><li> <em>Unsupervised learning</em> - The computer finds patterns in data without being given any labels or examples ahead of time.</li><li> <em>Reinforcement learning</em> - The computer learns by trying different actions and getting feedback on whether those actions were good or bad.</li></ul><h2>An Example: Linear Regression</h2><p>Let&#039;s say we have collected data on the weights and heights of a group of people. We can plot each person&#039;s height on the $x$-axis and their corresponding weight on the $y$-axis, creating a graph.</p><p>If we are given the height of a new person, how can we use our original data to predict their weight? Well, we can try to draw a line that best fits all of the data points we have. Then, we can determine the line&#039;s $y$ value at the $x$ value equal to the new person&#039;s height to predict their weight.</p><p>For example, with the graph below, we can guess that a person with height 67 will probably have a weight of around 141, if we follow the red line.</p>
+						<a class="img" href="/static/media/weight-height-plot.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/weight-height-plot.png"
+							  alt="weight height plot"
+							/>
+						</a>
+					<p>This method of predicting future values by finding the line of best fit is called <em>linear regression</em>. It&#039;s an example of a machine learning algorithm. The resulting line of best fit that linear regression finds is called the <em>model</em>, and creating this line from the data using linear regression is called <em>training</em> the model.</p><p>In our math classes we learn that lines can be expressed with the equation $y = mx + b$, where their are 2 variables $m$ and $b$ that control the placement of the line. Linear regression attempts to find the values for $m$ and $b$ that minimizes the distance between each data point. Therefore, the line of best fit that we find with linear regression can be completely described by two variables. We call these variables that describe the model its <em>parameters</em>.</p><h2>Deep Learning</h2><p>Most of the exciting new AI technologies like AI chatbots, art generators, and voice cloning technologies work using <em>deep learning</em>, a specific type of machine learning that has become very popular and promising in recent years. It&#039;s a way of training computers using a structure inspired by the human brain called <em>neural networks</em> to learn from data.</p><p>The &quot;deep&quot; in deep learning refers to the fact that these neural networks have multiple layers. In a deep learning model, the data goes through many different layers of these interconnected nodes, kind of like how information is processed through the neurons in the human brain. In practice, neural networks are represented in computers as numbers in the form of a matrix.</p><h2>How Does ChatGPT Work</h2><p>ChatGPT is an AI chatbot trained by the organization OpenAI. ChatGPT is a deep learning model. Go experiment and play around with <a href="https://chat.openai.com/">ChatGPT</a>, it&#039;s fun to observe its behaviour and limitations.</p><p>To be specific, ChatGPT is a <em>large language model</em> (LLM). LLMs are machine learning models that generate human language. They are trained by learning from a huge amount of text data from books, websites, and social media conversations.</p><p>Imagine you&#039;re trying to guess what word comes next in a sentence. If you&#039;ve read a lot of sentences before, you can probably make a pretty good guess about the next word. That&#039;s how LLMs like ChatGPT work—they&#039;ve learned patterns from language from reading so much text that they can predict the most likely next word in a sentence.</p><p>Let&#039;s look at an example of how we might use an LLM to generate text:</p><ul><li> I have a string of words, called the <em>context</em>. I start with the word &quot;I&quot; in the context. I feed the context into ChatGPT. ChatGPT tells me that it thinks the word &quot;am&quot; is the most likely to be next. If you look at billions of words, the word &quot;am&quot; often follows the word &quot;I&quot;, so this is a very logical choice by ChatGPT. I append &quot;am&quot; onto the context.</li><li> The context is now &quot;I am.&quot; I again feed the context into ChatGPT, and ChatGPT tells me that it thinks that &quot;feeling&quot; is the most likely next word to follow. I append the word &quot;feeling&quot; onto the context.</li><li> The context is now &quot;I am feeling.&quot; I feed the context, again, back into ChatGPT. ChatGPT tells me that it thinks &quot;tired&quot; is the most likely next word. I append the word &quot;tired&quot; onto the context. </li><li> Now, we have the full sentence &quot;I am feeling tired&quot; written by ChatGPT word-by-word!</li></ul><p>Essentially, LLMs are tools that tell us the probabilities of the next word given a sequence of previous words.</p><p>When you type out a text to someone on your smartphone, above the keyboard is a bar that suggests to you possible next words or phrases that you might want to write. LLMs can be thought of as these really advanced word suggesters like the one on your smartphone when you text—imagine just randomly accepting suggestions your smartphone gives you, you&#039;ll get some vaguely human-like text.</p><p>The linear regression example I gave had 2 parameters, $m$ and $b$. ChatGPT has 175 billion parameters—an astronomical amount! Computers usually store numbers in 32 bits, so you would need 700 gigabytes to store ChatGPT. That&#039;s around the size of your computer&#039;s entire storage capacity.</p><p>LLMs like ChatGPT need to see hundreds of billions of words before they can become proficient in predicting language. Therefore, training LLMs require a lot of computing power from powerful, specialized devices called GPUs. ChatGPT would&#039;ve taken around 2 million years to train on your laptop, but luckily ChatGPT can be trained in just a month using 1000 of those GPUs.</p><p>This is the reason why Nvidia&#039;s market cap is the third highest in the world as of April 1st. Nvidia is the only company right now that sells these high-quality GPUs which are required for training these large AI models. The compute to train ChatGPT cost OpenAI 4 million dollars!</p><p>A question you may have is that if ChatGPT only predicts the next word, then how is it that we can have a pleasant conversation with it? The answer is that we write a dialogue, like this:</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word">You are ChatGPT, an AI assistant. This is a dialogue between a human and you.
+
+Human: Hello, who are you?
+ChatGPT: I am ChatGPT, an AI assistant.
+Human: What is the capital of Canada?
+ChatGPT: The captial of Canada is Ottawa.
+Human: What is the tallest mountain on Earth?
+ChatGPT:</pre><p>We leave out ChatGPT&#039;s response, so when it predicts that the next few words in the dialogue are something like &quot;The tallest mountain is Mount Everest&quot; we can interpret that as its response to the human user. If the human user types something else, we can append ChatGPT&#039;s previous response and the human user&#039;s new request together onto the dialogue and feed this new dialogue into ChatGPT again to let it respond. Remember: All ChatGPT does is predict the next word.</p><p>Large language models were trained by other organizations before OpenAI and the technical groundwork was set by Google, but one of OpenAI&#039;s key innovations and the primary reason for their success (along with training a really big LLM) was to present the LLM in an easy to understand chatbot interface, making it more accessible for the general public to use and admire.</p><hr><p>I will provide more detail here on how LLMs operate, for those interested. If these details are confusing, skip them; they aren&#039;t essential.</p><ul><li> Machine learning models can only work with numbers. So these LLMs work with <em>tokens</em>, which are lists of numbers called vectors. These tokens might correspond with words, but in LLMs currently they correspond more like to syllables. Play around with ChatGPT&#039;s <a href="https://platform.openai.com/tokenizer">tokenizer</a> to get an idea of how LLMs see the world. Tokenisation is very important, since it represents what the LLM can see. Tokenisation  also leads to a lot of the problems with LLMs, like the fact that they can&#039;t spell well—because they see only syllables, not individual characters.</li></ul><h2>How Do AI Art Generators Work</h2><p>AIs that generate art like the models Stable Diffusion and DALL·E use deep learning too but in a different way from LLMs. You can try out a version of Stable Diffusion on <a href="https://replicate.com/bytedance/sdxl-lightning-4step">Replicate</a> for free. These art generators are trained by learning from a huge amount of image data scraped from the Internet.</p><p>In real life, we take pictures with our smartphones. Sometimes the pictures come out a little noisy or blurry, perhaps because of bad lighting conditions when it&#039;s nighttime. Luckily, we can train a deep learning model to remove the noise in the image we take using our smartphones.</p><p>Let&#039;s say this noise-remover model was trained on images of beautiful landscapes, so it&#039;s especially good at cleaning the noise from landscape images.</p><p>Now, what if we give this noise-remover model an image of purely random noise? An image of complete static, resembling the black and white static screen we might see on a television. We get an image with slightly less noise.</p><p>The key idea of AI art generators is to apply this noise-remover model multiple times to an image, starting with completely static noise. Look at the animation below.</p>
+						<a class="img" href="/static/media/diffusion-demonstration.gif">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/diffusion-demonstration.gif"
+							  alt="diffusion demonstration"
+							/>
+						</a>
+					<p>The animation starts with an image composed of purely static noise.</p><ul><li> First, we feed the completely noisy image into the noise-remover model. It removes a little of the noise.</li><li> We then feed this new image with a little bit of the noise removed back into the noise-remover model. It removes a little more of the noise.</li><li> We continue this process and gradually start to see a clean, crisp image. Eventually, all the noise is removed and we are left with the image of a beautiful landscape.</li></ul><p>AI art generators are called <em>diffusion</em> models, which mean they &quot;draw&quot; art by successively removing noise from an image.</p><p>These diffusion models are also much smaller than capable LLMs like ChatGPT, boasting only a few billion parameters. Who would&#039;ve thought it would be harder to accurately teach a model to write then to draw?</p><hr><p>I will provide more detail here on how AI art models operate, for those interested. If these details are confusing, skip them; they aren&#039;t essential.</p><ul><li> In particular, Stable Diffusion is a latent diffusion model which means in actuality it performs the denoising diffusion process on a 32x32 image. They then upscale this image to 512x512 later on. This is to save computing power, as diffusion on the full resolution 512x512 is expensive.</li><li> It seems that all future AI art generators will use DiT (diffusion transformer) as does Stable Diffusion 3 and Sora (probably) do. If you look at Stable Diffusion 3, it has much better prompt coherency—meaning it more closely draws what the user specifics—then previous models and possess the impressive ability to write long sequences of text, which older models notoriously struggled with. I don&#039;t understand at all how DiTs work; the diagrams in the Stable Diffusion 3 paper look like &quot;human instrumentality&quot; said one Twitter user (it&#039;s a Neon Genesis Evangelion reference and means the diagrams are really complicated).</li></ul><h2>Conclusion</h2><p>I enjoy exploring and understanding how these AI systems work, even though my knowledge in this domain is somewhat superficial. I think that current deep learning models are quite magical.</p><p>This post on AI is my first time writing such a long post and one geared towards an audience without my own background knowledge. I hope I wrote this article in a way that is understandable enough without sacrificing any essential detail.</p><hr><p>ChatGPT was trained on 300 billion tokens and consumed 314,000 exaflops, as explained in the <a href="https://arxiv.org/pdf/2005.14165.pdf">paper</a>. Assuming a consumer laptop CPU can sustain 5 gigaflops—which is optimistic—then it would&#039;ve required 1.991 million years to train.</p><p>Image credits:</p><ul><li> Linear regression plot is from <a href="https://online.stat.psu.edu/stat500/book/export/html/593">Penn State university</a>.</li><li> Stable diffusion GIF is from Aditya Ramesh&#039;s <a href="http://adityaramesh.com/posts/dalle2/dalle2.html">blog post</a> and was originally created by <a href="https://aqnichol.com/">Alex Nichol</a>.</li></ul>
+</article></main></body>
+
+</html>

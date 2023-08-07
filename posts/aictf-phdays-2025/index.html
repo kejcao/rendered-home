@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>PHDays AICTF 2025 Writeup - Kevin Cao</title>
+<meta name="description" content="I got 8th place in PHDays AICTF 2025 [https://aictf.phdays.fun/scoreboard]. This
+is a writeup for it." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>PHDays AICTF 2025 Writeup</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>May 29, 2025</time></div>
+  </header>
+  <p>I got 8th place in <a href="https://aictf.phdays.fun/scoreboard">PHDays AICTF 2025</a>. This is a writeup for it.</p><h3>Floor Check</h3><p>We are given a single parquet file. Simply observe the table, the rows and columns visually form characters corresponding to the flag.</p><pre >D .mode box
+D select * from read_parquet(&#039;miccheck_a8749ce.parquet&#039;);
+┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┐
+│ 0 │ 1 │ 2 │ 3 │ 4 │ 5 │ 6 │ 7 │ 8 │ 9 │
+├───┼───┼───┼───┼───┼───┼───┼───┼───┼───┤
+│ - │ - │ - │ - │ - │ 8 │ - │ - │ - │ - │
+│ - │ - │ - │ - │ - │ 8 │ - │ - │ - │ - │
+│ - │ - │ - │ - │ 8 │ - │ 8 │ - │ - │ - │
+│ - │ - │ - │ - │ 8 │ - │ 8 │ - │ - │ - │
+│ - │ - │ - │ 8 │ - │ - │ - │ 8 │ - │ - │
+│ - │ - │ - │ 8 │ - │ - │ - │ 8 │ - │ - │
+│ - │ - │ 8 │ 8 │ 8 │ 8 │ 8 │ 8 │ 8 │ - │
+│ - │ - │ 8 │ - │ - │ - │ - │ - │ 8 │ - │
+│ - │ 8 │ - │ - │ - │ - │ - │ - │ - │ 8 │
+│ - │ 8 │ - │ - │ - │ - │ - │ - │ - │ 8 │
+│ - │ - │ - │ - │ - │ - │ - │ - │ - │ - │
+│ - │ - │ - │ - │ - │ - │ - │ - │ - │ - │
+│ - │ - │ - │ - │ - │ - │ - │ - │ - │ - │
+│ - │ - │ - │ - │ - │ - │ - │ - │ - │ - │
+│ - │ - │ - │ - │ - │ - │ - │ - │ - │ - │
+│ - │ - │ 8 │ - │ - │ - │ - │ - │ - │ - │
+│ - │ - │ 8 │ - │ - │ - │ - │ - │ - │ - │
+│ - │ - │ 8 │ - │ - │ - │ - │ - │ - │ - │
+│ - │ - │ 8 │ - │ - │ - │ - │ - │ - │ - │
+│ - │ - │ 8 │ - │ - │ - │ - │ - │ - │ - │
+... etc.</pre><h3>VoiceGuard</h3><p>We are given a reference sample of someone&#039;s voice and asked to clone it to speak new text. The premise is security verification. I ran the IndexTTS model locally and passed this easily.</p><h3>Athrad Edhellen</h3><p>This was a frustrating one. You can see the final script <a href="https://www.youtube.com/watch?v=gGsylWtNi4E">in action on YouTube</a>. You have to solve 100 captchas by decoding the 6 Tengwar number symbols shown. The code I wrote to automate this is shit, basically a bunch of heuristics and heuristics to override heuristics. The challenge included 6 fonts and for each I gathered examples of the 12 symbols. Then, I just &quot;slide&quot; the representative examples across the new captcha and look for matches (the image is thresholded to remove noise). Basic selenium code completely automates the process of solving captchas.</p><h3>Ham Filter</h3><p>We are allowed to poison a spam-detection model with 100 training samples. Our goal is to get the test score of the model below 60%. We are also given access to the entire training data. My idea was to take the spam messages, generate my own data based on them, and wrongly label these messages as no spam. Firstly, we can get the spam messages like so:</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word">D .mode json
+D select message from read_parquet(&#039;train_data_chocobo.parquet&#039;) where label=1;
+[&lbrace;&quot;message&quot;:&quot;-PLS STOP bootydelious (32/F) is inviting you to be her friend. Reply YES-434 or NO-434 See her: www.SMS.ac/u/bootydelious STOP? Send STOP FRND to 62468&quot;&rbrace;,
+&lbrace;&quot;message&quot;:&quot;network operator. The service is free. For T &amp; C&#039;s visit 80488.biz&quot;&rbrace;,
+&lbrace;&quot;message&quot;:&quot;XMAS Prize draws! We are trying to contact U. Todays draw shows that you have won a å£2000 prize GUARANTEED. Call 09058094565 from land line. Valid 12hrs only&quot;&rbrace;,
+... etc.</pre><p>Then we can paste this JSON into the Python script. The script takes the messages and samples new words according to the frequency of the words present. I initially set the length <code>l</code> to between 20 and 30, but I was only getting a drop from 87% to 83%. I noticed that although only 100 rows were allowed, 1MB of data was allowed. So I extended the length by a factor of 10 which managed to drop the test score sufficiently to show the flag.</p><pre ><span class="hljs-keyword">import</span> random
+<span class="hljs-keyword">from</span> collections <span class="hljs-keyword">import</span> Counter
+
+<span class="hljs-keyword">import</span> duckdb
+
+data = [...]
+
+acc = []
+<span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> data:
+    acc += x[<span class="hljs-string">&#x27;message&#x27;</span>].split()
+c = Counter(acc)
+words = <span class="hljs-built_in">list</span>(c.keys())
+ws = <span class="hljs-built_in">list</span>(c.values())
+
+con = duckdb.connect()
+con.execute(<span class="hljs-string">&#x27;CREATE TABLE foo (label BIGINT, message VARCHAR);&#x27;</span>)
+<span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">100</span>):
+    l = random.randint(<span class="hljs-number">200</span>, <span class="hljs-number">300</span>)
+    con.execute(
+        <span class="hljs-string">&#x27;INSERT INTO foo (label, message) VALUES (0, ?);&#x27;</span>,
+        [<span class="hljs-string">&#x27; &#x27;</span>.join(random.choices(words, weights=ws, k=l))],
+    )
+<span class="hljs-built_in">print</span>(con.execute(<span class="hljs-string">&#x27;SELECT * FROM foo;&#x27;</span>).fetchall())
+con.execute(<span class="hljs-string">&quot;COPY foo TO &#x27;my_custom_data.parquet&#x27; (FORMAT &#x27;parquet&#x27;);&quot;</span>)</pre><h3>Rate My Car</h3><p>We upload an image onto the website and the judge (a multimodal LLM) returns a score between 0 and 100 based on the car present in the image. Our goal is to get a score of 1337. I used the following low resolution image to break the LLM, which given previous challenges, I suspected to be GPT-4o.</p>
+						<a class="img" href="/static/media/aictf-gpt4o-visual-jailbreak.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/aictf-gpt4o-visual-jailbreak.png"
+							  alt="aictf gpt4o visual jailbreak"
+							/>
+						</a>
+					<h3>Flag Leak</h3><p>We are given a webpage with 1000 YouTube videos. We are told one of them contains footage of a person submitting the flag. I noticed that a lot of the videos were popular, that is had a lot of views. Hence, I scraped the view counts of every video like so:</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word"><span class="hljs-keyword">import</span> os
+
+<span class="hljs-keyword">for</span> i, line <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>(
+    <span class="hljs-string">&quot;&quot;&quot;
+[... 1000 youtube video urls here]
+&quot;&quot;&quot;</span>.strip().splitlines()
+):
+    os.system(<span class="hljs-string">f&#x27;yt-dlp --print &quot;%(upload_date)s.%(view_count)s&quot; <span class="hljs-subst">&lbrace;line&rbrace;</span> &gt;<span class="hljs-subst">&lbrace;i&rbrace;</span>; echo &quot;<span class="hljs-subst">&lbrace;line&rbrace;</span>&quot; &gt;&gt;<span class="hljs-subst">&lbrace;i&rbrace;</span>&#x27;</span>)</pre><p>Then I sorted the results by views, and wouldn&#039;t you know it the first video (9 views) was the correct one. It showed some Russian guy developing a ping pong app with ChatGPT and at the end, he submits the flag.</p><pre >9 20250519 https://www.youtube.com/watch?v=7TE0p3kx5p0
+110 20240809 https://www.youtube.com/watch?v=YK5Db_HOFC0
+121 20250305 https://www.youtube.com/watch?v=fWu18blUXDo
+191 20191019 https://www.youtube.com/watch?v=XCviY4qNQ_Q
+1015 20221212 https://www.youtube.com/watch?v=OGmvoj5Dj_A
+... etc.</pre><h3>Brauni</h3><p>We are given an executable and need it to output &quot;valid.&quot; IDA gives this code:</p><pre ><span class="hljs-type">int</span> __fastcall <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc, <span class="hljs-type">const</span> <span class="hljs-type">char</span> **argv, <span class="hljs-type">const</span> <span class="hljs-type">char</span> **envp)</span>
+&lbrace;
+  <span class="hljs-type">int</span> v4; <span class="hljs-comment">// [rsp+10h] [rbp-90h] BYREF</span>
+  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v5; <span class="hljs-comment">// [rsp+14h] [rbp-8Ch]</span>
+  <span class="hljs-type">signed</span> <span class="hljs-type">int</span> i; <span class="hljs-comment">// [rsp+18h] [rbp-88h]</span>
+  <span class="hljs-type">int</span> DeviceCount; <span class="hljs-comment">// [rsp+1Ch] [rbp-84h]</span>
+  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> *v8; <span class="hljs-comment">// [rsp+20h] [rbp-80h] BYREF</span>
+  __int64 v9; <span class="hljs-comment">// [rsp+28h] [rbp-78h] BYREF</span>
+  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v10; <span class="hljs-comment">// [rsp+30h] [rbp-70h]</span>
+  __int64 v11; <span class="hljs-comment">// [rsp+34h] [rbp-6Ch] BYREF</span>
+  <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> v12; <span class="hljs-comment">// [rsp+3Ch] [rbp-64h]</span>
+  _DWORD v13[<span class="hljs-number">18</span>]; <span class="hljs-comment">// [rsp+40h] [rbp-60h] BYREF</span>
+  <span class="hljs-type">unsigned</span> __int64 v14; <span class="hljs-comment">// [rsp+88h] [rbp-18h]</span>
+
+  v14 = __readfsqword(<span class="hljs-number">0x28</span>u);
+  <span class="hljs-keyword">if</span> ( argc == <span class="hljs-number">2</span> )
+  &lbrace;
+    DeviceCount = cudaGetDeviceCount(&amp;v4, argv, envp);
+    <span class="hljs-keyword">if</span> ( !DeviceCount &amp;&amp; v4 )
+    &lbrace;
+      v5 = <span class="hljs-number">16</span>;
+      <span class="hljs-keyword">if</span> ( <span class="hljs-built_in">strlen</span>(argv[<span class="hljs-number">1</span>]) &lt; <span class="hljs-number">0x10</span> )
+        v5 = <span class="hljs-built_in">strlen</span>(argv[<span class="hljs-number">1</span>]);
+      <span class="hljs-keyword">for</span> ( i = <span class="hljs-number">0</span>; i &lt; (<span class="hljs-type">int</span>)v5; ++i )
+        v13[i] = argv[<span class="hljs-number">1</span>][i];
+      cudaMalloc&lt;<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>&gt;(&amp;v8, <span class="hljs-number">4LL</span> * (<span class="hljs-type">int</span>)v5);
+      cudaMemcpy(v8, v13, <span class="hljs-number">4LL</span> * (<span class="hljs-type">int</span>)v5, <span class="hljs-number">1LL</span>);
+      dim3::dim3((dim3 *)&amp;v11, v5, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+      dim3::dim3((dim3 *)&amp;v9, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);
+      <span class="hljs-keyword">if</span> ( !(<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span>)_cudaPushCallConfiguration(v9, v10, v11, v12, <span class="hljs-number">0LL</span>, <span class="hljs-number">0LL</span>) )
+        kernel(v8);
+      cudaMemcpy(v13, v8, <span class="hljs-number">4LL</span> * (<span class="hljs-type">int</span>)v5, <span class="hljs-number">2LL</span>);
+      <span class="hljs-keyword">if</span> ( v13[<span class="hljs-number">0</span>] == <span class="hljs-number">1</span> )
+        <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Valid&quot;</span>);
+      <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Fail&quot;</span>);
+      cudaFree(v8);
+      <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+    &rbrace;
+    <span class="hljs-keyword">else</span>
+    &lbrace;
+      <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Fail: No CUDA-capable GPU found.&quot;</span>);
+      <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;
+    &rbrace;
+  &rbrace;
+  <span class="hljs-keyword">else</span>
+  &lbrace;
+    <span class="hljs-built_in">puts</span>(<span class="hljs-string">&quot;Usage: program &lt;key&gt;&quot;</span>);
+    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+  &rbrace;
+&rbrace;</pre><p>So clearly all the important logic is in the kernel. We can output the PTX code.</p><div class="code-preview collapsed" id="1"><pre >0 kjc@kjc:~/Downloads/brauni$ /opt/cuda/bin/cuobjdump -ptx ./brauni_linux.elf
+
+Fatbin elf code:
+================
+arch = sm_52
+code version = [1,7]
+host = linux
+compile_size = 64bit
+
+Fatbin elf code:
+================
+arch = sm_52
+code version = [1,7]
+host = linux
+compile_size = 64bit
+
+Fatbin ptx code:
+================
+arch = sm_52
+code version = [8,0]
+host = linux
+compile_size = 64bit
+compressed
+
+
+
+
+
+
+
+
+.version 8.0
+.target sm_52
+.address_size 64
+
+
+
+
+.visible .entry _Z6kernelPj(
+.param .u64 _Z6kernelPj_param_0
+)
+&lbrace;
+.reg .pred %p&lt;17&gt;;
+.reg .b32 %r&lt;126&gt;;
+.reg .b64 %rd&lt;5&gt;;
+
+	.shared .align 4 .b8 _ZZ6kernelPjE5match[64];
+
+ld.param.u64 %rd2, [_Z6kernelPj_param_0];
+cvta.to.global.u64 %rd1, %rd2;
+mov.u32 %r1, %tid.x;
+setp.lt.s32 %p1, %r1, -7;
+mov.u32 %r125, 269671431;
+@%p1 bra $L__BB0_7;
+
+add.s32 %r22, %r1, 7;
+max.s32 %r2, %r22, 0;
+add.s32 %r23, %r2, 1;
+and.b32 %r124, %r23, 3;
+setp.lt.u32 %p2, %r2, 3;
+mov.u32 %r125, 269671431;
+@%p2 bra $L__BB0_4;
+
+sub.s32 %r119, %r2, %r124;
+
+$L__BB0_3:
+and.b32 %r25, %r125, 1;
+setp.eq.b32 %p3, %r25, 1;
+shr.u32 %r26, %r125, 1;
+xor.b32 %r27, %r26, 180;
+selp.b32 %r28, %r27, %r26, %p3;
+shr.u32 %r29, %r28, 1;
+and.b32 %r30, %r28, 1;
+setp.eq.b32 %p4, %r30, 1;
+xor.b32 %r31, %r29, 180;
+selp.b32 %r32, %r31, %r29, %p4;
+shr.u32 %r33, %r32, 1;
+and.b32 %r34, %r32, 1;
+setp.eq.b32 %p5, %r34, 1;
+xor.b32 %r35, %r33, 180;
+selp.b32 %r36, %r35, %r33, %p5;
+shr.u32 %r37, %r36, 1;
+and.b32 %r38, %r36, 1;
+setp.eq.b32 %p6, %r38, 1;
+xor.b32 %r39, %r37, 180;
+selp.b32 %r125, %r39, %r37, %p6;
+add.s32 %r119, %r119, -4;
+setp.ne.s32 %p7, %r119, -1;
+@%p7 bra $L__BB0_3;
+
+$L__BB0_4:
+setp.eq.s32 %p8, %r124, 0;
+@%p8 bra $L__BB0_7;
+
+$L__BB0_6:
+.pragma &quot;nounroll&quot;;
+and.b32 %r40, %r125, 1;
+setp.eq.b32 %p9, %r40, 1;
+shr.u32 %r41, %r125, 1;
+xor.b32 %r42, %r41, 180;
+selp.b32 %r125, %r42, %r41, %p9;
+add.s32 %r124, %r124, -1;
+setp.ne.s32 %p10, %r124, 0;
+@%p10 bra $L__BB0_6;
+
+$L__BB0_7:
+mul.wide.s32 %rd3, %r1, 4;
+add.s64 %rd4, %rd1, %rd3;
+ld.global.u32 %r43, [%rd4];
+xor.b32 %r16, %r43, %r125;
+add.s32 %r44, %r1, 3;
+setp.lt.u32 %p11, %r44, 7;
+shl.b32 %r45, %r1, 2;
+mov.u32 %r46, _ZZ6kernelPjE5match;
+add.s32 %r17, %r46, %r45;
+@%p11 bra $L__BB0_14;
+bra.uni $L__BB0_8;
+
+$L__BB0_14:
+shr.s32 %r77, %r1, 31;
+shr.u32 %r78, %r77, 30;
+add.s32 %r79, %r1, %r78;
+and.b32 %r80, %r79, 536870908;
+sub.s32 %r81, %r1, %r80;
+shl.b32 %r82, %r81, 3;
+mov.u32 %r83, 1502581021;
+shr.u32 %r84, %r83, %r82;
+xor.b32 %r85, %r16, %r84;
+and.b32 %r86, %r85, 255;
+st.shared.u32 [%r17], %r86;
+bra.uni $L__BB0_15;
+
+$L__BB0_8:
+and.b32 %r18, %r1, -4;
+setp.eq.s32 %p12, %r18, 4;
+@%p12 bra $L__BB0_13;
+bra.uni $L__BB0_9;
+
+$L__BB0_13:
+shr.s32 %r67, %r1, 31;
+shr.u32 %r68, %r67, 30;
+add.s32 %r69, %r1, %r68;
+and.b32 %r70, %r69, 536870908;
+sub.s32 %r71, %r1, %r70;
+shl.b32 %r72, %r71, 3;
+mov.u32 %r73, -1065423868;
+shr.u32 %r74, %r73, %r72;
+xor.b32 %r75, %r16, %r74;
+and.b32 %r76, %r75, 255;
+st.shared.u32 [%r17], %r76;
+bra.uni $L__BB0_15;
+
+$L__BB0_9:
+setp.eq.s32 %p13, %r18, 8;
+@%p13 bra $L__BB0_12;
+bra.uni $L__BB0_10;
+
+$L__BB0_12:
+shr.s32 %r57, %r1, 31;
+shr.u32 %r58, %r57, 30;
+add.s32 %r59, %r1, %r58;
+and.b32 %r60, %r59, 536870908;
+sub.s32 %r61, %r1, %r60;
+shl.b32 %r62, %r61, 3;
+mov.u32 %r63, 1987891068;
+shr.u32 %r64, %r63, %r62;
+xor.b32 %r65, %r16, %r64;
+and.b32 %r66, %r65, 255;
+st.shared.u32 [%r17], %r66;
+bra.uni $L__BB0_15;
+
+$L__BB0_10:
+setp.ne.s32 %p14, %r18, 12;
+@%p14 bra $L__BB0_15;
+
+shr.s32 %r47, %r1, 31;
+shr.u32 %r48, %r47, 30;
+add.s32 %r49, %r1, %r48;
+and.b32 %r50, %r49, 536870908;
+sub.s32 %r51, %r1, %r50;
+shl.b32 %r52, %r51, 3;
+mov.u32 %r53, 1336265249;
+shr.u32 %r54, %r53, %r52;
+xor.b32 %r55, %r16, %r54;
+and.b32 %r56, %r55, 255;
+st.shared.u32 [%r17], %r56;
+
+$L__BB0_15:
+bar.sync 0;
+setp.ne.s32 %p15, %r1, 0;
+@%p15 bra $L__BB0_17;
+
+ld.shared.u32 %r87, [_ZZ6kernelPjE5match];
+ld.shared.u32 %r88, [_ZZ6kernelPjE5match+4];
+or.b32 %r89, %r87, %r88;
+ld.shared.u32 %r90, [_ZZ6kernelPjE5match+8];
+or.b32 %r91, %r89, %r90;
+ld.shared.u32 %r92, [_ZZ6kernelPjE5match+12];
+or.b32 %r93, %r91, %r92;
+ld.shared.u32 %r94, [_ZZ6kernelPjE5match+16];
+or.b32 %r95, %r93, %r94;
+ld.shared.u32 %r96, [_ZZ6kernelPjE5match+20];
+or.b32 %r97, %r95, %r96;
+ld.shared.u32 %r98, [_ZZ6kernelPjE5match+24];
+or.b32 %r99, %r97, %r98;
+ld.shared.u32 %r100, [_ZZ6kernelPjE5match+28];
+or.b32 %r101, %r99, %r100;
+ld.shared.u32 %r102, [_ZZ6kernelPjE5match+32];
+or.b32 %r103, %r101, %r102;
+ld.shared.u32 %r104, [_ZZ6kernelPjE5match+36];
+or.b32 %r105, %r103, %r104;
+ld.shared.u32 %r106, [_ZZ6kernelPjE5match+40];
+or.b32 %r107, %r105, %r106;
+ld.shared.u32 %r108, [_ZZ6kernelPjE5match+44];
+or.b32 %r109, %r107, %r108;
+ld.shared.u32 %r110, [_ZZ6kernelPjE5match+48];
+or.b32 %r111, %r109, %r110;
+ld.shared.u32 %r112, [_ZZ6kernelPjE5match+52];
+or.b32 %r113, %r111, %r112;
+ld.shared.u32 %r114, [_ZZ6kernelPjE5match+56];
+or.b32 %r115, %r113, %r114;
+ld.shared.u32 %r116, [_ZZ6kernelPjE5match+60];
+or.b32 %r117, %r115, %r116;
+setp.eq.s32 %p16, %r117, 0;
+selp.u32 %r118, 1, 0, %p16;
+st.global.u32 [%rd1], %r118;
+
+$L__BB0_17:
+ret;
+
+&rbrace;</pre><button class="expand-btn" onclick="(()=>{const p=document.getElementById('1');const btn=p.querySelector('.expand-btn');if(p.classList.contains('collapsed')){p.classList.remove('collapsed');btn.textContent='Show Less'}else{p.classList.add('collapsed');btn.textContent='Show More';p.scrollIntoView({behavior:'instant',block:'start'})}})()">Show More</button></div><p>To put it shortly, since I forget where I put the code, you can use Z3 to solve for the input and hence the flag.</p><h3>Conclusion</h3><p>I definitely could&#039;ve completed a few more tasks, but I was tired. For one of them, you had to exploit a <code>torch.load()</code> vuln (pickle RCE) but I kept getting an internal server error when trying to download the files to exfiltrate the flag. Another involved a SQL injection in the semantic search feature to leak all user notes; but, the notes are encrypted client-side. So, I tried using <code>vec2text</code> to invert the embedding and it led to very promising results—unfortunately, not good enough becuase the IP address was garbage (I don&#039;t have an OpenAI key to improve with <code>num_steps</code>).</p>
+</article></main></body>
+
+</html>

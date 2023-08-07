@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Configuring Neovim - Kevin Cao</title>
+<meta name="description" content="I use Neovim and spend more time configuring it than actually coding—I'm
+exaggerating, of course, but I do spend an inordinate amount of time with my
+nose in my Neovim config. There are constantly new additions I think to add or
+small adjustments to make to my init.lua. Here I present two neat ad-hoc code
+snippets in my config. In the wise words of Georgi Gerganov, "I like big .vimrc
+and I cannot lie."" />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Configuring Neovim</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>May 7, 2024</time></div>
+  </header>
+  <p>I use Neovim and spend more time configuring it than actually coding—I&#039;m exaggerating, of course, but I do spend an inordinate amount of time with my nose in my Neovim config. There are constantly new additions I think to add or small adjustments to make to my <code>init.lua</code>. Here I present two neat ad-hoc code snippets in my config. In the wise words of Georgi Gerganov, &quot;I like big <code>.vimrc</code> and I cannot lie.&quot;</p><p>Proponents claim that Neovim is very lightweight unlike the bloated alternative IDEs such as VSCode. They point to latency numbers and the ability of Neovim to handle files on the order of gigabytes. And this is indeed true if my Treesitter and LSP plugins didn&#039;t make editing any C file &gt;2000 lines take half a second each time I press a fucking key.</p><p>Neovim equipped with my config and 200 plugins takes multiple agonizing seconds to load a plain text file more than a couple megabytes. During this loading duration Neovim freezes so if I (god forbid) accidentally open an especially large file, I have no choice but to forcibly and ungracefully kill it. This is not to mention—even if I do manage to open the file, it takes like 2 seconds to add a newline.</p><p>This is why I&#039;ve some code in my config that automatically emergency panic exits if I open a file &gt;1MB, less I have to bear that eternal delay for Neovim to load the file. The code gains an extra dimensionality of cleverness when you realize that I run <code>vim --clean</code> on a file &gt;1MB to edit the file, ignoring/bypassing my config entirely and thus the plugins that make Neovim unwieldy slow on large files.</p><pre ><span class="hljs-keyword">vim</span>.cmd [[
+<span class="hljs-keyword">function!</span> <span class="hljs-title">CheckFileSize</span><span class="hljs-params">()</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">getfsize</span>(<span class="hljs-built_in">expand</span>(<span class="hljs-string">&#x27;%&#x27;</span>)) &gt; <span class="hljs-number">1</span> * <span class="hljs-number">1024</span> * <span class="hljs-number">1024</span>
+        qa!
+    <span class="hljs-keyword">endif</span>
+<span class="hljs-keyword">endfunction</span>
+
+<span class="hljs-keyword">autocmd</span> BufReadPre * <span class="hljs-keyword">call</span> CheckFileSize()
+]]</pre><p>Anyway, when exploring a webpage&#039;s source code for example, I open a Neovim buffer and paste in source code. However, in this scenario, Neovim doesn&#039;t recognize the filetype (because its a <code>[No Name]</code> buffer) so even the bare essentials like syntax highlighting aren&#039;t available. It requires too much of my executive function to type something like <code>:set ft=html</code>. Therefore, I use Google&#039;s <a href="https://google.github.io/magika/">Magika</a> filetype detector to automatically guess the filetype of the buffer without engaging any part of my conscious brain.</p><pre ><span class="hljs-keyword">local</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">magika</span><span class="hljs-params">()</span></span>
+    <span class="hljs-keyword">local</span> buffer_content = vim.api.nvim_buf_get_lines(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">-1</span>, <span class="hljs-literal">false</span>)
+    <span class="hljs-keyword">local</span> buffer_content_str = <span class="hljs-built_in">table</span>.<span class="hljs-built_in">concat</span>(buffer_content, <span class="hljs-string">&quot;\n&quot;</span>)
+    <span class="hljs-keyword">local</span> <span class="hljs-built_in">output</span> = vim.fn.system(<span class="hljs-string">&quot;magika --json -&quot;</span>, buffer_content_str)
+    <span class="hljs-keyword">if</span> vim.v.shell_error == <span class="hljs-number">0</span> <span class="hljs-keyword">then</span>
+        <span class="hljs-keyword">local</span> guess = vim.json.decode(<span class="hljs-built_in">output</span>)[<span class="hljs-number">1</span>].dl.ct_label
+        <span class="hljs-keyword">if</span> guess ~= vim.NIL <span class="hljs-keyword">then</span>
+            vim.bo.filetype = guess
+            <span class="hljs-built_in">print</span>(<span class="hljs-built_in">string</span>.<span class="hljs-built_in">format</span>(<span class="hljs-string">&#x27;Guessed &quot;&#x27;</span> .. guess .. <span class="hljs-string">&#x27;&quot;&#x27;</span>))
+        <span class="hljs-keyword">end</span>
+    <span class="hljs-keyword">else</span>
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">&quot;Error with Magika &quot;</span> .. <span class="hljs-built_in">output</span>)
+    <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span>
+vim.api.nvim_create_user_command(<span class="hljs-string">&quot;Magika&quot;</span>, magika, &lbrace;&rbrace;)
+
+vim.cmd <span class="hljs-string">[[
+nnoremap &lt;C-g&gt; :Magika&lt;CR&gt;
+]]</span></pre><p>I don&#039;t use a plugin manager (unlike the normies) and instead my plugins are Git repositories cloned into <code>pack/plug/*</code>. To update these plugins I have a Bash script to glob over each repository and <code>git pull</code> updates. It works fine. I often forget to run it though. I really only run it if I think there&#039;s a bug in one of my plugins—in which case, I hope that someone else has experienced my problem too and that its fixed in the <code>master</code> branch.</p><pre ><span class="hljs-meta">#!/bin/bash</span>
+
+<span class="hljs-keyword">for</span> fp <span class="hljs-keyword">in</span> ./pack/plugs/*/*; <span class="hljs-keyword">do</span>
+    (
+        <span class="hljs-built_in">cd</span> <span class="hljs-string">&quot;<span class="hljs-variable">$fp</span>&quot;</span>
+        git pull
+    )
+<span class="hljs-keyword">done</span></pre><p>I compile Neovim from scratch. In fact, the Neovim source code (on <code>master</code> branch) is sitting comfortably in my home directory. I&#039;m not sure why I build from source rather than use the standard package supplied by my package manager. I think it has to do with a bleeding-edge feature that wasn&#039;t available in one of the stabler releases of Neovim, so I built from scratch to get access to that feature.</p>
+</article></main></body>
+
+</html>

@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>DD: Restricted Boltzmann Machines - Kevin Cao</title>
+<meta name="description" content="I've always wanted to learn about Boltzmann machines, but my interest was
+especially piqued after Hinton won a Nobel prize for it. Recently, I implemented
+and played with them in Python." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>DD: Restricted Boltzmann Machines</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Jun 7, 2025</time></div>
+  </header>
+  <p>I&#039;ve always wanted to learn about Boltzmann machines, but my interest was especially piqued after Hinton won a Nobel prize for it. Recently, I implemented and played with them in Python.</p><p>Boltzmann machines model the distribution of training data, but are typically intractable to train because the weights connect each neuron with every other, visually forming a complete graph. We therefore describe restricted Boltzmann machines (RBM) which segments the neurons into two categories and only permits connections between them, visually forming a bipartite graph. Let,</p><ul><li> $v\in\{0,1\}^n$, $h\in\{0,1\}^m$ be the neurons (which are constrained to only values 0 or 1) in two categories, visible and hidden.</li><li> $a\in\mathbb{R}^n$, $b\in\mathbb{R}^m$ be the biases for the neurons, respectively.</li><li> $W\in\mathbb{R}^{n\times m}$ be the weight matrix connecting the hidden and visible neurons.</li></ul><p>For the neurons $v,h$ in a certain state, we can define their &quot;energy.&quot; This is inspired by physics, particularly Ising models of spin states, but I don&#039;t know anything about that.</p><p>$$E(v,h) = -a^Tv - b^Th - v^TWh$$</p><p>The lower the energy, the higher the probability of seeing some state of neurons. The Boltzmann distribution tells us the probability of a system being in a state with a certain energy, so by applying it here we can calculate the exact probability of seeing some state of neurons (we set $kT = 1$ for simplicity). $Z$ represents a normalization factor to satisfy the requirements of a probability distribution.</p><p>$$P(v,h) = e^{-E(v,h)}/Z$$</p><p>$$Z=\sum_{v,h} e^{-E(v,h)} $$</p><p>Our goal is to increase the probability of observing the training data in the visible neurons. This can be done by maximizing the log-likelihood of the visible neurons for the training data. By marginalizing over the hidden units and using a couple log properties we obtain the log-likelihood of seeing some state of visible neurons $v$.</p><p>$$\log P(v) = \log \sum_h e^{-E(v,h)} - \log Z$$</p><p>Like in neural networks, we use gradient descent. To understand how much we should perturb each weight by, let&#039;s calculate the partial derivatives of the log-likelihood with respect to each weight.</p><p>$$\frac{\partial \log P(v)}{\partial W_{ij}} = \frac{\partial}{\partial W_{ij}}\left(\log \sum_h e^{-E(v,h)} - \log Z\right)$$</p><p>Firstly, note that $\partial (-E(v,h)) / \partial W_{ij} = v_ih_j$ which enables us to tackle the first term by simply applying the chain rule twice. Furthermore, note that some sums correspond to the distributions $P(v,h)$ and $P(v)$, where the normalization factor $Z$ cancels out and we can ultimately manipulate the result into a simple expectation.</p><p>$$\begin{aligned}\frac{\partial}{\partial W_{ij}}\log \sum_h e^{-E(v,h)} &= \frac{1}{\sum_h e^{-E(v,h)}} \cdot\sum_h \frac{\partial e^{-E(v,h)}}{\partial W_{ij}} \\ &= \frac{1}{P(v)Z} \cdot\sum_h P(v,h)Z \cdot v_ih_j \\ &= \sum_h P(h\mid v) \cdot v_ih_j \\ &= \mathbb{E}[v_ih_j \mid v] = \langle v_ih_j \rangle_{\textrm{data}}\end{aligned}$$</p><p>That the last sum over $h$ is just the expected value of $v_ih_j$ with respect to the conditional distribution $P(h\mid v)$. We denote this $\langle v_ih_j \rangle_{\textrm{data}}$ for some reason. And now the second term, likewise ending in the expected value of $v_ih_j$ but with respect to the joint distribution.</p><p>$$\begin{aligned}\frac{\partial \log Z}{\partial W_{ij}} &= \frac{1}{Z} \sum_{v,h} \frac{\partial e^{-E(v,h)}}{\partial W_{ij}} \\ &= \frac{1}{Z} \sum_{v,h} e^{-E(v,h)} \cdot v_ih_j \\ &= \sum_{v,h} P(v,h) \cdot v_ih_j = \langle v_ih_j \rangle_{\textrm{model}}\end{aligned}$$</p><p>So the entire gradient is just,</p><p>$$\frac{\partial \log P(v)}{\partial W_{ij}} = \langle v_ih_j \rangle_{\textrm{data}} - \langle v_ih_j \rangle_{\textrm{model}}$$</p><p>How concise! Note that $h_j$ is conditionally independent given $v$, and that $v_i$ is constant. So, we have,</p><p>$$\langle v_ih_j \rangle_{\textrm{data}} = \mathbb{E}[v_ih_j \mid v] = v_i\mathbb{E}[h_j \mid v]$$</p><p>Unfortunately, the $\langle v_ih_j \rangle_{\textrm{model}}$ term is intractable because it requires looping over all pairs $v,h$.</p>
+</article></main></body>
+
+</html>

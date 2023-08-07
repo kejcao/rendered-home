@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Stylizing Keyboard Shortcuts on My Website - Kevin Cao</title>
+<meta name="description" content="I was browsing Mozilla's fantastic list of all HTML elements
+[https://developer.mozilla.org/en-US/docs/Web/HTML/Element] when I stumbled upon
+the <kbd> tag which I'd never heard of before. It's used to denote actual
+keyboard presses, presumably so the website can style them uniquely. I wanted to
+incorporate this tag into my SSG by stylizing keyboard shortcuts (as like little
+cute buttons) instead of printing them in just a monospace font." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Stylizing Keyboard Shortcuts on My Website</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Sep 25, 2023</time></div>
+  </header>
+  <p>I was browsing Mozilla&#039;s fantastic <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element">list of all HTML elements</a> when I stumbled upon the <code>&lt;kbd&gt;</code> tag which I&#039;d never heard of before. It&#039;s used to denote actual keyboard presses, presumably so the website can style them uniquely. I wanted to incorporate this tag into my SSG by stylizing keyboard shortcuts (as like little cute buttons) instead of printing them in just a monospace font.</p><p>To render my blog posts (including the one you&#039;re reading right now) I use a messy 400-line JavaScript file that—among its other responsibilities—converts my own Markdown-like markup language into HTML. The section responsible for applying a monospace font to text wrapped in backticks is tucked away in a <code>switch</code> statement.</p><pre ><span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;`&#x27;</span>:
+  html += <span class="hljs-string">`&lt;code&gt;<span class="hljs-subst">$&lbrace;escapeHTML(readUntil(<span class="hljs-string">&#x27;`&#x27;</span>))&rbrace;</span>&lt;/code&gt;`</span>;
+  <span class="hljs-keyword">break</span>;</pre><p>I rewrote it such that if the starting backtick starts with an exclamation mark, then we interpret the following text as a keyboard shortcut. We split by the plus sign, and for each of these components we wrap them in a <code>&lt;kbd&gt;</code> tag; then we wrap the overall resulting string in a <code>&lt;kbd&gt;</code> tag.</p><pre ><span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;`&#x27;</span>:
+  <span class="hljs-keyword">const</span> data = <span class="hljs-title function_">readUntil</span>(<span class="hljs-string">&#x27;`&#x27;</span>);
+
+  <span class="hljs-keyword">if</span> (data.<span class="hljs-title function_">startsWith</span>(<span class="hljs-string">&#x27;!&#x27;</span>)) &lbrace;
+    html += <span class="hljs-string">`&lt;kbd&gt;<span class="hljs-subst">$&lbrace;
+      data.slice(<span class="hljs-number">1</span>).split(<span class="hljs-string">&#x27;+&#x27;</span>)
+        .map(x =&gt; <span class="hljs-string">`&lt;kbd&gt;<span class="hljs-subst">$&lbrace;x&rbrace;</span>&lt;/kbd&gt;`</span>).join(<span class="hljs-string">&#x27;+&#x27;</span>)
+    &rbrace;</span>&lt;/kbd&gt;`</span>;
+    <span class="hljs-keyword">break</span>;
+  &rbrace;
+
+  html += <span class="hljs-string">`&lt;code&gt;<span class="hljs-subst">$&lbrace;escapeHTML(data)&rbrace;</span>&lt;/code&gt;`</span>;
+  <span class="hljs-keyword">break</span>;</pre><p>For example, if I wrote &quot;<code>`!Ctrl+K`</code>&quot; it would be converted into:</p><pre ><span class="hljs-tag">&lt;<span class="hljs-name">kbd</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">kbd</span>&gt;</span>Ctrl<span class="hljs-tag">&lt;/<span class="hljs-name">kbd</span>&gt;</span>+<span class="hljs-tag">&lt;<span class="hljs-name">kbd</span>&gt;</span>K<span class="hljs-tag">&lt;/<span class="hljs-name">kbd</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">kbd</span>&gt;</span></pre><p>I then copied some CSS styling for the keyboard shortcuts from the <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd">Mozilla article</a> I was talking about into my own global CSS file. It produces a dainty little rounded gray box with a drop shadow: <kbd><kbd>Ctrl</kbd>+<kbd>Z</kbd></kbd> and <kbd><kbd>Ctrl</kbd>+<kbd>Shift</kbd>+<kbd>2</kbd></kbd>.</p><pre ><span class="hljs-selector-tag">kbd</span> &gt; <span class="hljs-selector-tag">kbd</span> &lbrace;
+  <span class="hljs-attribute">background-color</span>: <span class="hljs-number">#eee</span>;
+  <span class="hljs-attribute">border-radius</span>: <span class="hljs-number">3px</span>;
+  <span class="hljs-attribute">border</span>: <span class="hljs-number">1px</span> solid <span class="hljs-number">#b4b4b4</span>;
+  <span class="hljs-attribute">box-shadow</span>:
+    <span class="hljs-number">0</span> <span class="hljs-number">1px</span> <span class="hljs-number">1px</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0.2</span>),
+    <span class="hljs-number">0</span> <span class="hljs-number">2px</span> <span class="hljs-number">0</span> <span class="hljs-number">0</span> <span class="hljs-built_in">rgba</span>(<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">0.7</span>) inset;
+  <span class="hljs-attribute">color</span>: <span class="hljs-number">#333</span>;
+  <span class="hljs-attribute">display</span>: inline-block;
+  <span class="hljs-attribute">font-size</span>: <span class="hljs-number">0.85em</span>;
+  <span class="hljs-attribute">font-weight</span>: <span class="hljs-number">700</span>;
+  <span class="hljs-attribute">line-height</span>: <span class="hljs-number">1</span>;
+  <span class="hljs-attribute">padding</span>: <span class="hljs-number">2px</span> <span class="hljs-number">4px</span>;
+  <span class="hljs-attribute">white-space</span>: nowrap;
+&rbrace;</pre><p>I think it turned out really cute (<kbd><kbd>C</kbd></kbd> <kbd><kbd>U</kbd></kbd> <kbd><kbd>T</kbd></kbd> <kbd><kbd>E</kbd></kbd>) and I should add more features like this to my SSG to give my blog posts a little more pizzazz. Maybe I&#039;ll talk more about the internal details of SSG&#039;s operation.</p>
+</article></main></body>
+
+</html>

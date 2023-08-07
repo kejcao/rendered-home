@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Losslessly Compressing 25000 Images - Kevin Cao</title>
+<meta name="description" content="On May 20, Microsoft announced
+[https://blogs.microsoft.com/blog/2024/05/20/introducing-copilot-pcs/] their
+Copilot+ PCs. The main selling point of these devices are its AI features. These
+include near real-time local image generation, Live Captions with translation,
+and Recall. Recall periodically takes a screenshot of the PC and allows users to
+search through these to "easily find and remember what you have seen in your
+PC." After harsh backlash and exposed security flaws targeting Recall, Microsoft
+vastly scaled back
+[https://www.wired.com/story/microsoft-recall-off-default-security-concerns/]
+its ambitions with this project." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Losslessly Compressing 25000 Images</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Jun 26, 2024</time></div>
+  </header>
+  <p>On May 20, Microsoft <a href="https://blogs.microsoft.com/blog/2024/05/20/introducing-copilot-pcs/">announced</a> their Copilot+ PCs. The main selling point of these devices are its AI features. These include near real-time local image generation, Live Captions with translation, and Recall. Recall periodically takes a screenshot of the PC and allows users to search through these to &quot;easily find and remember what you have seen in your PC.&quot; After harsh backlash and exposed security flaws targeting Recall, Microsoft vastly <a href="https://www.wired.com/story/microsoft-recall-off-default-security-concerns/">scaled back</a> its ambitions with this project.</p><p>Anyway, I was surprised when Microsoft announced this Recall hoopla in the first place, because <em>I have been doing exactly the same thing</em> for half a year. I take the screenshots so I can reflect back at how I interacted with my computer in the past—the habits I had and the media I consumed. Instead, Microsoft advertises Recall as a feature to solve one of the most frustrating problems they claim users encounter, of &quot;finding something we know we have seen before [on our computers].&quot; I use this Bash script:</p><pre ><span class="hljs-meta">#!/bin/bash</span>
+
+<span class="hljs-built_in">sleep</span> 5
+
+<span class="hljs-keyword">while</span> :; <span class="hljs-keyword">do</span>
+    maim /home/kjc/screenshots/$(<span class="hljs-built_in">date</span> -Is).png
+    <span class="hljs-built_in">sleep</span> $((<span class="hljs-number">1</span>*<span class="hljs-number">60</span>))
+<span class="hljs-keyword">done</span></pre><p>I used to set a longer interval between screenshots, but have been gradually scaling the sleep time down from an hour to now just a minute. Storage is just too damn cheap these days, even pessimistic estimates of 1440 screenshots taken everyday, each weighing a megabyte, would fill a 2 TB drive only after 4 years and those drives go for peanuts on Amazon. 1 TB costs a dollar a month in S3 Glacier Deep Archive.</p><p>But I did notice a curious pattern in the screenshots. There were many consecutive runs of <em>very</em> similar images. I don&#039;t suspend my computer when the laptop lid is closed (because network issues) so the Bash script continues to run 24/7 even if my laptop is &quot;closed.&quot; I also keep my laptop lid open to listen to music, while engaging in some other activity in meat space. This redundancy of storing nearly identical images while my computer is idle upsets me deeply—that I&#039;m wasting so many bits storing the exact same thing over and over again.</p><p>The slight differences between similar images are accounted for by the continuously changing values in my taskbar, which displays fluctuating CPU usage, for instance. Therefore, I wrote a simple Python script to losslessly compress these runs of similar images. The script loops through each image in the current directory and considers the difference between the current one and the previous, and, if the difference between them is small enough, it stores the delta of the current image against the previous instead of the original image data. I store the deltas as JPEG XL since the file format has a smaller overhead than PNG and provides a reliable way to differentiate between actual image data and deltas.</p><pre ><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime
+<span class="hljs-keyword">from</span> multiprocessing <span class="hljs-keyword">import</span> Pool
+<span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> jxlpy <span class="hljs-keyword">import</span> JXLImagePlugin
+<span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image
+<span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> tqdm
+
+<span class="hljs-comment"># See: https://stackoverflow.com/questions/57354700/starmap-combined-with-tqdm</span>
+<span class="hljs-keyword">import</span> istarmap_patch
+
+files = <span class="hljs-built_in">list</span>(Path(<span class="hljs-string">&#x27;./&#x27;</span>).glob(<span class="hljs-string">&#x27;*.png&#x27;</span>))
+cache = &lbrace;f: datetime.fromisoformat(f.stem) <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> files&rbrace;
+imgs = <span class="hljs-built_in">sorted</span>(files, key=<span class="hljs-keyword">lambda</span> p: cache[p])
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">compress</span>(<span class="hljs-params">a, b</span>):
+    reference = np.array(Image.<span class="hljs-built_in">open</span>(a))
+    img = np.array(Image.<span class="hljs-built_in">open</span>(b))
+
+    <span class="hljs-keyword">if</span> reference.shape == img.shape:
+        delta = <span class="hljs-built_in">abs</span>((img - reference) % <span class="hljs-number">256</span>).astype(np.uint8)
+        <span class="hljs-keyword">if</span> np.count_nonzero(delta) &lt; <span class="hljs-number">100_000</span>:
+            Image.fromarray(delta).save(b.stem + <span class="hljs-string">&#x27;.jxl&#x27;</span>, lossless=<span class="hljs-literal">True</span>, effort=<span class="hljs-number">1</span>)
+            <span class="hljs-keyword">return</span> b
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>
+
+
+<span class="hljs-keyword">for</span> fp <span class="hljs-keyword">in</span> tqdm(
+    Pool().istarmap(compress, <span class="hljs-built_in">zip</span>(imgs, imgs[<span class="hljs-number">1</span>:])),
+    total=<span class="hljs-built_in">len</span>(imgs) - <span class="hljs-number">1</span>
+):
+    <span class="hljs-keyword">if</span> fp <span class="hljs-keyword">is</span> <span class="hljs-keyword">not</span> <span class="hljs-literal">None</span>:
+        fp.unlink()</pre><p>This script is fast enough for my usage. It compresses 50 images per second and finishes 25000 in 8 minutes. I did some testing with an alternative implementation in C++ and libpng, but I think the performance improvements would have been minor. Loading PNG images into an unsigned char pointer is 2x faster in C++ and we wouldn&#039;t need to compute the modulo when computing the delta because the overflow with unsigned char would wrap. But modern Python probably isn&#039;t too slow for your purpose, especially if the majority of operations are performed by libraries like <code>numpy</code> or <code>jxlpy</code>—they offload the computation to highly-optimized libraries like OpenBLAS or libjxl which themselves use a more efficient language such as C, Fortran, or ASM.</p><p>I haven&#039;t put much thought to decompression, but recovering the original image data is 10x slower primarily because there is no easy way to take advantage of parallelism. Each delta requires the previous one to be decoded. However, one nice advantage is that a whole run of deltas can be decompressed independently. Also, for data analysis like OCR, the deltas won&#039;t necessarily matter in calculations and thus you can just ignore them.</p><pre ><span class="hljs-keyword">from</span> datetime <span class="hljs-keyword">import</span> datetime
+<span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path
+
+<span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> jxlpy <span class="hljs-keyword">import</span> JXLImagePlugin
+<span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image
+<span class="hljs-keyword">from</span> tqdm <span class="hljs-keyword">import</span> tqdm
+
+files = [*Path(<span class="hljs-string">&#x27;./&#x27;</span>).glob(<span class="hljs-string">&#x27;*.png&#x27;</span>), *Path(<span class="hljs-string">&#x27;./&#x27;</span>).glob(<span class="hljs-string">&#x27;*.jxl&#x27;</span>)]
+cache = &lbrace;f: datetime.fromisoformat(f.stem) <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> files&rbrace;
+imgs = <span class="hljs-built_in">sorted</span>(files, key=<span class="hljs-keyword">lambda</span> p: cache[p])
+
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> tqdm(<span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(imgs) - <span class="hljs-number">1</span>)):
+    <span class="hljs-keyword">if</span> imgs[i].suffix == <span class="hljs-string">&#x27;.png&#x27;</span> <span class="hljs-keyword">and</span> imgs[i + <span class="hljs-number">1</span>].suffix == <span class="hljs-string">&#x27;.jxl&#x27;</span>:
+        reference = np.array(Image.<span class="hljs-built_in">open</span>(imgs[i]))
+        img = np.array(Image.<span class="hljs-built_in">open</span>(imgs[i + <span class="hljs-number">1</span>]))
+        data = Image.fromarray(((img + reference) % <span class="hljs-number">256</span>).astype(np.uint8))
+        data.save(imgs[i + <span class="hljs-number">1</span>].stem + <span class="hljs-string">&#x27;.png&#x27;</span>)
+        imgs[i + <span class="hljs-number">1</span>].unlink()
+        imgs[i + <span class="hljs-number">1</span>] = Path(imgs[i + <span class="hljs-number">1</span>].stem + <span class="hljs-string">&#x27;.png&#x27;</span>)</pre><p>I tested numerous permutations of this idea of delta coding images and ironically ended up settling with the simplest. I took lossy compression for a spin once, and it managed to compress 6x because JPEG XL compression is downright magical. But then I sat down, slapped myself in the face, and seriously balanced the storage savings lossy compression afforded with the facts that hard drive space is just so incredibly cheap these days and the added complexity (and thus the opportunities for error and data loss) the lossy compression code brought.</p><p>The problem with lossy compression together with delta coding is that its not a drop-in and replace kind of deal. You have to ensure not to lossy compress the reference image at the beginning of each run of deltas because in decompression the delta doesn&#039;t play nice with lossy images—this requirement also makes the code less amendable to parallelization. JPEG XL lossy compression also in and of itself takes a significant amount of processor time.</p><p>I&#039;m not excessively worried about the security of this mechanism. My probably flawed thinking goes like this: I store past images in encrypted 7z archives and my recent screenshots probably don&#039;t have any sensitive content. Infostealers would most likely focus on exfiltrating my credentials than the 10 gigabyte screenshots folder. If an attacker does gain access to my computer, I&#039;m screwed anyway—this mentality is probably wrong and dangerous, but you only live life once and I don&#039;t want to spend it securing my PC.</p>
+</article></main></body>
+
+</html>

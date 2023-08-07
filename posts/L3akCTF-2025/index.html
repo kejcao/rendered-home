@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>DD: L3akCTF 2025 - Kevin Cao</title>
+<meta name="description" content="LOWKEY RSA" />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>DD: L3akCTF 2025</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Jul 11, 2025</time></div>
+  </header>
+  <h3>Lowkey RSA</h3><p>The code:</p><pre ><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> *
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">gen_primes</span>(<span class="hljs-params">SIZE</span>):
+    p = random_prime(<span class="hljs-number">1</span> &lt;&lt; (SIZE - <span class="hljs-number">1</span>), <span class="hljs-number">1</span> &lt;&lt; SIZE)
+    <span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+        q = random_prime(<span class="hljs-number">1</span> &lt;&lt; (SIZE - <span class="hljs-number">1</span>), <span class="hljs-number">1</span> &lt;&lt; SIZE)
+        <span class="hljs-keyword">if</span> p &lt; q: 
+            p, q = q, p
+            <span class="hljs-keyword">if</span> q &lt; p &lt; <span class="hljs-number">2</span>*q:
+                <span class="hljs-keyword">break</span>
+    <span class="hljs-keyword">return</span> p, q
+
+nbits = <span class="hljs-number">1024</span>
+flag = <span class="hljs-string">b&quot;L3AK&lbrace;&lt;REDACTED&gt;&rbrace;&quot;</span>
+
+R = RealField(nbits)
+p, q = gen_primes(nbits//<span class="hljs-number">2</span>)
+N = p*q
+phi = (p**<span class="hljs-number">4</span>-<span class="hljs-number">1</span>)*(q**<span class="hljs-number">4</span>-<span class="hljs-number">1</span>)
+N_s = R(N**<span class="hljs-number">2</span>)
+N_ss = R(N**<span class="hljs-number">4</span>)   
+t = (<span class="hljs-number">2</span>*N_ss-<span class="hljs-number">49</span>*N_s + <span class="hljs-number">2</span>)/(<span class="hljs-number">4</span>*N+<span class="hljs-number">170</span>*N_s)
+
+<span class="hljs-keyword">while</span> <span class="hljs-literal">True</span>:
+    d = randint(<span class="hljs-number">1</span>, <span class="hljs-built_in">round</span>(sqrt(t)) - <span class="hljs-number">1</span>)
+    <span class="hljs-keyword">if</span> gcd(phi-d, phi) == <span class="hljs-number">1</span>:
+        <span class="hljs-keyword">break</span>
+
+e = inverse_mod(phi-d, phi)
+c = <span class="hljs-built_in">pow</span>(bytes_to_long(flag), e, N)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">f&quot;e = <span class="hljs-subst">&lbrace;e&rbrace;</span>\nN = <span class="hljs-subst">&lbrace;N&rbrace;</span>\nc = <span class="hljs-subst">&lbrace;c&rbrace;</span>&quot;</span>)</pre><p>This is a standard RSA system with $n=pq$ and $c\equiv m^e \pmod{n}$ except for one twist: The exponent $e$ is derived by a certain procedure. Specifically,</p><p>$$\phi = (p^4-1)(q^4-1)$$</p><p>$$e := (\phi-d)^{-1} \mod \phi$$</p><p>Empirically speaking, I found $d$ to be a random 1024-bit number. We would like to find the value of $\phi$ so we can invert $e$ and decrypt the flag. Let&#039;s analyze $e$ a bit further.</p><p>$$e\equiv (\phi-d)^{-1} \pmod\phi$$</p><p>$$e(\phi-d)\equiv 1 \pmod\phi$$</p><p>$$e\phi-ed\equiv 1 \pmod\phi$$</p><p>$$ed\equiv -1 \pmod\phi$$</p><p>Implying $ed = k\phi-1$ for some $k$. Furthermore, keep in mind that $1/d \approx 0$ and $\phi\approx (n^2-1)^2$. Therefore,</p><p>$$ed + 1= k\phi$$</p><p>$$e + 1/d = k\phi/d$$</p><p>$$e \approx k(n^2-1)^2/d$$</p><p>$$\frac{e}{(n^2-1)^2} \approx \frac{k}{d}$$</p><p>But we are given both $e$ and $n$, so the LHS is determined completely. We compute the convergents of the LHS to approximate the RHS, and we hope that one of these rational approximations is correct. Once we have $k,d$ we know $\phi = (ed+1)/k$. Consequently, we can invert $e$ and decrypt the flag.</p><pre ><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> long_to_bytes
+
+e = ...
+N = ...
+c = ...
+
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> (e / ((N**<span class="hljs-number">2</span> - <span class="hljs-number">1</span>)**<span class="hljs-number">2</span>)).continued_fraction().convergents():
+    k, d = i.numerator(), i.denominator()
+    <span class="hljs-keyword">if</span> k == <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">continue</span>
+    q, r = <span class="hljs-built_in">divmod</span>(e * d + <span class="hljs-number">1</span>, k)
+    <span class="hljs-keyword">if</span> r == <span class="hljs-number">0</span>:
+        <span class="hljs-built_in">print</span>(long_to_bytes(power_mod(c, inverse_mod(e, q), N)))
+<span class="hljs-comment"># flag: L3AK&lbrace;L0wK3y_Th1S_RSA_i5_kiNda_ScuFf3D_LmA0&rbrace;</span></pre>
+</article></main></body>
+
+</html>

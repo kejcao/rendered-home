@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Running Haar Cascades from Scratch in Rust - Kevin Cao</title>
+<meta name="description" content="I owned one of those digital cameras from the early 2010s. I always wondered how
+they could draw an orange bounding box around my face in real-time on low-power
+hardware. It turns out, they use an algorithm described by Paul Viola and
+Michael Jones in 2001, where in you slide a bunch of "Haar cascades" looking for
+matches." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Running Haar Cascades from Scratch in Rust</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Nov 30, 2024</time></div>
+  </header>
+  <p>I owned one of those digital cameras from the early 2010s. I always wondered how they could draw an orange bounding box around my face in real-time on low-power hardware. It turns out, they use an algorithm described by Paul Viola and Michael Jones in 2001, where in you slide a bunch of &quot;Haar cascades&quot; looking for matches.</p><p>I implemented this approach to face detection in Rust. I didn&#039;t want to train my own Haar cascades, so I just took the models in OpenCV&#039;s GitHub repository and wrote some Python code to parse the XML and output the relevant information into a neater JSON format for my program to consume.</p><pre ><span class="hljs-keyword">import</span> json
+<span class="hljs-keyword">import</span> xml.etree.ElementTree <span class="hljs-keyword">as</span> ET
+
+<span class="hljs-comment"># tree = ET.parse(&#x27;haarcascade_frontalface_alt.xml&#x27;)</span>
+tree = ET.parse(<span class="hljs-string">&#x27;haarcascade_frontalface_default.xml&#x27;</span>)
+root = tree.getroot()[<span class="hljs-number">0</span>][<span class="hljs-number">1</span>]
+
+data = []
+<span class="hljs-keyword">for</span> stage <span class="hljs-keyword">in</span> root:
+    data.append(&lbrace;<span class="hljs-string">&#x27;threshold&#x27;</span>: <span class="hljs-built_in">float</span>(stage[<span class="hljs-number">1</span>].text), <span class="hljs-string">&#x27;trees&#x27;</span>: []&rbrace;)
+    <span class="hljs-keyword">for</span> tree <span class="hljs-keyword">in</span> stage[<span class="hljs-number">0</span>]:
+        features, threshold, lt, gt = tree[<span class="hljs-number">0</span>]
+        rect, tilted = features
+        data[-<span class="hljs-number">1</span>][<span class="hljs-string">&#x27;trees&#x27;</span>].append(&lbrace;
+            <span class="hljs-string">&#x27;threshold&#x27;</span>: <span class="hljs-built_in">float</span>(threshold.text),
+            <span class="hljs-string">&#x27;lt&#x27;</span>: <span class="hljs-built_in">float</span>(lt.text),
+            <span class="hljs-string">&#x27;gt&#x27;</span>: <span class="hljs-built_in">float</span>(gt.text),
+            <span class="hljs-string">&#x27;tilted&#x27;</span>: <span class="hljs-keyword">not</span> <span class="hljs-built_in">bool</span>(tilted.text),
+            <span class="hljs-string">&#x27;rect&#x27;</span>: [],
+        &rbrace;)
+        <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> rect:
+            x, y, w, h, weight = <span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, r.text[:-<span class="hljs-number">1</span>].split())
+            data[-<span class="hljs-number">1</span>][<span class="hljs-string">&#x27;trees&#x27;</span>][-<span class="hljs-number">1</span>][<span class="hljs-string">&#x27;rect&#x27;</span>].append(&lbrace;
+                <span class="hljs-string">&#x27;x&#x27;</span>: x, <span class="hljs-string">&#x27;y&#x27;</span>: y,
+                <span class="hljs-string">&#x27;w&#x27;</span>: w, <span class="hljs-string">&#x27;h&#x27;</span>: h,
+                <span class="hljs-string">&#x27;weight&#x27;</span>: weight,
+            &rbrace;)
+
+<span class="hljs-keyword">with</span> <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;data.json&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>) <span class="hljs-keyword">as</span> fp:
+    json.dump(data, fp)</pre><p>I use <code>serde</code> to deserialize the JSON into Rust structures. The crate <a href="https://crates.io/crates/v4l">v4l</a> is used to obtain a stream of 640x480 frames from my webcam in YUYV format; U and V represent color and Y the luminance. Every two pixels is encoded YUYV. Since we operate on greyscale images anyway, later to process the image buffer we just skip the U and V and retain only the luminance information.</p><p>We also report (very roughly) how much time is required to run the <code>detect</code> function. It takes about 1–2 milliseconds.</p><pre ><span class="hljs-keyword">fn</span> <span class="hljs-title function_">main</span>() <span class="hljs-punctuation">-&gt;</span> io::<span class="hljs-type">Result</span>&lt;()&gt; &lbrace;
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">cascade</span>: <span class="hljs-type">Vec</span>&lt;Stage&gt; =
+        serde_json::<span class="hljs-title function_ invoke__">from_reader</span>(File::<span class="hljs-title function_ invoke__">open</span>(<span class="hljs-string">&quot;data.json&quot;</span>).<span class="hljs-title function_ invoke__">unwrap</span>()).<span class="hljs-title function_ invoke__">unwrap</span>();
+
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">dev</span> = Device::<span class="hljs-title function_ invoke__">new</span>(<span class="hljs-number">0</span>)?;
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">format</span> = dev.<span class="hljs-title function_ invoke__">format</span>()?;
+    format.width = <span class="hljs-number">640</span>;
+    format.height = <span class="hljs-number">480</span>;
+    format.fourcc = FourCC::<span class="hljs-title function_ invoke__">new</span>(<span class="hljs-string">b&quot;YUYV&quot;</span>);
+    dev.<span class="hljs-title function_ invoke__">set_format</span>(&amp;format)?;
+
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">stream</span> = MmapStream::<span class="hljs-title function_ invoke__">with_buffers</span>(&amp;dev, Type::VideoCapture, <span class="hljs-number">4</span>)?;
+    stream.<span class="hljs-title function_ invoke__">next</span>()?; <span class="hljs-comment">// warmup</span>
+    <span class="hljs-keyword">loop</span> &lbrace;
+        <span class="hljs-keyword">let</span> (buf, _meta) = stream.<span class="hljs-title function_ invoke__">next</span>()?;
+
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">start</span> = Instant::<span class="hljs-title function_ invoke__">now</span>();
+        <span class="hljs-keyword">if</span> <span class="hljs-title function_ invoke__">detect</span>(&amp;cascade, buf, format.width <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>, format.height <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>) &lbrace;
+            <span class="hljs-built_in">print!</span>(<span class="hljs-string">&quot;detected! &quot;</span>);
+        &rbrace; <span class="hljs-keyword">else</span> &lbrace;
+            <span class="hljs-built_in">print!</span>(<span class="hljs-string">&quot;not detected! &quot;</span>);
+        &rbrace;
+        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;&lbrace;:.6&rbrace;&quot;</span>, (Instant::<span class="hljs-title function_ invoke__">now</span>() - start).<span class="hljs-title function_ invoke__">as_secs_f32</span>());
+    &rbrace;
+&rbrace;</pre><p>Before looking at the <code>detect</code> function, let&#039;s look at the Rust structures we need. Firstly, in the deserialized Rect, we implement two functions. The first just returns a shifted version of the Rect. The second returns the number of pixels which overlap between two Rects.</p><pre ><span class="hljs-meta">#[derive(Serialize, Deserialize, Copy, Clone)]</span>
+<span class="hljs-keyword">struct</span> <span class="hljs-title class_">Rect</span> &lbrace;
+    x: <span class="hljs-type">usize</span>,
+    y: <span class="hljs-type">usize</span>,
+    w: <span class="hljs-type">usize</span>,
+    h: <span class="hljs-type">usize</span>,
+    weight: <span class="hljs-type">i32</span>,
+&rbrace;
+
+<span class="hljs-keyword">impl</span> <span class="hljs-title class_">Rect</span> &lbrace;
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">offset</span>(&amp;<span class="hljs-keyword">self</span>, x: <span class="hljs-type">usize</span>, y: <span class="hljs-type">usize</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> &lbrace;
+        Rect &lbrace;
+            x: <span class="hljs-keyword">self</span>.x + x,
+            y: <span class="hljs-keyword">self</span>.y + y,
+            w: <span class="hljs-keyword">self</span>.w,
+            h: <span class="hljs-keyword">self</span>.h,
+            weight: <span class="hljs-keyword">self</span>.weight,
+        &rbrace;
+    &rbrace;
+
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">overlap</span>(&amp;<span class="hljs-keyword">self</span>, other: Rect) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">usize</span> &lbrace;
+        <span class="hljs-keyword">let</span> (x1, y1) = (<span class="hljs-keyword">self</span>.x.<span class="hljs-title function_ invoke__">max</span>(other.x), <span class="hljs-keyword">self</span>.y.<span class="hljs-title function_ invoke__">max</span>(other.y));
+        <span class="hljs-keyword">let</span> (x2, y2) = (
+            (<span class="hljs-keyword">self</span>.x + <span class="hljs-keyword">self</span>.w).<span class="hljs-title function_ invoke__">min</span>(other.x + other.w),
+            (<span class="hljs-keyword">self</span>.y + <span class="hljs-keyword">self</span>.h).<span class="hljs-title function_ invoke__">min</span>(other.y + other.h),
+        );
+        <span class="hljs-keyword">if</span> x1 &gt;= x2 || y1 &gt;= y2 &lbrace;
+            <span class="hljs-number">0</span>
+        &rbrace; <span class="hljs-keyword">else</span> &lbrace;
+            (x2 - x1) * (y2 - y1)
+        &rbrace;
+    &rbrace;
+&rbrace;</pre><p>We must create a shrink function to rescale the image buffer. The algorithm used here is nearest neighbor interpolation, which is simple but works well enough with Haar cascades. The shrink function takes an image buffer of size <code>w*h</code> with each array element representing a greyscale pixel. It returns an iterator for the rescaled image.</p><pre ><span class="hljs-keyword">fn</span> <span class="hljs-title function_">shrink</span>(buf: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">u8</span>&gt;, w: <span class="hljs-type">usize</span>, h: <span class="hljs-type">usize</span>, neww: <span class="hljs-type">usize</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">impl</span> <span class="hljs-title class_">Iterator</span>&lt;Item = <span class="hljs-type">u8</span>&gt; &lbrace;
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">scale</span> = neww <span class="hljs-keyword">as</span> <span class="hljs-type">f32</span> / w <span class="hljs-keyword">as</span> <span class="hljs-type">f32</span>;
+
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">out_w</span> = scale * w <span class="hljs-keyword">as</span> <span class="hljs-type">f32</span>;
+    <span class="hljs-keyword">let</span> <span class="hljs-variable">out_h</span> = scale * h <span class="hljs-keyword">as</span> <span class="hljs-type">f32</span>;
+
+    <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">i</span> = <span class="hljs-number">0.0</span>;
+    std::iter::<span class="hljs-title function_ invoke__">from_fn</span>(<span class="hljs-keyword">move</span> || &lbrace;
+        <span class="hljs-keyword">let</span> (y, x) = (i / out_w, i % out_w);
+
+        <span class="hljs-keyword">if</span> y &gt;= out_h - <span class="hljs-number">1.0</span> &amp;&amp; x &gt;= out_w - <span class="hljs-number">1.0</span> &lbrace;
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">None</span>;
+        &rbrace;
+
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">by</span> = (y * <span class="hljs-number">1.0</span> / scale) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">bx</span> = (x * <span class="hljs-number">1.0</span> / scale) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+
+        i += <span class="hljs-number">1.0</span>;
+        <span class="hljs-title function_ invoke__">Some</span>(buf[by * w + bx])
+    &rbrace;)
+&rbrace;</pre><p>The integral image with a one-time preprocessing cost permits us to take the sum of any Rect in constant time, by storing the cumulative sum of the numbers before it. This code is quite sensitive to off-by-one errors, which I had to debug.</p><pre ><span class="hljs-keyword">struct</span> <span class="hljs-title class_">Integral</span> &lbrace;
+    data: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">Vec</span>&lt;<span class="hljs-type">f32</span>&gt;&gt;,
+&rbrace;
+
+<span class="hljs-keyword">impl</span> <span class="hljs-title class_">Integral</span> &lbrace;
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">new</span>&lt;I: <span class="hljs-built_in">Into</span>&lt;<span class="hljs-type">f32</span>&gt;&gt;(buf: <span class="hljs-keyword">impl</span> <span class="hljs-title class_">IntoIterator</span>&lt;Item = I&gt;, w: <span class="hljs-type">usize</span>, h: <span class="hljs-type">usize</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-keyword">Self</span> &lbrace;
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">data</span> = <span class="hljs-built_in">vec!</span>[<span class="hljs-built_in">vec!</span>[<span class="hljs-number">0f32</span>; w + <span class="hljs-number">1</span>]; h + <span class="hljs-number">1</span>];
+
+        <span class="hljs-title function_ invoke__">for</span> (i, value) <span class="hljs-keyword">in</span> buf.<span class="hljs-title function_ invoke__">into_iter</span>().<span class="hljs-title function_ invoke__">enumerate</span>() &lbrace;
+            <span class="hljs-keyword">let</span> (y, x) = (i / w + <span class="hljs-number">1</span>, i % w + <span class="hljs-number">1</span>);
+            data[y][x] = value.<span class="hljs-title function_ invoke__">into</span>() <span class="hljs-keyword">as</span> <span class="hljs-type">f32</span>;
+
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">n</span> = data[y - <span class="hljs-number">1</span>][x]; <span class="hljs-comment">// north</span>
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">w</span> = data[y][x - <span class="hljs-number">1</span>]; <span class="hljs-comment">// west</span>
+
+            <span class="hljs-keyword">let</span> <span class="hljs-variable">z</span> = data[y - <span class="hljs-number">1</span>][x - <span class="hljs-number">1</span>];
+            data[y][x] += z + (n - z) + (w - z);
+        &rbrace;
+        Integral &lbrace; data &rbrace;
+    &rbrace;
+
+    <span class="hljs-keyword">fn</span> <span class="hljs-title function_">sum</span>(&amp;<span class="hljs-keyword">self</span>, r: &amp;Rect) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">f32</span> &lbrace;
+        <span class="hljs-keyword">let</span> (x, y) = (r.x, r.y);
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">z</span> = <span class="hljs-keyword">self</span>.data[y][x];
+
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">n</span> = <span class="hljs-keyword">self</span>.data[y][x + r.w];
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">w</span> = <span class="hljs-keyword">self</span>.data[y + r.h][x];
+        (<span class="hljs-keyword">self</span>.data[y + r.h][x + r.w] - n - w + z) * r.weight <span class="hljs-keyword">as</span> <span class="hljs-type">f32</span>
+    &rbrace;
+&rbrace;</pre><p>In the <code>detect</code> function we loop over a list of scales which we would like to apply the Haar cascade to. I find that 0.1 and 0.07 work best for my situation and the distance that I am from the webcam. For each scale, we construct an image integral for the image buffer—note how we just step by two to ignore the chrominance information. We make two copies of the image shrunk down the scale, and construct both an regular integral image of the sums and an integral image of each pixel value squared. We need this to calculate the variance information.</p><p>Next, we instantiate a vector we can store the matches in. We loop through each pixel and do some operations to calculate the variance and normalization factor (I&#039;ll explain how I derived these later). Then, we begin the cascade. We loop through each stage and compare the results from the trees to the stage threshold. If it is smaller, then it does not pass the Haar cascade and we continue. Otherwise, if the window passes all stages, we note it down in the results vector.</p><p>At the end of each scale we consider the number of overlapping results and if this exceeds 3, then we return true—there is a face in the webcam image. Otherwise, false.</p><pre ><span class="hljs-keyword">fn</span> <span class="hljs-title function_">detect</span>(cascade: &amp;<span class="hljs-type">Vec</span>&lt;Stage&gt;, buf: &amp;[<span class="hljs-type">u8</span>], w: <span class="hljs-type">usize</span>, h: <span class="hljs-type">usize</span>) <span class="hljs-punctuation">-&gt;</span> <span class="hljs-type">bool</span> &lbrace;
+    <span class="hljs-keyword">for</span> <span class="hljs-variable">scale</span> <span class="hljs-keyword">in</span> [<span class="hljs-number">0.1</span>, <span class="hljs-number">0.07</span>] &lbrace;
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">sw</span> = (w <span class="hljs-keyword">as</span> <span class="hljs-type">f32</span> * scale) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">sh</span> = (h <span class="hljs-keyword">as</span> <span class="hljs-type">f32</span> * scale) <span class="hljs-keyword">as</span> <span class="hljs-type">usize</span>;
+
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">buf</span>: <span class="hljs-type">Vec</span>&lt;<span class="hljs-type">u8</span>&gt; = buf.<span class="hljs-title function_ invoke__">into_iter</span>().<span class="hljs-title function_ invoke__">step_by</span>(<span class="hljs-number">2</span>).<span class="hljs-title function_ invoke__">copied</span>().<span class="hljs-title function_ invoke__">collect</span>();
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">img1</span> = <span class="hljs-title function_ invoke__">shrink</span>(buf.<span class="hljs-title function_ invoke__">clone</span>(), w, h, sw);
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">img2</span> = <span class="hljs-title function_ invoke__">shrink</span>(buf.<span class="hljs-title function_ invoke__">clone</span>(), w, h, sw);
+
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">integral</span> = Integral::<span class="hljs-title function_ invoke__">new</span>(img1, sw, sh);
+        <span class="hljs-keyword">let</span> <span class="hljs-variable">integral_squared</span> = Integral::<span class="hljs-title function_ invoke__">new</span>(img2.<span class="hljs-title function_ invoke__">map</span>(|x| x <span class="hljs-keyword">as</span> <span class="hljs-type">f32</span>).<span class="hljs-title function_ invoke__">map</span>(|x| x * x), sw, sh);
+
+        <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut </span><span class="hljs-variable">results</span>: <span class="hljs-type">Vec</span>&lt;Rect&gt; = <span class="hljs-type">Vec</span>::<span class="hljs-title function_ invoke__">new</span>();
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">y</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..(sh - <span class="hljs-number">24</span>) &lbrace;
+            <span class="hljs-keyword">for</span> <span class="hljs-variable">x</span> <span class="hljs-keyword">in</span> <span class="hljs-number">0</span>..(sw - <span class="hljs-number">24</span>) &lbrace;
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">window</span> = Rect &lbrace; x: x, y: y, w: <span class="hljs-number">24</span>, h: <span class="hljs-number">24</span>, weight: <span class="hljs-number">1</span> &rbrace;;
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">sqsum</span> = integral_squared.<span class="hljs-title function_ invoke__">sum</span>(&amp;window);
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">sum</span> = integral.<span class="hljs-title function_ invoke__">sum</span>(&amp;window);
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">area</span> = (window.w * window.h) <span class="hljs-keyword">as</span> <span class="hljs-type">f32</span>;
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">nf</span> = area * sqsum - sum * sum;
+                <span class="hljs-keyword">let</span> <span class="hljs-variable">variance_nf</span> = <span class="hljs-keyword">if</span> nf &gt; <span class="hljs-number">0.0</span> &lbrace; <span class="hljs-number">1.0</span> / <span class="hljs-type">f32</span>::<span class="hljs-title function_ invoke__">sqrt</span>(nf) &rbrace; <span class="hljs-keyword">else</span> &lbrace; <span class="hljs-number">1.0</span> &rbrace;;
+
+                <span class="hljs-symbol">&#x27;fail</span>: &lbrace;
+                    <span class="hljs-keyword">for</span> <span class="hljs-variable">stage</span> <span class="hljs-keyword">in</span> cascade &lbrace;
+                        <span class="hljs-keyword">let</span> <span class="hljs-variable">sum</span>: <span class="hljs-type">f32</span> = stage
+                            .trees
+                            .<span class="hljs-title function_ invoke__">iter</span>()
+                            .<span class="hljs-title function_ invoke__">map</span>(|tree| &lbrace;
+                                <span class="hljs-keyword">let</span> <span class="hljs-variable">feature_sum</span>: <span class="hljs-type">f32</span> = tree
+                                    .rect
+                                    .<span class="hljs-title function_ invoke__">iter</span>()
+                                    .<span class="hljs-title function_ invoke__">map</span>(|r| integral.<span class="hljs-title function_ invoke__">sum</span>(&amp;r.<span class="hljs-title function_ invoke__">offset</span>(x, y)))
+                                    .<span class="hljs-title function_ invoke__">sum</span>();
+
+                                <span class="hljs-keyword">if</span> feature_sum * variance_nf &lt; tree.threshold &lbrace;
+                                    tree.lt
+                                &rbrace; <span class="hljs-keyword">else</span> &lbrace;
+                                    tree.gt
+                                &rbrace;
+                            &rbrace;)
+                            .<span class="hljs-title function_ invoke__">sum</span>();
+                        <span class="hljs-keyword">if</span> sum &lt; stage.threshold &lbrace;
+                            <span class="hljs-keyword">break</span> <span class="hljs-symbol">&#x27;fail</span>;
+                        &rbrace;
+                    &rbrace;
+                    results.<span class="hljs-title function_ invoke__">push</span>(window.<span class="hljs-title function_ invoke__">clone</span>());
+                &rbrace;
+            &rbrace;
+        &rbrace;
+        <span class="hljs-keyword">for</span> <span class="hljs-variable">rect</span> <span class="hljs-keyword">in</span> &amp;results &lbrace;
+            <span class="hljs-keyword">if</span> results.<span class="hljs-title function_ invoke__">iter</span>().<span class="hljs-title function_ invoke__">filter</span>(|&amp;n| rect.<span class="hljs-title function_ invoke__">overlap</span>(*n) &gt; <span class="hljs-number">288</span>).<span class="hljs-title function_ invoke__">count</span>() &gt; <span class="hljs-number">3</span> &lbrace;
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+            &rbrace;
+        &rbrace;
+    &rbrace;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+&rbrace;</pre><p>This approach works surprisingly well. It is not rotation invariant, and is sensitive to tilts and movements like that. I read some <a href="https://arxiv.org/pdf/1305.4537">research</a> after finishing this code of alternate methods that I would implement in the future were I to have the need for face detection again.</p><h3>Appendix</h3><p>From a <a href="https://stackoverflow.com/questions/40320934/is-there-more-detailed-reference-on-cascade-classifiers-in-opencv">StackOverflow question</a> and by digging through the OpenCV source code myself, I figured out how they were computing the variance normalization factor. Here is the code that determines the value for each tree in any stage:</p><pre ><span class="hljs-type">const</span> CascadeClassifierImpl::Data::Stump&amp; stump = cascadeStumps[i];
+<span class="hljs-type">double</span> value = <span class="hljs-built_in">featureEvaluator</span>(stump.featureIdx);
+tmp += value &lt; stump.threshold ? stump.left : stump.right;</pre><p><code>featureEvaluator</code> is a function pointer, except not really—it&#039;s an instance of the class <code>HaarEvaluator</code> with the call operator overridden as so:</p><pre ><span class="hljs-function"><span class="hljs-type">float</span> <span class="hljs-title">operator</span><span class="hljs-params">()</span><span class="hljs-params">(<span class="hljs-type">int</span> featureIdx)</span> <span class="hljs-type">const</span>
+</span>&lbrace; <span class="hljs-keyword">return</span> optfeaturesPtr[featureIdx].<span class="hljs-built_in">calc</span>(pwin) * varianceNormFactor; &rbrace;
+
+...
+
+<span class="hljs-keyword">inline</span> <span class="hljs-type">float</span> HaarEvaluator::OptFeature :: <span class="hljs-built_in">calc</span>( <span class="hljs-type">const</span> <span class="hljs-type">int</span>* ptr ) <span class="hljs-type">const</span>
+&lbrace;
+    <span class="hljs-type">float</span> ret = weight[<span class="hljs-number">0</span>] * <span class="hljs-built_in">CALC_SUM_OFS</span>(ofs[<span class="hljs-number">0</span>], ptr) +
+                weight[<span class="hljs-number">1</span>] * <span class="hljs-built_in">CALC_SUM_OFS</span>(ofs[<span class="hljs-number">1</span>], ptr);
+
+    <span class="hljs-keyword">if</span>( weight[<span class="hljs-number">2</span>] != <span class="hljs-number">0.0f</span> )
+        ret += weight[<span class="hljs-number">2</span>] * <span class="hljs-built_in">CALC_SUM_OFS</span>(ofs[<span class="hljs-number">2</span>], ptr);
+
+    <span class="hljs-keyword">return</span> ret;
+&rbrace;</pre><p><code>varianceNormFactor</code>, the value we&#039;re searching for, is set elsewhere, with the following code:</p><pre >pwin = &amp;sbuf.<span class="hljs-built_in">at</span>&lt;<span class="hljs-type">int</span>&gt;(pt) + s.layer_ofs;
+<span class="hljs-type">const</span> <span class="hljs-type">int</span>* pq = (<span class="hljs-type">const</span> <span class="hljs-type">int</span>*)(pwin + sqofs);
+<span class="hljs-type">int</span> valsum = <span class="hljs-built_in">CALC_SUM_OFS</span>(nofs, pwin);
+<span class="hljs-type">unsigned</span> valsqsum = (<span class="hljs-type">unsigned</span>)(<span class="hljs-built_in">CALC_SUM_OFS</span>(nofs, pq));
+
+<span class="hljs-type">double</span> area = normrect.<span class="hljs-built_in">area</span>();
+<span class="hljs-type">double</span> nf = area * valsqsum - (<span class="hljs-type">double</span>)valsum * valsum;
+<span class="hljs-keyword">if</span>( nf &gt; <span class="hljs-number">0.</span> )
+&lbrace;
+    nf = std::<span class="hljs-built_in">sqrt</span>(nf);
+    varianceNormFactor = (<span class="hljs-type">float</span>)(<span class="hljs-number">1.</span>/nf);
+    <span class="hljs-keyword">return</span> area*varianceNormFactor &lt; <span class="hljs-number">1e-1</span>;
+&rbrace;
+<span class="hljs-keyword">else</span>
+&lbrace;
+    varianceNormFactor = <span class="hljs-number">1.f</span>;
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+&rbrace;</pre><p><code>nofs</code> is an array of corners, which is passed to the macro <code>CALC_SUM_OFS</code> that calculates the sum from the integral image. I&#039;m unsure why they multiply <code>valsqsum</code> by area; mathematically I would expect them to divide both <code>valsqsum</code> and <code>valsum</code> by <code>area</code>, yielding the expected values, then evaluate <code>valsqsum - valsum*valsum</code> for variance.</p>
+</article></main></body>
+
+</html>

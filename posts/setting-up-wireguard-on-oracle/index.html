@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Configuring WireGuard VPN on Oracle - Kevin Cao</title>
+<meta name="description" content="My favourite kind of price is free. Hence, on perusing through all those
+affiliate web articles which blindly market VPN services and assign them
+arbitrary ratings, I had an epiphany—why not build my own VPN on free cloud
+compute? Oracle has a generous free tier, perhaps to compensate for their
+horrible UI/UX." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Configuring WireGuard VPN on Oracle</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Aug 23, 2024</time></div>
+  </header>
+  <p>My favourite kind of price is free. Hence, on perusing through all those affiliate web articles which blindly market VPN services and assign them arbitrary ratings, I had an epiphany—why not build my own VPN on free cloud compute? Oracle has a generous free tier, perhaps to compensate for their horrible UI/UX.</p><p>I signed up for an Oracle cloud account and spun up my free eligble Ubuntu 22.04 minimal instance. It has a solid gigabyte of RAM and a single CPU core, comfortably enough for a basic WireGuard setup.</p><h3>The First Attempt</h3><p>I followed <a href="https://www.digitalocean.com/community/tutorials/how-to-set-up-wireguard-on-ubuntu-22-04">this DigitalOcean article</a> to setup WireGuard. It didn&#039;t work. To troubleshoot, I checked <code>ss -lun &#039;sport = :51820&#039;</code> and saw two lines, indicating that WireGuard indeed was listening on the proper port. At this point, I suspected a firewall issue, so I tried <code>nc -l -p 33333</code> on the server and <code>telnet [IP] 33333</code> on my desktop. Telnet returned an error. Okay, so the ports probably aren&#039;t open. I tried allowing the ports with <code>iptables</code> but that did nothing. I allowed both TCP and UDP just in case, even though I knew that WireGuard only works over UDP.</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo iptables -A INPUT -p tcp --dport 51820 -j ACCEPT</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo iptables -A INPUT -p udp --dport 51820 -j ACCEPT</span></pre><p>Maybe I needed to explicitly open the port on Oracle&#039;s end? After much roaming around, I managed to navigate to the security list panel that enabled me to add a couple rules to enable ingress and egress traffic for 51820. I tested again, but WireGuard stayed frustratingly silent. I carefully checked the firewalls on the server again. I used a minimal Ubuntu installation so UFW wasn&#039;t present. I meticulously checked each rule in the INPUT chain of iptables and found this:</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word">REJECT     all  --  anywhere     anywhere     reject-with icmp-host-prohibited</pre><p>This rule rejected all traffic and came <em>before</em> the new iptable rules I added. After this experience with iptables, I can see why UFW exists. I also needed to drop a single rule in the FORWARD chain. But after that, WireGuard worked perfectly! I was able to curl <code>ifconfig.me</code> and get the IP address of the server instead of my desktop.</p><p>The only problem is that this current setup doesn&#039;t include IPV6. My ISP has IPV6 and defaults to it so a VPN without IPV6 is really inconvenient. To ensure I was using the WireGuard VPN I had to disable IPV6, do whatever, then enable it again.</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo sysctl -w net.ipv6.conf.wlan0.disable_ipv6=1</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">...</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo sysctl -w net.ipv6.conf.wlan0.disable_ipv6=0</span></pre><p>Fun fact, I was mindlessly messing around with iptables when I accidentally set the policy of the INPUT chain to drop. Immediately, the SSH connection became unresponsive and I realized my mistake. But there was no need to worry, iptables isn&#039;t persistent by default and I simply had to restart the instance through Oracle&#039;s web interface.</p><p>Anyway, that was my first attempt at a VPN. In the second attempt, I enable IPV6.</p><h3>The Second Attempt</h3><p>I couldn&#039;t figure out how to enable IPV6 for my Ubuntu server. I contacted Oracle&#039;s support team and they claimed that I couldn&#039;t—the only way was to create a new virtual cloud network (VCN) and delete the current one. Okay, so I created a new VCN. But I couldn&#039;t attach it to my Ubuntu instance, because the instance isn&#039;t the right &quot;shape.&quot; Okay, okay, okay. A bit annoying but I can just delete my current instance and VCNs and start from scratch, making sure to enable IPV6 when I create my new instance.</p><p>I pressed the red &quot;terminate&quot; button for my instance, <em>and it didn&#039;t delete itself</em>. I couldn&#039;t terminate it again, the button was grayed out. I thought I screwed everything up but when I asked Oracle support they assured me that on deleting an instance, it would remain visible in the instance list but remove itself automatically in around 24 hours—no further action necessary. If an instance is deleted, than why does it <em>remain in the instance list</em> without any UI indication?</p><p>After waiting a day my instance list is blank. I have to delete the VCNs now. I press the red button to terminate the VCN, and it prompts me to scan for the &quot;associated resources&quot; to delete first. Naturally, I click the scan button then the delete all button. But, I got this obscure error referring to some type of conflict between route tables. Again, I asked Oracle support, and after a lot of prodding I found out I needed to manually go to the route table attached to the VCN and delete each route rule manually. <em>Why</em>? Why can&#039;t oracle delete the damn route table rules automatically?</p><p>Phew. Three paragraphs later, we finally have deleted everything and can start from scratch. I create a new instance, pick the right shape and operating system, double-check all the settings, and then expand the VCN section to click the checkbox to assign an IPV6 address—wait, why is the checkbox grayed out? I read the message above and it says to configure this part of the VCN and subnet I have to create my own VCN and subnets first, then attach it to the instance on creation.</p><p><em>So</em>. So. I go ahead and create my own VCN and subnet, configure everything to the best of my ability. I didn&#039;t understand many of the options and checkboxes but I did make sure to enable IPV6. Then, I created an instance, attached the VCN and subnet to it. I excitingly try SSHing into the machine and—the connection hangs. I couldn&#039;t SSH into the instance. So I had to debug why, and I observed that the SSH port isn&#039;t opened.</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">nmap -Pn -p 22 [SERVER IP]</span>
+Starting Nmap 7.95 ( https://nmap.org ) at 2024-08-19 14:07 EDT
+Nmap scan report for [SERVER IP]
+Host is up.
+
+PORT   STATE    SERVICE
+22/tcp filtered ssh
+
+Nmap done: 1 IP address (1 host up) scanned in 2.02 seconds</pre><p>After contacting Oracle support again and looking around carefully in the Oracle web interface, I noticed I didn&#039;t have an internet gateway. So I created one and attached it to the route table. I then went to configure the route table, but got this error that stated, &quot;Rules in the route table must use private IP as a target. Or the route table can be empty (no rules).&quot; From a Reddit post, it turns out I needed to not attach the internet gateway to my route table when I created the gateway. Finally, after deleting and re-creating the internet gateway without attaching the route table, I added a couple route rules and tested the SSH again.</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo <span class="hljs-built_in">chmod</span> 0600 ssh-key-2024-08-19.key</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">ssh -i ssh-key-2024-08-19.key ubuntu@[SERVER IP]</span>
+Welcome to Ubuntu 22.04.4 LTS (GNU/Linux 6.5.0-1023-oracle x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+...</pre><p>It works! I could SSH into my machine! I proceeded to run some commands to get WireGuard up and going.</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word"><span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo apt update</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo apt install wireguard</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">wg genkey | sudo <span class="hljs-built_in">tee</span> /etc/wireguard/private.key</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo <span class="hljs-built_in">chmod</span> go= /etc/wireguard/private.key</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo <span class="hljs-built_in">cat</span> /etc/wireguard/private.key | wg pubkey | sudo <span class="hljs-built_in">tee</span> /etc/wireguard/public.key</span></pre><p>From the result of <code>ip a</code> my interface is named <code>ens3</code>. I followed the WireGuard configuration example provided in the DigitalOcean article.</p><pre ># /etc/wireguard/wg0.conf for server
+[Interface]
+PrivateKey = [SERVER PRIVATE KEY]
+Address = 10.8.0.1/24, fdfd:0704:cc10::1/64
+ListenPort = 51820
+SaveConfig = true
+
+PostUp = iptables -t nat -I POSTROUTING -o ens3 -j MASQUERADE
+PostUp = ip6tables -t nat -I POSTROUTING -o ens3 -j MASQUERADE
+PreDown = iptables -t nat -D POSTROUTING -o ens3 -j MASQUERADE
+PreDown = ip6tables -t nat -D POSTROUTING -o ens3 -j MASQUERADE</pre><p>I setup the iptables, making sure to persist my changes and <em>prepend</em> the rule to open 51820. I persist the changes of iptables too.</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo apt-get install iptables-persistent</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo iptables -I INPUT -p udp --dport 51820 -j ACCEPT</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo iptables -D FORWARD 1</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo iptables-save | sudo <span class="hljs-built_in">tee</span> /etc/iptables/rules.v4</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo netfilter-persistent save</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo systemctl <span class="hljs-built_in">enable</span> netfilter-persistent</span></pre><p>I went to configure ip6tables but it literally has no rules and the policy for all chains is to accept. Probably not ideal from a security stand point, but I left it alone.</p><p>I started configuring the peer (my desktop) which is simple enough.</p><pre ># /etc/wireguard/wg0.conf for peer
+[Interface]
+PrivateKey = [PEER PRIVATE KEY]
+Address = 10.8.0.2/24
+Address = fdfd:0704:cc10::2/64
+
+[Peer]
+PublicKey = [SERVER PUBLIC KEY]
+AllowedIPs = 0.0.0.0/0, ::/0
+Endpoint = [SERVER IP]:51820</pre><p>On the server I added my desktop as a peer.</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word"><span class="hljs-meta prompt_">$ </span><span class="language-bash">sudo wg <span class="hljs-built_in">set</span> wg0 peer [PEER PUBLIC KEY] allowed-ips 10.8.0.2,fdfd:0704:cc10::2</span></pre><p>Finally, with bated breath, I tested the VPN and it worked!</p><pre >$ sudo wg-quick up wg0
+$ curl --ipv4 ifconfig.me
+[SERVER IPV4 ADDRESS]
+$ curl --ipv6 ifconfig.me
+[SERVER IPV6 ADDRESS]
+$ sudo wg-quick down wg0</pre><p>Without the VPN I get 37.9 Mbps download and 30.1 Mbps upload, with 6 ms latency on the Google speed test. With the WireGuard VPN I get 44.1 Mbps download and 25.4 Mbps upload, with 22 ms latency. Somehow the download is faster with the VPN turned on? This is probably just a fluke.</p><p>Overall, the WireGuard VPN took only three evenings to setup. The first day to experiment, the second day to wait for the first day&#039;s instance and VCNs to delete, and the third day to setup the final VPN. Not bad.</p>
+</article></main></body>
+
+</html>

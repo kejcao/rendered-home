@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Homepage</title>
+<meta name="description"
+  content="Homepage of Kevin Cao's blog about computers, neovim, and occasionally mathematics." />
+<style>
+  nav a::before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 14%;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    transform: rotate(1.5deg);
+    background-color: magenta;
+    z-index: -1;
+    opacity: .3;
+    transition: opacity .2s ease-in-out;
+  }
+
+  nav a:hover::before {
+    opacity: .8;
+  }
+
+  nav a {
+    font-size: 1.8rem;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .green::before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 20%;
+    left: 0;
+    width: 100%;
+    height: 30%;
+    transform: rotate(1.5deg);
+    background-color: lightgreen;
+    z-index: -1;
+    opacity: .3;
+    transition: opacity .2s ease-in-out;
+  }
+
+  .green:hover::before {
+    opacity: .8;
+  }
+
+  .green {
+    font-size: 1.2rem;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .something {
+    font-size: 1.2rem;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .green:nth-child(odd):before {
+    transform: rotate(1.8deg);
+  }
+
+  .read-more::before {
+    content: '';
+    display: block;
+    position: absolute;
+    bottom: 14%;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    transform: rotate(-1.8deg);
+    background-color: orange;
+    z-index: -1;
+    opacity: .3;
+    transition: opacity .2s ease-in-out;
+  }
+
+  li:nth-child(odd) .read-more:before {
+    transform: rotate(1.8deg);
+  }
+
+  .read-more:hover::before {
+    opacity: .8;
+  }
+
+  .read-more {
+    font-size: 1.2rem;
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+    font-weight: bold;
+  }
+
+  .list-posts>li {
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06);
+    border-color: #4a5568;
+    border-style: solid;
+    border-width: 2px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+  }
+
+  h1>a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  nav {
+    text-align: center;
+    line-height: 2.2rem;
+  }
+</style></head>
+
+<body><header><nav>
+  <a href="/archive/">blog archive</a><br>
+  <a href="/about/">about</a>
+</nav></header>
+
+  <main><div>
+  <h1>Homepage</h1>
+  <p>Things I like:</p>
+  <ul style="line-height:1.1em">
+    <li><a href="https://www.cs.utexas.edu/~EWD/transcriptions/transcriptions.html">Edsger W. Dijkstra's EWDs</a></li>
+    <li><a href="https://phrack.org/">Phrack Magazine</a></li>
+    <li><a href="https://mathbases.org/">Index of Mathematical Databases</a></li>
+    <li><a href="https://planetmath.org/msc.html">PlanetMath</a> and <a href="https://mathworld.wolfram.com/">Wolfram MathWorld</a></li>
+  </ul>
+  <p>Things I've done:</p>
+  <ul>
+    <li>Won ~$1k in GraySwan <a href="https://app.grayswan.ai/arena/challenge/agent-red-teaming/leaderboard?tab=1">agents arena</a>.</li>
+    <li>Won $2.5k from Keep the Future Human <a href="https://keepthefuturehuman.ai/contest/">creative contest</a>.</li>
+  </ul>
+  <p>I am interested in various software related things, from deep learning to cryptography to web development. I know: Python, Bash, C/C++, Rust, JavaScript, Haskell, Lua, and x86-64 asm. For more information, <a href="/about">about</a>.</p>
+  <div style="text-align:center; margin-top: 1rem; margin-bottom: 2rem">
+    <a class="green" href="https://github.com/kejcao">github.com</a>&nbsp;&nbsp;&nbsp;
+    <a class="green" href="https://gitlab.com/kejcao">gitlab.com</a><br>
+    <!-- <a class="green" href="https://crackmes.one/user/kejcao">crackmes.one</a><br> -->
+    <!-- <a class="green" href="https://cryptohack.org/user/kjcao/">cryptohack.org</a><br> -->
+    <span
+      class="something">&#x6b;&#x6a;&#x63;&#x61;&#x6f;&#x40;&#x70;&#x72;&#x6f;&#x74;&#x6f;&#x6e;&#x2e;&#x6d;&#x65;</span><br>
+  </div>
+</div>
+
+<ul class="list-posts" style="margin:0; padding:0; list-style:none"><li>
+    <h1 style="margin-top:0"><a href="/posts/openECSC-2025">OpenECSC 2025 Writeups</a></h1>
+    <div style="columns:2">
+      <div style="text-align:center">Oct 12, 2025</div>
+      <div style="text-align:center">ctf,writeup</div>
+    </div>
+    <p><h3>yellow</h3></p>
+    <p style="text-align:center;margin:0"><a class="read-more" href="/posts/openECSC-2025">...read more</a></p>
+  </li><li>
+    <h1 style="margin-top:0"><a href="/posts/smileyctf-2025">SmileyCTF 2025</a></h1>
+    <div style="columns:2">
+      <div style="text-align:center">Jun 16, 2025</div>
+      <div style="text-align:center">ctf,writeup</div>
+    </div>
+    <p><p>I played a few challenges in smileyCTF.</p></p>
+    <p style="text-align:center;margin:0"><a class="read-more" href="/posts/smileyctf-2025">...read more</a></p>
+  </li><li>
+    <h1 style="margin-top:0"><a href="/posts/aictf-phdays-2025">PHDays AICTF 2025 Writeup</a></h1>
+    <div style="columns:2">
+      <div style="text-align:center">May 29, 2025</div>
+      <div style="text-align:center">ctf,writeup</div>
+    </div>
+    <p><p>I got 8th place in <a href="https://aictf.phdays.fun/scoreboard">PHDays AICTF 2025</a>. This is a writeup for it.</p></p>
+    <p style="text-align:center;margin:0"><a class="read-more" href="/posts/aictf-phdays-2025">...read more</a></p>
+  </li><li>
+    <h1 style="margin-top:0"><a href="/posts/image-resizing">Lanczos Image Resizing</a></h1>
+    <div style="columns:2">
+      <div style="text-align:center">Feb 26, 2025</div>
+      <div style="text-align:center">algo,cpp</div>
+    </div>
+    <p><p>I wrote a <a href="https://github.com/kejcao/PDFViewer">document viewer</a> to read my PDF files, but I wanted to view my CBZ files with it too. CBZ files are ZIP archives of images used as a format to store comic books. On starting, the problem I ran into was that resizing the images using SFML left aliasing artifacts and jaggies. I&#039;d heard that Lanczos was the best algorithm to resize images, so I implemented it:</p></p>
+    <p style="text-align:center;margin:0"><a class="read-more" href="/posts/image-resizing">...read more</a></p>
+  </li><li>
+    <h1 style="margin-top:0"><a href="/posts/lcs-haskell">Longest Common Substring in Haskell</a></h1>
+    <div style="columns:2">
+      <div style="text-align:center">Feb 14, 2025</div>
+      <div style="text-align:center">algo,hs</div>
+    </div>
+    <p><p><a href="https://rosalind.info/problems/list-view/">Rosalind</a> is a website resembling Project Euler but for bioinformatics problems instead. On Rosalind, there is a problem that asks you to find the longest common substring between $k$ sequences of length $n$. I am aware of three different approaches to this problem:</p></p>
+    <p style="text-align:center;margin:0"><a class="read-more" href="/posts/lcs-haskell">...read more</a></p>
+  </li><li>
+    <h1 style="margin-top:0"><a href="/posts/nlab-graph">41% of Roads Lead to Homotopical Algebra</a></h1>
+    <div style="columns:2">
+      <div style="text-align:center">Jan 13, 2025</div>
+      <div style="text-align:center">graph,nlab,py</div>
+    </div>
+    <p><p>By repeatedly clicking the first link on a Wikipedia article, you reach the article on philosophy 97% of the time. I wondered if a similar principle applied to a wiki about mathematics and physics from an abstract point of view called nLab.</p></p>
+    <p style="text-align:center;margin:0"><a class="read-more" href="/posts/nlab-graph">...read more</a></p>
+  </li><li>
+    <h1 style="margin-top:0"><a href="/posts/adansonia-disk-usage">Adansonia: A Disk Usage Analyzer in Rust</a></h1>
+    <div style="columns:2">
+      <div style="text-align:center">Dec 22, 2024</div>
+      <div style="text-align:center">rust,tui</div>
+    </div>
+    <p><p>Baobab is a disk usage analyzer from Gnome which I enjoy using. The right panel has nifty visualizations, but their usefulness is limited in practice. More eye candy than anything. On launch, Baobab has to crawl and index the entire directory to calculate the sizes of each file entry, but the indexing felt unnecessarily slow—I suspected it could&#039;ve be done faster. Hence, I wrote my own TUI app to replicate its functionality in Rust.</p></p>
+    <p style="text-align:center;margin:0"><a class="read-more" href="/posts/adansonia-disk-usage">...read more</a></p>
+  </li><li>
+    <h1 style="margin-top:0"><a href="/posts/private-image-hosting">Making a Personal Image Host</a></h1>
+    <div style="columns:2">
+      <div style="text-align:center">Dec 12, 2024</div>
+      <div style="text-align:center">admin,web</div>
+    </div>
+    <p><p>Due to very specific technical requirements, I share images by uploading the content to an image hosting service, then distribute the resulting URLs through SMS. It looks incredibly stupid, but this method satisfies everyone involved. It shares the pictures with a third-party presenting a privacy concern, but I couldn&#039;t be bothered to find a better solution at the time.</p></p>
+    <p style="text-align:center;margin:0"><a class="read-more" href="/posts/private-image-hosting">...read more</a></p>
+  </li><li>
+    <h1 style="margin-top:0"><a href="/posts/haar-cascades-in-rust">Running Haar Cascades from Scratch in Rust</a></h1>
+    <div style="columns:2">
+      <div style="text-align:center">Nov 30, 2024</div>
+      <div style="text-align:center">cv,rust</div>
+    </div>
+    <p><p>I owned one of those digital cameras from the early 2010s. I always wondered how they could draw an orange bounding box around my face in real-time on low-power hardware. It turns out, they use an algorithm described by Paul Viola and Michael Jones in 2001, where in you slide a bunch of &quot;Haar cascades&quot; looking for matches.</p></p>
+    <p style="text-align:center;margin:0"><a class="read-more" href="/posts/haar-cascades-in-rust">...read more</a></p>
+  </li></ul></main></body>
+
+</html>

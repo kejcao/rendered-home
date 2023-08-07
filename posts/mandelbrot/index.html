@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Drawing the Mandelbrot Set - Kevin Cao</title>
+<meta name="description" content="The Mandelbrot set is generated by iterating the function $f(x)=x^2+c$. Let $x$
+(called the seed) be 0 and $c$ (called the constant) be 1." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Drawing the Mandelbrot Set</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Oct 31, 2022</time></div>
+  </header>
+  <p>The Mandelbrot set is generated by iterating the function $f(x)=x^2+c$. Let $x$ (called the seed) be 0 and $c$ (called the constant) be 1.</p><p>$$ f(0)=0^2+1=1 $$</p><p>Let&#039;s use the previous computation as the input for the next.</p><p>$$ f(f(0))=f^2(1)=1^2+1=2 $$</p><p>And let&#039;s do that again and again.</p><p>$$\begin{equation*}
+  \begin{gathered}
+    f(f(f(0)))=f^3(2)=2^2+1=5 \\
+    f(f(f(f(0))))=f^4(5)=5^2+1=26 \\
+    f(f(f(f(f(0)))))=f^5(26)=26^2+1=677 \\
+    \dots
+  \end{gathered}
+\end{equation*}$$</p><p>The sequence of values produced by each function application is called the orbit of this certain iteration. Notice that the seed gets bigger and bigger in the orbit above; when it does this we say that the orbit tends to infinity or diverges.</p><p>Let&#039;s iterate again with the same seed, but with a different constant, 0.</p><p>$$\begin{equation*}
+  \begin{gathered}
+    f^1(0)=0^2+0=0 \\
+    f^2(0)=0^2+0=0 \\
+    f^3(0)=0^2+0=0 \\
+    f^4(0)=0^2+0=0 \\
+    \dots
+  \end{gathered}
+\end{equation*}$$</p><p>Notice how the orbit stays fixed at 0.</p><p>Let&#039;s iterate with a constant of -1.</p><p>$$\begin{equation*}
+  \begin{gathered}
+    f^1(0)=0^2-1=-1 \\
+    f^2(-1)=(-1)^2-1=0 \\
+    f^3(0)=0^2-1=-1 \\
+    f^4(-1)=(-1)^2-1=0 \\
+    \dots
+  \end{gathered}
+\end{equation*}$$</p><p>Notice how the orbit oscillates between 0 and -1. This is called a cycle with a period of 2. We can also represent its orbit graphically by plotting it.</p>
+						<a class="img" href="/static/media/mandelbrot-1.svg">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/mandelbrot-1.svg"
+							  alt="mandelbrot 1"
+							/>
+						</a>
+					<p>Let&#039;s iterate when the constant is -1.93. Instead of listing the values the orbit produces, I&#039;ll just plot them.</p>
+						<a class="img" href="/static/media/mandelbrot-1-93.svg">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/mandelbrot-1-93.svg"
+							  alt="mandelbrot 1 93"
+							/>
+						</a>
+					<p>And this is iterating with a constant of -1.73.</p>
+						<a class="img" href="/static/media/mandelbrot-1-73.svg">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/mandelbrot-1-73.svg"
+							  alt="mandelbrot 1 73"
+							/>
+						</a>
+					<p>While these two orbits aren&#039;t diverging, there doesn&#039;t seem to be a definite pattern to it either. They appear to be completely chaotic.</p><p>All in all, either an orbit tends to infinity or it doesn&#039;t. If it doesn&#039;t, it can stay fixed, cycle, or be unpredictably chaotic. The Mandelbrot set is the graphical representation of whether with seed 0 and a certain constant the orbit tends to infinity—but we can&#039;t plot a single number onto a plane, so instead we use complex numbers for the constant. The constant&#039;s real part specifies the X coordinate, and the imaginary part the Y coordinate. For example, let&#039;s iterate with a constant of $2+2i$.</p><p>$$\begin{equation*}
+  \begin{gathered}
+    f^1(0+0i)=(0+0i)^2+(2+2i)=2+2i \\
+    f^2(2+2i)=(2+2i)^2+(2+2i)=2+10i \\
+    f^3(2+10i)=(2+10i)^2+(2+2i)=-94+42i \\
+    \cdots
+  \end{gathered}
+\end{equation*}$$</p><p>Its orbit tends to infinity, so this would be a point in the Mandelbrot set.</p><p>In conclusion, the Mandelbrot set is the set of complex numbers $c$ for which the function $f(z)=z^2+c$ does not tend to infinity when iterated with $z=0$. We plot the complex numbers in this set to drawing the Mandelbrot set fractal.</p><p>I toyed around with the concept when I made a C program to draw the fractal.</p><pre ><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdio.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdlib.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;complex.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;png.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;stdint.h&gt;</span></span>
+<span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;string.h&gt;</span></span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> SCALE 200</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> WIDTH 640</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> HEIGHT 480</span>
+
+<span class="hljs-comment">/* Uncomment for higher resolutions. */</span>
+<span class="hljs-comment">/*
+#define SCALE 1000
+#define WIDTH 2880
+#define HEIGHT 2160
+
+#define SCALE 8000
+#define WIDTH 23360
+#define HEIGHT 17280
+*/</span>
+
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> SHIFTX WIDTH/1.35</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> SHIFTY HEIGHT/2</span>
+
+<span class="hljs-type">uint8_t</span> <span class="hljs-title function_">color_of_pixel_at</span><span class="hljs-params">(<span class="hljs-type">int</span> x, <span class="hljs-type">int</span> y)</span> &lbrace;
+    <span class="hljs-type">double</span> <span class="hljs-type">complex</span> z = <span class="hljs-number">0</span>, c =
+        (<span class="hljs-type">double</span>)(x-SHIFTX)/SCALE +
+        (<span class="hljs-type">double</span>)(y-SHIFTY)/SCALE*I;
+
+    <span class="hljs-comment">/* if we instead loop from 0 to 255 and return i, the
+     * resulting image will be much dimmer. */</span>
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>; i&lt;<span class="hljs-number">127</span>; ++i) &lbrace;
+        <span class="hljs-keyword">if</span>(cabs(z) &gt; SCALE) &lbrace;
+            <span class="hljs-comment">// `z` diverges. Return how fast it diverged.</span>
+            <span class="hljs-keyword">return</span> i*<span class="hljs-number">2</span>;
+        &rbrace;
+        z = z*z + c;
+    &rbrace;
+    <span class="hljs-comment">// `z` didn&#x27;t diverge, return white.</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-number">255</span>;
+&rbrace;
+
+<span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> &lbrace;
+    FILE *fp = fopen(<span class="hljs-string">&quot;out.png&quot;</span>, <span class="hljs-string">&quot;wb&quot;</span>);
+
+    png_structp png = png_create_write_struct(
+        PNG_LIBPNG_VER_STRING, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>, <span class="hljs-literal">NULL</span>);
+    png_infop info = png_create_info_struct(png);
+
+    png_set_IHDR(
+        png, info, WIDTH,HEIGHT, <span class="hljs-number">8</span>,
+        PNG_COLOR_TYPE_RGB,
+        PNG_INTERLACE_NONE,
+        PNG_COMPRESSION_TYPE_DEFAULT,
+        PNG_FILTER_TYPE_DEFAULT);
+
+    png_byte **rows = <span class="hljs-literal">NULL</span>;
+    rows = png_malloc(png, HEIGHT*<span class="hljs-keyword">sizeof</span>(png_byte *));
+
+    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> y=<span class="hljs-number">0</span>; y&lt;HEIGHT; ++y) &lbrace;
+        rows[y] = png_malloc(png, <span class="hljs-keyword">sizeof</span>(<span class="hljs-type">uint8_t</span>)*WIDTH * <span class="hljs-number">3</span>);
+        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x=<span class="hljs-number">0</span>; x&lt;WIDTH; ++x) &lbrace;
+            <span class="hljs-built_in">memset</span>(&amp;rows[y][x*<span class="hljs-number">3</span>], color_of_pixel_at(x,y), <span class="hljs-number">3</span>);
+        &rbrace;
+    &rbrace;
+
+    png_init_io(png, fp);
+    png_set_rows(png, info, rows);
+    png_write_png(png, info, PNG_TRANSFORM_IDENTITY, <span class="hljs-literal">NULL</span>);
+
+    <span class="hljs-comment">/* Can&#x27;t uncomment because errors appear, don&#x27;t know why. */</span>
+    <span class="hljs-comment">/*
+    for(int y=0; y&lt;HEIGHT; ++y) &lbrace;
+        png_free(png, rows[y]);
+    &rbrace;
+    png_free(png, rows);
+    png_destroy_write_struct(&amp;png, &amp;info);
+    */</span>
+
+    fclose(fp);
+&rbrace;</pre><p>Compile with <code>gcc main.c -lpng -lm -O3 -ffast-math -o mandelbrot</code>. The program requires the library <code>libpng</code> for writing PNGs. This is my first time using the library, so all of the image writing code is borrowed from places on the internet, and I can&#039;t get the code to free the images to work. This is the image the program produces,</p>
+						<a class="img" href="/static/media/mandelbrot-mandelbrot.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/mandelbrot-mandelbrot.png"
+							  alt="mandelbrot mandelbrot"
+							/>
+						</a>
+					<p>I&#039;ve ran the program with the following dimensions,</p><pre ><span class="hljs-meta">#<span class="hljs-keyword">define</span> SCALE 8000</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> WIDTH 23360</span>
+<span class="hljs-meta">#<span class="hljs-keyword">define</span> HEIGHT 17280</span></pre><p>It takes some time (around 3 minutes on my computer), but the end image is beautiful. It takes some time for my image viewer to load the image, but once it does you can really zoom in and see all the detail.</p>
+</article></main></body>
+
+</html>

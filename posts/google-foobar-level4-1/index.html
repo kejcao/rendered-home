@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Running with Bunnies: Google Foobar Level 4 - Kevin Cao</title>
+<meta name="description" content="Google Foobar is an invite-only set of programming challenges consisting of 5
+progressively harder levels. To participate, you can use the referral code from
+someone else who has access to it or you may stumble upon the opportunity like I
+did when Googling technical topics; for example, I searched something relating
+to convolutional neural networks and got the request to participate in Foobar." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Running with Bunnies: Google Foobar Level 4</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Feb 11, 2024</time></div>
+  </header>
+  <p>Google Foobar is an invite-only set of programming challenges consisting of 5 progressively harder levels. To participate, you can use the referral code from someone else who has access to it or you may stumble upon the opportunity like I did when Googling technical topics; for example, I searched something relating to convolutional neural networks and got the request to participate in Foobar.</p><p>Level 1–3 are fairly straightforward, but I recently completed one of the Level 4 ones that was a little difficult—probably because I&#039;m unfamiliar with graph algorithms. I reiterate the programming problem here and provide my solution.</p><h3>The Problem</h3><p>You and the bunny workers need to get out of this collapsing death trap of a space station—and fast! Unfortunately, some of the bunnies have been weakened by their long work shifts and can&#039;t run very fast. Their friends are trying to help them, but this escape would go a lot faster if you also pitched in. The defensive bulkhead doors have begun to close, and if you don&#039;t make it through in time, you&#039;ll be trapped! You need to grab as many bunnies as you can and get through the bulkheads before they close.</p><p>The time it takes to move from your starting point to all of the bunnies and to the bulkhead will be given to you in a square matrix of integers. Each row will tell you the time it takes to get to the start, first bunny, second bunny, ..., last bunny, and the bulkhead in that order. The order of the rows follows the same pattern (start, each bunny, bulkhead). The bunnies can jump into your arms, so picking them up is instantaneous, and arriving at the bulkhead at the same time as it seals still allows for a successful, if dramatic, escape. (Don&#039;t worry, any bunnies you don&#039;t pick up will be able to escape with you since they no longer have to carry the ones you did pick up.) You can revisit different spots if you wish, and moving to the bulkhead doesn&#039;t mean you have to immediately leave—you can move to and from the bulkhead to pick up additional bunnies if time permits.</p><p>In addition to spending time traveling between bunnies, some paths interact with the space station&#039;s security checkpoints and add time back to the clock. Adding time to the clock will delay the closing of the bulkhead doors, and if the time goes back up to 0 or a positive number after the doors have already closed, it triggers the bulkhead to reopen. Therefore, it might be possible to walk in a circle and keep gaining time: that is, each time a path is traversed, the same amount of time is used or added.</p><p>Write a function of the form <code>solution(times, time_limit)</code> to calculate the most bunnies you can pick up and which bunnies they are, while still escaping through the bulkhead before the doors close for good. If there are multiple sets of bunnies of the same size, return the set of bunnies with the lowest worker IDs (as indexes) in sorted order. The bunnies are represented as a sorted list by worker ID, with the first bunny being 0. There are at most 5 bunnies, and <code>time_limit</code> is a non-negative integer that is at most 999.</p><p>For instance, in the case of</p><pre >[
+  [0, 2, 2, 2, -1], # 0 = Start
+  [9, 0, 2, 2, -1], # 1 = Bunny 0
+  [9, 3, 0, 2, -1], # 2 = Bunny 1
+  [9, 3, 2, 0, -1], # 3 = Bunny 2
+  [9, 3, 2, 2,  0], # 4 = Bulkhead
+]</pre><p>and a time limit of 1, the five inner array rows designate the starting point, bunny 0, bunny 1, bunny 2, and the bulkhead door exit respectively. You could take the path:</p><pre >Start End Delta Time Status
+- 0  -  1 Bulkhead initially open
+0 4 -1  2
+4 2  2  0
+2 4 -1  1
+4 3  2 -1 Bulkhead closes
+3 4 -1  0 Bulkhead reopens; you and the bunnies exit</pre><p>With this solution, you would pick up bunnies 1 and 2. This is the best combination for this space station hallway, so the solution is <code>[1, 2]</code>. These are the test cases:</p><pre >solution.solution(
+    [
+        [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>],
+        [<span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>],
+        [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>],
+        [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>],
+        [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">0</span>]
+    ], <span class="hljs-number">3</span>) == [<span class="hljs-number">0</span>, <span class="hljs-number">1</span>])
+
+solution.solution(
+    [
+        [<span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, -<span class="hljs-number">1</span>],
+        [<span class="hljs-number">9</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>, -<span class="hljs-number">1</span>],
+        [<span class="hljs-number">9</span>, <span class="hljs-number">3</span>, <span class="hljs-number">0</span>, <span class="hljs-number">2</span>, -<span class="hljs-number">1</span>],
+        [<span class="hljs-number">9</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">0</span>, -<span class="hljs-number">1</span>],
+        [<span class="hljs-number">9</span>, <span class="hljs-number">3</span>, <span class="hljs-number">2</span>, <span class="hljs-number">2</span>,  <span class="hljs-number">0</span>]
+    ], <span class="hljs-number">1</span>) == [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>]</pre><h3>My Solution</h3><p>Some immediate observations:</p><ul><li> There are at most 5 bunnies, which indicates that the time complexity of our algorithms don&#039;t matter.</li><li> The square matrix is an adjacency matrix for a directed graph with integer weights.</li><li> A negative cycle in the graph implies that all bunnies can be saved.</li></ul><p>So my solution is as follows: firstly, run the Bellman–Ford algorithm on the starting point of the graph to detect negative cycles. If one exists, we can save them all by exploiting the cycle, so return all bunnies. If not we precede to run the Floyd–Warshall algorithm to find the shortest distances from each vertex to every other vertex. We then brute force all subsets of the bunnies and consider whether or not we can save them; we do this by iterating over permutations of the subset and considering the distance each permutation would take if considered as a path. We take the minimum distance and say that it is the distance of the subset. If this distance is within the time limit and the subset saves more bunnies then the previous solution, then take note of it. Return the solution.</p><pre ><span class="hljs-keyword">import</span> itertools
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">bellman_ford</span>(<span class="hljs-params">graph</span>):
+    n = <span class="hljs-built_in">len</span>(graph)
+    distances = [<span class="hljs-number">0</span>] + [<span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;inf&#x27;</span>)] * (n - <span class="hljs-number">1</span>)
+
+    <span class="hljs-keyword">for</span> _ <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n - <span class="hljs-number">1</span>):
+        <span class="hljs-keyword">for</span> u <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+            <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+                <span class="hljs-keyword">if</span> distances[u] + graph[u][v] &lt; distances[v]:
+                    distances[v] = distances[u] + graph[u][v]
+
+    <span class="hljs-keyword">for</span> u <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+        <span class="hljs-keyword">for</span> v <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n):
+            <span class="hljs-keyword">if</span> distances[u] + graph[u][v] &lt; distances[v]:
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">True</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">False</span>
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">solution</span>(<span class="hljs-params">times, time_limit</span>):
+    <span class="hljs-comment"># return all bunnies if negative cycle found</span>
+    <span class="hljs-keyword">if</span> bellman_ford(times):
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(times) - <span class="hljs-number">2</span>)
+
+    n_bunnies = <span class="hljs-built_in">len</span>(times) - <span class="hljs-number">2</span>
+
+    <span class="hljs-comment"># floyd-warshall</span>
+    <span class="hljs-keyword">for</span> k <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(times)):
+        <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(times)):
+            <span class="hljs-keyword">for</span> j <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(times)):
+                times[i][j] = <span class="hljs-built_in">min</span>(times[i][j], times[i][k] + times[k][j])
+
+    solution = <span class="hljs-built_in">set</span>()
+    <span class="hljs-keyword">for</span> subset <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">2</span>**n_bunnies):
+        subset = <span class="hljs-built_in">set</span>(i <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(n_bunnies) <span class="hljs-keyword">if</span> (subset &gt;&gt; i) &amp; <span class="hljs-number">1</span>)
+
+        <span class="hljs-comment"># calculate cost/distance of paths</span>
+        subset_time = <span class="hljs-built_in">float</span>(<span class="hljs-string">&#x27;inf&#x27;</span>)
+        <span class="hljs-keyword">for</span> path <span class="hljs-keyword">in</span> itertools.permutations(subset):
+            path = (-<span class="hljs-number">1</span>,) + path + (<span class="hljs-built_in">len</span>(times) - <span class="hljs-number">2</span>,)
+            path_time = <span class="hljs-built_in">sum</span>(times[a + <span class="hljs-number">1</span>][b + <span class="hljs-number">1</span>] <span class="hljs-keyword">for</span> a, b <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(path, path[<span class="hljs-number">1</span>:]))
+            subset_time = <span class="hljs-built_in">min</span>(path_time, subset_time)
+
+        <span class="hljs-comment"># if subset is impossible, then skip</span>
+        <span class="hljs-keyword">if</span> subset_time &gt; time_limit:
+            <span class="hljs-keyword">continue</span>
+
+        <span class="hljs-comment"># if we find a better solution, note it down</span>
+        <span class="hljs-keyword">if</span> <span class="hljs-built_in">len</span>(subset) &gt; <span class="hljs-built_in">len</span>(solution):
+            solution = subset
+
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sorted</span>(solution)</pre><p>A note: Google Foobar uses Python 2.7, which doesn&#039;t yet support the feature of tuple unpacking using an asterisk, so I am forced to use an alternative, uglier notation in the for loop over permutations to construct the path.</p><pre >path = (-<span class="hljs-number">1</span>,) + path + (<span class="hljs-built_in">len</span>(times) - <span class="hljs-number">2</span>,) <span class="hljs-comment"># used instead of:</span>
+<span class="hljs-comment"># path = (-1, *path, len(times) - 2)</span></pre>
+</article></main></body>
+
+</html>

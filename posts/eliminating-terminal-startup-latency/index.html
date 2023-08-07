@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Eliminating Terminal Startup Latency - Kevin Cao</title>
+<meta name="description" content="My workflow revolves around the terminal. For example, to launch an application
+such as Chromium or Krita, I press the keybind Win+space to open a new floating
+Alacritty terminal in the center of my screen. Then, I type krita or the name of
+whatever application to launch it. I have tons of aliases in my .bashrc that
+look like this to close the terminal when I open an application:" />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Eliminating Terminal Startup Latency</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Aug 4, 2024</time></div>
+  </header>
+  <p>My workflow revolves around the terminal. For example, to launch an application such as Chromium or Krita, I press the keybind <kbd><kbd>Win</kbd>+<kbd>space</kbd></kbd> to open a new floating Alacritty terminal in the center of my screen. Then, I type <code>krita</code> or the name of whatever application to launch it. I have tons of aliases in my <code>.bashrc</code> that look like this to close the terminal when I open an application:</p><pre ><span class="hljs-built_in">alias</span> firefox=<span class="hljs-string">&#x27;firefox &amp; disown; exit&#x27;</span>
+<span class="hljs-built_in">alias</span> krita=<span class="hljs-string">&#x27;krita &amp; disown; exit&#x27;</span>
+<span class="hljs-built_in">alias</span> blender=<span class="hljs-string">&#x27;blender &amp; disown; exit&#x27;</span>
+<span class="hljs-built_in">alias</span> chromium=<span class="hljs-string">&#x27;chromium &amp; disown; exit&#x27;</span></pre><p>I felt a noticeable but subtle startup latency between when I press the keybind <kbd><kbd>Win</kbd>+<kbd>space</kbd></kbd> and when the terminal actually appears on screen. To take a closer look at this issue, <code>ffmpeg</code> captured a screen recording for me. Looking over the footage, I noticed a few frames of latency (&gt;100ms) between when my keypress was detected and when the terminal appeared on screen.</p><p>I fixed this latency problem by baking a solution into DWM, my window manager. Instead of attempting to optimize how quickly Alacritty can load, my window manager &quot;pre-saves&quot; a terminal. It spawns an Alacritty process and keeps note of its PID. Then, it &quot;catches&quot; this Alacritty window: If a request comes to manage a window with the same PID as the recently opened Alacritty instance, we save the window data into a global struct instead of managing the window. By not mapping the window, which is one thing the manage function does, the window is fully loaded but does not appear as a Xorg window.</p><p>Next time the user presses the keybind <kbd><kbd>Win</kbd>+<kbd>space</kbd></kbd>, the window manager uses the saved window data to manage the saved terminal, which occurs with zero frames of latency. Following this, the window manager performs the aforementioned procedure of saving another terminal for the next time the user wants one. Let&#039;s see how I implemented this feature in detail. In the codebase of the window manager, which exists solely in one minimalistic two thousand line C file, we define this in the global scope:</p><pre ><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">SavedWindow</span> &lbrace;</span>
+    Window win; XWindowAttributes *attr;
+&rbrace;;
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">SavedWindow</span> <span class="hljs-title">savedterm</span> =</span> &lbrace;.win = <span class="hljs-number">0</span>&rbrace;;
+<span class="hljs-type">int</span> pid_of_window_to_catch = <span class="hljs-number">-1</span>;</pre><p>Once an Alacritty process is spawned, the PID of that process is stored into the <code>pid_of_window_to_catch</code> variable. This allows us to intercept the process in the <code>manage</code> function, to prevent it the window from being mapped.</p><p>I created a function to launch a terminal, which I map to the keybind <kbd><kbd>Win</kbd>+<kbd>space</kbd></kbd> in my config. If the saved terminal&#039;s window exists, e.g. its ID is not 0, then we manage the saved terminal&#039;s window and in effect use it. In the edgecase that the window was somehow managed before we could use it, and that no catched window exists, we just catch another terminal.</p><pre ><span class="hljs-type">void</span>
+<span class="hljs-title function_">launch_terminal</span><span class="hljs-params">(<span class="hljs-type">const</span> Arg *a)</span> &lbrace;
+    <span class="hljs-keyword">if</span> (savedterm.win != <span class="hljs-number">0</span>) &lbrace;
+        manage(savedterm.win, savedterm.attr); <span class="hljs-comment">// use saved terminal</span>
+    &rbrace;
+
+    <span class="hljs-keyword">if</span> (savedterm.win == <span class="hljs-number">0</span> &amp;&amp; pid_of_window_to_catch != <span class="hljs-number">-1</span>) &lbrace; <span class="hljs-comment">// edgecase</span>
+        pid_of_window_to_catch = <span class="hljs-number">-1</span>;
+    &rbrace;
+
+    <span class="hljs-comment">// spawn new terminal for saving</span>
+    <span class="hljs-keyword">if</span> (pid_of_window_to_catch == <span class="hljs-number">-1</span>) &lbrace;
+        Arg arg = &lbrace;.v = (<span class="hljs-type">const</span> <span class="hljs-type">char</span> *[])&lbrace;<span class="hljs-string">&quot;alacritty&quot;</span>, <span class="hljs-literal">NULL</span>&rbrace;&rbrace;;
+        pid_of_window_to_catch = spawn_(&amp;arg);
+    &rbrace;
+&rbrace;</pre><p>Then, in the function where windows are managed, I prepended some code to match against the Alacritty process which we should intercept and prevent from being managed. We copy the window and window attributes so we can restore window by managing it at a later date.</p><pre ><span class="hljs-type">void</span>
+<span class="hljs-title function_">manage</span><span class="hljs-params">(Window w, XWindowAttributes *wa)</span>
+&lbrace;
+    <span class="hljs-keyword">if</span> (w != savedterm.win &amp;&amp; pid_of_window_to_catch == winpid(w)) &lbrace;
+        pid_of_window_to_catch = <span class="hljs-number">-1</span>;
+        <span class="hljs-keyword">if</span> (savedterm.win != <span class="hljs-number">0</span>) &lbrace;
+            <span class="hljs-built_in">free</span>(savedterm.attr);
+        &rbrace;
+        XWindowAttributes *wa_copy = <span class="hljs-built_in">malloc</span>(<span class="hljs-keyword">sizeof</span>(XWindowAttributes));
+        <span class="hljs-built_in">memcpy</span>(wa_copy, wa, <span class="hljs-keyword">sizeof</span>(XWindowAttributes));
+        savedterm = (<span class="hljs-keyword">struct</span> SavedWindow)&lbrace;w, wa_copy&rbrace;;
+        <span class="hljs-keyword">return</span>;
+    &rbrace;
+    <span class="hljs-keyword">if</span> (w == savedterm.win) &lbrace;
+        savedterm.win = <span class="hljs-number">0</span>;
+    &rbrace;
+
+    ...
+&rbrace;</pre><p>Really, my solution is very similar to <a href="https://lock.cmpxchg8b.com/slowterm.html">Tavis Ormandy&#039;s</a> solution. He accomplishes it by intercepting the X map requests from the terminal application itself, which is probably more robust than my solution. Launching a terminal, noting its PID, and catching it feels like a more fragile process. But it has worked remarkably well so far.</p>
+</article></main></body>
+
+</html>

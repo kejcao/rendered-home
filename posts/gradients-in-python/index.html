@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Linear, Radial &amp; Conic Gradients in Python from Scratch - Kevin Cao</title>
+<meta name="description" content="An RGB value can be thought of as a point in 3D space. Given two RGB values, we
+can "move" from one to the next—that is, we can stretch a line between the two
+colors and place evenly spaced points. Each of these points can be interpreted
+as an RGB value which we can plot. If we plot all of these points in a line we
+get a smooth gradient of color. This process is called linear interpolation,
+commonly abbreviated as "lerping."" />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Linear, Radial &amp; Conic Gradients in Python from Scratch</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Aug 17, 2023</time></div>
+  </header>
+  <p>An RGB value can be thought of as a point in 3D space. Given two RGB values, we can &quot;move&quot; from one to the next—that is, we can stretch a line between the two colors and place evenly spaced points. Each of these points can be interpreted as an RGB value which we can plot. If we plot all of these points in a line we get a smooth gradient of color. This process is called linear interpolation, commonly abbreviated as &quot;lerping.&quot;</p><pre ><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">gradient</span>(<span class="hljs-params">c1, c2, t</span>):
+    <span class="hljs-keyword">assert</span> <span class="hljs-number">0</span> &lt;= t &lt;= <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">tuple</span>(np.clip(c1 + (c2-c1)*t, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>).astype(<span class="hljs-built_in">int</span>))
+
+img = Image.new(<span class="hljs-string">&#x27;RGB&#x27;</span>, (<span class="hljs-number">256</span>, <span class="hljs-number">256</span>))
+img.putdata([gradient(
+    np.array([<span class="hljs-number">255</span>,   <span class="hljs-number">0</span>,   <span class="hljs-number">0</span>]),
+    np.array([  <span class="hljs-number">0</span>,   <span class="hljs-number">0</span>, <span class="hljs-number">255</span>]), x/<span class="hljs-number">256</span>
+) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>)]*<span class="hljs-number">256</span>)
+img.save(<span class="hljs-string">&#x27;out.png&#x27;</span>)</pre><p>The above Python code should yield the image <code>out.png</code> featured below (but with a different proportion and resolution) which shows a smooth transition (AKA a gradient) from the color red to blue. When given two colors the <code>gradient</code> function selects a point on the line stretched from <code>c1</code> to <code>c2</code> depending on the timestep <code>t</code>, a number from 0 to 1. It does this by calculating the distance from <code>c1</code> to <code>c2</code> and multiplying it by the <code>t</code>—note that <code>c1 + (c2-c1)*0 == c1</code> and <code>c1 + (c2-c1)*1 == c2</code>. It ensures that the RGB components are clamped/clipped between 0 and 255 and that we return integers and not floats. The timestep we pass it is the X position of the pixel we&#039;re calculating the gradient for, scaled to be between 0 and 1.</p>
+						<a class="img" href="/static/media/gradient-from-red-to-blue.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/gradient-from-red-to-blue.png"
+							  alt="gradient from red to blue"
+							/>
+						</a>
+					<p>We can have gradients with arbitrary &quot;stops&quot; where each stop indicates a position and color. We find the stop with the greatest position smaller than <code>t</code>, such that <code>t</code> lies between this stop and the next. We then lerp these two colors but with a timestep that is scaled to be between the two stops.</p><pre ><span class="hljs-keyword">import</span> numpy <span class="hljs-keyword">as</span> np
+<span class="hljs-keyword">from</span> PIL <span class="hljs-keyword">import</span> Image
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">lerp</span>(<span class="hljs-params">c1, c2, t</span>):
+    <span class="hljs-keyword">assert</span> <span class="hljs-number">0</span> &lt;= t &lt;= <span class="hljs-number">1</span>
+    <span class="hljs-keyword">return</span> np.clip(c1 + (c2-c1)*t, <span class="hljs-number">0</span>, <span class="hljs-number">255</span>).astype(<span class="hljs-built_in">int</span>)
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">gradient</span>(<span class="hljs-params">stops, t</span>):
+    <span class="hljs-keyword">assert</span> <span class="hljs-number">0</span> &lt;= t &lt;= <span class="hljs-number">1</span>
+    <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(stops) &gt;= <span class="hljs-number">2</span>
+    <span class="hljs-keyword">for</span> loc, _ <span class="hljs-keyword">in</span> stops:
+        <span class="hljs-keyword">assert</span> <span class="hljs-number">0</span> &lt;= loc &lt;= <span class="hljs-number">1</span>
+    <span class="hljs-keyword">assert</span> stops[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>] == <span class="hljs-number">0</span>
+    <span class="hljs-keyword">assert</span> stops[-<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] == <span class="hljs-number">1</span>
+    <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-built_in">len</span>(stops)-<span class="hljs-number">1</span>):
+        <span class="hljs-keyword">assert</span> stops[i][<span class="hljs-number">0</span>] &lt;= stops[i+<span class="hljs-number">1</span>][<span class="hljs-number">0</span>]
+
+    i = <span class="hljs-number">0</span>
+    <span class="hljs-keyword">while</span> stops[i+<span class="hljs-number">1</span>][<span class="hljs-number">0</span>] &lt; t:
+        i += <span class="hljs-number">1</span>
+    loc1, c1 = stops[i]
+    loc2, c2 = stops[i+<span class="hljs-number">1</span>]
+
+    <span class="hljs-keyword">return</span> <span class="hljs-built_in">tuple</span>(lerp(c1, c2, (t-loc1) / (loc2-loc1)))
+
+img = Image.new(<span class="hljs-string">&#x27;RGB&#x27;</span>, (<span class="hljs-number">256</span>, <span class="hljs-number">256</span>))
+img.putdata([gradient([
+    ( <span class="hljs-number">0</span>, np.array([<span class="hljs-number">255</span>,   <span class="hljs-number">0</span>,   <span class="hljs-number">0</span>])),
+    (<span class="hljs-number">.5</span>, np.array([<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>])),
+    (<span class="hljs-number">.7</span>, np.array([<span class="hljs-number">255</span>, <span class="hljs-number">255</span>, <span class="hljs-number">255</span>])),
+    ( <span class="hljs-number">1</span>, np.array([  <span class="hljs-number">0</span>,   <span class="hljs-number">0</span>, <span class="hljs-number">255</span>])),
+], x/<span class="hljs-number">256</span>) <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>)]*<span class="hljs-number">256</span>)
+img.save(<span class="hljs-string">&#x27;out.png&#x27;</span>)</pre><p>The majority of the <code>gradient()</code> function is taken up by assertions to ensure data validity. It takes a list of tuples where the first element represents the position from 0 to 1 and the second is the associated color. Note how the technique of putting two stops of identical color directly adjacent to each other creates a solid block of color.</p>
+						<a class="img" href="/static/media/gradient-from-red-to-blue-with-stops.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/gradient-from-red-to-blue-with-stops.png"
+							  alt="gradient from red to blue with stops"
+							/>
+						</a>
+					<p>The concept of gradients isn&#039;t difficult to extend to 2D, we simply add together the result of our gradient calculations on both the X and Y positions of the pixel under consideration. Replace our original <code>img.putdata</code> routine with this block of code.</p><pre >pixels = []
+<span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):
+    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):
+        pixels.append(<span class="hljs-built_in">tuple</span>(<span class="hljs-built_in">sum</span>(
+            np.array(gradient(stops, t))
+            <span class="hljs-keyword">for</span> stops, t <span class="hljs-keyword">in</span> <span class="hljs-built_in">zip</span>(
+                [
+                    [
+                        (<span class="hljs-number">0</span>, np.array([<span class="hljs-number">255</span>,   <span class="hljs-number">0</span>,   <span class="hljs-number">0</span>])),
+                        (<span class="hljs-number">1</span>, np.array([  <span class="hljs-number">0</span>, <span class="hljs-number">255</span>,   <span class="hljs-number">0</span>])),
+                    ], [
+                        (<span class="hljs-number">0</span>, np.array([  <span class="hljs-number">0</span>,   <span class="hljs-number">0</span>, <span class="hljs-number">255</span>])),
+                        (<span class="hljs-number">1</span>, np.array([<span class="hljs-number">128</span>, <span class="hljs-number">128</span>,   <span class="hljs-number">0</span>])),
+                    ]
+                ],
+                (x/<span class="hljs-number">256</span>, y/<span class="hljs-number">256</span>)
+            )
+        )))
+img.putdata(pixels)</pre><p>Look at the absolutely beautiful rainbow gradient it produces. Look at how perfectly smooth it is! It&#039;s amazing how the image came from just a couple dozen lines of straightforward code.</p>
+						<a class="img" href="/static/media/2d-gradient-with-4-colors.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/2d-gradient-with-4-colors.png"
+							  alt="2d gradient with 4 colors"
+							/>
+						</a>
+					<p>Radial gradients use the distance from an origin to the X-Y position of the pixel under consideration as the timestep. At this point it&#039;s probably a good idea to replace the magic number &quot;256&quot; with meaningful variable names like <code>WIDTH</code> and <code>HEIGHT</code>, in case you want to change the output resolution. I define a new function <code>hexcolor()</code> that converts hex colors to RGB values. This makes color adjustments easier. I wrote both a version that processes strings and one that processes actual hex numbers. Use whichever one you prefer.</p><pre ><span class="hljs-comment"># def hexcolor(n):</span>
+<span class="hljs-comment">#     return np.array([</span>
+<span class="hljs-comment">#         (n&amp;0xff0000) &gt;&gt; 16,</span>
+<span class="hljs-comment">#         (n&amp;0x00ff00) &gt;&gt;  8,</span>
+<span class="hljs-comment">#         (n&amp;0x0000ff) &gt;&gt;  0,</span>
+<span class="hljs-comment">#     ])</span>
+
+<span class="hljs-keyword">def</span> <span class="hljs-title function_">hexcolor</span>(<span class="hljs-params">s</span>):
+    <span class="hljs-keyword">assert</span> <span class="hljs-built_in">len</span>(s) == <span class="hljs-number">6</span>
+    <span class="hljs-keyword">return</span> np.array([
+        <span class="hljs-built_in">int</span>(s[<span class="hljs-number">0</span>:<span class="hljs-number">2</span>], base=<span class="hljs-number">16</span>),
+        <span class="hljs-built_in">int</span>(s[<span class="hljs-number">2</span>:<span class="hljs-number">4</span>], base=<span class="hljs-number">16</span>),
+        <span class="hljs-built_in">int</span>(s[<span class="hljs-number">4</span>:<span class="hljs-number">6</span>], base=<span class="hljs-number">16</span>),
+    ])
+
+pixels = []
+<span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):
+    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):
+        pixels.append(<span class="hljs-built_in">tuple</span>(<span class="hljs-built_in">sum</span>(
+            np.array(gradient(stops,
+                <span class="hljs-built_in">min</span>(<span class="hljs-number">1</span>, math.sqrt(
+                    (x/<span class="hljs-number">256</span> - cx)**<span class="hljs-number">2</span> +
+                    (y/<span class="hljs-number">256</span> - cy)**<span class="hljs-number">2</span>
+                ))
+            ))
+            <span class="hljs-keyword">for</span> (cx, cy), *stops <span class="hljs-keyword">in</span> [
+                [
+                    (<span class="hljs-number">.5</span>, <span class="hljs-number">.5</span>),
+                    ( <span class="hljs-number">0</span>, hexcolor(<span class="hljs-string">&#x27;ff8c00&#x27;</span>)),
+                    (<span class="hljs-number">.5</span>, hexcolor(<span class="hljs-string">&#x27;ffd700&#x27;</span>)),
+                    ( <span class="hljs-number">1</span>, hexcolor(<span class="hljs-string">&#x27;ffd700&#x27;</span>)),
+                ], [
+                    (<span class="hljs-number">.5</span>, <span class="hljs-number">.5</span>),
+                    ( <span class="hljs-number">0</span>, hexcolor(<span class="hljs-string">&#x27;ff0000&#x27;</span>)),
+                    (<span class="hljs-number">.1</span>, hexcolor(<span class="hljs-string">&#x27;ff0000&#x27;</span>)),
+                    (<span class="hljs-number">.1</span>, hexcolor(<span class="hljs-string">&#x27;ffffff&#x27;</span>)),
+                    (<span class="hljs-number">.2</span>, hexcolor(<span class="hljs-string">&#x27;ffffff&#x27;</span>)),
+                    (<span class="hljs-number">.2</span>, hexcolor(<span class="hljs-string">&#x27;ff0000&#x27;</span>)),
+                    (<span class="hljs-number">.3</span>, hexcolor(<span class="hljs-string">&#x27;ff0000&#x27;</span>)),
+                    (<span class="hljs-number">.3</span>, hexcolor(<span class="hljs-string">&#x27;ffffff&#x27;</span>)),
+                    (<span class="hljs-number">.4</span>, hexcolor(<span class="hljs-string">&#x27;ffffff&#x27;</span>)),
+                    (<span class="hljs-number">.4</span>, hexcolor(<span class="hljs-string">&#x27;ff0000&#x27;</span>)),
+                    ( <span class="hljs-number">1</span>, hexcolor(<span class="hljs-string">&#x27;ff0000&#x27;</span>)),
+                ],
+            ]
+        )))
+img.putdata(pixels)</pre><p>It produces a target blended with an orange gradient. The edges are jagged, and if that&#039;s a problem for you try implementing supersampling or some other antialiasing method.</p>
+						<a class="img" href="/static/media/radial-gradient-of-target-with-orange-tint.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/radial-gradient-of-target-with-orange-tint.png"
+							  alt="radial gradient of target with orange tint"
+							/>
+						</a>
+					<p>Conic gradients are the same concept but use the angle against the X-axis from a line drawn from the origin to the X-Y position of the pixel under consideration.</p><pre >pixels = []
+<span class="hljs-keyword">for</span> y <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):
+    <span class="hljs-keyword">for</span> x <span class="hljs-keyword">in</span> <span class="hljs-built_in">range</span>(<span class="hljs-number">256</span>):
+        pixels.append(<span class="hljs-built_in">tuple</span>(<span class="hljs-built_in">sum</span>(
+            np.array(gradient(stops,
+                <span class="hljs-built_in">abs</span>(math.atan2(y/<span class="hljs-number">256</span> - cy, x/<span class="hljs-number">256</span> - cx)) / (math.pi*<span class="hljs-number">2</span>)
+            ))
+            <span class="hljs-keyword">for</span> (cx, cy), *stops <span class="hljs-keyword">in</span> [
+                [
+                    (<span class="hljs-number">.3</span>, <span class="hljs-number">.5</span>),
+                    ( <span class="hljs-number">0</span>, hexcolor(<span class="hljs-string">&#x27;000000&#x27;</span>)),
+                    (<span class="hljs-number">.5</span>, hexcolor(<span class="hljs-string">&#x27;ffffff&#x27;</span>)),
+                    ( <span class="hljs-number">1</span>, hexcolor(<span class="hljs-string">&#x27;000000&#x27;</span>)),
+                ],
+            ]
+        )))
+img.putdata(pixels)</pre><p>For radial and conic gradients we&#039;re essentially converting Cartesian to polar coordinates and using either the distance or the azimuth/angle as the timestep. It can also be thought of as expressing a complex number in polar form. The code for conic gradients produces a sort of 3D cone viewed from directly above with a light source to the left.</p>
+						<a class="img" href="/static/media/conic-gradient-of-black-and-white.png">
+							<img
+							  loading="lazy"
+							  decoding="async"
+							  src="/static/media/conic-gradient-of-black-and-white.png"
+							  alt="conic gradient of black and white"
+							/>
+						</a>
+					<p>Throughout this post you might&#039;ve seen bands of color or other distortions on the images. That&#039;s a result of JPEG compression artifacts and is not a fault of the code.</p><h3>Exercises for the Reader</h3><p>If you want something to do, you can extend the code to interpolate based off of an arbitrary Bézier curve. Maybe check out <a href="https://pomax.github.io/bezierinfo/#yforx">a primer</a>, the <a href="https://en.wikipedia.org/wiki/B%C3%A9zier_curve#General_definition">Wikipedia article</a>, and <a href="https://non-boring-gradients.netlify.app/">non-boring gradients</a> if you want to set out on that endeavour. I didn&#039;t mention speed, but the code for calculating certain gradients run painfully slowly—try optimizing the code.</p>
+</article></main></body>
+
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="/static/favicon.ico" type="image/x-icon">
+
+  <link rel="stylesheet" type="text/css" href="/static/asciinema-player.css" />
+  <script>MathJax = {tex: {inlineMath: [["$", "$"]], displayMath: [["$$", "$$"]], processEscapes: !1}}</script>
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+  <style>
+    /* HLJS CODE HIGHLIGHTING */
+    pre code.hljs {
+      display: block;
+      overflow-x: auto;
+      padding: 1em
+    }
+
+    code.hljs {
+      padding: 3px 5px
+    }
+
+    .hljs {
+      background: #fefefe;
+      color: #545454
+    }
+
+    .hljs-comment,
+    .hljs-quote {
+      color: #696969
+    }
+
+    .hljs-deletion,
+    .hljs-name,
+    .hljs-regexp,
+    .hljs-selector-class,
+    .hljs-selector-id,
+    .hljs-tag,
+    .hljs-template-variable,
+    .hljs-variable {
+      color: #d91e18
+    }
+
+    .hljs-attribute,
+    .hljs-built_in,
+    .hljs-link,
+    .hljs-literal,
+    .hljs-meta,
+    .hljs-number,
+    .hljs-params,
+    .hljs-type {
+      color: #aa5d00
+    }
+
+    .hljs-addition,
+    .hljs-bullet,
+    .hljs-string,
+    .hljs-symbol {
+      color: green
+    }
+
+    .hljs-section,
+    .hljs-title {
+      color: #007faa
+    }
+
+    .hljs-keyword,
+    .hljs-selector-tag {
+      color: #7928a1
+    }
+
+    .hljs-emphasis {
+      font-style: italic
+    }
+
+    .hljs-strong {
+      font-weight: 700
+    }
+
+    @media screen and (-ms-high-contrast:active) {
+
+      .hljs-addition,
+      .hljs-attribute,
+      .hljs-built_in,
+      .hljs-bullet,
+      .hljs-comment,
+      .hljs-link,
+      .hljs-literal,
+      .hljs-meta,
+      .hljs-number,
+      .hljs-params,
+      .hljs-quote,
+      .hljs-string,
+      .hljs-symbol,
+      .hljs-type {
+        color: highlight
+      }
+
+      .hljs-keyword,
+      .hljs-selector-tag {
+        font-weight: 700
+      }
+    }
+
+    /* HLJS CODE HIGHLIGHTING END */
+
+    header div a::before {
+      content: '';
+      display: block;
+      position: absolute;
+      bottom: 14%;
+      left: 0;
+      width: 100%;
+      height: 40%;
+      transform: rotate(-1deg);
+      background-color: orange;
+      z-index: -1;
+      opacity: .3;
+      transition: opacity .2s ease-in-out;
+    }
+
+    header div a:hover::before {
+      opacity: .8;
+    }
+
+    header div a {
+      font-size: 1.8rem;
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    header {
+      margin-top: 1rem;
+    }
+
+    header>div {
+      text-align: center;
+    }
+
+    body {
+      padding: 0 1rem;
+      margin: 0 auto;
+      color: #333333;
+      max-width: 36rem;
+      line-height: 1.55;
+    }
+
+    @media screen and (min-width:70ch) {
+      main {
+        word-break: auto-phrase;
+        text-align: justify;
+        text-justify: inter-character;
+        hyphens: auto;
+        hyphenate-limit-lines: 2;
+      }
+    }
+
+    /* what follows are common sense defaults for all pages that inherit this layout.html */
+    h1 {
+      font-size: 2.25rem;
+      line-height: 2.5rem;
+      text-align: center;
+    }
+
+    ul,
+    ol {
+      text-align: left;
+    }
+
+    hr {
+      margin: 32px 0;
+    }
+
+    li {
+      margin: 4px 0;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      line-height: 1.2;
+    }
+
+    /* From https://developer.mozilla.org/en-US/docs/Web/HTML/Element/kbd */
+    kbd>kbd {
+      text-indent: 0;
+      background-color: #eee;
+      border-radius: 3px;
+      border: 1px solid #b4b4b4;
+      box-shadow:
+        0 1px 1px rgba(0, 0, 0, 0.2),
+        0 2px 0 0 rgba(255, 255, 255, 0.7) inset;
+      color: #333;
+      display: inline-block;
+      font-size: 0.9em;
+      font-weight: 700;
+      line-height: 1;
+      padding: 2px 4px;
+      white-space: nowrap;
+    }
+
+    aside {
+      border-left: 2px solid gray;
+      border-radius: 2px;
+      padding-left: 16px;
+      margin: 0;
+      margin-left: 32px;
+    }
+
+    code,
+    pre {
+      font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, 'DejaVu Sans Mono', monospace !important;
+      overflow-y: hidden;
+      hyphens: auto;
+    }
+
+    :not(pre)>code {
+      font-size: 90%;
+    }
+
+    p+p {
+      margin-top: 1.3em;
+    }
+
+    pre {
+      border-radius: 8px;
+      background-color: #f2f2f2;
+      border: 1px solid #bfbfbf;
+      padding: 4px 7px;
+      overflow-x: auto;
+      font-size: .8rem;
+    }
+
+    .img+pre {
+      margin-top: 1rem;
+    }
+
+    pre:has(+.img) {
+      margin-bottom: 1rem;
+    }
+
+    [id^="asciinema-cast-"] {
+      max-width: 100%;
+      border-radius: 8px;
+      height: min-content;
+      display: block;
+      margin: 0 auto;
+    }
+
+    img {
+      max-width: 100%;
+      border-radius: 8px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .hljs-meta.prompt_ {
+      user-select: none;
+    }
+
+
+    summary {
+      cursor: pointer;
+      user-select: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      margin-bottom: 20px;
+    }
+
+    details>summary::before {
+      content: '>';
+      font-weight: 700;
+      padding-right: 10px;
+    }
+
+    details[open]>summary::before {
+      content: '^';
+    }
+
+    summary::after {
+      content: "";
+      flex-grow: 1;
+      height: 1px;
+      background-color: #333;
+      margin-left: 10px;
+    }
+
+    .code-preview.collapsed {
+      position: relative;
+    }
+
+    .code-preview.collapsed pre {
+      max-height: 300px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .code-preview.collapsed pre::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 350px;
+      background: linear-gradient(to top, rgba(0,0,0,0.3) 25%, rgba(0,0,0,0.12) 50%, rgba(0,0,0,0.0) 100%);
+      pointer-events: none;
+    }
+
+    .code-preview .expand-btn {
+      position: absolute;
+      left: 50%;
+      bottom: 10%;
+      transform: translate(-50%, 10%);
+      border: 1px solid black;
+      border-radius: 4px;
+      background: none;
+      background-color: rgba(239, 239, 239, 0.7);
+      padding: 8px;
+      width: 180px;
+    }
+
+    .code-preview .expand-btn:hover {
+      background-color: rgba(239, 239, 239);
+    }
+
+    .code-preview:not(.collapsed) .expand-btn {
+      position: sticky;
+      left: 50%;
+      transform: translate(-50%);
+    }
+  </style><title>Google&#039;s New Open Source Models: Magika &amp; Gemma - Kevin Cao</title>
+<meta name="description" content="Google haven't had a spectacular history with AI recently. Whether it be
+misleading
+[https://arstechnica.com/information-technology/2023/12/google-admits-it-fudged-a-gemini-ai-demo-video-which-critics-say-misled-viewers/]
+multimodal LLM benchmarks or woke AI art generators
+[https://www.nytimes.com/2024/02/22/technology/google-gemini-german-uniforms.html],
+Google has been falling behind other companies like Microsoft and OpenAI in
+terms of development despite inventing the transformer architecture and making
+other important contributions to the field of machine learning. However,
+recently, Google released 2 interesting open source AI models." />
+<style>
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-top: 32px;
+    margin-bottom: 12px;
+    margin-left: -28px;
+    text-decoration: underline;
+  }
+
+  @media (min-width: 42rem) {
+    pre {
+      margin-left: -2rem;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+    img {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  @media (min-width: 42rem) {
+	[id^="asciinema-cast-"] {
+      margin-left: -2rem;
+	  max-width: calc(100% + 4rem) !important;
+      width: calc(100% + 4rem);
+    }
+  }
+
+  header>h1 {
+    color: #333;
+    padding: 0 1rem;
+    text-align: center;
+  }
+</style></head>
+
+<body><header><div>
+      <a href="/">back to homepage</a>
+    </div></header>
+
+  <main><article>
+  <header>
+    <h1>Google&#039;s New Open Source Models: Magika &amp; Gemma</h1>
+    <div style="padding-bottom:1rem; text-align:center"><time>Feb 25, 2024</time></div>
+  </header>
+  <p>Google haven&#039;t had a spectacular history with AI recently. Whether it be <a href="https://arstechnica.com/information-technology/2023/12/google-admits-it-fudged-a-gemini-ai-demo-video-which-critics-say-misled-viewers/">misleading</a> multimodal LLM benchmarks or woke AI <a href="https://www.nytimes.com/2024/02/22/technology/google-gemini-german-uniforms.html">art generators</a>, Google has been falling behind other companies like Microsoft and OpenAI in terms of development despite inventing the transformer architecture and making other important contributions to the field of machine learning. However, recently, Google released 2 interesting open source AI models.</p><ul><li> A 1MB deep learning model for fast and efficient file identification, named <a href="https://opensource.googleblog.com/2024/02/magika-ai-powered-fast-and-efficient-file-type-identification.html?utm_source=substack&amp;utm_medium=email">Magika</a>, which beats hand-crafted heuristics and VSCode&#039;s Guesslang.</li><li> <a href="https://blog.google/technology/developers/gemma-open-models/">Gemma</a>, a family of language models that continue Google&#039;s exhilaratingly creative naming scheme. Gemma comes in 2 and 7 billion parameters versions. Google claims that Gemma beats other language models in a similar weight class such as Mistral-7B in benchmarks.</li></ul><p>4-bit quantized GGUF files for both the 2B and 7B variants of Gemma are available on Hugging Face, so you can run it with <code>llama.cpp</code> or on a frontend tool like Ollama. Currently, Perplexity Lab&#039;s <a href="https://labs.perplexity.ai/">playground</a> also hosts Gemma-2B and 7B online for free. Alternatively, you can use <code>gemma.cpp</code>, Google&#039;s lightweight inference engine written for Gemma exclusively, inspired by <code>llama.cpp</code>. To use it, clone and build the project,</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">git <span class="hljs-built_in">clone</span> https://github.com/google/gemma.cpp</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cd</span> build</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">cmake ..</span>
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">make -j4 gemma</span></pre><p>Then go on <a href="https://www.kaggle.com/models/google/gemma">Kaggle</a> and download yourself some model weights. I recommend getting the 2B sfp-compressed instruct weights for your first attempt. Extract the archive the model weights come in and move the contents (a <code>.sbs</code> and <code>.spm</code> file) into the <code>build/</code> directory in the <code>gemma.cpp</code> repository. Now run the command,</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">./gemma --tokenizer tokenizer.spm --model 2b-it --compressed_weights 2b-it-sfp.sbs</span></pre><p>To hold a conversation with Gemma-2B. I find it quite incoherent in multi-turn conversation, and I believe that its benchmarks are worse than Microsoft&#039;s Phi-2. Also users&#039; real world experience with it haven&#039;t been <a href="https://www.reddit.com/r/LocalLLaMA/comments/1axxi5s/gemma_vs_phi2/">stellar</a>. Overall, despite the benchmarks, Gemma doesn&#039;t seem to be a very good LLM—it doesn&#039;t help that it&#039;s crippled by all of its censoring, like Gemini is. Google&#039;s LLMs remind me of <a href="https://www.goody2.ai/">goody-2</a>, a satirical chatbot that mocks the LLM safety instituted by certain AI companies.</p><hr><p>Magika is more exciting and holds greater real world utility in my opinion. Before Magika, I wasn&#039;t aware that deep learning was used in file identification. Apparently VSCode uses a tool called Guesslang, which likewise uses deep learning to identify the programming language of a piece of text. I can&#039;t wait for the paper their going to release later this year on the training details and Magika&#039;s performance on large datasets, since I&#039;m really curious as to how it works.</p><p>Google uses Magika internally to improve malware detection by routing files to the appropriate specialized security scanners. Here are a few examples of Magika in action on local files I have lying around.</p><pre ><span class="hljs-meta prompt_">$ </span><span class="language-bash">magika ruler.py</span>
+ruler.py: Python source (code)
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">magika - &lt;ruler.py <span class="hljs-comment"># Magika doesn&#x27;t rely on file extension</span></span>
+-: Python source (code)
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">magika /usr/bin/ls</span>
+/usr/bin/ls: ELF executable (executable)
+<span class="hljs-meta prompt_">$ </span><span class="language-bash">magika notes.md</span>
+notes.md: Markdown document (text)</pre><p>Although Google has a tendency to heavily sensor their models and exaggerate benchmarks, they have developed impressive technologies like the Gemini Ultra with 10 million tokens of context length and AlphaGeometry, a system that can solve geometry problems at the Olympiad-level, among other things. I don&#039;t complain when a company releases open source models, regardless of quality, and I hope Google releases more.</p>
+</article></main></body>
+
+</html>
